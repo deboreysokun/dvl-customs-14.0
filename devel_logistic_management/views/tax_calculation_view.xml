@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Import line action-->
+        <record model="ir.actions.client" id="action_tax_line_item_import">
+            <field name="name">Import Item Line</field>
+            <field name="tag">import</field>
+            <field name="params">{'model':'tax.calculation.line','import_field':'line_ids','height':'1000px','show_required':True}</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--Tax Calculation Form View-->
+        <record id="view_tax_calculation_form" model="ir.ui.view">
+            <field name="name">tax_calculation_form</field>
+            <field name="model">tax.calculation</field>
+            <field name="arch" type="xml">
+                <form string="Tax Calculation" disable_autofocus='false'>
+                    <header>
+                        <button class="btn btn-primary" name="%(action_tax_line_item_import)d" type="action" string="Import Line" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                        <button class="btn btn-primary" name="action_to_confirm" string="Submit To Confirm" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button class="btn btn-primary" name="action_confirm" string="Confirm Tax?" type="object" attrs="{'invisible': [('state', '!=', 'to_confirm')]}"/>
+                        <button class="btn" name="action_draft" string="Set to Draft" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                        <button class="btn btn-primary" name="%(action_tax_calculation_line_make_operation_shipment)d" string="Create Shipment" type="action" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                        <field name="state" widget="statusbar" attrs="{'invisible': [('active', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="active" invisible="1"/>
+                        <div name="button_box" class="oe_button_box">
+                            <button class="oe_stat_button" type="object" name="action_view_operation_shipment"
+                                icon="fa-file-text-o">
+                                <field string="Shipments" name="shipment_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="is_editable" invisible="1"/>
+                                <field name="date" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="description" placeholder="eg. Check Tax for..." attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="create_uid" widget="many2one_avatar_user"/>
+                            </group>
+                            <group>
+                                <field name="operation_type" widget="radio" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="verify_user_id" options="{'no_create': True}" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="verify_date" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Check Tax" name="tax_lines">
+                              <field name="line_ids" attrs="{'readonly': [('is_editable', '=', False)]}">
+                                <tree editable="bottom" class="tariff_center">
+                                    <control style="text-align: left !important">
+                                        <create name="add_product_control" string="Add a line" style="text-align: left !important"/>
+                                    </control>
+                                    <field name="name" string="Item in English"/>
+                                    <field name="kh_name" string="Item in Khmer" optional="show"/>
+                                    <field name="hs_code_id" string="HS Code" options="{'no_create': True}" class="o_list_number_th"/>
+                                    <field name="remark_hs_code" optional="hide" placeholder="eg: HS Code 2017" class="o_list_number_th"/>
+                                    <field name="number" string="NBR In Book" optional="show" class="o_list_number_th"/>
+                                    <field name="tariff" style="text-align: center !important;"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id" context="{'show_full_name': 1}" options="{'no_create': True}" string="UOM" optional="show" class="o_list_number_th"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal" sum="Total"/>
+                                    <field name="fta_rate" optional="show" class="o_list_number_th"/>
+                                    <field name="tax_rate" optional="show" class="o_list_number_th"/>
+                                    <field name="new_tax_rate" placeholder="eg.0" optional="show" class="o_list_number_th"/>
+                                    <field name="tax_rate_co" optional="show" class="o_list_number_th"/>
+                                    <field name="tax_amount" sum='Total Amount' optional="show"/>
+                                    <field name="tax_amount_co" string="Tax Amount CO" sum='Total Amount CO' optional="show"/>
+                                    <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}" optional="show"/>
+                                </tree>
+                              </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tax_calculation_tree" model="ir.ui.view">
+            <field name="name">tax_calculation_tree</field>
+            <field name="model">tax.calculation</field>
+            <field name="arch" type="xml">
+                <tree sample="1">
+                    <field name="create_uid" widget="many2one_avatar_user"/>
+                    <field name="name" string="No."/>
+                    <field name="date"/>
+                    <field name="description"/>
+                    <field name="operation_type"/>
+                    <field name="verify_user_id" widget="many2one_avatar_user"/>
+                    <field name="verify_date"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'to_confirm'" decoration-success="state == 'done'"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tax_calculation_search" model="ir.ui.view">
+            <field name="name">tax_calculation_search</field>
+            <field name="model">tax.calculation</field>
+            <field name="arch" type="xml">
+                <search string="Search...">
+                    <field name="name" filter_domain="['|','|',('name','ilike',self), ('description','ilike',self), ('line_ids','ilike',self)]"/>
+                    <filter string="Import" name="import" domain="[('operation_type','=','import')]"/>
+                    <filter name="export" string="Export" domain="[('operation_type','=','export')]"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="To Confirm" name="confirm" domain="[('state', '=', 'to_confirm')]"/>
+                    <filter string="Confirmed" name="confirm" domain="[('state', '=', 'done')]"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="User" name="user_id" context="{'group_by':'create_uid'}"/>
+                        <filter string="Date" name="month" domain="[]" context="{'group_by':'date'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dvl_tax_calculation" model="ir.actions.act_window">
+            <field name="name">Check Tax</field>
+            <field name="res_model">tax.calculation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No record. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_check_tax_menu" name="Check Tax"
+            parent="devel_logistic_management.dvl_main_menu" sequence="2"/>
+        <menuitem id="dvl_tax_calculation_menu" name="Tax Calculation"
+            parent="devel_logistic_management.dvl_check_tax_menu" action="devel_logistic_management.action_dvl_tax_calculation" sequence="1"/>
+
+
+        <!--Tax Calulation Line Menu-->
+        <record id="view_tax_calculation_line_tree" model="ir.ui.view">
+            <field name="name">tax_calculation_line_tree</field>
+            <field name="model">tax.calculation.line</field>
+            <field name="arch" type="xml">
+                <tree create="0" delete="0" class="dvl_global" sample="1">
+                    <field name="name" string="Item in English"/>
+                    <field name="kh_name" string="Item in Khmer" optional="show"/>
+                    <field name="hs_code_id" options="{'no_create': True}" class="o_list_number_th"/>
+                    <field name="remark_hs_code" optional="hide" placeholder="eg: HS Code 2017!" class="o_list_number_th"/>
+                    <field name="number" optional="show" class="o_list_number_th"/>
+                    <field name="tariff" class="o_list_number_th"/>
+                    <field name="qty"/>
+                    <field name="uom_id" options="{'no_create': True}" string="UOM" optional="show" class="o_list_number_th"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal" sum="Total"/>
+                    <field name="fta_rate" optional="show" class="o_list_number_th"/>
+                    <field name="tax_rate" optional="show" class="o_list_number_th"/>
+                    <field name="new_tax_rate" optional="show" class="o_list_number_th"/>
+                    <field name="tax_rate_co" optional="show" class="o_list_number_th"/>
+                    <field name="tax_amount" sum='Total Amount' optional="show"/>
+                    <field name="tax_amount_co" string="Tax Amount CO" sum='Total Amount CO' optional="show"/>
+                    <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}" optional="show"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tax_calculation_line_form" model="ir.ui.view">
+            <field name="name">tax_calculation_line_form</field>
+            <field name="model">tax.calculation.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="kh_name"/>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city"/>
+                                <field name="uom_id" options="{'no_create': True}" class="o_address_state"/>
+                            </div>
+                            <field name="price_unit"/>
+                            <field name="price_subtotal" sum="Total"/>
+                        </group>
+                        <group>
+                            <field name="hs_code_id" options="{'no_create': True}"/>
+                            <field name="tariff"/>
+                            <field name="fta_rate"/>
+                            <field name="tax_rate"/>
+                            <field name="new_tax_rate"/>
+                            <field name="tax_amount" sum='Total Amount'/>
+                            <field name="tax_rate_co"/>
+                            <field name="tax_amount_co" sum='Total Amount Co'/>
+                        </group>
+                    </group>
+                    <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_dvl_tax_calculation_line" model="ir.actions.act_window">
+            <field name="name">Check Tax Line</field>
+            <field name="res_model">tax.calculation.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_tax_calculation_line_tree"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="view_tax_calculation_line_search" model="ir.ui.view">
+            <field name="name">tax_calculation_line_search</field>
+            <field name="model">tax.calculation.line</field>
+            <field name="arch" type="xml">
+                <search string="Search...">
+                    <field name="name" filter_domain="['|','|', ('name','ilike',self), ('kh_name','ilike',self), ('hs_code_id','ilike',self)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="ID" name="id" context="{'group_by':'tax_calculation_id'}"/>
+                        <filter string="HS Code" name="hs_code" context="{'group_by':'hs_code_id'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <menuitem id="dvl_tax_calculation_line_menu" name="Tax Calculation line"
+            parent="devel_logistic_management.dvl_check_tax_menu" action="devel_logistic_management.action_dvl_tax_calculation_line" sequence="2"/>
+
+    </data>
+</odoo>

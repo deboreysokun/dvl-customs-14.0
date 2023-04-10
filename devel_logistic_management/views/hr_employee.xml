@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_employee_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="khmer_name" placeholder="Khmer Name"/>
+            </field>
+            <field name="identification_id" position="after">
+                <field name="id_card_front_image" widget="image" options='{"size": [100, 100]}'/>
+                <field name="id_card_back_image" widget="image" options='{"size": [100, 100]}'/>
+            </field>
+            <field name="birthday" position="after">
+                <field name="age" />
+            </field>
+            <field name="country_of_birth" position="after">
+                <field name="signature" widget="signature" />
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_tree" model="ir.ui.view">
+        <field name="name">Employee Tree View</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="khmer_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Employee Publice View -->
+    <record id="hr_employee_public_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.public.form</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="khmer_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_public_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.tree</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="khmer_name"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

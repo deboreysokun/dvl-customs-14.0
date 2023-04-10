@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="create_sale_quotation_wizard_view" model="ir.ui.view">
+            <field name="name">Create Sale Quotation From Template</field>
+            <field name="model">create.sale.quotation.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="quotation_type"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="create_sales_quotation" string="Create" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_create_sale_quotation" model="ir.actions.act_window">
+            <field name="name">Create Sale Quotation From Template</field>
+            <field name="res_model">create.sale.quotation.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="devel_logistic_management.model_sale_quotation_template" />
+            <field name="binding_view_types">form</field>
+            <field name="view_id" ref="create_sale_quotation_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <!-- Inherit View Create Template From Quotation -->
+        <record id="create_quotation_template_wizard_view_inherit" model="ir.ui.view">
+            <field name="name">Create Template From Quotation</field>
+            <field name="model">create.quotation.template</field>
+            <field name="inherit_id" ref="devel_logistic_management.create_quotation_template_wizard"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="template_type"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

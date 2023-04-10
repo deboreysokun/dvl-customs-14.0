@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    #inherit add view Other Service Shipment ID
+        <record id="inherit_other_service_id_view" model="ir.ui.view">
+            <field name="name">Other Service Shipment</field>
+            <field name="model">res.partner.aging.customer</field>
+            <field name="inherit_id" ref="devel_logistic_management.view_customer_aging_ad_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='shipment_id']" position="after">
+                    <field name="other_service_id"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

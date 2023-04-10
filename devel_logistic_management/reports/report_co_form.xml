@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_co_form">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div style="text-align:center;">
+                            <div style="font-weight:bold"><h5><span t-field="o.consignee_id"/></h5></div>
+                            <div style="font-size:16px;"><t t-esc="o.consignee_id.street"/>, <t t-esc="o.consignee_id.city"/>, <t t-esc="o.consignee_id.country_id.name"/></div>
+                            <div style="font-size:16px;">TEL : <t t-esc="o.consignee_id.phone"/></div>
+                            <div style="font-size:16px;font-weight:bold">VATTIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.consignee_id.vat"/></strong></div>
+                            <div style="font-size:16px;">EMAIL : <t t-esc="o.consignee_id.email"/></div>
+                        </div>
+                        <div class="row" style="font-size:12px;">
+                            <div class="col-2">
+                                <span>លេខ <t t-esc="o.name"/></span>
+                            </div>
+                        </div>
+                        <div class="page" style="font-size:14px;">
+                            <div class="text-center" style="font-family:'Moul',cursive;padding-top:15px;">
+                                <span>គោរពជូន<br/>ឯកឧត្តមរដ្នមន្ត្រីប្រតិភូអមនាយករដ្នមន្ត្រី អគ្គនាយកនៃអគ្គនាយកដ្នានគយនិងរដ្ធាករកម្ពុជា</span>
+                            </div>
+                            <div class="mb-1 mt-1">
+                                <span style="font-family:'Moul',cursive">កម្មវត្ថុ៖ </span>
+                                <span> សំណើសុំអនុញ្ញាតនាំចូលទំនិញពីប្រទេសចិនដោយបង់ពន្ធគយតាមអត្រាអនុគ្រោះក្រោមកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរីទំនិញ <t t-esc="o.co_form_id.name"/> ។</span>
+                            </div>
+                            <div class="mb-1 mt-1">
+                                <span style="font-family:'Moul',cursive">យោង៖ </span>
+                                <span><t t-esc="o.co_form_id.sub_decree"/></span>
+                            </div>
+                            <div class="row mb-1 mt-1" style="padding-left:55px">
+                                <div class="col-3">
+                                   <span><t t-esc="o.co_form_id.form_type"/> N0:</span>
+                                </div>
+                                <div class="col-3">
+                                   <span><t t-esc="o.co_form_number"/></span>
+                                </div>
+                                <div class="col-6">
+                                   <span>ចុះថ្ងៃទី <t t-esc="o.co_form_date"/> មកពីប្រទេស <t t-esc="o.co_form_country_id.khmer_name"/> </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:55px">
+                                <div class="col-3">
+                                   <span>Invoice N0: </span>
+                                </div>
+                                <div class="col-3">
+                                   <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                   <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                </div>
+                                <div class="col-3">
+                                   <span>ចុះថ្ងៃទី <t t-esc="o.inv_pack_date" t-options="{'widget': 'date', 'format': 'dd MM YYYY'}"/> </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:55px">
+                                <div class="col-3">
+                                   <span>Packing List N0: </span>
+                                </div>
+                                <div class="col-3">
+                                   <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                   <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                </div>
+                                <div class="col-3">
+                                   <span>ចុះថ្ងៃទី <t t-esc="o.inv_pack_date" t-options="{'widget': 'date', 'format': 'dd MM YYYY'}"/> </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:55px">
+                                <div class="col-3">
+                                   <span>B/L N0: </span>
+                                </div>
+                                <div class="col-3">
+                                   <span><t t-esc="o.bl_number"/></span>
+                                </div>
+                                <div class="col-3">
+                                   <span>ចុះថ្ងៃទី <t t-esc="o.bl_date" t-options="{'widget': 'date', 'format': 'dd MM YYYY'}"/> </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:55px">
+                                <div class="col-3">
+                                   <span>VAT N0: </span>
+                                </div>
+                                <div class="col-3">
+                                   <span><t t-esc="o.consignee_id.vat"/></span>
+                                </div>
+                                <div class="col-6">
+                                   <span>ចុះថ្ងៃទី <t t-esc="o.consignee_id.vattin_date" t-options="{'widget': 'date', 'format': 'dd MM YYYY'}"/> </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:70px">
+                                <span>តបតាមកម្មវត្ថុ និងយោងខាងលើក ខ្ញុំបាទតំណាងឲ្យ ក្រុមហ៊ុន <t t-esc="o.consignee_id.name"/> </span>
+                            </div>
+
+                            <div class="mb-1 mt-1">
+                                <span>សូមគោរពស្នើសុំ</span>
+                                <span style="font-family:'Moul',cursive;font-size:12px;"> ឯកឧត្តមរដ្នមន្ត្រីប្រតិភូអមនាយករដ្នមន្ត្រី</span>
+                                <span> មេត្តាអនុញ្ញាតឲ្យអនុវត្តអត្រាពន្ធគយអនុគ្រោះក្រោមកិច្ចព្រមព្រៀងពាណិជ្ជកម្មសេរី <t t-esc="o.co_form_id.name"/> <t t-esc="o.co_form_id.form_type"/> ចំពោះការនាំចូល : </span>
+                            </div>
+
+                            <div class="mb-1 mt-1">
+                                <t t-foreach="o.line_ids" t-as="line"><span t-field="line.description"/>    </t>
+                                <span> ចំនួន <t t-esc="o.total_qty"/> Package   ទំងន់សរុប <t t-esc="o.total_gross_weight"/> KGS   តម្លៃសរុប CIF: <span t-field="o.total_amount"/> USD ។</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:70px">
+                                <span>ដូចមានលម្អិតក្នុងតារាងភ្ជាប់មកជាមួយ :</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:70px">
+                                <span>ផលិតនៅ <t t-esc="o.origin_country_id.khmer_name"/> នាំចូលមកប្រទេសកម្ពុជាតាមមាត់ច្រក <t t-esc="o.clearance_office_id.kh_name"/> បញ្ចេញទំនិញនៅ <t t-esc="o.entry_exit_port_id.kh_name"/> ។</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:70px">
+                                <span>ខ្ញុំបាទសូមធានាអះអាងថា រាល់ការប្រកាសនិងឯកសារគាំទ្រខាងលើ សុទ្ធសឹងជាពត៌មាន និងជាឯកសារត្រឹមត្រូវពិតប្រាកដ។</span>
+                            </div>
+
+                            <div class="mb-1 mt-1">
+                                <span>ក្នុងករណីរកឃើញថាពត៌មាន និងឯកសារទាំងនេះមានការក្លែងបន្លំខុសពីការពិត ខ្ញុំបាទជាតំណាងឲ្យក្រុមហ៊ុន <t t-esc="o.consignee_id.name"/> សូមទទួលពិន័យ និងទោសទណ្ឌផ្សេងទៀតតាមបញ្ញត្តិច្បាប់ជាធរមាន ។</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="padding-left:70px">
+                                <span>អាស្រ័យដូចបានជម្រាបជូនខាងលើសូម</span>
+                                <span style="font-family:'Moul',cursive;font-size:12px;"> ឯកឧត្តមរដ្នមន្ត្រីប្រតិភូអមនាយករដ្នមន្ត្រី</span>
+                                <span> មេត្តាពិនិត្យនិងសម្រេចដោយក្តីអនុគ្រោះ ។</span>
+                            </div>
+                            <div class="row mb-1 mt-1" style="padding-left:70px">
+                                <span>សូម</span>
+                                <span style="font-family:'Moul',cursive;font-size:12px;"> ឯកឧត្តមរដ្នមន្ត្រីប្រតិភូអមនាយករដ្នមន្ត្រី</span>
+                                <span> មេត្តាទទួលនូវការគោរពដ៏ខ្ពង់ខ្ពស់អំពី ខ្ញុំបាទ ។</span>
+                            </div>
+
+                            <div style="page-break-inside:avoid">
+                                <div class="row" style="margin-top:10px;font-weight:bold;">
+                                    <div class="col-6" style="font-size:14px;margin-top: 10px;">
+                                        <div class="text-center" style="font-size:14px;margin-top: 18px;"/>
+                                        <div class="text-center" style="font-size:14px"/>
+                                    </div>
+                                    <div class="col-6 text-center" style="font-size:14px;margin-top: 10px;">
+                                        <div style="font-size:14px;">ថ្ងៃទី <t t-esc="khmerformattedDate"/></div>
+                                        <div style="font-size:14px;margin-top: 10px;font-family:'Moul',cursive">នាយកក្រុមហ៊ុន</div>
+                                        <div style="font-size:14px;margin-top: 100px;"><t t-esc="o.owner_id.khmer_name"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+
+

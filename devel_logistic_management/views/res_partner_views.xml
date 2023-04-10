@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_partner_form_inherit_dvl" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.dvl</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_user'))]"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button type="object" class="oe_stat_button" icon="fa-truck" name="action_view_partner_shipments"
+                    context="{'default_customer_id': active_id}" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="shipments_no_invoice_count"/>/<field name="total_shipments_count"/> <span class="small o_stat_text"> Shipments</span>
+                        </span>
+                        <span class="o_stat_text">No Invoices</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//h1" position="after">
+                <h2><field name="khmer_name" placeholder="eg. Khmer Name"/></h2>
+            </xpath>
+            <xpath expr="//field[@name='function']" position="after">
+                <field name="fax" placeholder="Fax..." widget="phone"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="vattin_date"/>
+                <label for="patent_number"/>
+                <div class="o_address_format">
+                    <field name="patent_number" class="o_address_city" />
+                    <field name="patent_date" class="o_address_state" placeholder="Patent Date"/>
+                </div>
+                <label for="mocid"/>
+                <div class="o_address_format">
+                    <field name="mocid" class="o_address_city" />
+                    <field name="mocid_date" class="o_address_state" placeholder="Date"/>
+                </div>
+                <field name="business_activities"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Personal Information">
+                    <group>
+                        <group string="Personal Information">
+                            <field name="gender"/>
+                            <field name="birthdate_date"/>
+                            <field name="age"/>
+                            <field name="nationality_id"/>
+                            <field name="signature_image" widget="image" options='{"size": [100, 100]}'/>
+                        </group>
+                        <group string="ID Card/ អត្តសញ្ញាណប័ណ្ណ">
+                            <field name="id_card_number"/>
+                            <field name="id_card_date"/>
+                            <field name="id_card_front_image" widget="image" options='{"size": [100, 100]}'/>
+                            <field name="id_card_back_image" widget="image" options='{"size": [100, 100]}'/>
+                        </group>
+                        <group string="CB Card / ប័ណ្ណសម្គាល់ជើងសារគយ">
+                            <label for="cb_card_number"/>
+                            <div class="o_address_format">
+                                <field name="cb_card_number" class="o_address_city" />
+                                <field name="cb_card_date" class="o_address_state" placeholder="Exprie Date"/>
+                            </div>
+                            <field name="cb_card_front_image" widget="image" options='{"size": [100, 100]}'/>
+                            <field name="cb_card_back_image" widget="image" options='{"size": [100, 100]}'/>
+                        </group>
+                        <group string="Employee ID Card">
+                            <label for="emp_card_number"/>
+                            <div class="o_address_format">
+                                <field name="emp_card_number" class="o_address_city" />
+                                <field name="emp_card_date" class="o_address_state" placeholder="Exprie Date"/>
+                            </div>
+                            <field name="emp_card_front_image" widget="image" options='{"size": [100, 100]}'/>
+                            <field name="emp_card_back_image" widget="image" options='{"size": [100, 100]}'/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='company_type']" position="after">
+                <field name="is_truck" attrs="{'invisible': [('company_type','=', 'person')]}"/>
+                <label for="is_truck" string="Truck Company" attrs="{'invisible': [('company_type','=', 'person')]}"/>
+            </xpath>
+            <!-- For Truck Company -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Driver Information"  attrs="{'invisible': [('is_truck','=', False)]}">
+                    <group>
+                        <group string="Director Information">
+                            <field name="director_name"/>
+                            <field name="director_phone"/>
+                        </group>
+                    </group>
+                    <field name="driver_ids">
+                        <tree editable="bottom">
+                            <field name="truck_partner_id" invisible="1"/>
+                            <field name="driver_name"/>
+                            <field name="driver_number"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Partner kanban view inherte -->
+    <record model="ir.ui.view" id="partner_kanban_view_dvl">
+        <field name="name">res.partner.kanban.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="inside">
+                <field name="khmer_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_view_tree_inherit_khmer_name" model="ir.ui.view">
+        <field name="name">res.partner.view.tree.inherit.khmer.name</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="khmer_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_khmer_name" model="ir.ui.view">
+        <field name="name">view.res.partner.filter.inherit.khmer_name</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="filter_domain">['|', '|', '|',('display_name', 'ilike', self), ('khmer_name', 'ilike', self),('ref', '=', self), ('email', 'ilike', self)]</attribute>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="dvl_res_partner_menu_contacts" name="Contacts"
+    action="contacts.action_contacts" parent="devel_logistic_management.dvl_main_menu" sequence="7"/>
+
+    <!-- Res Partner Account Bank Address -->
+    <record id="view_address_partner_bank_form" model="ir.ui.view">
+        <field name="name">address.res.partner.bank.form</field>
+        <field name="model">res.partner.bank</field>
+        <field name="inherit_id" ref="base.view_partner_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acc_holder_name']" position="after">
+                <field name="street"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

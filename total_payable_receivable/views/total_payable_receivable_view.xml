@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="res_partner_total_payable_receivable">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='function']" position="before">
+                    <field name="partner_debit" sum="Debit" groups="account.group_account_user"/>
+                    <field name="partner_credit" sum="Credit" groups="account.group_account_user"/>
+                    <label for="entry_debit_credit" string="Total Entries" groups="account.group_account_user"/>
+                    <button style="padding:1px" type="object" class="oe_stat_button" name="action_view_expense_lines" context="{'default_partner_id': active_id}" groups="account.group_account_user">
+                      <field name="entry_debit_credit" string="Total Entries"  decoration-danger="entry_debit_credit &lt; 0"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_partner_move_line_tree" model="ir.ui.view">
+            <field name="name">account.move.line.tree</field>
+            <field name="model">account.move.line</field>
+            <field name="arch" type="xml">
+                <tree string="Journal Items" create="false" edit="false" sample="1">
+                    <field name="date" optional="show"/>
+                    <field name="partner_id" optional="show"/>
+                    <field name="journal_id" options='{"no_open":True}'/>
+                    <field name="account_id" options="{'no_open': True}" groups="account.group_account_readonly"/>
+                    <field name="ref" optional="hide"/>
+                    <field name="name" optional="show"/>
+                    <field name="amount_residual" sum="Total" string="Amount"/>
+                    <field name="debit" sum="Total Debit" optional="hide"/>
+                    <field name="credit" sum="Total Credit" optional="hide"/>
+                    <field name="move_id" optional="show"/>
+                    <field name="amount_currency" groups="base.group_multi_currency" optional="hide"/>
+                    <field name="matching_number" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_partner_account_move_line" model="ir.actions.act_window">
+            <field name="context">{'journal_type':'general', 'search_default_posted':1}</field>
+            <field name="name">Total Entries - Journal Items</field>
+            <field name="res_model">account.move.line</field>
+            <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')), ('partner_id', '=', active_id), ('move_id.state', '!=', 'cancel'), ('amount_residual', '!=', 0.0)]</field>
+            <field name="context">{'default_partner_id': active_id, 'search_default_posted':1}</field>
+            <field name="view_id" ref="view_partner_move_line_tree"/>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

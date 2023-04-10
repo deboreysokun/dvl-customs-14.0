@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="province_city_1" model="province.city">
+            <field name="name">Phnom Penh</field>
+            <field name="kh_name">ភ្នំពេញ</field>
+        </record>
+        <record id="province_city_2" model="province.city">
+            <field name="name">Banteay Meanchey</field>
+            <field name="kh_name">បន្ទាយមានជ័យ</field>
+        </record>
+        <record id="province_city_3" model="province.city">
+            <field name="name">Battambang</field>
+            <field name="kh_name">បាត់ដំបង</field>
+        </record>
+        <record id="province_city_4" model="province.city">
+            <field name="name">Kampong Cham</field>
+            <field name="kh_name">កំពង់ចាម</field>
+        </record>
+        <record id="province_city_5" model="province.city">
+            <field name="name">Kampong Chhnang</field>
+            <field name="kh_name">កំពង់ឆ្នាំង</field>
+        </record>
+        <record id="province_city_6" model="province.city">
+            <field name="name">Kampong Speu</field>
+            <field name="kh_name">កំពង់ស្ពឺ</field>
+        </record>
+        <record id="province_city_7" model="province.city">
+            <field name="name">Kampong Thom</field>
+            <field name="kh_name">កំពង់ធំ</field>
+        </record>
+        <record id="province_city_8" model="province.city">
+            <field name="name">Kampot</field>
+            <field name="kh_name">កំពត</field>
+        </record>
+        <record id="province_city_9" model="province.city">
+            <field name="name">Kandal</field>
+            <field name="kh_name">កណ្តាល</field>
+        </record>
+        <record id="province_city_10" model="province.city">
+            <field name="name">Koh Kong</field>
+            <field name="kh_name">កោះកុង</field>
+        </record>
+        <record id="province_city_11" model="province.city">
+            <field name="name">Kracheh</field>
+            <field name="kh_name">ក្រចេះ</field>
+        </record>
+        <record id="province_city_12" model="province.city">
+            <field name="name">Mondul Kiri</field>
+            <field name="kh_name">មណ្ឌលគិរី</field>
+        </record>
+        <record id="province_city_13" model="province.city">
+            <field name="name">Preah Vihear</field>
+            <field name="kh_name">ព្រះវិហារ</field>
+        </record>
+        <record id="province_city_14" model="province.city">
+            <field name="name">Prey Veng</field>
+            <field name="kh_name">ព្រៃវែង</field>
+        </record>
+        <record id="province_city_15" model="province.city">
+            <field name="name">Pursat</field>
+            <field name="kh_name">ពោធិ៍សាត់</field>
+        </record>
+        <record id="province_city_16" model="province.city">
+            <field name="name">Ratanak Kiri</field>
+            <field name="kh_name">រតនគិរី</field>
+        </record>
+        <record id="province_city_17" model="province.city">
+            <field name="name">Siem Reap</field>
+            <field name="kh_name">សៀមរាប</field>
+        </record>
+        <record id="province_city_18" model="province.city">
+            <field name="name">Preah Sihanouk</field>
+            <field name="kh_name">ព្រះសីហនុ</field>
+        </record>
+        <record id="province_city_19" model="province.city">
+            <field name="name">Stung Treng</field>
+            <field name="kh_name">Stung Treng</field>
+        </record>
+        <record id="province_city_20" model="province.city">
+            <field name="name">Svay Rieng</field>
+            <field name="kh_name">ស្វាយរៀង</field>
+        </record>
+        <record id="province_city_21" model="province.city">
+            <field name="name">Takeo</field>
+            <field name="kh_name">តាកែវ</field>
+        </record>
+        <record id="province_city_22" model="province.city">
+            <field name="name">Otdar Meanchey</field>
+            <field name="kh_name">ឧត្តរមានជ័យ</field>
+        </record>
+        <record id="province_city_23" model="province.city">
+            <field name="name">Kep</field>
+            <field name="kh_name">កែប</field>
+        </record>
+        <record id="province_city_24" model="province.city">
+            <field name="name">Pailin</field>
+            <field name="kh_name">ប៉ៃលិន</field>
+        </record>
+        <record id="province_city_25" model="province.city">
+            <field name="name">Tbong Kmum</field>
+            <field name="kh_name">ត្បូងឃ្មុំ</field>
+        </record>
+    </data>
+</odoo>
+
+

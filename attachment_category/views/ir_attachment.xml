@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="ir_attachment_form_view">
+        <field name="name">ir.attachment.form (in attachment_category)</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_form" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="category_ids" widget="many2many_tags" />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="ir_attachment_search_view">
+        <field name="name">ir.attachment.search (in attachment_category)</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_search" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="category_ids" />
+            </field>
+            <xpath expr="//search" position="inside">
+                <searchpanel>
+                    <field name="category_ids" select="multi" icon="fa-tag"
+                        enable_counters="1"
+                    />
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="ir_attachment_tree_view">
+        <field name="name">ir.attachment.tree (in attachment_category)</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_tree" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="category_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+    <record id="document_file_kanban_inherit" model="ir.ui.view">
+        <field name="name">ir.attachment kanban inherit </field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="mail.view_document_file_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_record_body')]" position="inside">
+                <div>
+                    <field name="category_ids" widget="many2many_tags"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

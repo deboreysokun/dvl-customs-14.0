@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="dvl_report_sale_normal_quotation" model="ir.actions.report">
+            <field name="name">Normal Quotation</field>
+            <field name="model">sale.quotation</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_other_operation.report_sale_normal_quotation</field>
+            <field name="report_file">devel_other_operation.report_sale_normal_quotation</field>
+            <field name="print_report_name">'Quotation - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_sale_quotation"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+        </record>
+        <record id="action_preview_sales_normal_quotation_dvl" model="ir.actions.report">
+            <field name="name">Preview Sales Quotation</field>
+            <field name="model">sale.quotation</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">devel_other_operation.report_preview_sale_normal_quotation</field>
+        </record>
+
+        <template id="report_sale_normal_quotation">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="not o" t-set="o" t-value="doc"/>
+                    <!-- Multicompany -->
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id"/>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div>
+                            <t t-if="not o.issued_quotation_id">
+                                <div class="row" style="font-size:18px;">
+                                    <div class="col-2">
+                                        <img style="max-height:80px;" t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                                    </div>
+                                    <div class="col-8" style="text-align:center;">
+                                        <div style="color:#2f5496"><h3><span t-esc="company.name"/></h3></div>
+                                        <div style="font-size:14px;color:#2f549">
+                                            <t t-if="company.phone">TEL: <span t-esc="company.phone"/>&#160;</t>
+                                            <t t-if="company.vat">VATTIN: <span t-esc="company.vat"/>&#160;</t>
+                                            <t t-if="company.email">EMAIL: <span t-esc="company.email"/>&#160;</t>
+                                        </div>
+                                        <div style="font-size:14px;color:#2f549"><span t-esc="company.street"/> </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-if="o.issued_quotation_id">
+                                <div class="row" style="font-size:18px;">
+                                    <div class="col-2">
+                                        <img style="max-height:80px;" t-if="o.issued_quotation_id.image_1920" t-att-src="image_data_uri(o.issued_quotation_id.image_1920)" alt="Logo"/>
+                                    </div>
+                                    <div class="col-8" style="text-align:center;">
+                                        <div style="color:#2f5496"><h3><span t-esc="o.issued_quotation_id.name"/></h3></div>
+                                        <div style="font-size:14px;color:#2f549">
+                                            <t t-if="o.issued_quotation_id.phone">TEL: <span t-esc="o.issued_quotation_id.phone"/>&#160;</t>
+                                            <t t-if="o.issued_quotation_id.vat">VATTIN: <span t-esc="o.issued_quotation_id.vat"/>&#160;</t>
+                                            <t t-if="o.issued_quotation_id.email">EMAIL: <span t-esc="o.issued_quotation_id.email"/>&#160;</t>
+                                        </div>
+                                        <div style="font-size:14px;color:#2f549"><span t-esc="o.issued_quotation_id.street"/> </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center" style="text-decoration: underline;">
+                            <h3>Sales Quotation</h3>
+                        </div>
+                        <div style="font-size:14px;">
+                            <span>Accepted quotation signed by customer become binding contract and is valid from date of Signature. All pricing are in USD. </span>
+                        </div>
+                        <div class="row" style="font-weight:bold;">
+                            <div class="col-6" style="font-size:14px;">
+                                <div class="row" style="margin-left:0px;margin-right:0px">
+                                  <div class="col-10 text-center" style="background-color:#d9e2f3;color:#2f5496;">
+                                    <span>Customer Information</span>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4"><span>Company&#39;s Name: </span></div>
+                                  <div class="col-6"><span t-field="o.partner_company_id"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4"><span t-esc="'Customer Name: '"/></div>
+                                  <div class="col-6"><span t-field="o.partner_id"/></div>
+                                </div>
+                                <div class="row" style="margin-top:50px">
+                                    <div class="col-4"><span t-esc="'Att: '"/></div>
+                                    <div class="col-6"><span t-field="o.partner_id"/></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4"><span t-esc="'Tel/Mobile: '"/></div>
+                                    <div class="col-6"><span t-field="o.partner_id.phone"/><t t-if="o.partner_id.mobile" t-esc="'/'"/><span t-field="o.partner_id.mobile"/> </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4"><span t-esc="'Email: '"/></div>
+                                    <div class="col-6"><span t-field="o.partner_id.email"/></div>
+                                </div>
+                            </div>
+                            <div class="col-6" style="font-size:14px;">
+                                <div class="row" style="margin-left:0px;margin-right:0px">
+                                  <div class="col-12 text-center" style="background-color:#d9e2f3;color:#2f5496;">
+                                    <span>Quotation Information</span>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Quotation No: '"/></div>
+                                  <div class="col-6"><span t-field="o.name"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Quotation Date:'"/></div>
+                                  <div class="col-6"><span t-field="o.quotation_date" t-options="{'widget': 'date', 'format': 'dd/MM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Quotation Valid Until:'"/></div>
+                                  <div class="col-6"><span t-field="o.validity_date" t-options="{'widget': 'date', 'format': 'dd/MM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Service Type:'"/> </div>
+                                  <div class="col-6"><span t-field="o.service_type"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Sales Rep:'"/> </div>
+                                  <div class="col-6"><span t-field="o.sale_user_id"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Pricing Rep:'"/> </div>
+                                  <div class="col-6"><span t-field="o.price_user_id"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Payment Term(service charge):'"/> </div>
+                                  <div class="col-9"><span t-field="o.payment_term"/></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page" style="font-size:14px;">
+                            <table class="table table-borderless" style="font-size:14px;">
+                                <thead>
+                                    <tr style="background-color:#2f5496;color:white;">
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width:350px">
+                                            <div>Description</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>QTY</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>UOM</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Unit Price</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Sub Total</div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody class="sale_tbody">
+                                    <t t-foreach="o.sale_quotation_line_ids" t-as="line">
+                                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''" style="page-break-inside:avoid">
+                                            <t t-if="not line.display_type">
+                                                <td style="border:1px solid black;padding:1px;">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
+                                                    <span t-field="line.qty"/>
+                                                </td>
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
+                                                    <span t-field="line.uom_id"/>
+                                                </td>
+                                                <td class="text-right" style="border:1px solid black;padding:1px;">
+                                                    <span t-field="line.price_unit" t-options="{'widget': 'float', 'precision': 2}" />
+                                                </td>
+                                                <td class="text-right" style="border:1px solid black;padding:1px;">
+                                                    <span t-field="line.price_subtotal" t-options="{'widget': 'float', 'precision': 2}" />
+                                                </td>
+                                            </t>
+                                            <t t-if="line.display_type == 'line_section'">
+                                                <td name="td_section_line" colspan="99" style="border:1px solid black;padding:1px;background-color:#ffffcc;">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <t t-set="current_section" t-value="line"/>
+                                            </t>
+                                            <t t-if="line.display_type == 'line_note'">
+                                                <td name="td_note_line" colspan="99" style="border:1px solid black;padding:1px;">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                    <tr style="font-family:serif;font-weight:bold">
+                                        <td colspan="4" class="text-right" style="border:1px solid black;padding:1px;">
+                                            <span t-esc="'TOTAL'"/>
+                                        </td>
+                                        <td class="text-right" style="border:1px solid black;padding:1px;">
+                                             <span t-field="o.total_amount"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="page-break-inside:avoid">
+                                <div class="row" style="font-weight:bold;">
+                                    <t t-if="not o.issued_quotation_id">
+                                        <div class="col-4" style="font-size:14px;margin-top: 130px;">
+                                            <t t-if="company.partner_id.signature_image"><div style="font-size:14px;height:150px"/></t>
+                                            <div style="border-bottom: 1px solid black;"/>
+                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
+                                            <div class="text-center" style="font-size:14px">(Company Name)</div>
+                                        </div>
+                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;"/>
+                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;">
+                                            <t t-if="company.partner_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(company.partner_id.signature_image)" height="150px"/></div></t>
+                                            <div style="border-bottom: 1px solid black;"/>
+                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc="company.name"/></div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.issued_quotation_id">
+                                        <div class="col-4" style="font-size:14px;margin-top: 130px;">
+                                            <t t-if="o.issued_quotation_id.signature_image"><div style="font-size:14px;height:150px"/></t>
+                                            <div style="border-bottom: 1px solid black;"/>
+                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
+                                            <div class="text-center" style="font-size:14px">(Company Name)</div>
+                                        </div>
+                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;"/>
+                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;">
+                                            <t t-if="o.issued_quotation_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.issued_quotation_id.signature_image)" height="150px"/></div></t>
+                                            <div style="border-bottom: 1px solid black;"/>
+                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc="o.issued_quotation_id.name"/></div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <div style="background-color:#d9e2f3;color:#7f9dd1;font-size:16px;margin-top:10px">
+                                <span>Term &amp; Conditions </span>
+                            </div>
+                            <div style="font-size:12px">
+                                <span t-field="o.note"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_preview_sale_normal_quotation">
+            <div style="padding-left:200px;padding-right:200px;">
+                <t t-call="devel_other_operation.report_sale_normal_quotation"/>
+            </div>
+        </template>
+    </data>
+</odoo>

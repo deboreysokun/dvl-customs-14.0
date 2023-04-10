@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_booking_order_doc">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <div style="text-align:center;">
+                           <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
+                           <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/><t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/></t><t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                           <div class="row" style="padding-left:250px">
+                           <div class="col-8 text-center">
+                              <div style="font-size:16px;"><t t-if="o.shipper_id.phone">TEL : <t t-esc="o.shipper_id.phone"/> </t> <t t-if="o.shipper_id.vat">  VAT : <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></t></div>
+                              <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                           </div>
+                           <div class="col-4">
+                              <div style="font-size:24px;text-align:left;padding-top:10px;">Booking Order</div>
+                           </div>
+                           </div>
+                           <div style="border-bottom:2px solid black; margin-top:5px;"/>
+                        </div>
+                        <div class="page" style="font-size:16px;">
+                           <div class="row mb-1 mt-1" style="padding-top:30px;">
+                              <div class="col-3">
+                                 <span>Date: <span t-field="o.booking_date"/> </span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-8">
+                                 <span class="font-weight-bold" style="font-size:18px">RE : COC BOOKING CONFIRMATION</span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-8">
+                                 <span>PLS BE INFORMED OUR BOOKING WITH ASA AS FOLLOWS: </span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>PORT OF LOADING: </span>
+                              </div>
+                              <div class="col-6">
+                                 <span t-field="o.port_of_loading"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>PORT OF DISCHARGES: </span>
+                              </div>
+                              <div class="col-6">
+                                 <span t-field="o.port_of_discharge"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>FEEDER VSL:</span>
+                              </div>
+                              <div class="col-3">
+                                 <span t-field="o.vessel_id"/>
+                              </div>
+                              <div class="col-4">
+                                 <span>VOY NO: <span t-field="o.voyage_number"/></span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-6">
+                                 <span>ETD: <span t-field="o.etd_export_port"/>&#160;<span t-field="o.etd_export_date"/> </span>
+                              </div>
+                              <div class="col-6">
+                                 <span>ETA: <span t-field="o.eta_export_port"/> &#160; <span t-field="o.eta_export_date"/> </span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>VOLUME: <span t-field="o.volume_cbm"/> </span>
+                              </div>
+                              <div class="col-6">
+                                 <t t-foreach="o.get_container_lines()" t-as="item">
+                                    <span t-esc="item_value"/>&#160; X <span t-esc="item"/> &#160; &#160;
+                                 </t>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>Estimate Pick up date:</span>
+                              </div>
+                              <div class="col-3">
+                                 <span style="color:red" t-field="o.pick_up_date"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>HS CODE: </span>
+                              </div>
+                              <div class="col-6">
+                                 <t t-set="hscode_ids" t-value="o.line_ids.mapped('hs_code_id')"/>
+                                 <span t-esc="'; '.join([hscode.tariff_code or '' for hscode in hscode_ids])"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>COMMODITY: </span>
+                              </div>
+                              <div class="col-6">
+                                 <span t-field="o.commodity"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>CARGO WEIGHT: </span>
+                              </div>
+                              <div class="col-6">
+                                 <span t-field="o.total_gross_weight"/>
+                                 <span t-field="o.gross_uom_id"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>FREIGHT: </span>
+                              </div>
+                              <div class="col-3">
+                                 <span style="color:red" t-field="o.freight"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-8">
+                                 <span>Ocean Freight(Invoice, No VAT 10%) Bill to:
+                                 <span style="color:red" t-field="o.shipper_id"/></span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-8">
+                                 <span>Local charge (with VAT 10% invoice) Bill to:
+                                 <span style="color:red" t-field="o.shipper_id"/> </span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-9">
+                                 <span>Shipper's VAT # <span t-field="o.shipper_id.vat"/> Shipper’s Certificate of Incorporation (Register #<span t-field="o.shipper_id.mocid"/>)</span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1">
+                              <div class="col-8">
+                                 <span>Consignee’s (Tax Identification Number / Siren Number) <span t-field="o.consignee_id.vat"/> </span>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:10px;">
+                              <div class="col-3">
+                                 <span>TRUCKER: </span>
+                              </div>
+                              <div class="col-6">
+                                 <t t-set="driver_ids" t-value="o.truck_line_ids.mapped('driver_id')"/>
+                                 <span t-esc="', '.join([driver.driver_name or '' for driver in driver_ids])"/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:20px;">
+                              <div class="col-9">
+                                 <span>PLS ACKNOWLEDGE OUR BOOING BY ENDORSING ON THE FAX AND REFAX IT TO US.</span><br/>
+                              </div>
+                           </div>
+                           <div class="row mb-1 mt-1" style="padding-top:20px;">
+                              <div class="col-6">
+                                 <span>TKS.B.RGDS.</span>
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

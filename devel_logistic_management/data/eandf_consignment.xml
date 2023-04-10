@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="consignment_1" model="consignment">
+            <field name="code">E</field>
+            <field name="name">Empty Consignment</field>
+        </record>
+        <record id="consignment_2" model="consignment">
+            <field name="code">F</field>
+            <field name="name">Full Consignment</field>
+        </record>
+        <record id="consignment_3" model="consignment">
+            <field name="code">N</field>
+            <field name="name">Not Full Consignment</field>
+        </record>
+        <record id="consignment_4" model="consignment">
+            <field name="code">P</field>
+            <field name="name">Part Consignment</field>
+        </record>
+    </data>
+</odoo>

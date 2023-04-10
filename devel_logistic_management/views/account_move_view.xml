@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Invoice Filter -->
+    <record id="view_shipment_account_invoice_filter" model="ir.ui.view">
+        <field name="name">account.move.select</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="shipment_id" string="Shipment Ref."/>
+            </field>
+            <group>
+                <filter string="Shipment" name="shipment_id" domain="" context="{'group_by':'shipment_id'}"/>
+            </group>
+        </field>
+    </record>
+
+    <!-- Journal Entry Filter -->
+    <record id="view_shipment_account_move_filter" model="ir.ui.view">
+        <field name="name">account.move.filter</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="shipment_id" string="Shipment Ref." invisible="True"/>
+            </field>
+            <group>
+                <filter string="Shipment" name="shipment_id" domain="" context="{'group_by':'shipment_id'}"/>
+            </group>
+        </field>
+    </record>
+
+    <record id="view_shipment_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <div class="oe_title">
+                <group>
+                    <group>
+                        <span attrs="{'invisible': ['|',('payment_state','=', 'not_paid'),('move_type', '=', 'entry')]}">
+                            <h5>Option to Print Only Receipt <field name="print_receipt" attrs="{'invisible': ['|',('payment_state', '=', 'not_paid'), ('move_type', '=', 'entry')]}" optional="show" widget="boolean_toggle"/></h5>
+                        </span>
+                    </group>
+                    <group>
+                        <span attrs="{'invisible': [('print_3digits','==', True)]}">
+                            <h5>Option to Print 2 Digits <field name="print_2digits" optional="show" widget="boolean_toggle"/></h5>
+                        </span>
+                        <span attrs="{'invisible': [('print_2digits','==', True)]}">
+                            <h5>Option to Print 3 Digits <field name="print_3digits" optional="show" widget="boolean_toggle"/></h5>
+                        </span>
+                    </group>
+                </group>
+                    <!-- Invoice draft header -->
+                    <span class="o_form_label"><field name="move_type" attrs="{'invisible': [('move_type', '=', 'entry')]}" readonly="1" nolabel="1"/></span>
+                    <h1>
+                        <span attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('name', '!=', '/')]}">Draft</span>
+                    </h1>
+
+                    <!-- Number -->
+                    <span class="text-warning" attrs="{'invisible': [('show_name_warning', '=', False)]}">The current highest number is <field name="highest_name"/>. You might want to put a higher number here.</span>
+                    <h1 class="mt0" attrs="{'invisible':[('name', '=', '/'), ('posted_before', '=', False)]}">
+                        <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="JRNL/2016/00001"/>
+                    </h1>
+                </div>
+            </xpath>
+
+            <xpath expr="//group[@id='header_left_group']/div[@class='o_td_label']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="agent_staff_id" context="{'show_mobile':True, 'show_email': True}" options='{"always_reload": True}' attrs="{'invisible': [('move_type', '=', 'entry')], 'readonly': [('state', 'not in', ('draft'))]}"/>
+                <field name="client_company_id" context="{'show_mobile':True, 'show_email': True}" options='{"always_reload": True}' attrs="{'invisible': [('move_type', '=', 'entry')], 'readonly': [('state', 'not in', ('draft'))]}"/>
+                <field name="client_staff_id" context="{'show_mobile':True, 'show_email': True}" attrs="{'invisible': [('move_type', '=', 'entry')], 'readonly': [('state', 'not in', ('draft'))]}"/>
+                <label name="invoice_copy_from_id" for="invoice_copy_from_id" string="Copy From" class="oe_edit_only"
+                       attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('move_type', '!=', 'out_invoice')]}"/>
+                <field name="invoice_copy_from_id" nolabel="1" class="oe_edit_only"
+                       attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('move_type', '!=', 'out_invoice')]}"
+                       domain="[('company_id', '=', company_id), ('partner_id','child_of', [partner_id]), ('move_type','=','out_invoice')]"
+                       placeholder="Select an old invoice"
+                       options="{'no_create': True}" context="{'show_total_amount': True}"/>
+            </xpath>
+            <field name="partner_id" position="before">
+                <field name="company_header_id" attrs="{'invisible': [('move_type', '=', 'entry')]}"/>
+                <field name="shipment_id" string="Shipment Ref." options="{'no_create': True}" attrs="{'readonly': [('state', 'not in', ('draft'))]}"/>
+                <div class="o_td_label">
+                    <label for="partner_id" string="Agent Company (Client)" style="font-weight:bold;"/>
+                </div>
+            </field>
+            <xpath expr="//field[@name='payment_reference']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+
+            <field name="partner_bank_id" position="replace"></field>
+            <xpath expr="//group[@name='sale_info_group']/field[@name='partner_bank_id']" position="replace"></xpath>
+
+            <field name="invoice_date" position="after">
+                <!--field name="partner_bank_id" context="{'default_partner_id': bank_partner_id}" domain="[('partner_id', '=', bank_partner_id)]" attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('move_type', '=', 'entry')]}"/-->
+                <!-- I removed the default domain -->
+                <field name="partner_bank_id" context="{'default_partner_id': bank_partner_id}" attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('move_type', '=', 'entry')]}"/>
+            </field>
+
+           <field name="narration" position="before">
+               <group class="oe_right">
+                 <field name="amount_total_khr" widget="monetary" options="{'currency_field': 'exchange_currency_id'}"/>
+                 <div class="o_address_format">
+                     <label  for="exchange_rate" string="Rate"/>
+                     <field name="exchange_rate" class="o_address_city"/>
+                     <field name="exchange_currency_id" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                 </div>
+               </group>
+           </field>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="before">
+                <field name="currency_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_shipment_invoice_tree" model="ir.ui.view">
+        <field name="name">account.invoice.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree" />
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="before">
+                <field name="shipment_id" optional="show"/>
+                <field name="commodity" optional="show"/>
+            </field>
+            <field name="name" position="after">
+                <field name="move_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_shipment_move_tree" model="ir.ui.view">
+        <field name="name">account.move.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree" />
+        <field name="arch" type="xml">
+            <field name="ref" position="before">
+                <field name="shipment_id" optional="show"/>
+            </field>
+            <field name="name" position="after">
+                <field name="move_type"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Account Move Line View  -->
+
+    <record id="view_move_line_tree" model="ir.ui.view">
+        <field name="name">account.move.line.tree</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="mode">extension</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_id']" position="after">
+               <field name="shipment_id" options="{'no_open': True, 'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_line_form_inherit_shipment" model="ir.ui.view">
+        <field name="name">account.move.line.form.inherit</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_id']" position="after">
+                <field name="shipment_id" options="{'no_open': True, 'no_create': True}"
+                    attrs="{'readonly': [('move_id','!=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_shipment_account_move_line_filter" model="ir.ui.view">
+        <field name="name">account.move.line.filter</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+        <field name="arch" type="xml">
+            <group>
+                <filter string="Shipment Ref." name="shipment_id" domain="" context="{'group_by':'shipment_id'}"/>
+            </group>
+        </field>
+    </record>
+    <!-- ########### Journal ################ -->
+    <record id="view_account_journal_form_inherited" model="ir.ui.view">
+        <field name="name">account_journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="is_reimbursement"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Action for view Reimbursement Invoice-->
+    <record id="action_reimbursement_invoice_type" model="ir.actions.act_window">
+        <field name="name">Reimbursment Invoice</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_in_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('move_type', 'in', ('out_invoice'))]</field>
+        <field name="context">{'default_is_reimbursement_invoice': True, 'default_move_type': 'out_invoice'}</field>
+    </record>
+
+    <!-- Action for view Reimbursement Bill -->
+    <record id="action_reimbursement_bill_type" model="ir.actions.act_window">
+        <field name="name">Reimbursment Bill</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_in_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('move_type', 'in', ('in_invoice'))]</field>
+        <field name="context">{'default_is_reimbursement_invoice': True, 'default_move_type': 'in_invoice'}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_inv_packing_list">
+           <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="o">
+                   <t t-if="not o.is_vehicle and not o.mix_commodity">
+                       <!-- Invoice Document Paper - Import -->
+                       <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                           <t t-raw="0"/>
+                           <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                           <div style="text-align:center;text-transform: uppercase;">
+                               <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
+                               <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                               <t t-if="o.shipper_id.phone"><div style="font-size:16px;">TEL : <t t-esc="o.shipper_id.phone"/></div></t>
+                               <t t-if="o.shipper_id.vat"><div style="font-size:16px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></div></t>
+                               <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                           </div>
+                           <div class="page" style="font-size:14px;">
+                               <div class="text-center" style="padding-top:15px;">
+                                   <h5 style="text-decoration: underline">INVOICE</h5>
+                               </div>
+                               <div class="row" style="font-weight:bold;">
+                                   <div class="col-6" style="font-size:14px;text-transform: uppercase;">
+                                       <div style="font-size:14px"><span style="text-decoration: underline">CONSIGNEE</span></div>
+                                       <div style="font-size:14px"><span t-field="o.consignee_id"/></div>
+                                       <div style="font-size:14px;"><t t-esc="o.consignee_id.street"/><t t-if="o.consignee_id.city">, <t t-esc="o.consignee_id.city"/> </t> <t t-if="o.consignee_id.country_id">, <t t-esc="o.consignee_id.country_id.name"/> </t></div>
+                                       <t t-if="o.consignee_id.phone"><div style="font-size:14px;">TEL : <t t-esc="o.consignee_id.phone"/> <t t-if="o.consignee_id.mobile"><t t-esc="' / '"/><t t-esc="o.consignee_id.mobile"/> </t></div> </t>
+                                       <t t-if="o.consignee_id.vat"><div style="font-size:14px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.consignee_id.vat"/></strong></div></t>
+                                       <t t-if="o.consignee_id.email"><div style="font-size:14px;">Email : <t t-esc="o.consignee_id.email"/></div></t>
+                                   </div>
+                                   <div class="col-6" style="font-size:14px;">
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'REF :'"/></div>
+                                           <div class="col-6"> <span t-field="o.name"/></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'INVOICE N0:'"/></div>
+                                           <div class="col-6">
+                                           <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                           <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'DATE :'"/></div>
+                                           <div class="col-6"><span t-field="o.inv_pack_date"/></div>
+                                       </div>
+                                       <div class="row" style="font-size:14px;text-transform: uppercase;">
+                                           <div class="col-6"><span t-esc="'COUNTRY OF ORIGIN :'"/> </div>
+                                           <div class="col-6"><span t-field="o.origin_country_id"/></div>
+                                       </div>
+                                        <t t-if="o.num_of_truck == 0.0">
+                                            <t t-if="o.num_of_truck == 0.0">
+                                                <t t-if="o.container_line_ids">
+                                                    <div class="row">
+                                                        <div class="col-6"><span t-esc="'CONTAINER N0:'"/></div>
+                                                        <div class="col-6">
+                                                            <span t-field="o.container_number1"/><span t-field="o.container_number2"/>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </t>
+                                   </div>
+                               </div>
+
+                               <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                                   <div class="col-6">
+                                   </div>
+                                   <div class="col-6">
+                                       <t t-if="not o.inv_packing_list_term">
+                                           <span><t t-esc="o.incoterm_id.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                       <t t-if="o.inv_packing_list_term">
+                                           <span><t t-esc="o.inv_packing_list_term.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                   </div>
+                               </div>
+                               <t t-set="manuf_date" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.item_manufacturing_date">
+                                       <t t-set="manuf_date" t-value="1"/>
+                                   </t>
+                               </t>
+                               <t t-set="expiry_date" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.item_expiry_date">
+                                       <t t-set="expiry_date" t-value="1"/>
+                                   </t>
+                               </t>
+                               <table class="table table-borderless" style="font-size:14px;">
+                                   <thead>
+                                       <tr>
+                                           <td class="text-center" style="border:1px solid black; width: 30px">
+                                               <div>NO.</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; width:450px">
+                                               <div>DESCRIPTION OF GOODS</div>
+                                           </td>
+                                           <t t-if="manuf_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>Manufacturing</div>
+                                                   <div>Date</div>
+                                               </td>
+
+                                           </t>
+                                           <t t-if="expiry_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>Expiry</div>
+                                                   <div>Date</div>
+                                               </td>
+                                           </t>
+
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>QUANTITY</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>UOM</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>UNIT PRICE</div>
+                                               <div>(USD)</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>AMOUNT</div>
+                                               <div>(USD)</div>
+                                           </td>
+                                       </tr>
+                                   </thead>
+                                   <tbody class="invoice_tbody">
+                                       <tr t-foreach="o.line_ids" t-as="l" style="page-break-inside:avoid">
+                                           <td class="text-center" style="border:1px solid black;padding:5px;"><span t-esc="l_index+1"/></td>
+                                           <td style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.description"/>
+                                           </td>
+                                           <t t-if="manuf_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <span t-field="l.item_manufacturing_date"/>
+                                               </td>
+                                           </t>
+                                           <t t-if="expiry_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <span t-field="l.item_expiry_date"/>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.0f}'.format(l.qty)"/>
+                                           </td>
+
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.uom_id"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               $ <span t-esc="'{0:,.2f}'.format(l.price_unit)"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               $ <span t-esc="'{0:,.2f}'.format(l.price_subtotal)"/>
+                                           </td>
+                                       </tr>
+                                       <tr style="page-break-inside:avoid">
+                                           <td style="border:1px solid black;padding:5px;"/>
+                                           <td class="text-center" colspan="4" style="border-bottom:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
+                                           <t t-if="manuf_date == 1">
+                                               <td class="text-center" style="border-bottom:1px solid black;"/>
+                                           </t>
+                                           <t t-if="expiry_date == 1">
+                                               <td class="text-center" style="border-bottom:1px solid black;"/>
+                                           </t>
+
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                                   $ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+
+
+                               <div style="page-break-inside:avoid">
+                                   <div class="row" style="margin-top:10px;font-weight:bold;">
+                                       <div class="col-5" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp_consignee == true">
+                                               <!-- Show consignee stamp at any position for all pages -->
+                                               <div style="position:absolute;padding-top:100px;">
+                                                   <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                               </div>
+                                           </t>
+                                       </div>
+                                       <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                           </t>
+                                           <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                           <div style="font-size:14px;">Authorized Signature</div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- Packing List Document Paper-->
+                       <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                           <t t-raw="0"/>
+                           <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                           <div style="text-align:center;text-transform: uppercase;">
+                               <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
+                               <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                               <t t-if="o.shipper_id.phone"><div style="font-size:16px;">TEL : <t t-esc="o.shipper_id.phone"/></div></t>
+                               <t t-if="o.shipper_id.vat"><div style="font-size:16px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></div></t>
+                               <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                           </div>
+                           <div class="page" style="font-size:14px;">
+                               <div class="text-center" style="padding-top:15px;">
+                                   <h5 style="text-decoration: underline">PACKING LIST</h5>
+                               </div>
+
+                               <div class="row" style="font-weight:bold;">
+                                   <div class="col-6" style="font-size:14px;text-transform: uppercase;">
+                                       <div style="font-size:14px"><span style="text-decoration: underline">CONSIGNEE</span></div>
+                                       <div style="font-size:14px"><span t-field="o.consignee_id"/></div>
+                                       <div style="font-size:14px;"><t t-esc="o.consignee_id.street"/><t t-if="o.consignee_id.city">, <t t-esc="o.consignee_id.city"/> </t> <t t-if="o.consignee_id.country_id">, <t t-esc="o.consignee_id.country_id.name"/> </t></div>
+                                       <t t-if="o.consignee_id.phone"><div style="font-size:14px;">TEL : <t t-esc="o.consignee_id.phone"/> <t t-if="o.consignee_id.mobile"><t t-esc="' / '"/><t t-esc="o.consignee_id.mobile"/> </t></div> </t>
+                                       <t t-if="o.consignee_id.vat"><div style="font-size:14px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.consignee_id.vat"/></strong></div></t>
+                                       <t t-if="o.consignee_id.email"><div style="font-size:14px;">Email : <t t-esc="o.consignee_id.email"/></div></t>
+                                   </div>
+                                   <div class="col-6" style="font-size:14px;">
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'REF :'"/></div>
+                                           <div class="col-6"> <span t-field="o.name"/></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'PACKING LIST N0:'"/></div>
+                                           <div class="col-6">
+                                           <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                           <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'DATE :'"/></div>
+                                           <div class="col-6"><span t-field="o.inv_pack_date"/></div>
+                                       </div>
+                                       <div class="row" style="font-size:14px;text-transform: uppercase;">
+                                           <div class="col-6"><span t-esc="'COUNTRY OF ORIGIN :'"/> </div>
+                                           <div class="col-6"><span t-field="o.origin_country_id"/></div>
+                                       </div>
+                                        <t t-if="o.num_of_truck == 0.0">
+                                            <t t-if="o.container_line_ids">
+                                                <div class="row">
+                                                    <div class="col-6"><span t-esc="'CONTAINER N0:'"/></div>
+                                                    <div class="col-6">
+                                                        <span t-field="o.container_number1"/><span t-field="o.container_number2"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                   </div>
+                               </div>
+                               <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                                   <div class="col-6">
+                                   </div>
+                                   <div class="col-6">
+                                       <t t-if="not o.inv_packing_list_term">
+                                           <span><t t-esc="o.incoterm_id.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                       <t t-if="o.inv_packing_list_term">
+                                           <span><t t-esc="o.inv_packing_list_term.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                   </div>
+                               </div>
+
+                               <t t-set="manuf_date" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.item_manufacturing_date">
+                                       <t t-set="manuf_date" t-value="1"/>
+                                   </t>
+                               </t>
+                               <t t-set="expiry_date" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.item_expiry_date">
+                                       <t t-set="expiry_date" t-value="1"/>
+                                   </t>
+                               </t>
+                               <table class="table table-borderless mt-2" style="font-size:14px;">
+                                   <thead>
+                                       <tr>
+                                           <td class="text-center" style="border:1px solid black; width: 30px">
+                                               <div>NO.</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; width:450px">
+                                               <div>DESCRIPTION OF GOODS</div>
+                                           </td>
+                                           <t t-if="manuf_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>Manufacturing</div>
+                                                   <div>Date</div>
+                                               </td>
+                                           </t>
+                                           <t t-if="expiry_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>Expiry</div>
+                                                   <div>Date</div>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>QUANTITY</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>UOM</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>N.WEIGHT</div>
+                                               <div>(KGS)</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>G.WEIGHT</div>
+                                               <div>(KGS)</div>
+                                           </td>
+                                       </tr>
+                                   </thead>
+                                   <tbody class="invoice_tbody">
+                                       <tr t-foreach="o.line_ids" t-as="l" style="page-break-inside:avoid">
+                                           <td class="text-center" style="border:1px solid black;padding:5px;"><span t-esc="l_index+1"/></td>
+                                           <td style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.description"/>
+                                           </td>
+                                           <t t-if="manuf_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <span t-field="l.item_manufacturing_date"/>
+                                               </td>
+                                           </t>
+                                           <t t-if="expiry_date == 1">
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <span t-field="l.item_expiry_date"/>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <t t-if="not l.packing_list_qty"><span t-esc="'{0:,.0f}'.format(l.qty)"/></t>
+                                               <t t-if="l.packing_list_qty"> <span t-esc="'{0:,.0f}'.format(l.packing_list_qty)"/></t>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <t t-if="not l.packing_list_uom_id"><span t-field="l.uom_id"/></t>
+                                               <t t-if="l.packing_list_uom_id"> <span t-field="l.packing_list_uom_id"/></t>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.2f}'.format(l.net_weight)"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.2f}'.format(l.gross_weight)"/>
+                                           </td>
+                                       </tr>
+                                       <tr style="page-break-inside:avoid">
+                                           <td style="border:1px solid black;padding:5px;"/>
+
+                                          <td class="text-center" style="border-bottom:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
+                                           <t t-if="manuf_date == 1">
+                                               <td class="text-center" style="border-bottom:1px solid black;"/>
+                                           </t>
+                                           <t t-if="expiry_date == 1">
+                                               <td class="text-center" style="border-bottom:1px solid black;"/>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-if="not o.total_pl_qty"><span t-esc="'{0:,.0f}'.format(o.total_qty)"/></t>
+                                               <t t-if="o.total_pl_qty"> <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/></t>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <span t-field="o.qty_uom_id"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-esc="'{0:,.2f}'.format(o.total_net_weight)"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+
+
+                               <div style="page-break-inside:avoid">
+                                   <div class="row" style="margin-top:10px;font-weight:bold;">
+                                       <div class="col-5" style="font-size:14px;margin-top: 10px;">
+                                           <div class="row">
+                                               <div class="col-5" style="padding-right:0px"><span t-esc="'GROSS WEIGHT:'"/></div>
+                                               <div class="col-6 text-right" style="padding:0px;margin-left:-100px"><span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/></div>
+                                               <div class="col-6" style="padding-left:0px"><span t-field="o.gross_uom_id"/></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-5" style="padding-right:0px"><span t-esc="'NET WEIGHT :'"/></div>
+                                               <div class="col-6 text-right" style="padding:0px;margin-left:-100px"> <span t-esc="'{0:,.2f}'.format(o.total_net_weight)"/></div>
+                                               <div class="col-6" style="padding-left:0px"><span t-field="o.net_uom_id"/></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-5" style="padding-right:0px"><span t-esc="'TOTAL :'"/></div>
+                                               <div class="col-6 text-right" style="padding:0px;margin-left:-100px"> <span t-esc="'{0:,.2f}'.format(o.total_pl_qty)"/></div>
+                                               <div class="col-6" style="padding-left:0px"><span t-field="o.qty_uom_id"/> <span t-field="o.qty_text"/></div>
+                                           </div>
+                                           <t t-if="o.inv_pl_stamp_consignee == true">
+                                               <!-- Show consignee stamp at any position for all pages -->
+                                               <div style="position:absolute;padding-top:100px;">
+                                                   <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                               </div>
+                                           </t>
+                                       </div>
+                                       <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                           </t>
+                                           <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                           <div style="font-size:14px;">Authorized Signature</div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </t>
+
+                   <!-- Template Invoice and Packing List for Mix Commodity -->
+                   <t t-if="o.mix_commodity and not o.is_vehicle" >
+                       <!-- Invoice Document Paper - Import -->
+                       <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                           <t t-raw="0"/>
+                           <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                           <div style="text-align:center;text-transform: uppercase;">
+                               <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
+                               <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                               <t t-if="o.shipper_id.phone"><div style="font-size:16px;">TEL : <t t-esc="o.shipper_id.phone"/></div></t>
+                               <t t-if="o.shipper_id.vat"><div style="font-size:16px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></div></t>
+                               <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                           </div>
+                           <div class="page" style="font-size:14px;">
+                               <div class="text-center" style="padding-top:15px;">
+                                   <h5 style="text-decoration: underline">INVOICE</h5>
+                               </div>
+                               <div class="row" style="font-weight:bold;">
+                                   <div class="col-6" style="font-size:14px;text-transform: uppercase;">
+                                       <div style="font-size:14px"><span style="text-decoration: underline">CONSIGNEE</span></div>
+                                       <div style="font-size:14px"><span t-field="o.consignee_id"/></div>
+                                       <div style="font-size:14px;"><t t-esc="o.consignee_id.street"/><t t-if="o.consignee_id.city">, <t t-esc="o.consignee_id.city"/> </t> <t t-if="o.consignee_id.country_id">, <t t-esc="o.consignee_id.country_id.name"/> </t></div>
+                                       <t t-if="o.consignee_id.phone"><div style="font-size:14px;">TEL : <t t-esc="o.consignee_id.phone"/> <t t-if="o.consignee_id.mobile"><t t-esc="' / '"/><t t-esc="o.consignee_id.mobile"/> </t></div> </t>
+                                       <t t-if="o.consignee_id.vat"><div style="font-size:14px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.consignee_id.vat"/></strong></div></t>
+                                       <t t-if="o.consignee_id.email"><div style="font-size:14px;">Email : <t t-esc="o.consignee_id.email"/></div></t>
+                                   </div>
+                                   <div class="col-6" style="font-size:14px;">
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'REF :'"/></div>
+                                           <div class="col-6"> <span t-field="o.name"/></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'INVOICE N0:'"/></div>
+                                           <div class="col-6">
+                                           <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                           <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'DATE :'"/></div>
+                                           <div class="col-6"><span t-field="o.inv_pack_date"/></div>
+                                       </div>
+                                       <div class="row" style="font-size:14px;text-transform: uppercase;">
+                                           <div class="col-6"><span t-esc="'COUNTRY OF ORIGIN :'"/> </div>
+                                           <div class="col-6"><span t-field="o.origin_country_id"/></div>
+                                       </div>
+                                        <t t-if="o.num_of_truck == 0.0">
+                                            <t t-if="o.container_line_ids">
+                                                <div class="row">
+                                                    <div class="col-6"><span t-esc="'CONTAINER N0:'"/></div>
+                                                    <div class="col-6">
+                                                        <span t-field="o.container_number1"/><span t-field="o.container_number2"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                   </div>
+                               </div>
+
+                               <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                                   <div class="col-6">
+                                   </div>
+                                   <div class="col-6">
+                                       <t t-if="not o.inv_packing_list_term">
+                                           <span><t t-esc="o.incoterm_id.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                       <t t-if="o.inv_packing_list_term">
+                                           <span><t t-esc="o.inv_packing_list_term.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                   </div>
+                               </div>
+
+                               <table class="table table-borderless" style="font-size:12px;">
+                                   <thead>
+                                       <tr>
+                                           <td class="text-center" style="border:1px solid black; width: 30px">
+                                               <div>NO.</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; width:450px">
+                                               <div>DESCRIPTION OF GOODS</div>
+                                           </td>
+
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>QUANTITY</div>
+                                           </td>
+                                           <!-- <td class="text-center" style="border:1px solid black;">
+                                               <div>UOM</div>
+                                           </td> -->
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>UNIT PRICE</div>
+                                               <div>(USD)</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>AMOUNT</div>
+                                               <div>(USD)</div>
+                                           </td>
+                                       </tr>
+                                   </thead>
+                                   <tbody class="invoice_tbody">
+                                       <tr t-foreach="o.line_ids" t-as="l" style="page-break-inside:avoid">
+                                           <td class="text-center" style="border:1px solid black;padding:5px;"><span t-esc="l_index+1"/></td>
+                                           <td class="text-left" style="border:1px solid black;">
+                                                <t t-if="not l.v_type">
+                                                    <span t-field="l.description"/>
+                                                    <t t-if="l.item_manufacturing_date "><span> ,MFG:<span t-esc="l.item_manufacturing_date" /> </span></t>
+                                                    <t t-if="l.item_expiry_date "><span> ,EXP:<span t-esc="l.item_expiry_date" /> </span></t>
+                                                </t>
+                                                <t t-if="l.v_type">
+                                                   <span t-field="l.new_used"/>
+                                                   <span t-field="l.v_left_hand_drive"/>
+                                                   <span t-field="l.v_type"/>
+                                                   <span t-field="l.v_brand"/>
+                                                   <span t-field="l.v_model"/>
+                                                   <t t-if="l.v_model_year"> <span t-esc="'YEAR:'"/> <span t-field="l.v_model_year"/> </t>
+                                                   <t t-if="l.origin_country_id" ><span t-esc="'ORIGIN:'"/> <span t-field="l.origin_country_id"/> </t>
+                                                   <t t-if="l.v_capacity"><span t-esc="'CAPACITY:'"/>
+                                                        <t t-set="v_capacity_integer" t-value="str(l.v_capacity).split('.')"/>
+                                                        <span t-esc="int(v_capacity_integer[0])"/>
+                                                   </t>
+                                                   <t t-if="l.v_vin"><span t-esc="'VIN:'"/> <span t-field="l.v_vin"/> </t>
+                                                   <t t-if="l.v_eng"><span t-esc="'ENG:'"/> <span t-field="l.v_eng"/> </t>
+                                                   <t t-if="l.wheel_type"><span t-esc="'TYPE:'"/> <span t-field="l.wheel_type"/> </t>
+                                               </t>
+                                           </td>
+
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.0f}'.format(l.qty)"/> <span t-field="l.uom_id"/>
+                                           </td>
+
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               $ <span t-esc="'{0:,.2f}'.format(l.price_unit)"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               $ <span t-esc="'{0:,.2f}'.format(l.price_subtotal)"/>
+                                           </td>
+                                       </tr>
+                                       <tr style="page-break-inside:avoid">
+                                           <td style="border:1px solid black;padding:5px;"/>
+                                           <td class="text-center" colspan="3" style="border-bottom:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               $ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+
+
+                               <div style="page-break-inside:avoid">
+                                   <div class="row" style="margin-top:10px;font-weight:bold;">
+                                       <div class="col-5" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp_consignee == true">
+                                               <!-- Show consignee stamp at any position for all pages -->
+                                               <div style="position:absolute;padding-top:100px;">
+                                                   <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                               </div>
+                                           </t>
+                                       </div>
+                                       <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                           </t>
+                                           <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                           <div style="font-size:14px;">Authorized Signature</div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- Packing List Document Paper-->
+                       <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                           <t t-raw="0"/>
+                           <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                           <div style="text-align:center;text-transform: uppercase;">
+                               <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
+                               <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                               <t t-if="o.shipper_id.phone"><div style="font-size:16px;">TEL : <t t-esc="o.shipper_id.phone"/></div></t>
+                               <t t-if="o.shipper_id.vat"><div style="font-size:16px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></div></t>
+                               <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                           </div>
+                           <div class="page" style="font-size:14px;">
+                               <div class="text-center" style="padding-top:15px;">
+                                   <h5 style="text-decoration: underline">PACKING LIST</h5>
+                               </div>
+
+                               <div class="row" style="font-weight:bold;">
+                                   <div class="col-6" style="font-size:14px;text-transform: uppercase;">
+                                       <div style="font-size:14px"><span style="text-decoration: underline">CONSIGNEE</span></div>
+                                       <div style="font-size:14px"><span t-field="o.consignee_id"/></div>
+                                       <div style="font-size:14px;"><t t-esc="o.consignee_id.street"/><t t-if="o.consignee_id.city">, <t t-esc="o.consignee_id.city"/> </t> <t t-if="o.consignee_id.country_id">, <t t-esc="o.consignee_id.country_id.name"/> </t></div>
+                                       <t t-if="o.consignee_id.phone"><div style="font-size:14px;">TEL : <t t-esc="o.consignee_id.phone"/> <t t-if="o.consignee_id.mobile"><t t-esc="' / '"/><t t-esc="o.consignee_id.mobile"/> </t></div> </t>
+                                       <t t-if="o.consignee_id.vat"><div style="font-size:14px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.consignee_id.vat"/></strong></div></t>
+                                       <t t-if="o.consignee_id.email"><div style="font-size:14px;">Email : <t t-esc="o.consignee_id.email"/></div></t>
+                                   </div>
+                                   <div class="col-6" style="font-size:14px;">
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'REF :'"/></div>
+                                           <div class="col-6"> <span t-field="o.name"/></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'PACKING LIST N0:'"/></div>
+                                           <div class="col-6">
+                                           <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                           <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'DATE :'"/></div>
+                                           <div class="col-6"><span t-field="o.inv_pack_date"/></div>
+                                       </div>
+                                       <div class="row" style="font-size:14px;text-transform: uppercase;">
+                                           <div class="col-6"><span t-esc="'COUNTRY OF ORIGIN :'"/> </div>
+                                           <div class="col-6"><span t-field="o.origin_country_id"/></div>
+                                       </div>
+                                        <t t-if="o.num_of_truck == 0.0">
+                                            <t t-if="o.container_line_ids">
+                                                <div class="row">
+                                                    <div class="col-6"><span t-esc="'CONTAINER N0:'"/></div>
+                                                    <div class="col-6">
+                                                        <span t-field="o.container_number1"/><span t-field="o.container_number2"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                   </div>
+                               </div>
+                               <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                                   <div class="col-6">
+                                   </div>
+                                   <div class="col-6">
+                                       <t t-if="not o.inv_packing_list_term">
+                                           <span><t t-esc="o.incoterm_id.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                       <t t-if="o.inv_packing_list_term">
+                                           <span><t t-esc="o.inv_packing_list_term.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                   </div>
+                               </div>
+
+                               <t t-set="manuf_date" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.item_manufacturing_date">
+                                       <t t-set="manuf_date" t-value="1"/>
+                                   </t>
+                               </t>
+                               <t t-set="expiry_date" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.item_expiry_date">
+                                       <t t-set="expiry_date" t-value="1"/>
+                                   </t>
+                               </t>
+                               <table class="table table-borderless mt-2" style="font-size:12px;">
+                                   <thead>
+                                       <tr>
+                                           <td class="text-center" style="border:1px solid black; width: 30px">
+                                               <div>NO.</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; width:450px">
+                                               <div>DESCRIPTION OF GOODS</div>
+                                           </td>
+
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>QUANTITY</div>
+                                               <div>PKGS</div>
+                                           </td>
+
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>N.WEIGHT</div>
+                                               <div>(KGS)</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>G.WEIGHT</div>
+                                               <div>(KGS)</div>
+                                           </td>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr t-foreach="o.line_ids" t-as="l" style="page-break-inside:avoid">
+                                           <td class="text-center" style="border:1px solid black;padding:5px;"><span t-esc="l_index+1"/></td>
+                                           <td class="text-left" style="border:1px solid black;">
+                                                <t t-if="not l.v_type">
+                                                   <span t-field="l.description"/>
+                                                   <t t-if="l.item_manufacturing_date "><span> ,MFG:<span t-esc="l.item_manufacturing_date" /> </span></t>
+                                                   <t t-if="l.item_expiry_date "><span> ,EXP:<span t-esc="l.item_expiry_date" /> </span></t>
+                                                </t>
+                                                <t t-if="l.v_type">
+                                                    <span t-field="l.new_used"/>
+                                                    <span t-field="l.v_left_hand_drive"/>
+                                                    <span t-field="l.v_type"/>
+                                                    <span t-field="l.v_brand"/>
+                                                    <span t-field="l.v_model"/>
+                                                    <t t-if="l.v_model_year"> <span t-esc="'YEAR:'"/> <span t-field="l.v_model_year"/> </t>
+                                                    <t t-if="l.origin_country_id" ><span t-esc="'ORIGIN:'"/> <span t-field="l.origin_country_id"/> </t>
+                                                    <t t-if="l.v_capacity"><span t-esc="'CAPACITY:'"/>
+                                                         <t t-set="v_capacity_integer" t-value="str(l.v_capacity).split('.')"/>
+                                                         <span t-esc="int(v_capacity_integer[0])"/>
+                                                    </t>
+                                                    <t t-if="l.v_vin"><span t-esc="'VIN:'"/> <span t-field="l.v_vin"/> </t>
+                                                    <t t-if="l.v_eng"><span t-esc="'ENG:'"/> <span t-field="l.v_eng"/> </t>
+                                                    <t t-if="l.wheel_type"><span t-esc="'TYPE:'"/> <span t-field="l.wheel_type"/> </t>
+                                                </t>
+                                           </td>
+
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.0f}'.format(l.qty)"/>
+                                           </td>
+
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.2f}'.format(l.net_weight)"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.2f}'.format(l.gross_weight)"/>
+                                           </td>
+                                       </tr>
+                                       <tr style="page-break-inside:avoid">
+                                           <td style="border:1px solid black;padding:5px;"/>
+                                            <td style="border:1px solid black;padding:5px;"/>
+
+                                           <td class="text-center" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-if="not o.total_pl_qty"><span t-esc="'{0:,.0f}'.format(o.total_qty)"/></t>
+                                               <t t-if="o.total_pl_qty"> <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/> <span t-field="o.qty_uom_id"/></t>
+                                           </td>
+
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-esc="'{0:,.2f}'.format(o.total_net_weight)"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+
+
+                               <div style="page-break-inside:avoid">
+                                   <div class="row" style="margin-top:10px;font-weight:bold;">
+                                       <div class="col-5" style="font-size:14px;margin-top: 10px;">
+                                           <div class="row">
+                                               <div class="col-5" style="padding-right:0px"><span t-esc="'GROSS WEIGHT:'"/></div>
+                                               <div class="col-6 text-right" style="padding:0px;margin-left:-100px"><span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/></div>
+                                               <div class="col-6" style="padding-left:0px"><span t-field="o.gross_uom_id"/></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-5" style="padding-right:0px"><span t-esc="'NET WEIGHT :'"/></div>
+                                               <div class="col-6 text-right" style="padding:0px;margin-left:-100px"> <span t-esc="'{0:,.2f}'.format(o.total_net_weight)"/></div>
+                                               <div class="col-6" style="padding-left:0px"><span t-field="o.net_uom_id"/></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-5" style="padding-right:0px"><span t-esc="'TOTAL :'"/></div>
+
+                                           </div>
+                                           <t t-if="o.inv_pl_stamp_consignee == true">
+                                               <!-- Show consignee stamp at any position for all pages -->
+                                               <div style="position:absolute;padding-top:100px;">
+                                                   <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                               </div>
+                                           </t>
+                                       </div>
+                                       <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                           </t>
+                                           <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                           <div style="font-size:14px;">Authorized Signature</div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </t>
+
+
+                   <!-- Invoice and Packing List for Vehicle ; show only one page-->
+                   <t t-if="o.is_vehicle and not o.mix_commodity">
+                       <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                           <t t-raw="0"/>
+                           <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                           <div>
+                               <div style="font-size:14px"><span style="text-decoration: underline">SELLER</span></div>
+                               <div style="font-weight:bold;font-size:14px"><span t-field="o.shipper_id"/></div>
+                               <div style="font-size:14px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                               <div style="font-size:14px;"><t t-if="o.shipper_id.phone">TEL : <t t-esc="o.shipper_id.phone"/> </t></div>
+                               <div style="font-size:14px;"><t t-if="o.shipper_id.vat">VAT TIN :<t style="font-weight:bold;" t-esc="o.shipper_id.vat"/> </t></div>
+                               <t t-if="o.shipper_id.email"><div style="font-size:14px;text-transform: uppercase;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                           </div>
+                           <div class="page" style="font-size:14px;">
+                               <div class="text-center" style="padding-top:15px;">
+                                   <h5 style="text-decoration: underline">INVOICE &amp; PACKING LIST</h5>
+                               </div>
+
+                               <div class="row" style="font-weight:bold;">
+                                   <div class="col-6" style="font-size:14px;text-transform: uppercase;">
+                                       <div style="font-size:14px"><span style="text-decoration: underline">BUYER:</span></div>
+                                       <div style="font-size:14px"><span t-field="o.consignee_id"/></div>
+                                       <div style="font-size:14px;"><t t-esc="o.consignee_id.street"/><t t-if="o.consignee_id.city">, <t t-esc="o.consignee_id.city"/> </t> <t t-if="o.consignee_id.country_id">, <t t-esc="o.consignee_id.country_id.name"/> </t></div>
+                                       <t t-if="o.consignee_id.phone"><div style="font-size:14px;">TEL : <t t-esc="o.consignee_id.phone"/> <t t-if="o.consignee_id.mobile"><t t-esc="' / '"/><t t-esc="o.consignee_id.mobile"/> </t></div> </t>
+                                       <t t-if="o.consignee_id.vat"><div style="font-size:14px;font-weight:bold">VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.consignee_id.vat"/></strong></div></t>
+                                       <t t-if="o.consignee_id.email"><div style="font-size:14px;text-transform: uppercase;">EMAIL : <t t-esc="o.consignee_id.email"/></div></t>
+                                   </div>
+                                   <div class="col-6" style="font-size:14px;">
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'REF :'"/></div>
+                                           <div class="col-6"> <span t-field="o.name"/></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'INVOICE N0:'"/></div>
+                                           <div class="col-6">
+                                           <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                           <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                           </div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'DATE :'"/></div>
+                                           <div class="col-6"><span t-field="o.inv_pack_date"/></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-6"><span t-esc="'EXPORTING COUNTRY :'"/> </div>
+                                           <div class="col-6"><span style="text-transform: uppercase;" t-field="o.export_country_id"/></div>
+                                       </div>
+                                        <t t-if="o.num_of_truck == 0.0">
+                                            <t t-if="o.container_line_ids">
+                                                <div class="row">
+                                                    <div class="col-6"><span t-esc="'CONTAINER N0:'"/></div>
+                                                    <div class="col-6">
+                                                        <span t-field="o.container_number1"/><span t-field="o.container_number2"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                   </div>
+                               </div>
+
+                               <div class="row" style="margin-top:10px;margin-bottom:10px;">
+                                   <div class="col-6" style="font-size:14px;text-transform: uppercase;">
+                                       <span>FROM :</span>
+                                       <span t-field="o.export_country_id"/>
+                                   </div>
+                                   <div class="col-6">
+                                       <t t-if="not o.inv_packing_list_term">
+                                           <span><t t-esc="o.incoterm_id.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                       <t t-if="o.inv_packing_list_term">
+                                           <span><t t-esc="o.inv_packing_list_term.code"/> :</span>
+                                           <span t-field="o.entry_exit_port_id"/>
+                                       </t>
+                                   </div>
+                               </div>
+                               <t t-set="engine_number" t-value="0"/>
+                               <t t-set="gvwr" t-value="0"/>
+                               <t t-set="wheel_type" t-value="0"/>
+                               <t t-foreach="o.line_ids" t-as="l">
+                                   <t t-if="l.v_eng"><t t-set="engine_number" t-value="1"/> </t>
+                                   <t t-if="l.v_gvw"><t t-set="gvwr" t-value="1"/> </t>
+                                   <t t-if="l.wheel_type"><t t-set="wheel_type" t-value="1"/> </t>
+                               </t>
+                               <t t-set="cloumn_span" t-value="4"/>
+                               <table class="table table-borderless" style="font-size:10px;">
+                                   <thead>
+                                       <tr>
+                                           <td class="text-center" style="border:1px solid black; width: 30px">
+                                               <div>NO.</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; width: 30px">
+                                               <div>MODEL</div>
+                                               <div>YEAR</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black; width:550px">
+                                               <div>DESCRIPTION</div>
+                                               <div>BRAND &amp; MODE</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>CHASSIS No.</div>
+                                           </td>
+                                           <t t-if="engine_number == 1">
+                                               <t t-set="cloumn_span" t-value="cloumn_span + 1"/>
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>ENGINE No.</div>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>COUNTRY</div>
+                                               <div>OF ORIGIN</div>
+                                           </td>
+                                           <t t-if="wheel_type == 1">
+                                               <t t-set="cloumn_span" t-value="cloumn_span + 1"/>
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>TYPE OF</div>
+                                                   <div>WHEEL</div>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;">
+                                               <div>QUANTITY</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:120px">
+                                               <div>G.WEIGHT</div>
+                                               <div>(KGS)</div>
+                                           </td>
+                                           <t t-if="gvwr == 1"> <!--No need column span since it's after G.W-->
+                                               <td class="text-center" style="border:1px solid black;">
+                                                   <div>GVWR</div>
+                                                   <div>(KGS)</div>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;width:100px">
+                                               <div>CYLINDER</div>
+                                               <div>CAPACITY</div>
+                                               <div>(CC)</div>
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;width:130px">
+                                               <div>Amount</div>
+                                               <div>(USD)</div>
+                                           </td>
+                                       </tr>
+                                   </thead>
+                                   <tbody class="invoice_tbody">
+                                       <tr t-foreach="o.line_ids" t-as="l" style="page-break-inside:avoid">
+                                           <td class="text-center" style="border:1px solid black;padding:5px;"><span t-esc="l_index+1"/></td>
+                                           <td style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.v_model_year"/>
+                                           </td>
+                                           <td style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.new_used"/>
+                                               <span t-field="l.v_left_hand_drive"/>
+                                               <span t-field="l.v_type"/>
+                                               <span t-field="l.v_brand"/>
+                                               <span t-field="l.v_model"/>
+                                               <!-- <span t-field="l.v_power_mode"/> -->
+                                               <!-- <span t-field="l.description"/> -->
+                                           </td>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.v_vin"/>
+                                           </td>
+                                           <t t-if="engine_number == 1">
+                                               <td class="text-center" style="border:1px solid black;padding:5px;white-space:nowrap !important;">
+                                                   <span t-field="l.v_eng"/>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                               <span t-field="l.origin_country_id.code"/>
+                                           </td>
+                                           <t t-if="wheel_type == 1">
+                                               <td class="text-center" style="border:1px solid black;padding:5px;">
+                                                   <span t-field="l.wheel_type"/>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;white-space:nowrap !important;">
+                                               <span t-esc="'{0:,.0f}'.format(l.qty)"/>
+                                               <span t-field="l.uom_id"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;">
+                                               <span t-esc="'{0:,.2f}'.format(l.gross_weight)"/>
+                                           </td>
+                                           <t t-if="gvwr == 1">
+                                               <td class="text-right" style="border:1px solid black;padding:5px;">
+                                                   <span t-field="l.v_gvw"/>
+                                               </td>
+                                           </t>
+                                           <td class="text-center" style="border:1px solid black;padding:5px;">
+                                                <t t-if="l.v_capacity">
+                                                    <t t-set="v_capacity_integer" t-value="str(l.v_capacity).split('.')"/>
+                                                    <span t-esc="int(v_capacity_integer[0])"/>
+                                                </t>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black;padding:5px;white-space:nowrap !important;">
+                                               $ <span t-esc="'{0:,.2f}'.format(l.price_subtotal)"/>
+                                           </td>
+                                       </tr>
+                                       <tr style="page-break-inside:avoid">
+                                           <td style="border:1px solid black;padding:5px;"/>
+                                           <td class="text-center" t-att-colspan="cloumn_span" style="border:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
+                                           <td class="text-center" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-esc="'{0:,.0f}'.format(o.total_qty)"/> <span t-field="o.inv_qty_uom_id"/>
+                                           </td>
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               <t t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/>
+                                           </td>
+                                           <t t-if="gvwr == 1"><td style="border:1px solid black;font-weight:bold;padding:5px;"/></t>
+                                           <td style="border:1px solid black;padding:5px;"/>
+                                           <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
+                                               $ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                               <div style="page-break-inside:avoid">
+                                   <div class="row" style="margin-top:10px;font-weight:bold;">
+                                       <div class="col-5" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp_consignee == true">
+                                               <!-- Show consignee stamp at any position for all pages -->
+                                               <div style="position:absolute;padding-top:100px;">
+                                                   <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                               </div>
+                                           </t>
+                                       </div>
+                                       <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
+                                           <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                           </t>
+                                           <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                           <div style="font-size:14px;">Authorized Signature</div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </t>
+               </t>
+           </t>
+        </template>
+
+    </data>
+</odoo>

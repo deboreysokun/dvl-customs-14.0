@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="co_form_d" model="co.form">
+            <field name="name">អាស៊ាន​ (ATIGA)</field>
+            <field name="sub_decree">អនុក្រឹត្យលេខ៣៤ អនក្រ បក​ ​ចុះថ្ងៃទី០៦ ខែមីនា ឆ្នាំ២០១៩</field>
+            <field name="form_type">CO Form D</field>
+        </record>
+        <record id="co_form_ak" model="co.form">
+            <field name="name">អាស៊ាន​-កូរ៉េ (AKFTA)</field>
+            <field name="sub_decree">អនុក្រឹត្យលេខ៦៣ អនក្រ បក​ ចុះថ្ងៃទី២៧ ខែមេសា ឆ្នាំ២០១៧</field>
+            <field name="form_type">CO Form AK</field>
+        </record>
+        <record id="co_form_e" model="co.form">
+            <field name="name">អាស៊ាន​-ចិន (ACFTA)</field>
+            <field name="sub_decree">អនុក្រឹត្យលេខ៣៧ អនក្រ បក ​ចុះថ្ងៃទី០៦ ខែមីនា ឆ្នាំ២០១៩</field>
+            <field name="form_type">CO Form E</field>
+        </record>
+        <record id="co_form_ai" model="co.form">
+            <field name="name">អាស៊ាន​-ឥណ្ឌា (AIFTA)</field>
+            <field name="sub_decree">អនុក្រឹត្យលេខ៦៥ អនក្រ បក ​ចុះថ្ងៃទី២៧ ខែមេសា ឆ្នាំ២០១៧</field>
+            <field name="form_type">CO Form AI</field>
+        </record>
+        <record id="co_form_aj" model="co.form">
+            <field name="name">អាស៊ាន​-ជប៉ុន (AJCEP)</field>
+            <field name="sub_decree">ប្រកាសលេខ១៣៧៦ អនក្រ ប្រក ​ចុះថ្ងៃទី៣០ ខែធ្នូ ឆ្នាំ២០០៩</field>
+            <field name="form_type">CO Form AJ</field>
+        </record>
+        <record id="co_form_aanz" model="co.form">
+            <field name="name">អាស៊ាន​-អូស្រ្តាលី ញូហ្សឺឡេន (AANZFTA)</field>
+            <field name="sub_decree">អនុក្រឹត្យលេខ៣២ អនក្រ បក​ចុះថ្ងៃទី០៨ ខែកុម្ភៈ ឆ្នាំ២០១៩</field>
+            <field name="form_type">CO Form AANZ</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="outstanding_statement_logistic_wizard_action" model="ir.actions.act_window">
+        <field name="name">Logistic Outstanding Statement</field>
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="res_model">outstanding.statement.logistic.wizard</field>
+        <field name="context">{'default_show_aging_buckets': 0}</field>
+        <field name="view_mode">form</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('partner_statement.group_outstanding_statement'))]"
+        />
+        <field name="target">new</field>
+    </record>
+
+    <record id="outstanding_statement_logistic_wizard_view" model="ir.ui.view">
+        <field name="name">Outstanding Statement Logistic Wizard</field>
+        <field name="model">outstanding.statement.logistic.wizard</field>
+        <field name="inherit_id" ref="partner_statement.statement_common_view" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='info']/span" position="before">
+                <span class="o_form_label">The Logistic Outstanding Statement provides details of all partner's outstanding
+        receivables and payables of Logistic operation up to a particular date. This includes all unpaid invoices, unclaimed
+        refunds and outstanding payments. The list is displayed in chronological order and is
+        split by currencies.
+                </span>
+                <br />
+                <br />
+            </xpath>
+        </field>
+    </record>
+</odoo>

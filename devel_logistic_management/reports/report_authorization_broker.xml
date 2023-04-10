@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_authorization_broker">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!-- Format for Import & Transit Operations -->
+                    <t t-if="o.operation_type != 'export'">
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center">
+                                <div style="font-weight:bold;font-family:'Khmer OS Muol Light',cursive;font-size:16px;"><span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                                <div style="font-size:16px;"/>
+                            </div>
+                            <div style="text-align:center">
+                                <div style="font-weight:bold;font-family:'Khmer OS Muol Light',cursive;font-size:16px;padding-top:30px"><span>លិខិតផ្ទេរសិទ្ធិ </span></div>
+                            </div>
+                            <div class="page" style="font-size:14pt;line-height:30px;ont-family:'Battambang'">
+                                <div class="text-center" style="font-family:'Battambang'">
+                                    <span>សម្រាប់ម្ចាស់ទំនិញជូននីតិបុគ្គលជើងសាគយ <i class="fa fa-check-square-o"/> </span>
+                                    <span style="margin-left:30px">រូបវន្តបុគ្គលជើងសាគយ <i class="fa fa-square-o"/></span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.owner_id"><span style="margin-left:30px;font-weight:bold">
+                                        <t t-if="o.owner_id.gender == 'male'"><t t-esc="'ខ្ញុំបាទ '"/> </t>
+                                        <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ '"/> </t>
+                                        <t t-if="o.owner_id.gender == 'other'"><t t-esc="'ខ្ញុំបាទ/នាងខ្ញុំ '"/> </t>
+                                        <span style="font-size:16pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;"><t t-esc="o.owner_id.khmer_name"/> </span> </span>
+                                    </t>
+                                    <t t-if="not o.owner_id"><span style="margin-left:30px">ខ្ញុំបាទ/នាងខ្ញុំ................................................. </span></t>
+                                    <t t-if="not o.owner_id.id_card_number"><span>អត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ......................................... </span></t>
+                                    <t t-if="o.owner_id.id_card_number"><span>អត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ <t t-esc="o.owner_id.id_card_number"/> </span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span>ជាប្រធានក្រុមហ៊ុន <t t-if="not o.owner_id.function"><i class="fa fa-check-square-o"/></t> <t t-if="o.owner_id.function"><i class="fa fa-square-o"/></t></span>
+                                    <span style="margin-left:30px">សមាជិកក្រុមប្រឹក្សាភិបាល <i class="fa fa-square-o"/></span>
+                                    <span style="margin-left:30px">ផ្សេងទៀត <t t-if="o.owner_id.function"><i class="fa fa-check-square-o"/></t> <t t-if="not o.owner_id.function"><i class="fa fa-square-o"/></t> ................................................</span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.owner_id.parent_id"><span style="font-weight:bold">នៃក្រុមហ៊ុន/សហគ្រាស/អង្គភាព <t t-esc="o.owner_id.parent_id.name"/> </span></t>
+                                    <t t-if="not o.owner_id.parent_id"><span>នៃក្រុមហ៊ុន/សហគ្រាស/អង្គភាព...........................................................................................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.owner_id.parent_id.vat"><span>អត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ  <t t-esc="o.owner_id.parent_id.vat"/></span></t>
+                                    <t t-if="o.owner_id.parent_id.phone"><span>ទូរស័ព្ទលេខ <t t-esc="o.owner_id.parent_id.phone"/> </span></t>
+                                    <t t-if="not o.owner_id.parent_id.vat"><span>អត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ..................................</span></t>
+                                    <t t-if="not o.owner_id.parent_id.phone"><span>ទូរស័ព្ទលេខ..................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span>និងជាម្ចាស់ទំនិញ</span>
+                                    <span>សូមផ្ទេរសិទ្ធិជូន</span>
+                                    <t t-if="o.authorized_emp_id">
+                                        <span>លោក <t t-if="o.authorized_emp_id.gender == 'male'"><i class="fa fa-check-square-o"/></t><t t-if="o.authorized_emp_id.gender != 'male'"><i class="fa fa-square-o"/></t></span>
+                                        <span style="margin-left:30px">/លោកស្រី <t t-if="o.authorized_emp_id.gender == 'female'"><i class="fa fa-check-square-o"/></t><t t-if="o.authorized_emp_id.gender != 'female'"><i class="fa fa-square-o"/></t><span style="margin-left:30px;font-size:16pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">  <t t-esc="o.authorized_emp_id.khmer_name"/> </span></span>
+                                    </t>
+                                    <t t-if="not o.authorized_emp_id">
+                                        <span>លោក <i class="fa fa-square-o"/></span>
+                                        <span style="margin-left:30px">/លោកស្រី <i class="fa fa-square-o"/>............................................................................................................</span>
+                                    </t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.authorized_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ <t t-esc="o.authorized_emp_id.id_card_number"/> </span></t>
+                                    <t t-if="o.authorized_emp_id.phone"> <span>ទូរស័ព្ទលេខ <t t-esc="o.authorized_emp_id.phone"/></span></t>
+                                    <t t-if="not o.authorized_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ............................</span></t>
+                                    <t t-if="not o.authorized_emp_id.phone"> <span>ទូរស័ព្ទលេខ..................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.authorized_emp_id"><span style="font-weight:bold">ជាប្រធាន/អនុប្រធាន ក្រុមហ៊ុន/សហគ្រាស <t t-esc="o.authorized_emp_id.parent_id.name"/> </span></t>
+                                    <t t-if="not o.authorized_emp_id"><span>ជាប្រធាន/អនុប្រធាន ក្រុមហ៊ុន/សហគ្រាស...........................................................................................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.authorized_emp_id.parent_id.vat"><span>មានអត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ  <t t-esc="o.authorized_emp_id.parent_id.vat"/></span></t>
+                                    <t t-if="not o.authorized_emp_id.parent_id.vat"><span>មានអត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ..................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span>និងមានរូបវន្តបុគ្គលជើងសាគយតំណាង</span>
+                                    <t t-if="o.customs_emp_id">
+                                        <span>លោក <t t-if="o.customs_emp_id.gender == 'male'"><i class="fa fa-check-square-o"/></t><t t-if="o.customs_emp_id.gender != 'male'"><i class="fa fa-square-o"/></t></span>
+                                        <span style="margin-left:30px">/លោកស្រី <t t-if="o.customs_emp_id.gender == 'female'"><i class="fa fa-check-square-o"/></t><t t-if="o.customs_emp_id.gender != 'female'"><i class="fa fa-square-o"/></t><span style="margin-left:30px;font-size:16pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">  <t t-esc="o.customs_emp_id.khmer_name"/> </span></span>
+                                    </t>
+                                    <t t-if="not o.customs_emp_id">
+                                        <span>លោក <i class="fa fa-square-o"/></span>
+                                        <span style="margin-left:30px">/លោកស្រី <i class="fa fa-square-o"/>............................................................................................................</span>
+                                    </t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.customs_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ <t t-esc="o.customs_emp_id.id_card_number"/> </span></t>
+                                    <t t-if="o.customs_emp_id.phone"> <span>ទូរស័ព្ទលេខ <t t-esc="o.customs_emp_id.phone"/></span></t>
+                                    <t t-if="not o.customs_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ............................</span></t>
+                                    <t t-if="not o.customs_emp_id.phone"> <span>ទូរស័ព្ទលេខ..................................</span></t>
+                                </div>
+
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.customs_emp_id.cb_card_number"><span>ប័ណ្ណសម្គាល់ជើងសាគយលេខ <t t-esc="o.customs_emp_id.cb_card_number"/></span></t>
+                                    <t t-if="o.customs_emp_id.cb_card_date"><span>ផុតសុពលភាពថ្ងៃទី <t t-esc="o.khmer_number(o.customs_emp_id.cb_card_date.day)"/> ខែ <t t-esc="o.khmer_month(o.customs_emp_id.cb_card_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.customs_emp_id.cb_card_date.year)"/> ។</span></t>
+                                    <t t-if="not o.customs_emp_id.cb_card_number"><span>ប័ណ្ណសម្គាល់ជើងសាគយលេខខ............................</span></t>
+                                    <t t-if="not o.customs_emp_id.cb_card_date"><span>ផុតសុពលភាពថ្ងៃទីខែឆ្នាំ.................................. ។</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span style="font-weight:bold"> ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយ៖</span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.valuation_office_id.kh_name"/> </span><br/>
+                                    <span style="margin-left:30px">តាមឯកសារភ្ជាប់ដូចខាងក្រោម៖</span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">១. វិក្កយប័ត្រ(Invoice)លេខ <t t-if="o.inv_pack_number"><t t-esc="o.inv_pack_number"/> </t> <t t-if="not o.inv_pack_number"><t t-esc="o.name"/> </t></span>
+                                        </div>
+                                        <t t-if="o.inv_pack_date">
+                                            <div class="col-5">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">២. បញ្ជីវេចខ្ចប់(Packing List)លេខ <t t-if="o.inv_pack_number"><t t-esc="o.inv_pack_number"/> </t> <t t-if="not o.inv_pack_number"><t t-esc="o.name"/> </t></span>
+                                        </div>
+                                        <t t-if="o.inv_pack_date">
+                                            <div class="col-5">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <t t-if="not o.truck_bill_number">
+                                        <div class="row">
+                                            <t t-if="not o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.bl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.bl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.bl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.bl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.hbl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.hbl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.hbl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.hbl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                        <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៤. ឯកសារគាំទ្រផ្សេងទៀត...........................................................................................................</span><br/>
+                                    </t>
+                                    <t t-if="o.truck_bill_number and (o.bl_number or o.hbl_number)">
+                                        <div class="row">
+                                            <t t-if="not o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.bl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.bl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.bl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.bl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.hbl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.hbl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.hbl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.hbl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៤.	អញ្ញាតប័ណ្ណ(Truck Bill)លេខ  <t t-esc="o.truck_bill_number"/></span>
+                                            </div>
+                                            <t t-if="o.truck_bill_date">
+                                                <div class="col-5">
+                                                    <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span>
+                                                </div>
+                                            </t>
+                                        </div>
+                                        <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៥. ឯកសារគាំទ្រផ្សេងទៀត...........................................................................................................</span><br/>
+                                    </t>
+                                    <t t-if="o.truck_bill_number and not o.bl_number and not o.hbl_number">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;"> ៣.	អញ្ញាតប័ណ្ណ(Truck Bill)លេខ  <t t-esc="o.truck_bill_number"/></span>
+                                            </div>
+                                            <t t-if="o.truck_bill_date">
+                                                <div class="col-5">
+                                                    <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span>
+                                                </div>
+                                            </t>
+                                        </div>
+                                        <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៤. ឯកសារគាំទ្រផ្សេងទៀត...........................................................................................................</span><br/>
+                                    </t>
+                                </div>
+                                <div style="font-family:'Moul';font-size:14pt;">
+                                    <i class="fa fa-square-o"/><span>សម្រាប់ច្រើនលើកនិងមានរយៈពេលកំណត់រហូតដល់ថ្ងៃទី...........ខែ.......................ឆ្នាំ២០២.........យោងតាម</span>
+                                    <span>លិខិតចាត់តាំងឬលិខិតឧទ្ទេសនាមលេខ........................................ចុះថ្ងៃទីខែឆ្នាំ............................................។</span>
+                                </div>
+
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <div class="text-center">
+                                        <span> <t t-esc="o.khmer_date_char"/> </span><br/>
+                                        <span><t t-if="o.province_id"> ធ្វើនៅ <t t-esc="o.province_id.kh_name"/>,</t> <t t-if="o.document_date"> ត្រូវនឹងថ្ងៃទី <t t-esc="o.khmer_number(o.document_date.day)"/> ខែ <t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.document_date.year)"/> </t></span>
+                                    </div>
+                                </div>
+
+                                <div style="page-break-inside:avoid;font-family:'Battambang';font-size:14pt;">
+                                    <div class="row" style="margin-top:10px;font-weight:bold;">
+                                        <div class="col-6 text-center" style="font-size:14pt;margin-top: 10px;">
+                                            <div style="margin-top: 10px;">ហត្ថលេខានិងត្រាអ្នកទទួលសិទ្ធិ</div>
+                                            <t t-if="o.auth_broker_stamp_consignee == true">
+                                                <t t-if="o.authorized_emp_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.authorized_emp_id.signature_image)" height="150px"/></div>
+                                                    <div style="margin-top: 10px;font-size:18pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                                </t>
+                                                <t t-if="not o.authorized_emp_id.signature_image">
+                                                    <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp_consignee == false">
+                                                <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                        <div class="col-6 text-center" style="font-size:14pt;margin-top: 10px;font-family:'Battambang';">
+                                            <div style="margin-top: 10px;">ហត្ថលេខា/ត្រាអ្នកផ្ទេរសិទ្ធិ</div>
+                                            <t t-if="o.auth_broker_stamp_consignee == true">
+                                                <t t-if="o.owner_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
+                                                    <div style="margin-top: 10px;font-size:18pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/></span></div>
+                                                </t>
+                                                <t t-if="not o.owner_id.signature_image">
+                                                    <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/></span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp_consignee == false">
+                                                <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="font-weight:bold;font-family:'Battambang';font-size:14pt;">
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;"/>
+                                        </div>
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;font-family:'Battambang';">ស្នាមមេដៃស្តាំជើងសាគយ</div>
+                                            <t t-if="o.auth_broker_stamp_consignee == true">
+                                                <t t-if="o.customs_emp_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.customs_emp_id.signature_image)" height="150px"/></div>
+                                                    <div style="font-size:18pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/></span></div>
+                                                </t>
+                                                <t t-if="not o.customs_emp_id.signature_image">
+                                                    <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/></span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp_consignee == false">
+                                                <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;font-family:'Battambang';"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Image ID Card page -->
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center;">
+                                <!--div style="font-weight:bold"><h5><span t-field="o.consignee_id"/></h5></div-->
+                            </div>
+                            <div class="page" style="font-size:14px;">
+                                <div style="page-break-inside:avoid">
+                                    <div class="row">
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.owner_id.id_card_front_image"><div><img t-att-src="image_data_uri(o.owner_id.id_card_front_image)" width="400px" height="250px"/></div></t>
+                                            <t t-if="o.authorized_emp_id.id_card_front_image"><div><img t-att-src="image_data_uri(o.authorized_emp_id.id_card_front_image)" width="400px" height="250px"/></div></t>
+                                        </div>
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.owner_id.id_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.owner_id.id_card_back_image)" width="400px" height="250px"/></div></t>
+                                            <t t-if="o.authorized_emp_id.id_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.authorized_emp_id.id_card_back_image)" width="400px" height="250px"/></div></t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.customs_emp_id.cb_card_front_image"><div><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_front_image)" width="400px" height="500px"/></div></t>
+                                        </div>
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.customs_emp_id.cb_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_back_image)" width="400px" height="500px"/></div></t>
+                                        </div>
+                                    </div>
+                                    <t t-if="o.auth_broker_stamp_consignee == true">
+                                        <div class="row">
+                                            <div class="text-center col-4">
+                                                <div style="margin-top: 10px;"/>
+                                            </div>
+                                            <div class="text-center col-4">
+                                                <!-- Show consignee stamp -->
+                                                <div style="position:absolute;padding-top:20px;">
+                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                                </div>
+                                            </div>
+                                            <div class="text-center col-4">
+                                                <div style="margin-top: 10px;"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2nd Document for Clearance Office -->
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center">
+                                <div style="font-weight:bold;font-family:'Khmer OS Muol Light',cursive;font-size:16px;"><span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                                <div style="font-size:16px;"/>
+                            </div>
+                            <div style="text-align:center">
+                                <div style="font-weight:bold;font-family:'Khmer OS Muol Light',cursive;font-size:16px;padding-top:30px"><span>លិខិតផ្ទេរសិទ្ធិ </span></div>
+                            </div>
+                            <div class="page" style="font-size:14pt;line-height:30px;ont-family:'Battambang'">
+                                <div class="text-center" style="font-family:'Battambang'">
+                                    <span>សម្រាប់ម្ចាស់ទំនិញជូននីតិបុគ្គលជើងសាគយ <i class="fa fa-check-square-o"/> </span>
+                                    <span style="margin-left:30px">រូបវន្តបុគ្គលជើងសាគយ <i class="fa fa-square-o"/></span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.owner_id"><span style="margin-left:30px;font-weight:bold">
+                                        <t t-if="o.owner_id.gender == 'male'"><t t-esc="'ខ្ញុំបាទ '"/> </t>
+                                        <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ '"/> </t>
+                                        <t t-if="o.owner_id.gender == 'other'"><t t-esc="'ខ្ញុំបាទ/នាងខ្ញុំ '"/> </t>
+                                        <span style="font-size:16pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;"><t t-esc="o.owner_id.khmer_name"/> </span> </span>
+                                    </t>
+                                    <t t-if="not o.owner_id"><span style="margin-left:30px">ខ្ញុំបាទ/នាងខ្ញុំ................................................. </span></t>
+                                    <t t-if="not o.owner_id.id_card_number"><span>អត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ......................................... </span></t>
+                                    <t t-if="o.owner_id.id_card_number"><span>អត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ <t t-esc="o.owner_id.id_card_number"/> </span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span>ជាប្រធានក្រុមហ៊ុន <t t-if="not o.owner_id.function"><i class="fa fa-check-square-o"/></t> <t t-if="o.owner_id.function"><i class="fa fa-square-o"/></t></span>
+                                    <span style="margin-left:30px">សមាជិកក្រុមប្រឹក្សាភិបាល <i class="fa fa-square-o"/></span>
+                                    <span style="margin-left:30px">ផ្សេងទៀត <t t-if="o.owner_id.function"><i class="fa fa-check-square-o"/></t> <t t-if="not o.owner_id.function"><i class="fa fa-square-o"/></t> ................................................</span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.owner_id.parent_id"><span style="font-weight:bold">នៃក្រុមហ៊ុន/សហគ្រាស/អង្គភាព <t t-esc="o.owner_id.parent_id.name"/> </span></t>
+                                    <t t-if="not o.owner_id.parent_id"><span>នៃក្រុមហ៊ុន/សហគ្រាស/អង្គភាព...........................................................................................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.owner_id.parent_id.vat"><span>អត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ  <t t-esc="o.owner_id.parent_id.vat"/></span></t>
+                                    <t t-if="o.owner_id.parent_id.phone"><span>ទូរស័ព្ទលេខ <t t-esc="o.owner_id.parent_id.phone"/> </span></t>
+                                    <t t-if="not o.owner_id.parent_id.vat"><span>អត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ..................................</span></t>
+                                    <t t-if="not o.owner_id.parent_id.phone"><span>ទូរស័ព្ទលេខ..................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span>និងជាម្ចាស់ទំនិញ</span>
+                                    <span>សូមផ្ទេរសិទ្ធិជូន</span>
+                                    <t t-if="o.authorized_emp_id">
+                                        <span>លោក <t t-if="o.authorized_emp_id.gender == 'male'"><i class="fa fa-check-square-o"/></t><t t-if="o.authorized_emp_id.gender != 'male'"><i class="fa fa-square-o"/></t></span>
+                                        <span style="margin-left:30px">/លោកស្រី <t t-if="o.authorized_emp_id.gender == 'female'"><i class="fa fa-check-square-o"/></t><t t-if="o.authorized_emp_id.gender != 'female'"><i class="fa fa-square-o"/></t><span style="margin-left:30px;font-size:16pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">  <t t-esc="o.authorized_emp_id.khmer_name"/> </span></span>
+                                    </t>
+                                    <t t-if="not o.authorized_emp_id">
+                                        <span>លោក <i class="fa fa-square-o"/></span>
+                                        <span style="margin-left:30px">/លោកស្រី <i class="fa fa-square-o"/>............................................................................................................</span>
+                                    </t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.authorized_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ <t t-esc="o.authorized_emp_id.id_card_number"/> </span></t>
+                                    <t t-if="o.authorized_emp_id.phone"> <span>ទូរស័ព្ទលេខ <t t-esc="o.authorized_emp_id.phone"/></span></t>
+                                    <t t-if="not o.authorized_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ............................</span></t>
+                                    <t t-if="not o.authorized_emp_id.phone"> <span>ទូរស័ព្ទលេខ..................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.authorized_emp_id"><span style="font-weight:bold">ជាប្រធាន/អនុប្រធាន ក្រុមហ៊ុន/សហគ្រាស <t t-esc="o.authorized_emp_id.parent_id.name"/> </span></t>
+                                    <t t-if="not o.authorized_emp_id"><span>ជាប្រធាន/អនុប្រធាន ក្រុមហ៊ុន/សហគ្រាស...........................................................................................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.authorized_emp_id.parent_id.vat"><span>មានអត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ  <t t-esc="o.authorized_emp_id.parent_id.vat"/></span></t>
+                                    <t t-if="not o.authorized_emp_id.parent_id.vat"><span>មានអត្តសញ្ញាណកម្មសារពើពន្ធ (VAT)លេខ..................................</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span>និងមានរូបវន្តបុគ្គលជើងសាគយតំណាង</span>
+                                    <t t-if="o.customs_emp_id">
+                                        <span>លោក <t t-if="o.customs_emp_id.gender == 'male'"><i class="fa fa-check-square-o"/></t><t t-if="o.customs_emp_id.gender != 'male'"><i class="fa fa-square-o"/></t></span>
+                                        <span style="margin-left:30px">/លោកស្រី <t t-if="o.customs_emp_id.gender == 'female'"><i class="fa fa-check-square-o"/></t><t t-if="o.customs_emp_id.gender != 'female'"><i class="fa fa-square-o"/></t><span style="margin-left:30px;font-size:16pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">  <t t-esc="o.customs_emp_id.khmer_name"/> </span></span>
+                                    </t>
+                                    <t t-if="not o.customs_emp_id">
+                                        <span>លោក <i class="fa fa-square-o"/></span>
+                                        <span style="margin-left:30px">/លោកស្រី <i class="fa fa-square-o"/>............................................................................................................</span>
+                                    </t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.customs_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ <t t-esc="o.customs_emp_id.id_card_number"/> </span></t>
+                                    <t t-if="o.customs_emp_id.phone"> <span>ទូរស័ព្ទលេខ <t t-esc="o.customs_emp_id.phone"/></span></t>
+                                    <t t-if="not o.customs_emp_id.id_card_number"><span>មានអត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរ/លិខិតឆ្លងដែនលេខ............................</span></t>
+                                    <t t-if="not o.customs_emp_id.phone"> <span>ទូរស័ព្ទលេខ..................................</span></t>
+                                </div>
+
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <t t-if="o.customs_emp_id.cb_card_number"><span>ប័ណ្ណសម្គាល់ជើងសាគយលេខ <t t-esc="o.customs_emp_id.cb_card_number"/></span></t>
+                                    <t t-if="o.customs_emp_id.cb_card_date"><span>ផុតសុពលភាពថ្ងៃទី <t t-esc="o.khmer_number(o.customs_emp_id.cb_card_date.day)"/> ខែ <t t-esc="o.khmer_month(o.customs_emp_id.cb_card_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.customs_emp_id.cb_card_date.year)"/> ។</span></t>
+                                    <t t-if="not o.customs_emp_id.cb_card_number"><span>ប័ណ្ណសម្គាល់ជើងសាគយលេខខ............................</span></t>
+                                    <t t-if="not o.customs_emp_id.cb_card_date"><span>ផុតសុពលភាពថ្ងៃទីខែឆ្នាំ.................................. ។</span></t>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <span style="font-weight:bold"> ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយ៖</span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.clearance_office_id.kh_name"/> </span><br/>
+                                    <span style="margin-left:30px">តាមឯកសារភ្ជាប់ដូចខាងក្រោម៖</span>
+                                </div>
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">១. វិក្កយប័ត្រ(Invoice)លេខ <t t-if="o.inv_pack_number"><t t-esc="o.inv_pack_number"/> </t> <t t-if="not o.inv_pack_number"><t t-esc="o.name"/> </t></span>
+                                        </div>
+                                        <t t-if="o.inv_pack_date">
+                                            <div class="col-5">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">២. បញ្ជីវេចខ្ចប់(Packing List)លេខ <t t-if="o.inv_pack_number"><t t-esc="o.inv_pack_number"/> </t> <t t-if="not o.inv_pack_number"><t t-esc="o.name"/> </t></span>
+                                        </div>
+                                        <t t-if="o.inv_pack_date">
+                                            <div class="col-5">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <t t-if="not o.truck_bill_number">
+                                        <div class="row">
+                                            <t t-if="not o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.bl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.bl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.bl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.bl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.hbl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.hbl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.hbl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.hbl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                        <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៤. ឯកសារគាំទ្រផ្សេងទៀត...........................................................................................................</span><br/>
+                                    </t>
+                                    <t t-if="o.truck_bill_number and (o.bl_number or o.hbl_number)">
+                                        <div class="row">
+                                            <t t-if="not o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.bl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.bl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.bl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.bl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <div class="col-8">
+                                                    <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៣.	អញ្ញាតប័ណ្ណ(B/L,AWB,TWB)លេខ  <t t-esc="o.hbl_number"/></span>
+                                                </div>
+                                                <t t-if="o.bl_date">
+                                                    <div class="col-5">
+                                                        <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.hbl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.hbl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.hbl_date.year)"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៤.	អញ្ញាតប័ណ្ណ(Truck Bill)លេខ  <t t-esc="o.truck_bill_number"/></span>
+                                            </div>
+                                            <t t-if="o.truck_bill_date">
+                                                <div class="col-5">
+                                                    <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span>
+                                                </div>
+                                            </t>
+                                        </div>
+                                        <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៥. ឯកសារគាំទ្រផ្សេងទៀត...........................................................................................................</span><br/>
+                                    </t>
+                                    <t t-if="o.truck_bill_number and not o.bl_number and not o.hbl_number">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;"> ៣.	អញ្ញាតប័ណ្ណ(Truck Bill)លេខ  <t t-esc="o.truck_bill_number"/></span>
+                                            </div>
+                                            <t t-if="o.truck_bill_date">
+                                                <div class="col-5">
+                                                    <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span>
+                                                </div>
+                                            </t>
+                                        </div>
+                                        <span style="margin-left:30px;font-family:'Battambang';font-size:14pt;">៤. ឯកសារគាំទ្រផ្សេងទៀត...........................................................................................................</span><br/>
+                                    </t>
+                                </div>
+                                <div style="font-family:'Moul';font-size:14pt;">
+                                    <i class="fa fa-square-o"/><span>សម្រាប់ច្រើនលើកនិងមានរយៈពេលកំណត់រហូតដល់ថ្ងៃទី...........ខែ.......................ឆ្នាំ២០២.........យោងតាម</span>
+                                    <span>លិខិតចាត់តាំងឬលិខិតឧទ្ទេសនាមលេខ........................................ចុះថ្ងៃទីខែឆ្នាំ............................................។</span>
+                                </div>
+
+                                <div style="font-family:'Battambang';font-size:14pt;">
+                                    <div class="text-center">
+                                        <span> <t t-esc="o.khmer_date_char"/> </span><br/>
+                                        <span><t t-if="o.province_id"> ធ្វើនៅ <t t-esc="o.province_id.kh_name"/>,</t> <t t-if="o.document_date"> ត្រូវនឹងថ្ងៃទី <t t-esc="o.khmer_number(o.document_date.day)"/> ខែ <t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.document_date.year)"/> </t></span>
+                                    </div>
+                                </div>
+
+                                <div style="page-break-inside:avoid;font-family:'Battambang';font-size:14pt;">
+                                    <div class="row" style="margin-top:10px;font-weight:bold;">
+                                        <div class="col-6 text-center" style="font-size:14pt;margin-top: 10px;">
+                                            <div style="margin-top: 10px;">ហត្ថលេខានិងត្រាអ្នកទទួលសិទ្ធិ</div>
+                                            <t t-if="o.auth_broker_stamp_consignee == true">
+                                                <t t-if="o.authorized_emp_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.authorized_emp_id.signature_image)" height="150px"/></div>
+                                                    <div style="margin-top: 10px;font-size:18pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                                </t>
+                                                <t t-if="not o.authorized_emp_id.signature_image">
+                                                    <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp_consignee == false">
+                                                <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                        <div class="col-6 text-center" style="font-size:14pt;margin-top: 10px;font-family:'Battambang';">
+                                            <div style="margin-top: 10px;">ហត្ថលេខា/ត្រាអ្នកផ្ទេរសិទ្ធិ</div>
+                                            <t t-if="o.auth_broker_stamp_consignee == true">
+                                                <t t-if="o.owner_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
+                                                    <div style="margin-top: 10px;font-size:18pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/></span></div>
+                                                </t>
+                                                <t t-if="not o.owner_id.signature_image">
+                                                    <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/></span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp_consignee == false">
+                                                <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="font-weight:bold;font-family:'Battambang';font-size:14pt;">
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;"/>
+                                        </div>
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;font-family:'Battambang';">ស្នាមមេដៃស្តាំជើងសាគយ</div>
+                                            <t t-if="o.auth_broker_stamp_consignee == true">
+                                                <t t-if="o.customs_emp_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.customs_emp_id.signature_image)" height="150px"/></div>
+                                                    <div style="font-size:18pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/></span></div>
+                                                </t>
+                                                <t t-if="not o.customs_emp_id.signature_image">
+                                                    <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/></span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp_consignee == false">
+                                                <div style="margin-top: 160px;font-size:14pt;font-weight:bold;font-family: 'Kantumruy Pro', sans-serif;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;font-family:'Battambang';"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Image ID Card page -->
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center;">
+                                <!--div style="font-weight:bold"><h5><span t-field="o.consignee_id"/></h5></div-->
+                            </div>
+                            <div class="page" style="font-size:14px;">
+                                <div style="page-break-inside:avoid">
+                                    <div class="row">
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.owner_id.id_card_front_image"><div><img t-att-src="image_data_uri(o.owner_id.id_card_front_image)" width="400px" height="250px"/></div></t>
+                                            <t t-if="o.authorized_emp_id.id_card_front_image"><div><img t-att-src="image_data_uri(o.authorized_emp_id.id_card_front_image)" width="400px" height="250px"/></div></t>
+                                        </div>
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.owner_id.id_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.owner_id.id_card_back_image)" width="400px" height="250px"/></div></t>
+                                            <t t-if="o.authorized_emp_id.id_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.authorized_emp_id.id_card_back_image)" width="400px" height="250px"/></div></t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.customs_emp_id.cb_card_front_image"><div><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_front_image)" width="400px" height="500px"/></div></t>
+                                        </div>
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.customs_emp_id.cb_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_back_image)" width="400px" height="500px"/></div></t>
+                                        </div>
+                                    </div>
+                                    <!-- Show consignee stamp -->
+                                    <t t-if="o.auth_broker_stamp_consignee == true">
+                                        <div class="row">
+                                            <div class="text-center col-4">
+                                                <div style="margin-top: 10px;"/>
+                                            </div>
+                                            <div class="text-center col-4">
+                                                <div style="position:absolute;padding-top:20px;">
+                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                                </div>
+                                            </div>
+                                            <div class="text-center col-4">
+                                                <div style="margin-top: 10px;"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <!-- Format for Export Operations || Different Format -->
+                    <t t-if="o.operation_type == 'export'">
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div class="row">
+                                <div class="col-2">
+                                    <img style="max-height:100px;" t-if="o.shipper_id.image_1920" t-att-src="image_data_uri(o.shipper_id.image_1920)" alt="Logo"/>
+                                </div>
+                                <div class="col-9">
+                                    <div style="text-align:center;font-family:'Times New Roman'">
+                                        <div style="font-weight:bold"><h3><span t-field="o.shipper_id"/></h3></div>
+                                        <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                                        <div style="font-size:16px;"><t t-if="o.shipper_id.phone">TEL : <t t-esc="o.shipper_id.phone"/> </t> <t t-if="o.shipper_id.vat"> VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></t></div>
+                                        <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page" style="font-size:14pt;line-height:30px;">
+                                <div style="border-bottom:3px solid black;"/>
+                                <div style="text-align:center">
+                                    <div style="font-weight:bold;font-family:'Khmer OS Muol Light',cursive;font-size:14pt;padding-top:30px;text-decoration: underline;"><span>លិខិតផ្ទេរសិទ្ធិ</span></div>
+                                </div>
+                                <div style="line-height: 30px;">
+                                    <p style="font-family:'Battambang';text-indent: 80px;font-size:14pt;text-align: justify;text-transform: uppercase;">
+                                    <span><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំឈ្មោះ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទឈ្មោះ'"/></t> <span style="font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;"><t t-esc="o.owner_id.khmer_name"/></span>
+                                    <t t-if="o.owner_id.nationality_id.name == 'Cambodia'"><t t-esc="'អត្តសញ្ញណប័ណ្ណសញ្ជាតិខ្មែរ '"/></t><t t-else=""><t t-esc="'លិខិតឆ្លងដែនលេខ '"/></t> <t t-esc="o.owner_id.id_card_number"/>
+                                    <t t-if="not o.owner_id.function"><t t-esc="'ជាប្រធានក្រុមហ៊ុន '"/></t><t t-else=""><t t-esc="'តំណាងក្រុមហ៊ុន '"/></t> <t t-esc="o.owner_id.parent_id.name"/>
+                                    អត្តសញ្ញណកម្មសារពើពន្ធ អតប លេខ<t t-esc="o.owner_id.parent_id.vat"/> </span> ទូរស័ព្ទលេខ <t t-esc="o.owner_id.parent_id.phone"/> ជាម្ចាស់ទំនិញ។
+                                    </p>
+                                </div>
+                                <div style="text-align:center">
+                                    <div style="font-weight:bold;font-family:'Khmer OS Muol Light',cursive;font-size:14pt;padding-bottom:20px;text-decoration: underline;"><span>សូមផ្ទេរសិទ្ធិជូន</span></div>
+                                </div>
+                                <div style="line-height: 30px;">
+                                    <p style="font-family:'Battambang';text-indent: 80px;font-size:14pt;text-align: justify;text-transform: uppercase;">
+                                    <span><t t-if="o.authorized_emp_id.gender == 'female'"><t t-esc="'លោកស្រី '"/></t><t t-else=""><t t-esc="'លោក '"/></t><span style="font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;"> <t t-esc="o.authorized_emp_id.khmer_name"/></span>
+                                    អត្តសញ្ញណប័ណ្ណសញ្ជាតិខ្មែរ <t t-esc="o.authorized_emp_id.id_card_number"/> ជាប្រធានក្រុមហ៊ុន <t t-esc="o.authorized_emp_id.parent_id.name"/>
+                                    អត្តសញ្ញណកម្មសារពើពន្ធ អតប លេខ <t t-esc="o.authorized_emp_id.parent_id.vat"/> លេខទូរស័ព្ទ <t t-esc="o.authorized_emp_id.phone"/>  និងមានរូបវន្តបុគ្គលជើងសាគយតំណាង
+                                    <t t-if="o.customs_emp_id.gender == 'female'"><t t-esc="'លោកស្រី '"/></t><t t-else=""><t t-esc="'លោក '"/></t> <t t-esc="o.customs_emp_id.khmer_name"/>
+                                    <t t-if="o.customs_emp_id.nationality_id.name == 'Cambodia'"><t t-esc="'អត្តសញ្ញណប័ណ្ណសញ្ជាតិខ្មែរ '"/></t><t t-else=""><t t-esc="'លិខិតឆ្លងដែនលេខ '"/></t> <t t-esc="o.customs_emp_id.id_card_number"/>
+                                    លេខទូរស័ព្ទ <t t-esc="o.customs_emp_id.phone"/> ប័ណ្ណសម្គាល់ជើងសាគយលេខ <t t-esc="o.customs_emp_id.cb_card_number"/>
+                                    <t t-if="o.customs_emp_id.cb_card_date"><span>ផុតសុពលភាពថ្ងៃទី <t t-esc="o.khmer_number(o.customs_emp_id.cb_card_date.day)"/> ខែ <t t-esc="o.khmer_month(o.customs_emp_id.cb_card_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.customs_emp_id.cb_card_date.year)"/></span></t>
+                                    <span>ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយសម្រាប់មួយប្រតិវេទន៍គយ នៅ<t t-esc="o.clearance_office_id.kh_name"/>
+                                        ដែលមានឯកសារភ្ជាប់ដូចខាងក្រោម៖
+                                    </span>
+                                    </span>
+                                    </p>
+                                </div>
+                                <div style="font-family:'Battambang'; font-size:14pt">
+                                    <p style="font-family:'Battambang'">
+                                       <span style="margin-left:30px;font-size:14pt;">១. វិក្កយប័ត្រ (Invoice) លេខ <t t-if="o.inv_pack_number"><t t-esc="o.inv_pack_number"/> </t> <t t-if="not o.inv_pack_number"><t t-esc="o.name"/> </t></span>
+                                        <t t-if="o.inv_pack_date">
+                                            <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span>
+                                        </t>
+                                    </p>
+                                    <p style="font-family:'font-family:'Battambang''">
+                                       <span style="margin-left:30px;font-size:14pt'">២. បញ្ជីវេចខ្ចប់ (Packing List) លេខ <t t-if="o.inv_pack_number"><t t-esc="o.inv_pack_number"/> </t> <t t-if="not o.inv_pack_number"><t t-esc="o.name"/> </t></span>
+                                       <t t-if="o.inv_pack_date">
+                                           <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span>
+                                       </t>
+                                    </p>
+                                    <t t-if="not o.truck_bill_number">
+                                        <p style="font-family:'font-family:'Battambang''">
+                                            <span style="margin-left:30px;font-size:14pt'">៣. អញ្ញាតប័ណ្ណ(B/L,AWB,TWB) លេខ  <t t-if="o.hbl_number"><t t-esc="o.hbl_number"/> </t> <t t-if="not o.hbl_number"><t t-esc="o.bl_number"/> </t></span>
+                                            <t t-if="o.hbl_date">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.hbl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.hbl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.hbl_date.year)"/></span>
+                                            </t>
+                                            <t t-if="not o.hbl_date">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.bl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.bl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.bl_date.year)"/></span>
+                                            </t>
+                                        </p>
+                                    </t>
+                                    <t t-if="o.truck_bill_number and (o.bl_number or o.hbl_number)">
+                                        <p style="font-family:'font-family:'Battambang''">
+                                            <span style="margin-left:30px;font-size:14pt'">៣. អញ្ញាតប័ណ្ណ(B/L,AWB,TWB) លេខ  <t t-if="o.hbl_number"><t t-esc="o.hbl_number"/> </t> <t t-if="not o.hbl_number"><t t-esc="o.bl_number"/> </t></span>
+                                            <t t-if="o.hbl_date">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.hbl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.hbl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.hbl_date.year)"/></span>
+                                            </t>
+                                            <t t-if="not o.hbl_date">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.bl_date.day)"/> ខែ <t t-esc="o.khmer_month(o.bl_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.bl_date.year)"/></span>
+                                            </t>
+                                        </p>
+                                        <p style="font-family:'font-family:'Battambang''">
+                                            <span style="margin-left:30px;font-size:14pt'">៤.	អញ្ញាតប័ណ្ណ(Truck Bill) លេខ  <t t-esc="o.truck_bill_number"/> </span>
+                                            <t t-if="o.truck_bill_date">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span>
+                                            </t>
+                                        </p>
+                                    </t>
+                                    <t t-if="o.truck_bill_number and not o.bl_number and not o.hbl_number">
+                                        <p style="font-family:'font-family:'Battambang''">
+                                            <span style="margin-left:30px;font-size:14pt'"> ៣.	អញ្ញាតប័ណ្ណ(Truck Bill) លេខ  <t t-esc="o.truck_bill_number"/> </span>
+                                            <t t-if="o.truck_bill_date">
+                                                <span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span>
+                                            </t>
+                                        </p>
+                                    </t>
+                                </div>
+
+                                <div style="page-break-inside:avoid">
+                                    <div class="row" style="margin-top:10px;font-family:'Battambang'">
+                                        <div class="col-6 text-center" style="font-size:14pt;margin-top: 10px;">
+                                            <div style="padding-top: 50px;">ហត្ថលេខានិងត្រាអ្នកទទួលសិទ្ធិ</div>
+                                            <t t-if="o.auth_broker_stamp == true">
+                                                <t t-if="o.authorized_emp_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.authorized_emp_id.signature_image)" height="150px"/></div>
+                                                    <div style="margin-top: 10px;font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp == false">
+                                                <div style="margin-top: 160px;font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.authorized_emp_id.khmer_name"/> </span></div>
+                                            </t>
+                                        </div>
+                                        <div class="col-6 text-center" style="font-size:14pt;margin-top: 10px;font-family:'Battambang'">
+                                            <div style="font-size:14pt;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/></div>
+                                            <div style="margin-top: 10px;font-family:'Battambang';">ហត្ថលេខានិងត្រាអ្នកផ្ទេរសិទ្ធិ</div>
+                                            <t t-if="o.auth_broker_stamp == true">
+                                                <t t-if="o.owner_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
+                                                    <div style="margin-top: 10px;font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/></span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp == false">
+                                                <div style="margin-top: 160px;font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.owner_id.khmer_name"/></span></div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="font-family:'Battambang';font-size:14pt;">
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;"/>
+                                        </div>
+                                        <div class="text-center col-4" style="font-size:14pt;">
+                                            <div style="margin-top: 10px;font-family:'Battambang'">ស្នាមមេដៃស្តាំជើងសាគយ</div>
+                                            <t t-if="o.auth_broker_stamp == true">
+                                                <t t-if="o.customs_emp_id.signature_image">
+                                                    <div><img t-att-src="image_data_uri(o.customs_emp_id.signature_image)" height="150px"/></div>
+                                                    <div style="font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/></span></div>
+                                                </t>
+                                            </t>
+                                            <t t-if="o.auth_broker_stamp == false">
+                                                <div style="margin-top: 160px;font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;">ឈ្មោះ <span style="margin-left:10px"> <t t-esc="o.customs_emp_id.khmer_name"/></span></div>
+                                            </t>
+                                        </div>
+                                        <div class="text-center col-4" style="font-size:18px;">
+                                            <div style="margin-top: 10px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Image ID Card page -->
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center;">
+                                <!--div style="font-weight:bold"><h5><span t-field="o.consignee_id"/></h5></div-->
+                            </div>
+                            <div class="page" style="font-size:14px;">
+                                <div style="page-break-inside:avoid">
+                                    <div class="row">
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.owner_id.id_card_front_image"><div><img t-att-src="image_data_uri(o.owner_id.id_card_front_image)" width="400px" height="250px"/></div></t>
+                                            <t t-if="o.authorized_emp_id.id_card_front_image"><div><img t-att-src="image_data_uri(o.authorized_emp_id.id_card_front_image)" width="400px" height="250px"/></div></t>
+                                        </div>
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.owner_id.id_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.owner_id.id_card_back_image)" width="400px" height="250px"/></div></t>
+                                            <t t-if="o.authorized_emp_id.id_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.authorized_emp_id.id_card_back_image)" width="400px" height="250px"/></div></t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.customs_emp_id.cb_card_front_image"><div><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_front_image)" width="400px" height="500px"/></div></t>
+                                        </div>
+                                        <div class="col-6 mb-3 mt-3">
+                                            <t t-if="o.customs_emp_id.cb_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_back_image)" width="400px" height="500px"/></div></t>
+                                        </div>
+                                    </div>
+                                    <t t-if="o.auth_broker_stamp_consignee == true">
+                                        <div class="row">
+                                            <div class="text-center col-4">
+                                                <div style="margin-top: 10px;"/>
+                                            </div>
+                                            <div class="text-center col-4">
+                                                <!-- Show consignee stamp -->
+                                                <div style="position:absolute;padding-top:20px;">
+                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                                </div>
+                                            </div>
+                                            <div class="text-center col-4">
+                                                <div style="margin-top: 10px;"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

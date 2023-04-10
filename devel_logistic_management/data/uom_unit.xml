@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="uom_unit_1" model="uom.unit">
+            <field name="description">TRAY</field>
+            <field name="name">TRA</field>
+        </record>
+        <record id="uom_unit_2" model="uom.unit">
+            <field name="description">PALLET</field>
+            <field name="name">PLT</field>
+        </record>
+        <record id="uom_unit_3" model="uom.unit">
+            <field name="description">SAKE</field>
+            <field name="name">SAK</field>
+        </record>
+        <record id="uom_unit_4" model="uom.unit">
+            <field name="description">CONE</field>
+            <field name="name">CON</field>
+        </record>
+        <record id="uom_unit_5" model="uom.unit">
+            <field name="description">BIN</field>
+            <field name="name">BIN</field>
+        </record>
+        <record id="uom_unit_6" model="uom.unit">
+            <field name="description">DECK</field>
+            <field name="name">DEC</field>
+        </record>
+        <record id="uom_unit_7" model="uom.unit">
+            <field name="description">LINE</field>
+            <field name="name">LIN</field>
+        </record>
+        <record id="uom_unit_8" model="uom.unit">
+            <field name="description">PANEL</field>
+            <field name="name">PNL</field>
+        </record>
+        <record id="uom_unit_9" model="uom.unit">
+            <field name="description">BOBBIN</field>
+            <field name="name">BBI</field>
+        </record>
+        <record id="uom_unit_10" model="uom.unit">
+            <field name="description">JERRYCAN</field>
+            <field name="name">JCN</field>
+        </record>
+        <record id="uom_unit_11" model="uom.unit">
+            <field name="description">CYLINDER</field>
+            <field name="name">CLD</field>
+        </record>
+        <record id="uom_unit_12" model="uom.unit">
+            <field name="description">BARREL</field>
+            <field name="name">BRL</field>
+        </record>
+        <record id="uom_unit_13" model="uom.unit">
+            <field name="description">FRAME</field>
+            <field name="name">FRM</field>
+        </record>
+        <record id="uom_unit_14" model="uom.unit">
+            <field name="description">BEAM</field>
+            <field name="name">BEM</field>
+        </record>
+        <record id="uom_unit_15" model="uom.unit">
+            <field name="description">CRATES</field>
+            <field name="name">CRA</field>
+        </record>
+        <record id="uom_unit_16" model="uom.unit">
+            <field name="description">INHALER</field>
+            <field name="name">INH</field>
+        </record>
+        <record id="uom_unit_17" model="uom.unit">
+            <field name="description">RACK</field>
+            <field name="name">RCK</field>
+        </record>
+        <record id="uom_unit_18" model="uom.unit">
+            <field name="description">TANK</field>
+            <field name="name">TNK</field>
+        </record>
+        <record id="uom_unit_19" model="uom.unit">
+            <field name="description">BUCKET</field>
+            <field name="name">BCK</field>
+        </record>
+        <record id="uom_unit_20" model="uom.unit">
+            <field name="description">CARTRIDGE</field>
+            <field name="name">CTR</field>
+        </record>
+        <record id="uom_unit_21" model="uom.unit">
+            <field name="description">STERE</field>
+            <field name="name">STE</field>
+        </record>
+        <record id="uom_unit_22" model="uom.unit">
+            <field name="description">ROD</field>
+            <field name="name">ROD</field>
+        </record>
+        <record id="uom_unit_23" model="uom.unit">
+            <field name="description">KEGS</field>
+            <field name="name">KEG</field>
+        </record>
+        <record id="uom_unit_24" model="uom.unit">
+            <field name="description">BLOCKS</field>
+            <field name="name">BLK</field>
+        </record>
+        <record id="uom_unit_25" model="uom.unit">
+            <field name="description">COTAINER</field>
+            <field name="name">CNT</field>
+        </record>
+        <record id="uom_unit_26" model="uom.unit">
+            <field name="description">REEL</field>
+            <field name="name">REL</field>
+        </record>
+        <record id="uom_unit_27" model="uom.unit">
+            <field name="description">HECTO</field>
+            <field name="name">HEC</field>
+        </record>
+        <record id="uom_unit_28" model="uom.unit">
+            <field name="description">LENGTH</field>
+            <field name="name">LNG</field>
+        </record>
+        <record id="uom_unit_29" model="uom.unit">
+            <field name="description">GALLON</field>
+            <field name="name">GAL</field>
+        </record>
+        <record id="uom_unit_30" model="uom.unit">
+            <field name="description">JAR</field>
+            <field name="name">JAR</field>
+        </record>
+        <record id="uom_unit_31" model="uom.unit">
+            <field name="description">MILLIMETER</field>
+            <field name="name">MMT</field>
+        </record>
+        <record id="uom_unit_32" model="uom.unit">
+            <field name="description">CAPSULE</field>
+            <field name="name">CAP</field>
+        </record>
+        <record id="uom_unit_33" model="uom.unit">
+            <field name="description">AMPULES</field>
+            <field name="name">AMP</field>
+        </record>
+        <record id="uom_unit_34" model="uom.unit">
+            <field name="description">BAGS</field>
+            <field name="name">BAG</field>
+        </record>
+        <record id="uom_unit_35" model="uom.unit">
+            <field name="description">BALE</field>
+            <field name="name">BAL</field>
+        </record>
+        <record id="uom_unit_36" model="uom.unit">
+            <field name="description">BUNDLES</field>
+            <field name="name">BDL</field>
+        </record>
+        <record id="uom_unit_37" model="uom.unit">
+            <field name="description">BUCKLES</field>
+            <field name="name">BKL</field>
+        </record>
+        <record id="uom_unit_38" model="uom.unit">
+            <field name="description">BILLIONS OF UNITS</field>
+            <field name="name">BOU</field>
+        </record>
+        <record id="uom_unit_39" model="uom.unit">
+            <field name="description">BOX</field>
+            <field name="name">BOX</field>
+        </record>
+        <record id="uom_unit_40" model="uom.unit">
+            <field name="description">BOTTLES</field>
+            <field name="name">BTL</field>
+        </record>
+        <record id="uom_unit_41" model="uom.unit">
+            <field name="description">BUN/BUNCHES</field>
+            <field name="name">BUN</field>
+        </record>
+        <record id="uom_unit_42" model="uom.unit">
+            <field name="description">CANS</field>
+            <field name="name">CAN</field>
+        </record>
+        <record id="uom_unit_43" model="uom.unit">
+            <field name="description">CUBIC METER</field>
+            <field name="name">CBM</field>
+        </record>
+        <record id="uom_unit_44" model="uom.unit">
+            <field name="description">CUBIC CENTIMETER</field>
+            <field name="name">CCM</field>
+        </record>
+        <record id="uom_unit_45" model="uom.unit">
+            <field name="description">CENTIMETER</field>
+            <field name="name">CMS</field>
+        </record>
+        <record id="uom_unit_46" model="uom.unit">
+            <field name="description">CARAT</field>
+            <field name="name">CRT</field>
+        </record>
+        <record id="uom_unit_47" model="uom.unit">
+            <field name="description">CATONS</field>
+            <field name="name">CTN</field>
+        </record>
+        <record id="uom_unit_48" model="uom.unit">
+            <field name="description">DOZEN</field>
+            <field name="name">DOZ</field>
+        </record>
+        <record id="uom_unit_49" model="uom.unit">
+            <field name="description">DRUM</field>
+            <field name="name">DRM</field>
+        </record>
+        <record id="uom_unit_50" model="uom.unit">
+            <field name="description">FEET</field>
+            <field name="name">FTS</field>
+        </record>
+        <record id="uom_unit_51" model="uom.unit">
+            <field name="description">GREAT GROSS</field>
+            <field name="name">GGR</field>
+        </record>
+        <record id="uom_unit_52" model="uom.unit">
+            <field name="description">GRAMS</field>
+            <field name="name">GMS</field>
+        </record>
+        <record id="uom_unit_53" model="uom.unit">
+            <field name="description">GROSS</field>
+            <field name="name">GRS</field>
+        </record>
+        <record id="uom_unit_54" model="uom.unit">
+            <field name="description">GYD/GROSS YARDS</field>
+            <field name="name">FTS</field>
+        </record>
+        <record id="uom_unit_55" model="uom.unit">
+            <field name="description">KILOGRAM ACTIVITY</field>
+            <field name="name">KGA</field>
+        </record>
+        <record id="uom_unit_56" model="uom.unit">
+            <field name="description">KILOGRAM BASE</field>
+            <field name="name">KGB</field>
+        </record>
+        <record id="uom_unit_57" model="uom.unit">
+            <field name="description">KILOGRAMS</field>
+            <field name="name">KGS</field>
+        </record>
+        <record id="uom_unit_58" model="uom.unit">
+            <field name="description">KITS</field>
+            <field name="name">KIT</field>
+        </record>
+        <record id="uom_unit_59" model="uom.unit">
+            <field name="description">KILOLITER</field>
+            <field name="name">KLR</field>
+        </record>
+        <record id="uom_unit_60" model="uom.unit">
+            <field name="description">KILOMETERS</field>
+            <field name="name">KME</field>
+        </record>
+        <record id="uom_unit_61" model="uom.unit">
+            <field name="description">POUNDS</field>
+            <field name="name">LBS</field>
+        </record>
+        <record id="uom_unit_62" model="uom.unit">
+            <field name="description">LITERS</field>
+            <field name="name">LTR</field>
+        </record>
+        <record id="uom_unit_63" model="uom.unit">
+            <field name="description">MILIGRAMS</field>
+            <field name="name">MGS</field>
+        </record>
+        <record id="uom_unit_64" model="uom.unit">
+            <field name="description">MILLION KEASERGEN</field>
+            <field name="name">MKU</field>
+        </record>
+        <record id="uom_unit_65" model="uom.unit">
+            <field name="description">MILLIONS</field>
+            <field name="name">MLT</field>
+        </record>
+        <record id="uom_unit_66" model="uom.unit">
+            <field name="description">MILLIONS OF UNIT</field>
+            <field name="name">MOU</field>
+        </record>
+        <record id="uom_unit_67" model="uom.unit">
+            <field name="description">METER</field>
+            <field name="name">MTR</field>
+        </record>
+        <record id="uom_unit_68" model="uom.unit">
+            <field name="description">METRIC TON</field>
+            <field name="name">MTS</field>
+        </record>
+        <record id="uom_unit_69" model="uom.unit">
+            <field name="description">MILLION UNITS</field>
+            <field name="name">MUS</field>
+        </record>
+        <record id="uom_unit_70" model="uom.unit">
+            <field name="description">NUMBER</field>
+            <field name="name">NOS</field>
+        </record>
+        <record id="uom_unit_71" model="uom.unit">
+            <field name="description">PACKS</field>
+            <field name="name">PAC</field>
+        </record>
+        <record id="uom_unit_72" model="uom.unit">
+            <field name="description">PIECES</field>
+            <field name="name">PCS</field>
+        </record>
+        <record id="uom_unit_73" model="uom.unit">
+            <field name="description">PAIRS</field>
+            <field name="name">PRS</field>
+        </record>
+        <record id="uom_unit_74" model="uom.unit">
+            <field name="description">QUINTAL</field>
+            <field name="name">QTL</field>
+        </record>
+        <record id="uom_unit_75" model="uom.unit">
+            <field name="description">ROLLS</field>
+            <field name="name">RLS</field>
+        </record>
+        <record id="uom_unit_76" model="uom.unit">
+            <field name="description">ROLLS</field>
+            <field name="name">ROL</field>
+        </record>
+        <record id="uom_unit_77" model="uom.unit">
+            <field name="description">SETS</field>
+            <field name="name">SET</field>
+        </record>
+        <record id="uom_unit_78" model="uom.unit">
+            <field name="description">SQUARE FEET</field>
+            <field name="name">SQF</field>
+        </record>
+        <record id="uom_unit_79" model="uom.unit">
+            <field name="description">SQUARE METER</field>
+            <field name="name">SQM</field>
+        </record>
+        <record id="uom_unit_80" model="uom.unit">
+            <field name="description">SQUARE YARDS</field>
+            <field name="name">SQY</field>
+        </record>
+        <record id="uom_unit_81" model="uom.unit">
+            <field name="description">TABLETES</field>
+            <field name="name">TBS</field>
+        </record>
+        <record id="uom_unit_82" model="uom.unit">
+            <field name="description">TEN GRAMS</field>
+            <field name="name">TGM</field>
+        </record>
+        <record id="uom_unit_83" model="uom.unit">
+            <field name="description">THOUSANDS</field>
+            <field name="name">THD</field>
+        </record>
+        <record id="uom_unit_84" model="uom.unit">
+            <field name="description">GREAT BRITAIN TON</field>
+            <field name="name">TON</field>
+        </record>
+        <record id="uom_unit_85" model="uom.unit">
+            <field name="description">TUBES</field>
+            <field name="name">TUB</field>
+        </record>
+        <record id="uom_unit_86" model="uom.unit">
+            <field name="description">US GALLONS</field>
+            <field name="name">UGS</field>
+        </record>
+        <record id="uom_unit_87" model="uom.unit">
+            <field name="description">UNITS</field>
+            <field name="name">UNT</field>
+        </record>
+        <record id="uom_unit_88" model="uom.unit">
+            <field name="description">VIALS</field>
+            <field name="name">VLS</field>
+        </record>
+        <record id="uom_unit_89" model="uom.unit">
+            <field name="description">YARDS</field>
+            <field name="name">YDS</field>
+        </record>
+        <record id="uom_unit_90" model="uom.unit">
+            <field name="description">BANK</field>
+            <field name="name">BNK</field>
+        </record>
+        <record id="uom_unit_91" model="uom.unit">
+            <field name="description">EACH</field>
+            <field name="name">EAC</field>
+        </record>
+        <record id="uom_unit_92" model="uom.unit">
+            <field name="description">LOT</field>
+            <field name="name">LOT</field>
+        </record>
+        <record id="uom_unit_93" model="uom.unit">
+            <field name="description">SUIT</field>
+            <field name="name">SUI</field>
+        </record>
+        <record id="uom_unit_94" model="uom.unit">
+            <field name="description">BIDON</field>
+            <field name="name">BID</field>
+        </record>
+        <record id="uom_unit_95" model="uom.unit">
+            <field name="description">FLEXI-BAG</field>
+            <field name="name">FLB</field>
+        </record>
+        <record id="uom_unit_96" model="uom.unit">
+            <field name="description">PACKAGE</field>
+            <field name="name">PKG</field>
+        </record>
+        <record id="uom_unit_97" model="uom.unit">
+            <field name="description">CASE</field>
+            <field name="name">CAS</field>
+        </record>
+        <record id="uom_unit_98" model="uom.unit">
+            <field name="description">PAIL</field>
+            <field name="name">PAL</field>
+        </record>
+        <record id="uom_unit_99" model="uom.unit">
+            <field name="description">GIGABYTE</field>
+            <field name="name">GBY</field>
+        </record>
+        <record id="uom_unit_100" model="uom.unit">
+            <field name="description">REAM</field>
+            <field name="name">REM</field>
+        </record>
+        <record id="uom_unit_101" model="uom.unit">
+            <field name="description">SHEET</field>
+            <field name="name">SHT</field>
+        </record>
+        <record id="uom_unit_102" model="uom.unit">
+            <field name="description">TIN</field>
+            <field name="name">TIN</field>
+        </record>
+        <record id="uom_unit_103" model="uom.unit">
+            <field name="description">COIL</field>
+            <field name="name">COI</field>
+        </record>
+        <record id="uom_unit_104" model="uom.unit">
+            <field name="description">BOB</field>
+            <field name="name">BOB</field>
+        </record>
+        <record id="uom_unit_105" model="uom.unit">
+            <field name="description">SLAB</field>
+            <field name="name">SLB</field>
+        </record>
+        <record id="uom_unit_106" model="uom.unit">
+            <field name="description">Pair</field>
+            <field name="name">2u</field>
+        </record>
+        <record id="uom_unit_107" model="uom.unit">
+            <field name="description">Carat</field>
+            <field name="name">carat</field>
+        </record>
+        <record id="uom_unit_108" model="uom.unit">
+            <field name="description">Kilogram</field>
+            <field name="name">Kg</field>
+        </record>
+        <record id="uom_unit_109" model="uom.unit">
+            <field name="description">Kilowatt-Hour</field>
+            <field name="name">kwh</field>
+        </record>
+        <record id="uom_unit_110" model="uom.unit">
+            <field name="description">Liter</field>
+            <field name="name">l</field>
+        </record>
+        <record id="uom_unit_111" model="uom.unit">
+            <field name="description">Meter</field>
+            <field name="name">m</field>
+        </record>
+        <record id="uom_unit_112" model="uom.unit">
+            <field name="description">Square meter</field>
+            <field name="name">m2</field>
+        </record>
+        <record id="uom_unit_113" model="uom.unit">
+            <field name="description">Cubic meter</field>
+            <field name="name">m3</field>
+        </record>
+        <record id="uom_unit_114" model="uom.unit">
+            <field name="description"></field>
+            <field name="name">NAR</field>
+        </record>
+        <record id="uom_unit_115" model="uom.unit">
+            <field name="description">Square meter</field>
+            <field name="name">u</field>
+        </record>
+        <record id="uom_unit_116" model="uom.unit">
+            <field name="description">u(jeu/pack)</field>
+            <field name="name">u(j/p)</field>
+        </record>
+    </data>
+</odoo>

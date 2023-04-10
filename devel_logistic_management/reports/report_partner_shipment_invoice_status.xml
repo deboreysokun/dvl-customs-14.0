@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_partner_shipment_invoice_status" model="ir.actions.report">
+        <field name="name">Partner Shipment Invoice Status</field>
+        <field name="model">res.partner.shipment.invoice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">devel_logistic_management.report_partner_shp_inv_status</field>
+        <field name="report_file">devel_logistic_management.report_partner_shipment_invoice_status</field>
+        <field name="print_report_name">('Shipment_Invoice_Status_%s' % (object.partner_id.name))</field>
+    </record>
+
+    <template id="report_partner_shp_inv_status">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <t t-set="o" t-value="o.with_context({'lang': lang})"/>
+                    <div class="page">
+                        <div class="text-center">
+                            <t t-set="company" t-value="o.env['res.company'].browse(data['company_id'])"/>
+                            <h4><span t-esc="company.name"/> </h4>
+                            <h5>Shipment Invoice Status of Client</h5>
+                            <h5><span t-esc="'Agent: '"/> <span t-field="o.name"/></h5>
+                            <h5>From <span t-esc="data['start_date']" t-options="{'widget': 'date', 'format': 'dd-MMM-YYYY'}"/> to <span t-esc="data['end_date']" t-options="{'widget': 'date', 'format': 'dd-MMM-YYYY'}"/> </h5>
+                        </div>
+                        <t t-if="shipment_without_invoice">
+                            <p>Shipments without invoiced</p>
+                            <table class="table table-sm table-statement " style="font-size:14px">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="vertical-align: middle;border: 1px solid black">No.</th>
+                                        <th class="text-center" style="width: 15%;vertical-align: middle;border: 1px solid black">Shipment REF.</th>
+                                        <th class="text-center" style="width: 15%;vertical-align: middle;border: 1px solid black">Date</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">BL No.</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Contianer No.</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Vol</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Invoice?</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Issued Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="shipment_without_invoice" t-as="shipment">
+                                        <t t-set="sum_payment" t-value="0"/>
+                                        <t t-set="payment_method" t-value="False"/>
+                                        <t t-set="payment_date" t-value="False"/>
+                                        <td class="text-center" style="border:1px solid black;"><span t-esc="shipment_index+1"/></td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.date" t-options="{'widget': 'date', 'format': 'dd-MMM-YYYY'}"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.bl_number"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.container_number"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.container_qty_type"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="'No'"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.issued_invoice_date" t-options="{'widget': 'date', 'format': 'dd-MMM-YYYY'}"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <t t-if="shipment_with_invoice">
+                            <p>Shipments with invoiced</p>
+                            <table class="table table-sm table-statement " style="font-size:14px">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="vertical-align: middle;border: 1px solid black">No.</th>
+                                        <th class="text-center" style="width: 15%;vertical-align: middle;border: 1px solid black">Shipment REF.</th>
+                                        <th class="text-center" style="width: 15%;vertical-align: middle;border: 1px solid black">Date</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">BL No.</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Contianer No.</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Vol</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Invoice?</th>
+                                        <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Issued Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="shipment_with_invoice" t-as="shipment">
+                                        <t t-set="sum_payment" t-value="0"/>
+                                        <t t-set="payment_method" t-value="False"/>
+                                        <t t-set="payment_date" t-value="False"/>
+                                        <td class="text-center" style="border:1px solid black;"><span t-esc="shipment_index+1"/></td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.date" t-options="{'widget': 'date', 'format': 'dd-MMM-YYYY'}"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.bl_number"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.container_number"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.container_qty_type"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="'Yes'"/>
+                                        </td>
+                                        <td style="border: 1px solid black;">
+                                            <span t-esc="shipment.issued_invoice_date" t-options="{'widget': 'date', 'format': 'dd-MMM-YYYY'}"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

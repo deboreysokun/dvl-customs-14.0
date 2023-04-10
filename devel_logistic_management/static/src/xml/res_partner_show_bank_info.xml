@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+	<t t-name="ShowAccountBankInfo">
+		<div>
+			<table class="table table-sm table-striped" style="width:100%;">
+				<thead>
+					<th class="text-left">Bank name</th>
+					<th class="text-left">Account Number</th>
+					<th class="text-left">Account Name</th>
+				</thead>
+				<tbody>
+					<t t-foreach="bank_ids" t-as="bank_id">
+						<tr>
+							<td><span t-esc="bank_id.bank_name"/></td>
+							<td><span t-esc="bank_id.acc_number"/></td>
+							<td><span t-esc="bank_id.acc_name"/></td>
+						</tr>
+					</t>
+				</tbody>
+			</table>
+		</div>
+	</t>
+</templates>

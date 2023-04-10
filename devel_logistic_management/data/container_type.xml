@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="container_type_1" model="container.type">
+            <field name="code">10DC</field>
+            <field name="name">10' Dry Cargo</field>
+        </record>
+        <record id="container_type_2" model="container.type">
+            <field name="code">20BK</field>
+            <field name="name">20' Bulk Container</field>
+        </record>
+        <record id="container_type_3" model="container.type">
+            <field name="code">20FR</field>
+            <field name="name">20' Flat Rack Refurbished</field>
+        </record>
+
+        <record id="container_type_4" model="container.type">
+            <field name="code">20HT</field>
+            <field name="name">20' Hardtop Container</field>
+        </record>
+        <record id="container_type_5" model="container.type">
+            <field name="code">20IS</field>
+            <field name="name">20' Insulated Container</field>
+        </record>
+        <record id="container_type_6" model="container.type">
+            <field name="code">20OT</field>
+            <field name="name">20' Opentop Container</field>
+        </record>
+
+        <record id="container_type_7" model="container.type">
+            <field name="code">20PF</field>
+            <field name="name">20' Platform Container</field>
+        </record>
+        <record id="container_type_8" model="container.type">
+            <field name="code">20RF</field>
+            <field name="name">20' Refrigerated Container</field>
+        </record>
+        <record id="container_type_9" model="container.type">
+            <field name="code">20RG</field>
+            <field name="name">20' Regular Container</field>
+        </record>
+
+        <record id="container_type_10" model="container.type">
+            <field name="code">20TK</field>
+            <field name="name">20' Tank Container</field>
+        </record>
+        <record id="container_type_11" model="container.type">
+            <field name="code">20VT</field>
+            <field name="name">20' Ventilated Container</field>
+        </record>
+        <record id="container_type_12" model="container.type">
+            <field name="code">40FR</field>
+            <field name="name">40' Flat Rack Refurbished</field>
+        </record>
+
+        <record id="container_type_13" model="container.type">
+            <field name="code">40HC</field>
+            <field name="name">40' High Cube Container</field>
+        </record>
+        <record id="container_type_14" model="container.type">
+            <field name="code">40HT</field>
+            <field name="name">40' Hardtop Container</field>
+        </record>
+        <record id="container_type_15" model="container.type">
+            <field name="code">40IS</field>
+            <field name="name">40' Insulated Container</field>
+        </record>
+
+        <record id="container_type_16" model="container.type">
+            <field name="code">40OT</field>
+            <field name="name">40' Opentop Container</field>
+        </record>
+        <record id="container_type_17" model="container.type">
+            <field name="code">40PF</field>
+            <field name="name">40' Platform Container</field>
+        </record>
+        <record id="container_type_18" model="container.type">
+            <field name="code">40RF</field>
+            <field name="name">40' Refrigerated Container</field>
+        </record>
+
+        <record id="container_type_19" model="container.type">
+            <field name="code">40RG</field>
+            <field name="name">40' Regular Container</field>
+        </record>
+        <record id="container_type_20" model="container.type">
+            <field name="code">40RH</field>
+            <field name="name">40' High Cube Refrigerated</field>
+        </record>
+        <record id="container_type_21" model="container.type">
+            <field name="code">40TK</field>
+            <field name="name">40' Tank Container</field>
+        </record>
+
+        <record id="container_type_22" model="container.type">
+            <field name="code">40VT</field>
+            <field name="name">40' Ventilated Container</field>
+        </record>
+        <record id="container_type_23" model="container.type">
+            <field name="code">40HQ</field>
+            <field name="name">40' High Cube Container</field>
+        </record>
+        <record id="container_type_24" model="container.type">
+            <field name="code">45RG</field>
+            <field name="name">45' Regular Container</field>
+        </record>
+    </data>
+</odoo>

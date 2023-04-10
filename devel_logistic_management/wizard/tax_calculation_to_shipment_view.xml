@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <data>
+        <record id="view_tax_calculation_line_make_operation_shipment"
+                model="ir.ui.view">
+            <field name="name">Tax Calculation to Shipment Operation</field>
+            <field name="model">tax.calculation.line.make.operation.shipment</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                 <form string="Create Operation Shipment">
+                     <group>
+                        <field name="operation_type" widget="radio"/>
+                        <field name="transportation_mode" widget="radio" attrs="{'invisible': [('operation_type','!=','import')]}"/>
+                     </group>
+                     <newline/>
+                     <newline/>
+                     <footer>
+                         <button name="make_operation_shipment"
+                                 string="Create Shipment" type="object"
+                                 class="oe_highlight"/>
+                         <button special="cancel" string="Cancel" class="oe_link"/>
+                     </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_tax_calculation_line_make_operation_shipment" model="ir.actions.act_window">
+            <field name="name">Create Shipment Operation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tax.calculation.line.make.operation.shipment</field>
+            <field name="view_mode">form</field>
+            <field name="view_id"
+                   ref="view_tax_calculation_line_make_operation_shipment"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref=""/>
+        </record>
+    </data>
+</odoo>
+

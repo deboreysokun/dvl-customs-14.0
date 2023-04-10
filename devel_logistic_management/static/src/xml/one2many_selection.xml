@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="One2ManySelectable">
+		<div>
+			<!-- will add button above one2many selection but if you use widget="one2many_selectable" -->
+			<t t-if="!widget.get('effective_readonly')">
+
+				<button style="margin-bottom: 1%;display:none;" class="button_set_received_by btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+
+				<button style="margin-bottom: 1%;display:none;" class="button_confirm_expense_lines btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+                <button style="margin-bottom: 1%;display:none;" class="button_approve_expense_lines btn bg-warning-light"
+                        href="javascript:void(0)">
+                    	Approve
+                </button>
+				<button style="margin-bottom: 1%;display:none;" class="btn_confirm_approve_expense_line btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+                <button style="margin-bottom: 1%;display:none;" class="button_draft_expense_lines btn btn-secondary"
+                        href="javascript:void(0)">
+                    	Draft
+                </button>
+				<button style="margin-bottom: 1%;display:none;" class="btn_pay_other_expense_line btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;" class="btn_direct_pay_other_expense_line btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')">
+				<span class="oe_form_char_content"></span>
+			</t>
+		</div>
+    </t>
+	<t t-name="SelectableCustomsOfficePermit">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_cop btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_cop btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_cop btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_cop btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_cop btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_cop btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_cop btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_cop btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_cop btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectableShippingLine">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_spl btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_spl btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_spl btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_spl btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_spl btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_spl btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_spl btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_spl btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_spl btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectableClearance">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_cle btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_cle btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_cle btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_cle btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_cle btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_cle btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_cle btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_cle btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_cle btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectableCustomDuty">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_cdt btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_cdt btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_cdt btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_cdt btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_cdt btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_cdt btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_cdt btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_cdt btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_cdt btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectablePortCharge">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_ptg btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_ptg btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_ptg btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_ptg btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_ptg btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_ptg btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_ptg btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_ptg btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_ptg btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectableTrucking">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_tk btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_tk btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_tk btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_tk btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_tk btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_tk btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_tk btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_tk btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_tk btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectableOtherAdmin">
+		<div>
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_set_received_by_otd btn bg-primary-light"
+						href="javascript:void(0)">
+						Update Recevied By
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_confirm_expense_lines_otd btn bg-info-light "
+						href="javascript:void(0)">
+						Confirm
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_approve_expense_lines_otd btn bg-warning-light"
+						href="javascript:void(0)">
+						Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_confirm_approve_expense_line_otd btn dvl-bg-light-blue-orange"
+						href="javascript:void(0)">
+						Confirm and Approve
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_draft_expense_lines_otd btn btn-secondary"
+						href="javascript:void(0)">
+						Draft
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_pay_expense_lines_otd btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_reimbursement_otd btn bg-success-light"
+						href="javascript:void(0)">
+						Reimbursement
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="button_direct_pay_otd btn dvl-bg-light-orange"
+						href="javascript:void(0)">
+						Direct Pay
+				</button>
+				<button style="margin-bottom: 1%;display:none;"
+						class="btn_clear_cash_advance_otd btn btn-secondary"
+						href="javascript:void(0)">
+						Clear Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')"><span class="oe_form_char_content"></span></t>
+		</div>
+	</t>
+	<t t-name="SelectableCashAdvance">
+		<div>
+			<!-- will add button above one2many selection but if you use widget="one2many_selectable" -->
+			<t t-if="!widget.get('effective_readonly')">
+				<button style="margin-bottom: 1%;display:none;" class="btn_cash_advance_payment btn bg-danger-light"
+						href="javascript:void(0)">
+						Pay Advance
+				</button>
+			</t>
+			<t t-if="widget.get('effective_readonly')">
+				<span class="oe_form_char_content"></span>
+			</t>
+		</div>
+	</t>
+</templates>

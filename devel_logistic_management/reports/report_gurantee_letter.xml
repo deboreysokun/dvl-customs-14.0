@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_guarantee_letter">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div class="header row">
+                            <div class="col-2">
+                                <img style="max-height:100px;" t-if="o.shipper_id.image_1920" t-att-src="image_data_uri(o.shipper_id.image_1920)" alt="Logo"/>
+                            </div>
+                            <div class="col-9">
+                                <div style="text-align:center;font-family:'Times New Roman'">
+                                    <div style="font-weight:bold"><h3><span t-field="o.shipper_id"/></h3></div>
+                                    <div style="font-size:16px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
+                                    <div style="font-size:16px;"><t t-if="o.shipper_id.phone">TEL : <t t-esc="o.shipper_id.phone"/> </t> <t t-if="o.shipper_id.vat"> VAT TIN: <strong style="font-weight:bold;"><t style="font-weight:bold;" t-esc="o.shipper_id.vat"/></strong></t></div>
+                                    <t t-if="o.shipper_id.email"><div style="font-size:16px;">EMAIL : <t t-esc="o.shipper_id.email"/></div></t>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page" style="font-size:18px;">
+                            <div style="border-bottom:3px solid black;"/>
+                            <div class="text-center" style="font-family:'Khmer OS Muol Light';padding-top:15px;">
+                                <span style="text-decoration: underline">កិច្ចសន្យាធានាអះអាង</span>
+                            </div>
+
+                            <div style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">
+                                <span><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំឈ្មោះ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទឈ្មោះ'"/></t> <t t-esc="o.owner_id.khmer_name"/> សញ្ជាតិ <t t-esc="o.owner_id.nationality_id.khmer_name"/>  ជាប្រធាន<span t-field="o.company_type"/> <t t-esc="o.owner_id.parent_id.name"/>
+                                លេខអត្តសញ្ញណកម្មសារពើពន្ធ អ ត ប <t t-esc="o.owner_id.parent_id.vat"/></span>
+                                <t t-if="o.owner_id.parent_id.business_activities"> សកម្មភាពអាជីវកម្មចម្បង <t t-esc="o.owner_id.parent_id.business_activities"/> </t> អាសយដ្នាន <t t-esc="o.owner_id.parent_id.street2"/>  ។
+                                </p>
+                            </div>
+
+                            <div class="text-center" style="font-family:'Khmer OS Muol Light';padding-top:15px;">
+                                <span style="text-decoration: underline">សូមគោរពជូន</span><br/>
+                                <span> លោកប្រធាននាយកដ្នានគ្រប់គ្រងការនាំចេញ <br/> នៃអគ្គនាយកដ្នានគយនិងរដ្ធាករកម្ពុជា</span>
+                            </div>
+
+                            <div style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">
+                                    <span><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងជូនចំពោះមន្ត្រីគយដែលមានសមត្ថកិច្ចឆែកឆេរ​​ និងត្រួតពិនិត្យបែបបទ ទំនិញនាំចេញថាទំនិញ <span t-field="o.company_type"/>របស់យើងខ្ញុំមាន បរិយាយមុខទំនិញ <span t-field="o.commodity_khmer"/>        
+                                        បរិមាណ <t t-esc="'{0:,.2f}'.format(o.total_qty)"/> <span t-field="o.qty_uom_id"/>ដើមកំណើត និងលក្ខណៈដទៃទៀតត្រឹមត្រូវស្របតាមឯកសារដូចខាងក្រោមនេះ​​​ ៖ </span>
+                                </p>
+                            </div>
+
+                            <t t-if="not o.inv_pack_number">
+                                <p style="font-family:'Times New Roman'">
+                                <span>- Invoice &amp; Packing List No.: </span>
+                                <t t-esc="'..............................................'"/>
+                                Date<t t-esc="'..............................'"/>
+                                </p>
+                            </t>
+                            <t t-if="o.inv_pack_number">
+                                <p style="font-family:'Times New Roman'">
+                                <span>- Invoice &amp; Packing List No.: </span>
+                                <t t-esc="o.inv_pack_number"/>
+                                Date<t t-if="not o.inv_pack_date">
+                                <t t-esc="'..............................'"/></t>
+                                <t t-if="o.inv_pack_date">
+                                    <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/>
+                                </t>
+                                </p>
+                            </t>
+                            <!-- <p style="font-family:'Times New Roman'">
+                               <span>- Invoice &amp; Packing List No.: </span>
+                               <t t-esc="'..............................................'"/>
+                               Date<t t-esc="'..............................'"/>
+                            </p> -->
+
+                            <div class="row">
+                                <div class="col-4 text-center" style="padding-right: 5px;padding-left: 5px">
+                                    <p style="font-family:'Battambang';font-size:18px;text-decoration: underline;">លេខកុងតឺន័រ</p>
+                                    <t t-foreach="o.container_line_ids" t-as="container">
+                                        <div style="margin-top: 5px;">
+                                            <t t-if="container.container_number"> <t t-esc="container.container_number"/> </t>
+                                            <t t-if="not container.container_number"><t t-esc="'.........................................'"/> </t>
+                                        </div>
+                                    </t>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                </div>
+                                <div class="col-4 text-center" style="padding-right: 5px;padding-left: 5px">
+                                    <p style="font-family:'Battambang';font-size:18px;text-decoration: underline;">សៀលគយ</p>
+                                    <t t-foreach="o.container_line_ids" t-as="container">
+                                        <div style="margin-top: 5px;">
+                                            <t t-if="o.customs_seal_number"><t t-esc="o.customs_seal_number"/> </t>
+                                            <t t-if="not o.customs_seal_number"><t t-esc="'.........................................'"/> </t>
+                                        </div>
+                                    </t>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                </div>
+                                <div class="col-4 text-center" style="padding-right: 5px;padding-left: 5px">
+                                    <p style="font-family:'Battambang';font-size:18px;text-decoration: underline;">សៀលកប៉ាល់</p>
+                                    <t t-foreach="o.container_line_ids" t-as="container">
+                                        <div style="margin-top: 5px;">
+                                            <t t-if="container.container_seal_number"><t t-esc="container.container_seal_number"/> </t>
+                                            <t t-if="not container.container_seal_number"><t t-esc="'.........................................'"/> </t>
+                                        </div>
+                                    </t>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+                                </div>
+                            </div>
+
+                            <div style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">
+                                    <span>
+                                    ក្រៅពីសេចក្តីរាយការណ៍ខាងលើ​ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>ពុំមានផ្ទុកអ្វីបន្ថែមទេ ក្នុងករណីដែលសេចក្តីអះអាង ខាងលើខុសពីការពិត ឬបើថ្ងៃក្រោយអាជ្ញាធរមានសមត្ថកិច្ចរកឃើញទំនិញល្មើសច្បាប់ដោយប្រការ ណាមួយ
+                                    <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមទទួលខុសត្រូវទាំងស្រុងចំពោះមុខច្បាប់ជាធរមាន។
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div style="page-break-inside:avoid">
+                                <div class="row" style="margin-top:10px;font-weight:bold;">
+                                    <div class="col-6 text-center" style="font-size:16px;margin-top: 10px;">
+                                        <p style="font-size:16px;font-family:'Battambang';text-decoration: underline;margin-top: 10px">សូមបញ្ជក់ថា</p>
+                                        <p style="font-size:16px;font-family:'Battambang'">ហត្ថលេខាខាងស្តាំនេះ ពិតជារបស់<t t-if="o.owner_id.gender == 'female'"><t t-esc="'លោកស្រី'"/></t><t t-else=""><t t-esc="'លោក'"/></t>
+                                        <t t-esc="o.owner_id.khmer_name"/> ប្រធានក្រុមហ៊ុន <span t-field="o.shipper_id.name"/> ពិតប្រាកដមែន។
+                                        </p>
+                                        <p style="font-size:16px;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/></p>
+                                        <p style="font-size:16px;font-family:'Battambang'">ហត្ថលេខា </p>
+                                        <t t-if="o.gua_letter_stamp_consignee == true">
+                                            <!-- Show consignee stamp-->
+                                            <div style="position:absolute;">
+                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="col-6 text-center" style="font-size:16px;margin-top: 10px;">
+                                        <div style="font-size:16px;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/>
+                                        </div>
+                                        <div style="font-size:16px;margin-top: 10px;font-family:'Battambang'">ប្រធាន<span t-field="o.company_type"/></div>
+                                        <t t-if="o.gua_letter_stamp == true">
+                                            <t t-if="o.owner_id.signature_image">
+                                                <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
+                                                <div style="font-size:16px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/></div>
+                                            </t>
+                                        </t>
+                                        <t t-if="o.gua_letter_stamp == false">
+                                            <div style="font-size:16px;margin-top:160px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/></div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
+
+

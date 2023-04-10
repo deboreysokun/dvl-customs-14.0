@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="operation_shipment_review_done_form" model="ir.ui.view">
+            <field name="name">operation.shipment.review.done.form</field>
+            <field name="model">operation.shipment.review.done</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="review_comment"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_review_done" string="Save" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="operation_shipment_review_done_action" model="ir.actions.act_window">
+            <field name="name">Commit or Feedback</field>
+            <field name="res_model">operation.shipment.review.done</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

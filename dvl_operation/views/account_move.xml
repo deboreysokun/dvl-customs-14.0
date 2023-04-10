@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record id="action_view_total_all_invoices" model="ir.actions.act_window">
+        <field name="name">All Total</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_in_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('move_type', 'in', ('in_invoice'))]</field>
+        <field name="context">{'default_is_reimbursement_invoice': True, 'default_move_type': 'in_invoice'}</field>
+    </record> -->
+    <record id="view_button_total_all_invoices" model="ir.ui.view">
+            <field name="name">shipment operation form</field>
+            <field name="model">operation.shipment</field>
+            <field name="inherit_id" ref="devel_logistic_management.view_shipment_operation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_reimbursed_reciept']" position="after">
+                    <button type="object" class="oe_stat_button" icon="fa-dollar" name="action_view_total_all_invoices" context="{'default_shipment_id': active_id}" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="total_all_invoices" decoration-danger="total_all_invoices &lt; 0"/>
+                            </span>
+                            <span class="o_stat_text">Total All</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+    </record>
+</odoo>

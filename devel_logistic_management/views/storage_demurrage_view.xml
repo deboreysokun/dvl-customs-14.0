@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Storage and demurrage Charge Form View-->
+        <record id="view_storage_demurrage_charge_form" model="ir.ui.view">
+            <field name="name">Storage Demurrage Charge</field>
+            <field name="model">storage.demurrage.charge</field>
+            <field name="arch" type="xml">
+                <form string="Storage Demurrage Charge">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group col="3">
+                            <group>
+                                <field name="storage_price"/>
+                                <field name="storage_day_free"/>
+                            </group>
+                            <group>
+                                <field name="demurrage_9day_price"/>
+                                <field name="demurrage_9day_day_free"/>
+                            </group>
+
+                            <group>
+                                <field name="demurrage_over_9day_price"/>
+                                <field name="demurrage_over_9day_day_free"/>
+                            </group>
+                            <group>
+                                <field name="standby_price"/>
+                                <field name="standby_day_free"/>
+                            </group>
+
+                            <group>
+                                <field name="detention_price"/>
+                                <field name="detention_day_free"/>
+                            </group>
+                            <group>
+                                <field name="customs_penalty_day_free"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_storage_demurrage_charge_tree" model="ir.ui.view">
+            <field name="name">Storage.Demurrage.Detention.Charge</field>
+            <field name="model">shipment.container</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" class="freeze_column" sample="1">
+                    <field name="shipment_id"/>
+                    <field name="container_type_id" options="{'no_create': True}"/>
+                    <field name="container_number"/>
+                    <field name="eta"/>
+                    <field name="storage_charge_date"/>
+                    <field name="demurrage_charge_date"/>
+                    <field name="takeout_date"/>
+                    <field name="return_date"/>
+                    <field name="number_storage_days" optional="show"/>
+                    <field name="number_demurrage_days" optional="show"/>
+                    <field name="number_demurrage_days_1" optional="show"/>
+                    <field name="number_detention_days" optional="show"/>
+                    <field name="number_standby_days" optional="show"/>
+                    <field name="number_penalty_days" optional="show"/>
+
+                    <field name="storage_charge" string="Storage" sum="Total Storage Charge"/>
+                    <field name="demurrage_charge" string="Demurrage" sum="Total Demurrage Charge"/>
+                    <field name="detention_charge" string="Detention" sum="Total Detention Charge"/>
+                    <field name="standby_charge" string="Standby" sum="Total Standby Charge"/>
+                    <field name="custom_penalty_charge" string="Customs Penalty" sum="Total Custom Penalty Charge"/>
+                    <field name="total_charge" sum="Total Charge"/>
+                    <field name="currency_id" invisible='1'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_dvl_storage_demurrage_detention" model="ir.actions.act_window">
+            <field name="name">Storage Demurrage Detention Charge</field>
+            <field name="res_model">shipment.container</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_storage_demurrage_charge_tree"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No record. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_storage_demurrage_line_menu" name="Storage Demurrage Detention"
+        parent="devel_logistic_management.dvl_truck_booking_menu" action="devel_logistic_management.action_dvl_storage_demurrage_detention" sequence="2"/>
+
+    </data>
+</odoo>

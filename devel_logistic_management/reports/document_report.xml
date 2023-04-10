@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Import Doucment Reports -->
+
+        <record id="dvl_co_form_document" model="ir.actions.report">
+            <field name="name">Import - CO Form</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_co_form</field>
+            <field name="report_file">devel_logistic_management.report_co_form</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_co_attachment_doc" model="ir.actions.report">
+            <field name="name">Import - CO Attachment Doc</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_co_attachment_doc</field>
+            <field name="report_file">devel_logistic_management.report_co_attachment_doc</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_inv_packing_list_document" model="ir.actions.report">
+            <field name="name">Import - Invoice and Packing List</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_inv_packing_list</field>
+            <field name="report_file">devel_logistic_management.report_inv_packing_list</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_authorization_document" model="ir.actions.report">
+            <field name="name">Authorization Trader</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_authorization_trader</field>
+            <field name="report_file">devel_logistic_management.report_authorization_trader</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_permit_document" model="ir.actions.report">
+            <field name="name">Import - Permit</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_import_permit_doc</field>
+            <field name="report_file">devel_logistic_management.report_permit_doc</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- END OF QWeb Import Doucment Reports -->
+
+        <!-- QWeb Export Doucment Reports -->
+
+        <record id="dvl_booking_order_document" model="ir.actions.report">
+            <field name="name">Export - Booking Order</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_booking_order_doc</field>
+            <field name="report_file">devel_logistic_management.report_booking_order_doc</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_export_inv_packing_list_document" model="ir.actions.report">
+            <field name="name">Export - Inv and Packing List</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_export_inv_packing_list</field>
+            <field name="report_file">devel_logistic_management.report_export_inv_packing_list</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_export_requirement_letter_document" model="ir.actions.report">
+            <field name="name">Export - Requirement Letter</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_export_req_letter</field>
+            <field name="report_file">devel_logistic_management.report_export_req_letter</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_export_guaranteed_letter_document" model="ir.actions.report">
+            <field name="name">Export - Gurantee letter</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_guarantee_letter</field>
+            <field name="report_file">devel_logistic_management.report_guarantee_letter</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_export_vgm_document" model="ir.actions.report">
+            <field name="name">Export - VGM</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_vgm</field>
+            <field name="report_file">devel_logistic_management.report_vgm</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_permit_export_document" model="ir.actions.report">
+            <field name="name">Export - Permit</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_export_permit_doc</field>
+            <field name="report_file">devel_logistic_management.report_permit_export_doc</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_export_draft_bl_document" model="ir.actions.report">
+            <field name="name">Export - Draft BL</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_export_draft_bl</field>
+            <field name="report_file">devel_logistic_management.report_draft_bl</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="dvl_export_inspection_document" model="ir.actions.report">
+            <field name="name">Export - Inspection Letter</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_inspection_letter</field>
+            <field name="report_file">devel_logistic_management.report_inspection_letter</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="dvl_export_container_list" model="ir.actions.report">
+            <field name="name">Export - List of Container</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_export_container_list</field>
+            <field name="report_file">devel_logistic_management.report_export_container_list</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--  END Of QWeb Export Doucment Reports -->
+
+        <!--  QWeb Transit Doucment Reports -->
+        <record id="dvl_transit_inv_packing_list_document" model="ir.actions.report">
+            <field name="name">Transit - Inv and Packing List</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_transit_inv_packing_list</field>
+            <field name="report_file">devel_logistic_management.report_transit_inv_packing_list</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="dvl_transit_truck_bill_document" model="ir.actions.report">
+            <field name="name">Transit - Truck Bill</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_transit_truck_bill</field>
+            <field name="report_file">devel_logistic_management.report_transit_truck_bill</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="dvl_transit_authorization_document" model="ir.actions.report">
+            <field name="name">Transit - Authorization Broker</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_authorization_broker</field>
+            <field name="report_file">devel_logistic_management.report_authorization_broker</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--  END Of QWeb Transit Doucment Reports -->
+
+        <!-- Cover & Closing File Shipment Report -->
+        <record id="dvl_cover_file_shipment" model="ir.actions.report">
+            <field name="name">Cover File Shipment</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_cover_file_shipment_doc</field>
+            <field name="report_file">devel_logistic_management.report_cover_file_shipment</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_cash_payment_request_shipment" model="ir.actions.report">
+            <field name="name">Cash Payment Request By Shipment</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_cash_payment_request_shipment_doc</field>
+            <field name="report_file">devel_logistic_management.report_cash_payment_request_shipment</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="dvl_closing_file_shipment" model="ir.actions.report">
+            <field name="name">Closing File Shipment</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_closing_file_shipment_doc</field>
+            <field name="report_file">devel_logistic_management.report_closing_file_shipment</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="model_operation_shipment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!-- END of Cover & Closing File Shipment Report -->
+
+        <!-- Action Preview Document -->
+        <record id="action_view_all_import_docs" model="ir.actions.report">
+            <field name="name">Preview Import Document</field>
+            <field name="model">operation.shipment</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">devel_logistic_management.report_preview_import_document</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+        </record>
+        <record id="action_view_all_export_docs" model="ir.actions.report">
+            <field name="name">Preview Export Document</field>
+            <field name="model">operation.shipment</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">devel_logistic_management.report_preview_export_document</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+        </record>
+        <record id="action_view_all_transit_docs" model="ir.actions.report">
+            <field name="name">Preview Transit Document</field>
+            <field name="model">operation.shipment</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">devel_logistic_management.report_preview_transit_document</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+        </record>
+        <record id="action_view_accounting_docs" model="ir.actions.report">
+            <field name="name">Preview Accounting Document</field>
+            <field name="model">operation.shipment</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">devel_logistic_management.report_preview_accounting_document</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+        </record>
+        <!-- End Action Preview Document -->
+
+        <!--Action export Invoice and Packing List Line In Customs Excel Format-->
+        <record id="export_inv_packing_line_xlsx" model="ir.actions.report">
+            <field name="name">Export INV PL in Excel</field>
+            <field name="model">operation.shipment</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">devel_logistic_management.inv_packing_lines.xlsx</field>
+            <field name="report_file">invoice_packing_line</field>
+        </record>
+
+         <!-- Action Preview DVL Sales Quotation Document -->
+        <record id="action_view_sales_quotation_dvl" model="ir.actions.report">
+            <field name="name">Preview Sales Quotation Document</field>
+            <field name="model">sale.quotation</field>
+            <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">devel_logistic_management.report_preview_sale_quotation</field>
+        </record>
+    </data>
+</odoo>

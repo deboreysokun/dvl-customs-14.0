@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_other_operation_form" model="ir.ui.view">
+            <field name="name">Other Operation Form</field>
+            <field name="model">other.operation</field>
+            <field name="arch" type="xml">
+                <form string="Other Operation" disable_autofocus='false'>
+                    <header>
+                        <widget name="attach_document" string="Add Operation Attachment" action="message_post"
+                            highlight="1" attrs="{'invisible': [('id','=',False)]}"/>
+                        <field name="state" widget="statusbar" attrs="{'invisible': [('active', '=', False)]}"/>
+                        <button string="Open" name="action_confirm" type="object" states="draft"/>
+                        <button string="Finish" name="action_done" type="object" states="confirm"/>
+                        <button string="Set to draft" name="action_draft" type="object" states="done"/>
+                        <button class="btn btn-primary" name="action_get_attachment_accounting_view" type="object" string="All Attachments"
+                            groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_get_attachment_view" class="oe_stat_button" icon="fa-file-text-o" type="object">
+                                <field name="attachment_number" widget="statinfo" string="Documents" options="{'reload_on_button': true}"/>
+                            </button>
+                            <button type="object" class="oe_stat_button" icon="fa-dollar" name="action_view_invoice" groups="account.group_account_user">
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="total_invoices_amount"/>
+                                    </span>
+                                    <span class="o_stat_text">Revenues</span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <h1><field name="name" class="oe_inline" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+                        <field name="is_editable" invisible="1"/>
+                        <field name="active" invisible="1"/>
+                        <group>
+                            <group>
+                                <field name="service_type_id" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                <label for="description"/>
+                                <div class="o_row">
+                                    <field name="description" attrs="{'readonly': [('is_editable', '=', False)]}" placeholder="eg: Service Fee Transfer..."/>
+                                    <field name="create_uid" widget="many2one_avatar_user"/>
+                                </div>
+                                <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('is_editable', '=', False)]}" invisible="1"/>
+
+                                <field name="partner_id" string="Customer" domain="[('active', '=', True)]" attrs="{'readonly': [('is_editable', '=', False)]}"
+                                    context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}'/>
+                                <label for="start_date" string="Start | End Date"/>
+                                <div class="o_row">
+                                    <field name="start_date" attrs="{'readonly': [('is_editable', '=', False)]}" placeholder="Start Date"/>
+                                    <field name="end_date" attrs="{'readonly': [('is_editable', '=', False)]}" placeholder="End date" />
+                                </div>
+                                <field name="transfer_country_id" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="received_country_id" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="customer_feedback" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            </group>
+                            <group class="oe_subtotal_footer oe_right" name="operation_total_cash" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user">
+                                <label for="total_cash_received" string="Cash Received"/>
+                                <button style="padding:2px" type="object" class="oe_stat_button" name="action_view_cash_received_lines" context="{'default_shipment_id': active_id}" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user">
+                                    <field name="total_cash_received" string="Cash Received" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                </button>
+                                <label for="total_cash_paid" string="Cash Paid"/>
+                                <button style="padding:2px" type="object" class="oe_stat_button" name="action_view_cash_paid_lines" context="{'default_shipment_id': active_id}" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user">
+                                  <field name="total_cash_paid" string="Cash Paid" widget="monetary" options="{'currency_field': 'company_currency_id'}" decoration-danger="total_cash_paid &lt; 0"/>
+                                </button>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="cash_balance"/>
+                                </div>
+                                <field name="cash_balance" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                                    options="{'currency_field': 'company_currency_id'}" decoration-danger="cash_balance &lt; 0" decoration-success="cash_balance &gt; 0"/>
+                            </group>
+                            <group class="oe_subtotal_footer oe_right" name="operation_total" groups="account.group_account_user">
+                                <field name="total_invoices_amount" string="Total Revenues" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                <field name="total_expense_amount" string="Total Expenses" widget="monetary" options="{'currency_field': 'company_currency_id'}" decoration-danger="total_expense_amount &lt; 0"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="balance"/>
+                                </div>
+                                <field name="balance" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                                    options="{'currency_field': 'company_currency_id'}" decoration-danger="balance &lt; 0" decoration-success="balance &gt; 0"/>
+                            </group>
+                            <group>
+                                <field name="note" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="sale_quotation_id" domain="[('active', '=', True)]" options="{'no_create': True}" context="{'show_customer': 1, 'show_quotation_type': 1}"/>
+                                <field name="is_partially_paid" invisible="1" groups="account.group_account_readonly"/>
+                                <field name="is_fully_paid" string="Fully Paid" groups="account.group_account_readonly"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Expense Line" groups="account.group_account_user">
+                                <group>
+                                    <field nolabel="1" name="other_operation_expense_line_ids"
+                                            context="{'default_requester_user_id': uid}" widget="one2many_selectable">
+                                        <tree class="expense_line" editable="bottom">
+                                            <field name="other_operation_id" invisible="1"/>
+                                            <field name="is_editable" invisible="1"/>
+                                            <field name="sequence" widget="handle"  attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                            <field name="account_id" groups="account.group_account_readonly"
+                                                options="{'no_create': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="description" widget="text" attrs="{'readonly': [('is_editable', '=', False)]}" optional="show"/>
+                                            <field name="qty" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                            <field name="uom_id" context="{'show_full_name': 1}" options="{'no_create': True}" class="o_list_number_th" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                            <field name="currency_id" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                                            <field name="rate" string="Rate" optional="show"/>
+                                            <field name="unit_price" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="sub_total" string="Sub Total USD" sum="Sub Total USD"/>
+                                            <field name="state" attrs="{'readonly': [('state', '!=', 'draft')]}" widget="badge"
+                                                decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'"
+                                                decoration-muted="state == 'reject'" decoration-success="state == 'paid'" decoration-orange="state == 'direct_paid'"/>
+
+                                            <field name="remark" optional="show"/>
+
+                                            <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                                                groups="devel_other_operation.group_dvl_other_operation_confirm_expense" states="draft"/>
+                                            <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                                                groups="devel_other_operation.group_dvl_other_operation_manager" states="confirm"/>
+                                            <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                                                groups="devel_other_operation.group_dvl_other_operation_manager" states="confirm"/>
+                                            <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                                                groups="devel_other_operation.group_dvl_other_operation_confirm_expense" states="confirm"/>
+                                            <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                                                groups="devel_other_operation.group_dvl_other_operation_manager" states="validate,reject"/>
+
+
+                                            <field name="requester_user_id" optional="show" force_save="1"/>
+                                            <field name="requested_date" optional="show" string="Date Requested" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="checked_user_id" optional="show" />
+                                            <field name="checked_date" optional="show" string="Date Checked" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="approver_user_id" optional="show" />
+                                            <field name="approved_date" optional="show" string="Date Approved" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="paid_user_id" optional="show" />
+                                            <field name="received_user_id" optional="show" domain="[('active', '=', True)]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="paid_date" optional="show" string="Date Paid" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                        </tree>
+                                    </field>
+                                    <group/>
+                                    <group/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_other_operation_tree" model="ir.ui.view">
+            <field name="name">Other Operation tree</field>
+            <field name="model">other.operation</field>
+            <field name="arch" type="xml">
+                <tree sample="1" decoration-bg-pink="is_partially_paid == True" decoration-danger="is_fully_paid == True">
+                    <field name="create_uid" widget="many2one_avatar_user" optional="show"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="start_date"/>
+                    <field name="customer_feedback"/>
+                    <field name="end_date"/>
+                    <field name="note"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'confirm'"/>
+                    <field name="is_fully_paid" string="Fully Paid" optional="show" groups="account.group_account_readonly"/>
+                    <field name="is_partially_paid" string="Partially Paid" optional="hide" groups="account.group_account_readonly"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_other_operation_search" model="ir.ui.view">
+            <field name="name">Other Operation search</field>
+            <field name="model">other.operation</field>
+            <field name="arch" type="xml">
+                <search string="Search...">
+                    <field name="name" filter_domain="['|',('name','ilike',self), ('partner_id','ilike',self)]"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Confirmed" name="confirm" domain="[('state', '=', 'confirm')]"/>
+                    <separator/>
+                    <filter string="No Expense Lines" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="to_confirm" domain="[('other_operation_expense_line_ids', '=', False)]"/>
+                    <separator/>
+                    <filter string="To Confirm" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="to_confirm" domain="[('other_operation_expense_line_ids.state', '=', 'draft')]"/>
+                    <filter string="To Approve" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="to_approve" domain="[('other_operation_expense_line_ids.state', '=', 'confirm')]"/>
+                    <separator/>
+                    <filter string="To Pay" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="to_paid" domain="[('other_operation_expense_line_ids.state', '=', 'validate')]"/>
+                    <filter string="Paid" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="paid" domain="[('other_operation_expense_line_ids.state', '=', 'paid')]"/>
+                    <separator/>
+                    <filter string="Rejected" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="rejected" domain="[('other_operation_expense_line_ids.state', '=', 'reject')]"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Customer" name="partner_id" context="{'group_by':'partner_id'}"/>
+                        <filter string="Start Date" name="group_start_date" domain="[]" context="{'group_by':'start_date'}"/>
+                        <filter string="End Date" name="group_end_date" domain="[]" context="{'group_by':'end_date'}"/>
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Type" name="group_type" domain="[]" context="{'group_by':'service_type_id'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_view_other_operation_tree" model="ir.actions.act_window">
+            <field name="name">Other Operation</field>
+            <field name="res_model">other.operation</field>
+            <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="view_other_operation_tree"/>
+            <field name="domain">[('active','=',True)]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Records. Let Create a new one!
+              </p>
+            </field>
+        </record>
+
+        <record id="view_other_operation_expense_form" model="ir.ui.view">
+            <field name="name">Other Operation Expense Line</field>
+            <field name="model">other.operation.expense.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="other_operation_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state in ('confirm','validate')" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Other Service Operation Dashboard View-->
+        <record id="other_operation_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">other.operation.dashboard.kanban</field>
+            <field name="model">other.operation.type</field>
+            <field name="arch" type="xml">
+                <kanban create="true" class="oe_background_grey o_kanban_dashboard o_account_kanban">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}" >
+                                <t t-call="ServiceTop"/>
+                                <div t-att-class="'container o_kanban_card_content'">
+                                    <div class="row">
+                                        <t t-call="ServiceNewRecord"/>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                    <t t-call="ServiceManage"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-name="ServiceTop">
+                            <div t-attf-class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <a type="object" name="open_action"><field name="name"/></a>
+                                    </div>
+                                    <div><span groups="base.group_multi_company" class="small"><field name="company_id"/></span></div>
+                                </div>
+                                <div class="o_kanban_manage_button_section">
+                                    <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" aria-label="Selection" role="img" title="Selection"/></a>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-name="ServiceManage">
+                            <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                <div class="col-8">
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+
+                            <div  class="row o_kanban_card_settings">
+                                <div class="col-6 text-right mt-1">
+                                    <a class="dropdown-item" t-if="widget.editable" type="edit">Edit</a>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-name="ServiceNewRecord">
+                            <div class="col-12 col-sm-4 mb-3 mb-sm-0 o_kanban_primary_left">
+                                <button type="object" name="action_create_new" class="btn btn-primary">
+                                    <span>New Record</span>
+                                </button>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_other_operation_dashboard_kanban" model="ir.actions.act_window">
+            <field name="name">Other Operation Service Type</field>
+            <field name="res_model">other.operation.type</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="view_id" ref="other_operation_dashboard_kanban_view"/>
+            <field name="usage">menu</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No record. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_other_operation_menu" name="Other Operation Services"
+            parent="devel_logistic_management.dvl_shipment_menu" action="devel_other_operation.action_other_operation_dashboard_kanban" sequence="50"/>
+
+
+        <!-- Other Serivce Type View-->
+        <record id="view_other_operation_type_form" model="ir.ui.view">
+            <field name="name">Other Service Type</field>
+            <field name="model">other.operation.type</field>
+            <field name="arch" type="xml">
+                <form string="Other Operation">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Operation Type Name"/>
+                            <h1><field name="name" class="oe_inline"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="create_uid" widget="many2one_avatar_user"/>
+                                <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_other_operation_type_tree" model="ir.ui.view">
+            <field name="name">Other Service Type Tree</field>
+            <field name="model">other.operation.type</field>
+            <field name="arch" type="xml">
+                <tree sample="1">
+                    <field name="sequence" widget="handle"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="create_uid" widget="many2one_avatar_user" optional="show"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_other_operation_type" model="ir.actions.act_window">
+            <field name="name">Other Service Type</field>
+            <field name="res_model">other.operation.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_other_operation_type_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No record. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_other_service_type_menu" name="Other Operation"
+            parent="devel_logistic_management.dvl_configuration_menu" sequence="1"/>
+        <menuitem id="dvl_other_service_type" name="Service Types"
+            parent="devel_other_operation.dvl_other_service_type_menu" action="devel_other_operation.action_other_operation_type" sequence="50"/>
+
+        <!-- Report Other Service Operation -->
+        <record id="view_report_other_service_operation" model="ir.ui.view">
+            <field name="name">report other operation tree</field>
+            <field name="model">other.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Report Other Operation" create="false" import="false">
+                    <field name="name"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="customer_feedback"/>
+                    <field name="note" optional="hide"/>
+                    <field name="state" widget="badge" optional="hide" decoration-info="state == 'draft'" decoration-success="state == 'confirm'"/>
+                    <field name="is_fully_paid" string="Fully Paid" optional="hide" groups="account.group_account_readonly"/>
+                    <field name="total_invoices_amount" sum="Total Revenues" string="Revenues" optional="show"/>
+                    <field name="total_expense_amount" sum="Total Expenses" string="Expenses" optional="show" decoration-danger="total_expense_amount &lt; 0"/>
+                    <field name="balance" sum="Balance" optional="show" decoration-danger="balance &lt; 0" decoration-success="balance &gt; 0"/>
+                    <button name="action_open" context="{'other_opperation_report':1}" type="object" icon="fa-list-alt"/>
+                    <field name="total_cash_received" sum="Total Cash Received" string="Cash Received" optional="show"/>
+                    <field name="total_cash_paid" sum="Total Cash Paid" string="Cash Paid" optional="show" decoration-danger="total_cash_paid &lt; 0"/>
+                    <field name="cash_balance" sum="Total Cash Balance" optional="show" decoration-danger="cash_balance &lt; 0" decoration-success="cash_balance &gt; 0"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Actions Report Other Operation  Services -->
+        <record id="dvl_report_other_operation_action" model="ir.actions.act_window">
+            <field name="name">Monthly Other Operations</field>
+            <field name="res_model">other.operation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="view_id" ref="view_report_other_service_operation"/>
+            <field name="context">{'search_default_group_start_date': 1, 'search_default_group_type': 1}</field>
+        </record>
+
+        <menuitem id="dvl_report_other_operations_menu" name="Other Operations"
+            parent="devel_logistic_management.dvl_report_menu" action="dvl_report_other_operation_action" sequence="4"/>
+
+    </data>
+</odoo>

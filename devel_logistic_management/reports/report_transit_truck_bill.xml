@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_transit_truck_bill">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div class="page">
+                            <div class="mb-1"><span style="font-size:16px;">TRUCK BILL</span></div>
+                            <table class="table table-borderless" style="border:1px solid black;font-size:12px">
+                                <tr>
+                                    <td colspan="3" style="border-bottom:1px solid black;width:50%;">
+                                        <span style="color:#2f5496">Shipper:</span><br/>
+                                        <strong><span style="text-transform: uppercase;font-weight:bold" t-field="o.shipper_id.name"/><br/></strong>
+                                        <span t-esc="o.shipper_id.street"/><t t-if="o.shipper_id.city">, <span t-esc="o.shipper_id.city"/></t><t t-if="o.shipper_id.country_id">, <span t-esc="o.shipper_id.country_id.name"/></t><br/>
+                                        <t t-if="o.shipper_id.vat">VAT TIN: <span t-esc="o.shipper_id.vat"/><br/></t>
+                                        <t t-if="o.shipper_id.phone">TEL: <span t-esc="o.shipper_id.phone"/><br/></t>
+                                        <t t-if="o.shipper_id.fax">FAX: <span t-esc="o.shipper_id.fax"/><br/></t>
+                                        <t t-if="o.shipper_id.email">EMAIL: <span t-esc="o.shipper_id.email"/></t>
+                                    </td>
+                                    <td rowspan="4" colspan="3" style="width:50%;padding-top:0px;border-left:1px solid black;border-bottom:1px solid black;width:450px;font-family:serif;font-weight:bold;">
+                                        <div style="position:absolute;padding-top:100px;opacity:0.15;">
+                                            <img src="/devel_logistic_management/static/img/dvl_logo.png" style="width:90%;"/>
+                                        </div>
+                                        <div style="margin-left:-12px;padding-top:30px;font-size:12px;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;width:150px;">T/B No. <t t-if="not o.truck_bill_number"><t t-esc="o.name"/> </t>
+                                        <t t-if="o.truck_bill_number"><span t-field="o.truck_bill_number"/> </t></div><br/>
+                                        <div style="color:#2f5496;text-transform: uppercase;font-size:26px;"><span t-esc="o.company_id.name"/></div><br/><br/>
+
+                                        <div style="font-size:16px;">Tel: <span t-esc="o.company_id.phone"/></div>
+                                        <div style="font-size:16px;">Telegram, WeChat, Line: @devellog</div>
+                                        <div style="font-size:16px;">Email: <span t-esc="o.company_id.email"/></div><br/>
+
+                                        <div style="font-size:16px;">Address:
+                                            <span t-esc="o.company_id.street"/><t t-if="o.company_id.city">, <span t-esc="o.company_id.city"/></t><t t-if="o.company_id.country_id">, <span t-esc="o.company_id.country_id.name"/></t><br/>
+                                        </div><br/>
+                                        <div style="font-size:16px;">Website: <span t-esc="o.company_id.website"/></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="border-bottom:1px solid black;">
+                                        <span style="color:#2f5496">Consignee:</span><br/>
+                                        <span style="text-transform: uppercase;font-weight:bold" t-field="o.consignee_id.name"/><br/>
+                                        <span t-esc="o.consignee_id.street"/><t t-if="o.consignee_id.city">, <span t-esc="o.consignee_id.city"/></t><t t-if="o.consignee_id.country_id">, <span t-esc="o.consignee_id.country_id.name"/></t><br/>
+                                        <t t-if="o.consignee_id.vat">VAT TIN: <span t-esc="o.consignee_id.vat"/><br/></t>
+                                        <t t-if="o.consignee_id.phone">TEL: <span t-esc="o.consignee_id.phone"/><br/></t>
+                                        <t t-if="o.consignee_id.fax">FAX: <span t-esc="o.consignee_id.fax"/><br/></t>
+                                        <t t-if="o.consignee_id.email">EMAIL: <span t-esc="o.consignee_id.email"/></t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="border-bottom:1px solid black;">
+                                        <span style="color:#2f5496">Notify Party:</span><br/>
+                                        <t t-if="o.notify_party_id">
+                                            <span style="text-transform: uppercase;font-weight:bold" t-field="o.notify_party_id.name"/><br/>
+                                            <span t-esc="o.notify_party_id.street"/><t t-if="o.notify_party_id.city">, <span t-esc="o.notify_party_id.city"/></t><t t-if="o.notify_party_id.country_id">, <span t-esc="o.notify_party_id.country_id.name"/></t><br/>
+                                            <t t-if="o.notify_party_id.vat">VAT TIN: <span t-esc="o.notify_party_id.vat"/><br/></t>
+                                            <t t-if="o.notify_party_id.phone">TEL: <span t-esc="o.notify_party_id.phone"/><br/></t>
+                                            <t t-if="o.notify_party_id.fax">FAX: <span t-esc="o.notify_party_id.fax"/><br/></t>
+                                            <t t-if="o.notify_party_id.email">EMAIL: <span t-esc="o.notify_party_id.email"/></t>
+                                        </t>
+                                        <t t-if="not o.notify_party_id"><div style="padding:45px;text-align: center;"><span>SAME AS CONSIGNEE</span></div></t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid black;border-right:1px solid black;">
+                                        <span style="color:#2f5496">Port of Loading</span><br/>
+                                        <span style="font-weight:bold" t-field="o.port_of_loading"/>
+                                    </td>
+                                    <td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black;">
+                                        <span style="color:#2f5496">Place of Receipt or Port of Transition</span><br/>
+                                        <t t-if="o.place_of_reciept"><span style="font-weight:bold" t-field="o.place_of_reciept"/></t>
+                                        <t t-if="not o.place_of_reciept"><span style="font-weight:bold" t-field="o.etd_export_port_1"/></t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid black;border-right:1px solid black;">
+                                        <span style="color:#2f5496">Carriage By</span><br/>
+                                        <span style="font-weight:bold">TRUCKING</span>
+                                    </td>
+                                    <td colspan="2" style="border-bottom:1px solid black;border-right:1px solid black;">
+                                        <span style="color:#2f5496">Place Of Discharge</span><br/>
+                                        <span style="font-weight:bold" t-field="o.port_of_discharge"/>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-top:1px solid black;">
+                                        <span style="color:#2f5496">Place Of Delivery</span><br/>
+                                        <span style="font-weight:bold" t-field="o.port_of_delivery"/>
+                                    </td>
+                                    <td colspan="2" style="border:1px solid black;">
+                                        <span style="color:#2f5496">Final Destination</span><br/>
+                                        <span style="font-weight:bold" t-field="o.final_destination"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;">
+                                        <span style="color:#2f5496">Container No./Seal No.</span><br/>
+                                        <span style="color:#2f5496">Marks &amp; Numbers</span>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black; width:110px;">
+                                        <span style="color:#2f5496">Quantity</span>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black; width:110px;">
+                                        <span style="color:#2f5496">Kind of Packing</span>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;width:200px;">
+                                        <span style="color:#2f5496">Description of Goods</span>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;">
+                                        <span style="color:#2f5496">Gross Weight (KGS)</span>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;">
+                                        <span style="color:#2f5496">Measurement (CBM)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;font-weight:bold">
+                                        <t t-if="o.num_of_truck == 0.0">
+                                            <t t-set="containe_text" t-value=""/>
+                                            <t t-foreach="o.container_line_ids" t-as="line">
+                                                <t t-if="not line.container_seal_number"><t t-set="containe_text" t-value="line.container_number + ' / ' + line.container_type_id.code"/> </t>
+                                                <t t-if="line.container_seal_number"><t t-set="containe_text" t-value="line.container_number+ ' / ' + line.container_seal_number + ' / ' + line.container_type_id.code"/> </t>
+                                                <span t-esc="containe_text"/><br/>
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;font-weight:bold">
+                                        <t t-if="not o.actual_qty"><span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/></t>
+                                        <t t-if="o.actual_qty"><span t-esc="'{0:,.0f}'.format(o.actual_qty)"/></t>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;font-weight:bold">
+                                        <t t-if="not o.actual_qty_uom_id"><span t-field="o.qty_uom_id"/></t>
+                                        <t t-if="o.actual_qty_uom_id"><span t-field="o.actual_qty_uom_id"/></t>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;font-weight:bold">
+                                        <t t-if="o.description_of_goods"><span t-field="o.description_of_goods"/></t>
+                                        <t t-if="not o.description_of_goods"><span t-field="o.commodity"/><br/><br/><br/><br/></t>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;;font-weight:bold">
+                                        <t t-if="not o.actual_gross_weight"><span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/> <span t-field="o.gross_uom_id"/></t>
+                                        <t t-if="o.actual_gross_weight"><span t-esc="'{0:,.2f}'.format(o.actual_gross_weight)"/> <span t-field="o.actual_gross_uom_id"/></t>
+                                    </td>
+                                    <td style="border-bottom:1px solid black;font-weight:bold">
+                                        <span t-field="o.volume_cbm"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">Freight &amp; Charges</span>
+                                    </td>
+                                    <td class="text-center" style="border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">Prepaid</span>
+                                    </td>
+                                    <td class="text-center" style="border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">Collect</span>
+                                    </td>
+                                    <td colspan="3" style="border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">No. of Original B (s)t</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" style="border-bottom:1px solid black;border-left:1px solid black;"/>
+                                    <td rowspan="2" style="border-bottom:1px solid black;border-left:1px solid black;"/>
+                                    <td rowspan="2" style="border-bottom:1px solid black;border-left:1px solid black;"/>
+                                    <td style="border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">Shipped on Board Date :</span>
+                                    </td>
+                                    <td colspan="2" style="border-bottom:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">By :</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-right:1px solid black;border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        <span style="color:#2f5496">Issued Date:</span>
+                                        <span style="padding-left:10px;" t-field="o.truck_bill_date" t-option="{'widget': 'date', 'format': 'dd-MM-YY'}"/>
+                                    </td>
+                                    <td colspan="2" style="border-bottom:1px solid black;border-left:1px solid black;padding:0px">
+                                        at <span t-field="o.place_of_reciept"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" colspan="3" style="border-bottom:1px solid black;">
+                                        <span style="color:#2f5496">For delivery of goods please apply to:</span><br/>
+                                        <span style="text-transform: uppercase;font-weight:bold" t-field="o.notify_party_id.name"/><br/>
+                                        <span t-esc="o.notify_party_id.street"/><t t-if="o.notify_party_id.country_id">, <span t-esc="o.notify_party_id.country_id.name"/></t><br/><br/> <br/>
+                                        <t t-if="o.notify_party_id.vat">VATTIN: <span t-esc="o.notify_party_id.vat"/></t><br/>
+                                        <t t-if="o.notify_party_id.phone">TEL: <span t-esc="o.notify_party_id.phone"/></t><br/>
+                                        <t t-if="o.notify_party_id.email">EMAIL: <span t-esc="o.notify_party_id.email"/></t><br/><br/><br/><br/><br/>
+                                    </td>
+
+                                    <td colspan="3" style="border-left:1px solid black;">
+                                        <span style="color:#2f5496">Signed on behalf of the Carrier</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="border-bottom:1px solid black;border-right:1px solid black;">
+                                        <span style="color:#2f5496">By As Carrier</span>
+                                        <t t-if="o.truck_bill_stamp == true">
+                                            <t t-if="o.shipper_id.signature_image"><div class="text-center" style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- Show consignee stamp -->
+                            <t t-if="o.truck_bill_stamp_consignee == true">
+                                <div class="row">
+                                    <div class="text-center col-4">
+                                    </div>
+                                    <div class="text-center col-4">
+                                        <div style="position:absolute;text-center">
+                                            <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

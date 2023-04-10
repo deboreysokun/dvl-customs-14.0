@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Shipment Import Processing Status -->
+        <record id="view_import_operation_status" model="ir.ui.view">
+            <field name="name">shipment import operation tree</field>
+            <field name="model">operation.shipment</field>
+            <field name="arch" type="xml">
+                <tree name="status_table" create="0" multi_edit="1" editable="bottom"
+                class="processing_status o_list_number_th" decoration-warning="cv_1 == True"
+                decoration-success="submit == True" decoration-bg-pink="is_partially_paid == True" decoration-danger="is_fully_paid == True" sample="1">
+                    <field name="stage_id" optional="show"/>
+                    <field name="name" string="Ref.Shipment"/>
+                    <button name="action_read_operation_shipment" context="{'processing_status_import':1}" type="object" string="View" class="float-right btn-secondary"/>
+                    <field name="date" readonly="1"/>
+                    <field name="commodity" readonly="1" widget="text"/>
+                    <field name="bl_number" readonly="1" widget="text"/>
+                    <field name="container_number" readonly="1" widget="text"/>
+                    <field name="seal_number" optional="show" readonly="1" widget="text"/>
+                    <field name="container_qty_type" optional="show"/>
+                    <field name="shipping_line_id" readonly="1"/>
+                    <field name="vessel_voyage_info" widget="text" optional="show"/>
+                    <field name="vessel_id" invisible="1" readonly="1"/>
+                    <field name="customer_id" readonly="1"/>
+                    <field name="consignee_id" readonly="1"/>
+                    <field name="port_of_loading_report" string="Port Of Loading" readonly="1"/>
+                    <field name="entry_exit_port_id" readonly="1"/>
+                    <field name="clearance_office_id" readonly="1"/>
+                    <field name="docs_received" widget="text" optional="show"/>
+                    <field name="etd" readonly="1"/>
+                    <field name="eta" readonly="1"/>
+
+                    <field name="cv" optional="show" widget="toggle_button" />
+                    <field name="co" optional="show" widget="toggle_button" />
+                    <field name="permit" optional="show" widget="toggle_button" />
+                    <field name="truck_bl" string="Truck BL" optional="show" widget="toggle_button" />
+                    <field name="inv_pl" string="INV PL" optional="show" widget="toggle_button" />
+                    <field name="authorization" optional="show" widget="toggle_button" string="Authori zation" />
+                    <field name="list_co" string="List CO" optional="show" widget="toggle_button" />
+                    <field name="let_apply_co" string="Let Apply CO" optional="show" widget="toggle_button" />
+                    <field name="draft_custom_value" optional="show" widget="toggle_button" />
+                    <field name="check_doc" optional="show" widget="toggle_button"  />
+                    <field name="submit" optional="show" widget="boolean_toggle" />
+                    <field name="cv_no" optional="show"/>
+                    <field name="co_no" optional="show"/>
+                    <field name="cv_1" optional="show" widget="boolean_toggle"/>
+                    <field name="co_1" optional="show" widget="toggle_button" />
+
+                    <field name="docs_expire_date" optional="show"/>
+                    <field name="bl_sent_date" string="BL Sent Date" optional="show"/>
+                    <field name="arrival_sent" optional="show" widget="toggle_button" />
+                    <field name="ctn_arrival_port" optional="show"/>
+                    <field name="internal_note" widget="dynamic_popover_text" options="{'max_width': '350px'}" optional="show" class="dvl-bg-light-orange"/>
+                    <field name="do_delivery" string="DO Delivery" optional="show"/>
+                    <field name="file_clearance_date" optional="show"/>
+                    <field name="delivery_date" optional="show" widget="text"/>
+                    <field name="truck_container" widget="text" optional="show" string="Truck &amp; Container"/>
+                    <field name="driver_phone" widget="text" optional="show"/>
+                    <field name="delivery_location" widget="text" optional="show"/>
+                    <field name="unloading_datetime" optional="show" widget="text"/>
+                    <field name="contact_info" widget="text" optional="show"/>
+                    <field name="empty_return_to" optional="show" widget="text"/>
+                    <field name="empty_return_date" optional="show" widget="text"/>
+                    <field name="create_uid" optional="show" string="Processer"/>
+                    <field name="total_estimated_tax_amount" string="Estimated Tax"
+                        widget="monetary" options="{'currency_field': 'company_currency_id'}"
+                        optional="show"/>
+                    <field name="total_thc_amount" string="THC Amount"
+                        widget="monetary" options="{'currency_field': 'company_currency_id'}"
+                        optional="show" groups="account.group_account_manager"/>
+                    <field name="total_deposit_amount" string="Deposit Amount"
+                        widget="monetary" options="{'currency_field': 'company_currency_id'}"
+                        optional="show" groups="account.group_account_manager"/>
+                    <field name="total_thc_paid_date" string="THC &amp; Deposit Date" optional="show" groups="account.group_account_manager"/>
+                    <field name="total_duty_tax_khr" string="Duty Tax KHR"
+                        optional="show" groups="account.group_account_manager"/>
+                    <field name="total_duty_tax_paid_date" string="Duty Tax Paid Date" optional="show" groups="account.group_account_manager"/>
+                    <field name="total_reimbursed" string="Reimbursement Settle Amount" optional="show" groups="account.group_account_manager" />
+                    <field name="reimbursement_date" string="Reimbursement Date" optional="show" groups="account.group_account_manager"/>
+                    <field name="issued_invoice_date" string="Issued INV Date" optional="show" groups="account.group_account_manager"/>
+                    <field name="received_payment_date" groups="account.group_account_manager" optional="show"/>
+                    <field name="is_partially_paid" invisible="1" groups="account.group_account_manager"/>
+                    <field name="is_fully_paid" invisible="1" groups="account.group_account_manager"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
+                    <field name="company_currency_id" invisible='1'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_operation_import_status" model="ir.actions.act_window">
+            <field name="name">Import Processing Status</field>
+            <field name="res_model">operation.shipment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('operation_type','=','import'), ('stage_id.is_done','=', False)]</field>
+            <field name="context">{'default_operation_type': 'import'}</field>
+            <field name="view_id" ref="view_import_operation_status"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Export Operation records.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_import_menu_status" name="Imports Processing Status"
+            parent="devel_logistic_management.dvl_processing_status_menu" action="action_operation_import_status" sequence="2"/>
+
+        <!-- Shipment Export Processing Status -->
+        <record id="view_export_operation_status" model="ir.ui.view">
+            <field name="name">shipment export operation tree</field>
+            <field name="model">operation.shipment</field>
+            <field name="arch" type="xml">
+                <tree create="0" multi_edit="1"  editable="bottom"
+                class="processing_status_export o_list_number_th" decoration-bg-pink="is_partially_paid == True" decoration-danger="is_fully_paid == True" sample="1">
+                    <field name="stage_id" optional="show"/>
+                    <field name="name" string="Shipment No."/>
+                    <button name="action_read_operation_shipment" context="{'processing_status_export':1}" type="object" string="View" class="float-right btn-secondary"/>
+                    <field name="date" readonly="1"/>
+                    <field name="customer_id" readonly="1"/>
+                    <field name="incoterm_id" readonly="1"/>
+                    <field name="port_of_loading_report" string="Port Of Loading" readonly="1"/>
+                    <field name="import_country_id" readonly="1"/>
+
+                    <field name="bl_number" string="BL No." readonly="1" widget="text"/>
+                    <field name="vessel_voyage_info" widget="text" optional="show"/>
+                    <field name="vessel_id" invisible="1" optional="hide"/>
+                    <field name="voyage_number" invisible="1" optional="hide"/>
+
+                    <field name="shipper_id" readonly="1"/>
+                    <field name="container_number" readonly="1"/>
+                    <field name="seal_number" optional="show" readonly="1"/>
+                    <field name="container_qty_type" optional="show"/>
+                    <field name="commodity" readonly="1" widget="text"/>
+
+                    <field name="internal_seal_number" optional="show"/>
+                    <field name="customs_seal_number" optional="show"/>
+                    <field name="internal_note" widget="dynamic_popover_text" options="{'max_width': '350px'}" optional="show" class="dvl-bg-light-orange"/>
+                    <field name="docs_received" widget="text" optional="show"/>
+
+                    <field name="cv_no" optional="show"/>
+                    <field name="shipment_type_id" optional="show"/>
+
+                    <field name="truck_container" widget="text" optional="show" string="Truck &amp; Container"/>
+                    <field name="driver_phone" widget="text" optional="show"/>
+                    <field name="delivery_location" widget="text" optional="show"/>
+                    <field name="unloading_datetime" optional="show"/>
+                    <field name="contact_info" widget="text" optional="show"/>
+
+                    <field name="total_estimated_tax_amount" string="Estimated Tax"
+                        widget="monetary" options="{'currency_field': 'company_currency_id'}"
+                        optional="hide"/>
+                    <field name="total_thc_amount" string="THC Amount"
+                        widget="monetary" options="{'currency_field': 'company_currency_id'}"
+                        optional="show" groups="account.group_account_manager"/>
+                    <field name="total_thc_paid_date" string="THC Paid Date" optional="show" groups="account.group_account_manager"/>
+                    <field name="issued_invoice_date" string="Issued INV Date" optional="show" groups="account.group_account_manager"/>
+                    <field name="received_payment_date" groups="account.group_account_manager" optional="show"/>
+                    <field name="is_partially_paid" invisible="1" groups="account.group_account_manager"/>
+                    <field name="is_fully_paid" invisible="1" groups="account.group_account_manager"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
+                    <field name="company_currency_id" invisible='1'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_operation_export_status" model="ir.actions.act_window">
+            <field name="name">Export Processing Status</field>
+            <field name="res_model">operation.shipment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('operation_type','=','export'), ('stage_id.is_done','=', False)]</field>
+            <field name="context">{'default_operation_type': 'export'}</field>
+            <field name="view_id" ref="view_export_operation_status"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Export Operation records.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_export_menu_status" name="Exports Processing Status"
+            parent="devel_logistic_management.dvl_processing_status_menu" action="action_operation_export_status" sequence="2"/>
+    </data>
+</odoo>

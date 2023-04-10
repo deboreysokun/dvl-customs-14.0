@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_export_req_letter">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div style="text-align:center; padding-top:0px;line-height: 30px;">
+                            <div style="font-family:'Khmer OS Muol Light';font-size:12pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                            <div style="font-size:12pt;"/>
+                        </div>
+                        <div class="page" style="font-size:12pt;line-height: 30px;">
+                            <div style="font-size:12pt;font-family:'Battambang';">
+                                <div class="col-4"><span style="font-family:'Khmer OS Muol Light';font-size:12pt"><span t-field="o.company_type"/>:</span> <t t-esc="o.shipper_id.khmer_name"/></div>
+                                <div class="col-4"><span style="font-size:12pt;font-family:'Battambang';">អាស័យដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>
+                            </div>
+                            <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:12pt;text-align:center; line-height:30px;">
+                                <span>សូមគោរពជូន<br/>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span>
+                            </div>
+
+                            <div class="" style="line-height:30px;">
+                                <p style="font-size:14pt;font-family:'Battambang';text-align: justify ">
+                                    <span style="font-family:'Khmer OS Muol Light'">កម្មវត្ថុ៖ </span>
+                                    សំណើសុំនាំចេញ <span t-field="o.commodity_khmer"/> ចំនួន <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/> <span t-field="o.qty_uom_id"/> ស្មើនឹង <span t-esc="'{0:,.0f}'.format(o.total_container_qty)"/> កុងតឺន័រ   មានទម្ងន់ <span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/> គីឡូក្រាម   និងមានតម្លៃ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/> ដុល្លារអាមេរិក
+                                    នាំចេញទៅកាន់ប្រទេស <t t-esc="o.import_country_id.khmer_name"/> តាមមាត់ច្រកអន្តរជាតិ <t t-esc="o.entry_exit_port_id.kh_name"/>  និងសុំត្រួតពិនិត្យរូបវ័ន្ត ទំនិញនៅ <t t-esc="o.clearance_office_id.kh_name"/> ។
+                                </p>
+                            </div>
+
+                            <div class="row" style="font-family:'serif';font-size:12pt;">
+                               <div class="col-4">
+                                    <span style="font-family:'Moul'">យោង៖ </span><span>- Invoice &amp; P/L No:</span>
+                                </div>
+                                <div class="col-3">
+                                   <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>
+                                   <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>
+                                </div>
+                                <div class="col-5" style="font-family:'Battambang';font-size:14pt;">
+                                   <t t-if="o.inv_pack_date"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span></t>
+                                </div>
+                            </div>
+
+                            <div class="row" style="font-family:'serif';font-size:12pt;">
+                                <div class="col-4">
+                                   <span style="margin-left:60px">- VAT No:</span>
+                                </div>
+                                <div class="col-3">
+                                   <span><t t-esc="o.shipper_id.vat"/></span>
+                                </div>
+                                <div class="col-5" style="font-family:'Battambang';font-size:14pt;">
+                                   <t t-if="o.shipper_id.vattin_date"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.shipper_id.vattin_date.day)"/> ខែ <t t-esc="o.khmer_month(o.shipper_id.vattin_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.shipper_id.vattin_date.year)"/></span></t>
+                                </div>
+                            </div>
+
+                            <div class="row" style="font-family:'serif';font-size:12pt;">
+                                <div class="col-4">
+                                   <span style="padding-left:60px">- PATENT No: </span>
+                                </div>
+                                <div class="col-3">
+                                   <span><t t-esc="o.shipper_id.patent_number"/></span>
+                                </div>
+                                <div class="col-5" style="font-family:'Battambang';font-size:14pt;">
+                                   <t t-if="o.shipper_id.patent_date"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.shipper_id.patent_date.day)"/> ខែ <t t-esc="o.khmer_month(o.shipper_id.patent_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.shipper_id.patent_date.year)"/></span></t>
+                                </div>
+                            </div>
+
+
+                            <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូនលោកប្រធាននាយកដ្ឋានមេត្តាជ្រាបថា
+                                <span t-field="o.company_type"/>យើងខ្ញុំបាន<span t-field="o.commodity_source"/>នូវ <span t-field="o.commodity_khmer"/> ដើម្បីធ្វើការនាំចេញទៅកាន់ទីផ្សារបរទេស។
+                                </p>
+                            </div>
+
+                            <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា&#160;ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។
+                                    ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ <span t-field="o.company_type"/>យើងខ្ញុំ សូមទទួលខុសត្រូវទាំងស្រុងចំពោះមុខច្បាប់ជាធរមាន។
+                                </p>
+                            </div>
+
+                            <!--<div class="" style="line-height: 30px;">-->
+                            <!--    <p style="font-family:'Moul';text-indent: 50px;font-size:14pt;text-align: justify">អាស្រ័យហេតុនេះ​សូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតអោយ<span t-field="o.company_type"/> <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>នាំចេញទំនិញ-->
+                            <!--    តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
+                            <!--    </p>-->
+                            <!--</div>-->
+                            
+                            <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">អាស្រ័យហេតុនេះ សូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតអោយ<span t-field="o.company_type"/>
+                                    <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>​នាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
+                                </p>
+                            </div>
+
+                            <div class="">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">សូមលោកប្រធាន មេត្តាទទួលនូវការគោរពអំពី<t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>។</p>
+                            </div>
+
+                            <div style="page-break-inside:avoid">
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-4" style="font-size:14pt;margin-top: 10px;">
+                                        <t t-if="o.req_letter_stamp_consignee == true">
+                                            <!-- Show consignee stamp-->
+                                            <div style="position:absolute;">
+                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="col-8 text-center" style="font-size:14pt;margin-top: 10px;line-height:30px;">
+                                        <div style="font-size:14pt;font-family:'Battambang';"><span> <t t-esc="o.khmer_date_char"/> </span><br/></div>
+                                        <div style="font-size:14pt;font-family:'Battambang';"><span>ធ្វើនៅ <t t-esc="o.province_id.kh_name"/></span> ថ្ងៃទី <t t-esc="khmerformattedDate"/>
+                                        </div>
+                                        <div style="font-size:12pt;margin-top: 10px;font-family:'Khmer OS Muol Light'">ប្រធាន<span t-field="o.company_type"/></div>
+                                        <t t-if="o.req_letter_stamp == true">
+                                            <t t-if="o.owner_id.signature_image">
+                                                <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
+                                                <div style="font-size:14pt;font-family:'Battambang';"><t t-esc="o.owner_id.khmer_name"/></div>
+                                            </t>
+                                        </t>
+                                        <t t-if="not o.owner_id.signature_image">
+                                            <div style="font-size:14pt;margin-top:160px;font-family:'Battambang';"><t t-esc="o.owner_id.khmer_name"/></div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

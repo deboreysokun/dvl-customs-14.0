@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for tax.calculation -->
+        <record id="seq_tax_calculation" model="ir.sequence">
+            <field name="name">Tax Calculation</field>
+            <field name="code">tax.calculation</field>
+            <field name="prefix">CT</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Import Operation By Sea -->
+        <record id="seq_import_operation" model="ir.sequence">
+            <field name="name">Import Sea Operation</field>
+            <field name="code">operation.import</field>
+            <field name="prefix">IMP%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <!-- Sequences for Import Operation By Air -->
+        <record id="seq_import_operation_air" model="ir.sequence">
+            <field name="name">Import Air Operation</field>
+            <field name="code">operation.import.air</field>
+            <field name="prefix">IMPA%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <!-- Sequences for Import Operation By Road/Truck -->
+        <record id="seq_import_operation_road" model="ir.sequence">
+            <field name="name">Import Road Operation</field>
+            <field name="code">operation.import.road</field>
+            <field name="prefix">IMPT%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <!-- Sequences for Import Operation By Other -->
+        <record id="seq_import_operation_other" model="ir.sequence">
+            <field name="name">Import Other Operation</field>
+            <field name="code">operation.import.other</field>
+            <field name="prefix">IMPO%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Export Operation -->
+        <record id="seq_export_operation" model="ir.sequence">
+            <field name="name">Export Operation</field>
+            <field name="code">operation.export</field>
+            <field name="prefix">EXP%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Transit Operation -->
+        <record id="seq_transit_operation" model="ir.sequence">
+            <field name="name">Transit Operation</field>
+            <field name="code">operation.transit</field>
+            <field name="prefix">DVL%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Truck Booking -->
+        <record id="seq_truck_booking" model="ir.sequence">
+            <field name="name">Trucking Booking</field>
+            <field name="code">truck.booking</field>
+            <field name="prefix">TB%(y)s%(month)s</field>
+            <field name="padding">2</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequences for Sales Quotation -->
+        <record id="seq_dvl_sale_quotation" model="ir.sequence">
+            <field name="name">DVL Sale Quotation</field>
+            <field name="code">sale.quotation</field>
+            <field name="prefix">SD%(y)s%(month)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="form_view_shipment_cover_template" model="ir.ui.view">
+            <field name="name">shipment.cover.template.form</field>
+            <field name="model">shipment.cover.template</field>
+            <field name="arch" type="xml">
+                <form string="Shipment Template" disable_autofocus='false'>
+                    <sheet>
+                        <h1>
+                            <field name="name" placeholder="eg. Cover file and Cash Payment Request Import by Sea..."/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="create_uid" widget="many2one_avatar_user"/>
+                                <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                                <field name="shipment_id" domain="[('active', '=', True)]"
+                                            options="{'no_open': True, 'no_create_edit': True, 'no_quick_create': True}"
+                                            context="{
+                                                'show_commodity': 1,
+                                                'show_client_name': 1,
+                                                'search_view_ref': 'devel_logistic_management.view_shipment_operation_search',
+                                                'tree_view_ref': 'devel_logistic_management.view_shipment_operation_tree'}">
+                                </field>
+                            </group>
+                        </group>
+                        <group>
+                            <notebook>
+                                <page string="Checking List">
+                                    <field name="checking_list_shipment_ids" widget="section_and_note_one2many" mode="tree">
+                                        <tree limit="80" string="Checking List" editable="bottom">
+                                            <control>
+                                                <create name="add_section_control" string="Add a Section" context="{'default_display_type': 'line_section'}"/>
+                                                <create name="add_description_control" string="Add a Description"/>
+                                            </control>
+                                            <field name="display_type" invisible="1"/>
+                                            <field name="sequence" widget="handle" />
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+
+                        <group>
+                            <notebook>
+                                <page string="Processing List">
+                                    <field name="process_list_shipment_ids" widget="section_and_note_one2many" mode="tree">
+                                        <tree limit="80" string="Process List" editable="bottom">
+                                            <control>
+                                                <create name="add_section_control" string="Add a Section" context="{'default_display_type': 'line_section'}"/>
+                                                <create name="add_description_control" string="Add a Description"/>
+                                            </control>
+                                            <field name="display_type" invisible="1"/>
+                                            <field name="sequence" widget="handle" />
+                                            <field name="name"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+
+                        <group>
+                            <notebook>
+                                <page string="Cash Payment Request">
+                                    <field name="cash_payment_shipment_ids" widget="section_and_note_one2many" mode="tree">
+                                        <tree limit="80" string="Cash Payment Request" editable="bottom">
+                                            <control>
+                                                <create name="add_section_control" string="Add a Section" context="{'default_display_type': 'line_section'}"/>
+                                                <create name="add_description_control" string="Add a Description"/>
+                                            </control>
+                                            <field name="display_type" invisible="1"/>
+                                            <field name="sequence" widget="handle" />
+                                            <field name="name"/>
+                                            <field name="uom_id" context="{'show_full_name': 1}" options="{'no_create': True}" string="UOM" class="o_list_number_th"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                        <field name="note" placeholder="Term and Condition..."/>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="tree_view_shipment_cover_template" model="ir.ui.view">
+            <field name="name">shipment.cover.template.tree</field>
+            <field name="model">shipment.cover.template</field>
+            <field name="arch" type="xml">
+                <tree sample="1">
+                    <field name="shipment_id"/>
+                    <field name="name" string="Template Name"/>
+                    <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_shipment_cover_template" model="ir.actions.act_window">
+            <field name="name">Shipment Cover Template</field>
+            <field name="res_model">shipment.cover.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No record. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_shipment_cover_template_menu" name="Shipment Cover Template"
+            parent="devel_logistic_management.dvl_check_tax_menu"
+            action="devel_logistic_management.action_shipment_cover_template"
+            sequence="6"/>
+
+    </data>
+</odoo>

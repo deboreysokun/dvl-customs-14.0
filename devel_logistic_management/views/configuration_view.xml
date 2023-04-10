@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hs_code_form" model="ir.ui.view">
+            <field name="name">hs_code_form</field>
+            <field name="model">hs.code</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="active" invisible="1"/>
+                        <group>
+                            <group string="HS Code Info">
+                                <field name="year_id"/>
+                                <field name="head_id" options="{'no_create': True}"/>
+                                <field name="tariff_code"/>
+                                <field name="description_kh"/>
+                                <field name="description"/>
+                                <field name="unit_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Duty and Tax %">
+                                <field name="cd"/>
+                                <field name="st"/>
+                                <field name="vat"/>
+                                <field name="et"/>
+                                <field name="at"/>
+                            </group>
+                        </group>
+                        <group>
+                          <field name="ministry_info" string="Ministry (Treatments)"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hs_code_tree" model="ir.ui.view">
+            <field name="name">hs_code_tree</field>
+            <field name="model">hs.code</field>
+            <field name="arch" type="xml">
+                <tree multi_edit="1">
+                    <field name="year_id" optional="show"/>
+                    <field name="head_id" options="{'no_create': True}"/>
+                    <field name="tariff_code"/>
+                    <field name="description_kh"/>
+                    <field name="description"/>
+                    <field name="unit_id" options="{'no_create': True}"/>
+                    <field name="cd"/>
+                    <field name="st"/>
+                    <field name="vat"/>
+                    <field name="et"/>
+                    <field name="at"/>
+                    <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hs_code_search" model="ir.ui.view">
+            <field name="name">hs_code_search</field>
+            <field name="model">hs.code</field>
+            <field name="arch" type="xml">
+                <search string="HS Code">
+                    <field name="head_id" filter_domain="['|','|','|',('head_id','ilike',self),('tariff_code','ilike',self), ('description_kh','ilike',self),('description','ilike',self)]" string="HS Code"/>
+                    <separator/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Head Code" name="head_id" context="{'group_by':'head_id'}"/>
+                        <filter string="Year" name="year_id" context="{'group_by':'year_id'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dvl_hs_code" model="ir.actions.act_window">
+            <field name="name">Hs Code</field>
+            <field name="res_model">hs.code</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No HS Code found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_hs_code_menu" name="HS Code"
+            parent="devel_logistic_management.dvl_configuration_menu" sequence="1"/>
+
+        <menuitem id="dvl_hs_code" name="HS Code"
+        parent="devel_logistic_management.dvl_hs_code_menu" action="devel_logistic_management.action_dvl_hs_code" sequence="1"/>
+
+        <!-- ################### HS CODE YEAR #########################-->
+        <!-- Import line action-->
+        <record model="ir.actions.client" id="action_import_hscode_item">
+            <field name="name">Import HS Code Item</field>
+            <field name="tag">import</field>
+            <field name="params">{'model':'hs.code','import_field':'hs_code_line_ids','height':'1000px','show_required':True}</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_hs_code_year_form" model="ir.ui.view">
+            <field name="name">hs_code_year_form</field>
+            <field name="model">hs.code.year</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button class="btn btn-primary" name="%(action_import_hscode_item)d" type="action" string="Import HS code"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="active" invisible="1"/>
+                        <h1>
+                            <field name="name" class="oe_inline" placeholder="eg.2017"/>
+                        </h1>
+                        <group>
+                            <field name="description"/>
+                            <field name="create_uid" widget="many2one_avatar_user"/>
+                        </group>
+                        <notebook>
+                            <page string="HS Code Line">
+                                <field name="hs_code_line_ids">
+                                    <tree editable="top">
+                                        <field name="head_id" options="{'no_create': True}"/>
+                                        <field name="tariff_code"/>
+                                        <field name="description_kh"/>
+                                        <field name="description"/>
+                                        <field name="unit_id" options="{'no_create': True}"/>
+                                        <field name="cd"/>
+                                        <field name="st"/>
+                                        <field name="vat"/>
+                                        <field name="et"/>
+                                        <field name="at"/>
+                                        <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_hs_code_year_tree" model="ir.ui.view">
+            <field name="name">hs_code_year_tree</field>
+            <field name="model">hs.code.year</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hs_code_year_search" model="ir.ui.view">
+            <field name="name">hs_code_year_search</field>
+            <field name="model">hs.code.year</field>
+            <field name="arch" type="xml">
+                <search string="HS Code Year">
+                    <field name="name"/>
+                    <separator/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_dvl_hs_code_year" model="ir.actions.act_window">
+            <field name="name">Hs Code Year</field>
+            <field name="res_model">hs.code.year</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No HS Code Year found. Let's create one!
+              </p>
+            </field>
+        </record>
+        <menuitem id="dvl_hs_code_year" name="HS Code Year"
+            parent="devel_logistic_management.dvl_hs_code_menu" action="devel_logistic_management.action_dvl_hs_code_year" sequence="2"/>
+        <!-- ################### HS Code Head #######################-->
+        <record id="view_hs_code_head_form" model="ir.ui.view">
+            <field name="name">hs_code_head_form</field>
+            <field name="model">head.hs.code</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="head" class="oe_inline" placeholder="eg.2017"/>
+                        </h1>
+                        <group>
+                            <field name="year_ids" widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page string="HS Code Line">
+                                <field name="head_code_lines">
+                                    <tree>
+                                        <field name="year_id" options="{'no_create': True}" />
+                                        <field name="head_id" options="{'no_create': True}"/>
+                                        <field name="tariff_code"/>
+                                        <field name="description_kh"/>
+                                        <field name="description"/>
+                                        <field name="unit_id" options="{'no_create': True}"/>
+                                        <field name="cd"/>
+                                        <field name="st"/>
+                                        <field name="vat"/>
+                                        <field name="et"/>
+                                        <field name="at"/>
+                                        <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hs_code_head_search" model="ir.ui.view">
+            <field name="name">hs_code_header_search</field>
+            <field name="model">head.hs.code</field>
+            <field name="arch" type="xml">
+                <search string="HS Code Head">
+                    <field name="head"/>
+                    <field name="year_ids" filter_domain="[('year_ids', 'child_of', self)]"/>
+                </search>
+            </field>
+        </record>
+        <record id="view_hs_code_head_tree" model="ir.ui.view">
+            <field name="name">Head HS Code</field>
+            <field name="model">head.hs.code</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="head"/>
+                    <field name="year_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_dvl_hs_code_head" model="ir.actions.act_window">
+            <field name="name">Head HS Code</field>
+            <field name="res_model">head.hs.code</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No HS Code Head found. Let's create one!
+              </p>
+            </field>
+        </record>
+        <menuitem id="dvl_hs_code_head" name="HS Code Head"
+            parent="devel_logistic_management.dvl_hs_code_menu" action="devel_logistic_management.action_dvl_hs_code_head" sequence="3"/>
+
+        <!-- uom.unit or Measurement List -->
+        <record id="view_uom_unit_tree" model="ir.ui.view">
+            <field name="name">uom_unit_tree</field>
+            <field name="model">uom.unit</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_dvl_uom_unit" model="ir.actions.act_window">
+            <field name="name">Measurement List</field>
+            <field name="res_model">uom.unit</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No HS Code found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_uom_unit_menu" name="Measurement List"
+            parent="devel_logistic_management.dvl_configuration_menu" action="action_dvl_uom_unit" sequence="10"/>
+
+        <!--Incoterm Menu in Accounting-->
+        <menuitem id="menu_action_incoterm_open_dvl"
+            parent="devel_logistic_management.dvl_configuration_menu" action="account.action_incoterms_tree" sequence="4"/>
+
+
+        <!-- Shipment Type Tree View -->
+        <record id="view_shipment_type_tree" model="ir.ui.view">
+            <field name="name">shipment_type_tree</field>
+            <field name="model">shipment.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_dvl_shipment_type" model="ir.actions.act_window">
+            <field name="name">Shipment Type</field>
+            <field name="res_model">shipment.type</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Shipment Type found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_shipment_type_menu" name="Shipment Type"
+            parent="devel_logistic_management.dvl_configuration_menu" action="action_dvl_shipment_type" sequence="4"/>
+
+
+        <!--Country List-->
+        <menuitem id="menu_action_country_list_dvl"
+            parent="devel_logistic_management.dvl_configuration_menu" action="base.action_country" sequence="20"/>
+
+        <record id="view_country_tree" model="ir.ui.view">
+            <field name="name">res.country.tree.inherit</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="khmer_name"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_country_form" model="ir.ui.view">
+            <field name="name">res.country.form.inherit</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="khmer_name"/>
+                </field>
+            </field>
+        </record>
+
+        <!--########### Provice City ####################-->
+        <record id="view_province_tree" model="ir.ui.view">
+            <field name="name">province.city.tree</field>
+            <field name="model">province.city</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="kh_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_province_list" model="ir.actions.act_window">
+            <field name="name">Province List</field>
+            <field name="res_model">province.city</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_province_list_dvl"
+            parent="devel_logistic_management.dvl_configuration_menu" action="devel_logistic_management.action_province_list" sequence="21"/>
+
+        <!-- Entry / Exit Port -->
+        <record id="view_entry_exit_port_tree" model="ir.ui.view">
+            <field name="name">entry_exit_port_tree</field>
+            <field name="model">entry.exit.port</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="kh_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_entry_exit_port" model="ir.actions.act_window">
+            <field name="name">Entry / Exit Port</field>
+            <field name="res_model">entry.exit.port</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Port found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_entry_exit_port_menu" name="Entry / Exit Port"
+            parent="devel_logistic_management.dvl_configuration_menu" action="action_entry_exit_port" sequence="6"/>
+
+        <!-- Clearance Office -->
+        <record id="view_clearance_office_tree" model="ir.ui.view">
+            <field name="name">clearance_office_tree</field>
+            <field name="model">clearance.office</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="kh_name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_clearance_office" model="ir.actions.act_window">
+            <field name="name">Clearance Office</field>
+            <field name="res_model">clearance.office</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_clearance_office_menu" name="Clearance Office"
+            parent="devel_logistic_management.dvl_configuration_menu" action="action_clearance_office" sequence="7"/>
+
+        <!--CO Form -->
+        <record id="view_co_form_tree" model="ir.ui.view">
+            <field name="name">co_form_tree</field>
+            <field name="model">co.form</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="form_type"/>
+                    <field name="name"/>
+                    <field name="sub_decree"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_co_form" model="ir.actions.act_window">
+            <field name="name">CO Form List</field>
+            <field name="res_model">co.form</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Form found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_co_form_menu" name="CO Form List"
+            parent="devel_logistic_management.dvl_configuration_menu" action="action_co_form" sequence="7"/>
+
+
+        <!-- Container Type -->
+        <record id="container_type_view_tree" model="ir.ui.view">
+            <field name="name">container.type.tree</field>
+            <field name="model">container.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Container Type" editable="bottom" multi_edit="1">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="charge_type_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="container_type_action" model="ir.actions.act_window">
+            <field name="name">Container Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">container.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="dvl_container_type_menu" name="Container Type"
+            parent="devel_logistic_management.dvl_configuration_menu" action="container_type_action" sequence="8"/>
+
+
+        <!--
+            operation.tag views
+        -->
+        <record id="operation_tag_view_form" model="ir.ui.view">
+            <field name="name">operation.tag.view.form</field>
+            <field name="model">operation.tag</field>
+            <field name="arch" type="xml">
+                <form string="Tags">
+                    <sheet>
+                        <div class="oe_title">
+                            <div class="oe_edit_only">
+                                <label for="name"/>
+                            </div>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="color" required="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="operation_tag_view_tree" model="ir.ui.view">
+            <field name="name">operation_tag.view.tree</field>
+            <field name="model">operation.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Tags" editable="bottom">
+                    <field name="name"/>
+                    <field name="color" widget="color_picker" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Tags Configuration -->
+        <record id="operation_tag_action" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="res_model">operation.tag</field>
+            <field name="view_id" ref="operation_tag_view_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create new tags for your operation
+                </p><p>
+                Create tags that fit your current status to better manage and track your operation.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_operation_tag_menu" name="Tags"
+        parent="devel_logistic_management.dvl_configuration_menu" action="operation_tag_action" sequence="2"/>
+
+
+        <!-- Shipment Stage Configuration -->
+        <record id="operation_stage_search" model="ir.ui.view">
+            <field name="name">Operation Stage - Search</field>
+            <field name="model">operation.stage</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="is_done"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Operation STAGES TREE VIEW + MUTI_EDIT -->
+        <record id="operation_stage_tree" model="ir.ui.view">
+            <field name="name">operation.stage.tree</field>
+            <field name="model">operation.stage</field>
+            <field name="arch" type="xml">
+                <tree string="Stages" multi_edit="1">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" readonly="1"/>
+                    <field name="is_done"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="operation_stage_form" model="ir.ui.view">
+            <field name="name">operation.stage.form</field>
+            <field name="model">operation.stage</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form string="Operation Stage">
+                    <sheet>
+                        <div class="oe_title">
+                            <div class="oe_edit_only">
+                                <label for="name"/>
+                            </div>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="is_done"/>
+                                <field name="fold"/>
+
+                            </group>
+                        </group>
+                        <separator string="Requirements"/>
+                        <field name="requirements" nolabel="1" placeholder="Give your team the requirements to move shipment to this stage."/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="operation_stage_action" model="ir.actions.act_window">
+            <field name="name">Operation Stages</field>
+            <field name="res_model">operation.stage</field>
+            <field name="view_id" ref="devel_logistic_management.operation_stage_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Set a new stage in your shipment pipeline
+              </p><p>
+                Stages allow your team to easily track how a specific shipment
+                is positioned in your operation cycle.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_operation_stage_menu" name="Stages"
+            parent="devel_logistic_management.dvl_configuration_menu" action="operation_stage_action" sequence="3"/>
+
+        <!--################# Vehicle Menu Vehicle Type ########################-->
+        <record id="view_vehicle_type_tree" model="ir.ui.view">
+            <field name="name">Vehicle Type Tree</field>
+            <field name="model">vehicle.type</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_vehicle_type_search" model="ir.ui.view">
+            <field name="name">Vehicle Type Search</field>
+            <field name="model">vehicle.type</field>
+            <field name="arch" type="xml">
+                <search string="Vehicle Type">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dvl_vehicle_type" model="ir.actions.act_window">
+            <field name="name">Vehicle Type</field>
+            <field name="res_model">vehicle.type</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Vehicle Type found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_vehicle_menu" name="Vehicle"
+            parent="devel_logistic_management.dvl_configuration_menu" sequence="40"/>
+
+        <menuitem id="dvl_vehicle_type_menu" name="Vehicle Type"
+        parent="devel_logistic_management.dvl_vehicle_menu" action="devel_logistic_management.action_dvl_vehicle_type" sequence="1"/>
+         <!--################# End Vehicle Menu Vehicle Type ########################-->
+
+        <!--################# Vehicle Brand ########################-->
+        <record id="view_vehicle_brand_tree" model="ir.ui.view">
+            <field name="name">Vehicle Brand Tree</field>
+            <field name="model">vehicle.brand</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_vehicle_brand_search" model="ir.ui.view">
+            <field name="name">Vehicle Brand Search</field>
+            <field name="model">vehicle.brand</field>
+            <field name="arch" type="xml">
+                <search string="Vehicle Brand">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dvl_vehicle_brand" model="ir.actions.act_window">
+            <field name="name">Vehicle Brand</field>
+            <field name="res_model">vehicle.brand</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Vehicle Brand found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_vehicle_brand_menu" name="Vehicle Brand"
+        parent="devel_logistic_management.dvl_vehicle_menu" action="devel_logistic_management.action_dvl_vehicle_brand" sequence="2"/>
+         <!--################# End Vehicle Brand ########################-->
+
+        <!--################# Vehicle Power Mode ########################-->
+        <record id="view_vehicle_power_mode_tree" model="ir.ui.view">
+            <field name="name">Vehicle Power Mode Tree</field>
+            <field name="model">vehicle.power.mode</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_vehicle_power_mode_search" model="ir.ui.view">
+            <field name="name">Vehicle Power Mode Search</field>
+            <field name="model">vehicle.power.mode</field>
+            <field name="arch" type="xml">
+                <search string="Vehicle Power Mode">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dvl_vehicle_power_mode" model="ir.actions.act_window">
+            <field name="name">Vehicle Power Mode</field>
+            <field name="res_model">vehicle.power.mode</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Vehicle Power Mode found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_vehicle_power_mode_menu" name="Vehicle Power Mode"
+        parent="devel_logistic_management.dvl_vehicle_menu" action="devel_logistic_management.action_dvl_vehicle_power_mode" sequence="2"/>
+        <!--################# End Vehicle Power Mode ########################-->
+
+
+        <!--################# IR Attachment ########################-->
+        <record id="view_attachment_form_inherit_dvl" model="ir.ui.view">
+            <field name="name">ir.attachment.form.inherit.dvl</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='datas']" position="after">
+                <field name="accounting_document" groups="account.group_account_user"/>
+            </xpath>
+            </field>
+        </record>
+
+        <record id="view_attachment_tree_inherit_dvl" model="ir.ui.view">
+            <field name="name">ir.attachment.tree.inherit.dvl</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="js_class">dvl_document_list</attribute>
+                </xpath>
+                <xpath expr="//field[@name='res_model']" position="after">
+                    <field name="accounting_document" groups="account.group_account_user"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_attachment_search_dvl" model="ir.ui.view">
+            <field name="name">ir.attachment.search.inherit.dvl</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter
+                        string="Accounting Files"
+                        name="accounting_files"
+                        domain="[('accounting_document', '=', True)]"
+                        groups="account.group_account_user"
+                    />
+                </xpath>
+            </field>
+        </record>
+        <!-- ################ Attachment Kanban View ##########-->
+        <record id="view_document_file_kanban_inherit" model="ir.ui.view">
+            <field name="name">ir.attachment kanban inherit </field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="mail.view_document_file_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="js_class">dvl_document_kanban</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('o_kanban_record_body')]" position="replace">
+                    <div class="o_kanban_record_body" style="font-size:25px">
+                        <t t-if="record.type.raw_value == 'url'">
+                            <span class="o_document_url"><i class="fa fa-globe" aria-label="Document url"/> <field name="url" widget="url"/></span>
+                        </t>
+                        <samp t-else="" class="text-muted"> </samp>
+                        <!-- added this field in order to see preview icon in kanban view -->
+                        <field name="datas" widget="preview_binary" modifiers="{'invisible':[['type','=','url']]}" id="datas"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

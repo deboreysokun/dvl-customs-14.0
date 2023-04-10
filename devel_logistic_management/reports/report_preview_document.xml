@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_preview_import_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o.inv_packing_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_inv_packing_list"/>
+                        </div>
+                    </t>
+                    <t t-if="o.transit_truck_bill_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_transit_truck_bill"/>
+                        </div>
+                    </t>
+                    <t t-if="o.draft_bl">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_export_draft_bl"/>
+                        </div>
+                    </t>
+                    <t t-if="o.authorization_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_authorization_trader"/>
+                        </div>
+                    </t>
+                    <t t-if="o.transit_authorization_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_authorization_broker"/>
+                        </div>
+                    </t>
+                    <t t-if="o.permit_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_import_permit_doc"/>
+                        </div>
+                    </t>
+                    <t t-if="o.co_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_co_form"/>
+                        </div>
+                    </t>
+                    <t t-if="o.co_attactment_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_co_attachment_doc"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_preview_export_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o.booking_order_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_booking_order_doc"/>
+                        </div>
+                    </t>
+                    <t t-if="o.export_inv_packing_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_export_inv_packing_list"/>
+                        </div>
+                    </t>
+                    <t t-if="o.authorization_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_authorization_trader"/>
+                        </div>
+                    </t>
+                    <t t-if="o.transit_authorization_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_authorization_broker"/>
+                        </div>
+                    </t>
+                    <t t-if="o.export_requirement_letter">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_export_req_letter"/>
+                        </div>
+                    </t>
+                    <t t-if="o.guaranteed_letter">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_guarantee_letter"/>
+                        </div>
+                    </t>
+                    <t t-if="o.vgm">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_vgm"/>
+                        </div>
+                    </t>
+                    <t t-if="o.draft_bl">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_export_draft_bl"/>
+                        </div>
+                    </t>
+                    <t t-if="o.transit_truck_bill_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_transit_truck_bill"/>
+                        </div>
+                    </t>
+                    <t t-if="o.inspection_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_inspection_letter"/>
+                        </div>
+                    </t>
+                    <t t-if="o.list_of_container">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_export_container_list"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_preview_transit_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o.transit_inv_packing_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_transit_inv_packing_list"/>
+                        </div>
+                    </t>
+                    <t t-if="o.draft_bl">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_export_draft_bl"/>
+                        </div>
+                    </t>
+                    <t t-if="o.transit_truck_bill_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_transit_truck_bill"/>
+                        </div>
+                    </t>
+                    <t t-if="o.transit_authorization_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_authorization_broker"/>
+                        </div>
+                    </t>
+                    <t t-if="o.authorization_doc">
+                        <div style="padding:100px">
+                            <t t-call="devel_logistic_management.report_authorization_trader"/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_preview_accounting_document">
+            <div style="padding:80px">
+                <t t-call="devel_logistic_management.report_cover_file_shipment_doc"/>
+            </div>
+            <div style="padding:80px">
+                <t t-call="devel_logistic_management.report_cash_payment_request_shipment_doc"/>
+            </div>
+            <div style="padding:80px">
+                <t t-call="devel_logistic_management.report_closing_file_shipment_doc"/>
+            </div>
+        </template>
+
+        <template id="report_preview_sale_quotation">
+            <div style="padding-left:200px;padding-right:200px;">
+                <t t-call="devel_logistic_management.report_sale_quotation"/>
+            </div>
+        </template>
+
+    </data>
+</odoo>

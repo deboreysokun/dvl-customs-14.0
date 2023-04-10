@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Trucking Booking Form View-->
+        <record id="view_truck_booking_form" model="ir.ui.view">
+            <field name="name">truck_booking_form</field>
+            <field name="model">truck.booking</field>
+            <field name="arch" type="xml">
+                <form string="Book Truck" disable_autofocus='false'>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="active" invisible="1"/>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                        <group >
+                            <group string="General">
+                                <field name="booking_date"/>
+                                <field name="create_uid" widget="many2one_avatar_user"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="operation_type" widget="radio"/>
+                            </group>
+                            <group string="Shipment ID">
+                                <field name="shipment_id" context="{'tree_view_ref': 'devel_logistic_management.view_shipment_operation_tree'}"/>
+                                <field name="bl_number"/>
+                                <field name="container_id"/>
+                                <field name="have_product"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Truck Company Info">
+                                <field name="truck_partner_id" domain="[('is_truck', '=', True)]" context="{'default_is_company': 1, 'default_is_truck': 1}"
+                                    options='{"no_quick_create": True}'/>
+                                <field name="truck_company_phone"/>
+                                <field name="truck_company_address"/>
+
+                                <label for="director_name"/>
+                                <div class="o_address_format">
+                                    <field name="director_name" class="o_address_city" placeholder="Driver Name"/>
+                                    <field name="director_number" class="o_address_state"  placeholder="Director Number"/>
+                                </div>
+                            </group>
+                            <group string="Truck Information">
+                                <field name="truck_number"/>
+                                <field name="trailer_number"/>
+                                <field name="driver_id" domain="[('truck_partner_id', '=', truck_partner_id)]" option="{'no_create': True}"/>
+                                <field name="driver_number"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Pick Up Container">
+                                <label for="pick_up_empty_location_id" string="Empty Location"/>
+                                <div class="o_address_format">
+                                    <field name="pick_up_empty_location_id" class="o_address_city" placeholder="Location"/>
+                                    <field name="pick_up_date" class="o_address_state"  placeholder="DATE"/>
+                                </div>
+                                <label for="loading_location_id" string="Loading/Unloading Location"/>
+                                <div class="o_address_format">
+                                    <field name="loading_location_id" class="o_address_city" placeholder="Location"/>
+                                    <field name="loading_date" class="o_address_state"  placeholder="DATE"/>
+                                </div>
+                            </group>
+                            <group string="Drop Off Container">
+                                <label for="delivery_location_id"/>
+                                <div class="o_address_format">
+                                    <field name="delivery_location_id" class="o_address_city" placeholder="Location"/>
+                                    <field name="delivery_date" class="o_address_state"  placeholder="DATE"/>
+                                </div>
+                                <label for="release_empty_location_id" string="Drop Off Empty Location"/>
+                                <div class="o_address_format">
+                                    <field name="release_empty_location_id" class="o_address_city" placeholder="Location"/>
+                                    <field name="release_date" class="o_address_state"  placeholder="DATE"/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <field name="note" placeholder="Internal Note..."/>
+                    </sheet>
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_truck_booking_tree" model="ir.ui.view">
+            <field name="name">truck_booking_tree</field>
+            <field name="model">truck.booking</field>
+            <field name="arch" type="xml">
+                <tree sample="1" multi_edit="1" class="freeze_column">
+                    <field name="name" string="N0." optional="show"/>
+                    <field name="booking_date"/>
+                    <field name="shipment_id"/>
+                    <field name="operation_type" widget="selection"/>
+                    <field name="bl_number"/>
+                    <field name="container_id"/>
+                    <field name="have_product" widget="toggle_button"/>
+                    <field name="container_seal_id"/>
+                    <field name="truck_type" optional="show"/>
+                    <field name="truck_number"/>
+                    <field name="trailer_number"/>
+                    <field name="truck_partner_id" domain="[('is_truck', '=', True)]" context="{'default_is_company': 1, 'default_is_truck': 1}"
+                        options='{"no_quick_create": True}' optional="show" class="o_list_number_th" />
+                    <field name="driver_id"/>
+                    <field name="driver_number" string="Driver Number"/>
+                    <field name="truck_company_phone"/>
+                    <field name="director_name" optional="hide"/>
+                    <field name="director_number" optional="hide"/>
+                    <field name="truck_company_address" string="Truck Company Address" optional="hide"/>
+                    <field name="delivery_location_id" optional="show"/>
+                    <field name="delivery_date" optional="show"/>
+                    <field name="release_empty_location_id" string="Return Empty CONT To" optional="show"/>
+                    <field name="release_date" string="Return Date" optional="show"/>
+                    <field name="pick_up_empty_location_id" optional="show"/>
+                    <field name="pick_up_date" optional="show"/>
+                    <field name="loading_location_id" string="Loading/ Unloading Location" optional="show"/>
+                    <field name="loading_date" string="Loading/ Unloading Date" optional="show"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_truck_booking_search" model="ir.ui.view">
+            <field name="name">truck_booking_search</field>
+            <field name="model">truck.booking</field>
+            <field name="arch" type="xml">
+                <search string="Search...">
+                    <field name="name" string=" " filter_domain="['|','|',('name','ilike',self), ('shipment_id','ilike',self), ('container_id', 'ilike', self)]"/>
+                    <field name="truck_number"/>
+                    <field name="driver_id"/>
+                    <filter string="Import" name="import" domain="[('operation_type', '=', 'import')]"/>
+                    <filter string="Export" name="export" domain="[('operation_type', '=', 'export')]"/>
+                    <filter string="Transit" name="transit" domain="[('operation_type', '=', 'transit')]"/>
+                    <filter string="Other" name="other" domain="[('operation_type', '=', 'other')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Operation Type" name="operation_type" domain="[]" context="{'group_by':'operation_type'}"/>
+                        <filter string="Booking Date" name="month" domain="[]" context="{'group_by':'booking_date'}"/>
+                        <filter string="Shipment" name="shipment_id" context="{'group_by':'shipment_id'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dvl_truck_booking" model="ir.actions.act_window">
+            <field name="name">Book Truck</field>
+            <field name="res_model">truck.booking</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Booking record. Let's create one!
+              </p>
+            </field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Import Operation records. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="dvl_truck_booking_menu" name="Truck Booking"
+            parent="devel_logistic_management.dvl_main_menu" sequence="4"/>
+        <menuitem id="dvl_truck_booking_record_menu" name="Truck Booking"
+            parent="devel_logistic_management.dvl_truck_booking_menu" action="devel_logistic_management.action_dvl_truck_booking" sequence="1"/>
+
+
+        <!--########### Delivery or Pick up Location for Truck ####################-->
+        <record id="view_truck_location_tree" model="ir.ui.view">
+            <field name="name">truck.location.tree</field>
+            <field name="model">truck.location</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_truck_location_list" model="ir.actions.act_window">
+            <field name="name">Locations / Places</field>
+            <field name="res_model">truck.location</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_location_list_dvl"
+            parent="devel_logistic_management.dvl_configuration_menu" action="devel_logistic_management.action_truck_location_list" sequence="22"/>
+    </data>
+</odoo>

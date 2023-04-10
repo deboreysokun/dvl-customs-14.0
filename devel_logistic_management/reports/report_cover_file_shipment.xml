@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_cover_file_shipment_doc">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <div style="font-size:10px"><span>Printed Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M:%S')"/> </span></div>
+                        <div class="row" style="border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div class="col-6" style="font-size:12px;padding:0px;">
+                            </div>
+                            <t t-if="o.operation_type == 'export'">
+                                <div class="col-6" style="font-size:16px;padding:0px;background-color:#2f5496;color:white">
+                                    <div class="text-center mb-5"><span> Shpmt Reference#: </span> <span t-field="o.name"/></div>
+                                </div>
+                            </t>
+                            <t t-else="o.operation_type == 'import'">
+                                <div class="col-6" style="font-size:16px;padding:0px;background-color:#c5e0b3;color:#002060">
+                                    <div class="text-center mb-5"><span> Shpmt Reference#: </span> <span t-field="o.name"/></div>
+                                </div>
+                            </t>
+                        </div>
+                        <div style="text-align:center;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div style="font-weight:bold;font-size:18px;"><span t-field="o.company_id.name"/></div>
+                            <div style="font-size:16px;"><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.city"/>, <t t-esc="o.company_id.country_id.name"/></div>
+                            <div style="font-size:16px;"><span>Cover File Shipment</span></div>
+                        </div>
+                        <div class="row"  style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div class="col-6" style="font-size:14px;">
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Quantity'"/></div>
+                                  <div class="col-6">
+                                    <t t-foreach="o.get_container_lines()" t-as="item">
+                                       <span t-esc="item_value"/>&#160; &#160; x <span t-esc="item"/> &#160; &#160;
+                                    </t>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Commodity'"/></div>
+                                  <div class="col-6"><span t-field="o.commodity"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'B/L No.'"/> </div>
+                                  <div class="col-6">
+                                    <t t-if="not o.hbl_number"><span t-field="o.bl_number"/></t>
+                                    <t t-if="o.hbl_number"><span t-field="o.hbl_number"/></t>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Containers No.'"/> </div>
+                                  <div class="col-6">
+                                    <span t-field="o.container_number"/>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Weight in (KGS)'"/> </div>
+                                  <div class="col-6"><span t-field="o.total_gross_weight"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Vessel Voyage No.'"/> </div>
+                                  <div class="col-6"><span t-field="o.vessel_id"/><t t-if="o.voyage_number"><span t-esc="'/'"/></t><span t-field="o.voyage_number"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Port of Loading'"/> </div>
+                                  <div class="col-6"><span t-field="o.port_of_loading"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Port of Discharge'"/> </div>
+                                  <div class="col-6"><span t-field="o.port_of_discharge"/></div>
+                                </div>
+                            </div>
+                            <div class="col-6" style="font-size:14px;">
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'ETD: '"/></div>
+                                  <div class="col-6"><span t-field="o.etd" t-options="{'widget': 'date', 'format': 'MM/dd/YYYY'}"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'ETA: '"/></div>
+                                  <div class="col-6"><span t-field="o.eta" t-options="{'widget': 'date', 'format': 'MM/dd/YYYY'}"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'ETR: '"/></div>
+                                  <div class="col-6"><span t-field="o.etr" t-options="{'widget': 'date', 'format': 'MM/dd/YYYY'}"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Shipping Line:'"/> </div>
+                                  <div class="col-6"><span t-field="o.shipping_line_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Trucking:'"/> </div>
+                                  <div class="col-6"><span t-esc="' '"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Shipper:'"/> </div>
+                                  <div class="col-8"><span t-field="o.shipper_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Consignee:'"/> </div>
+                                  <div class="col-8"><span t-field="o.consignee_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Clearance:'"/> </div>
+                                  <div class="col-8"><span t-field="o.clearance_office_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
+                                <div class="col-8"><span style="background-color:#ffff00" t-esc="o.customer_id.name"/></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page" style="font-size:12px;">
+                            <table class="table table-borderless" style="font-size:12px;" name="costing">
+                                <thead>
+                                    <t t-if="o.operation_type == 'import'">
+                                        <tr style="background-color:#e2efd9;">
+                                            <td colspan="2" style="padding:1px;border:1px solid black; width:100px">
+                                                <div>I. Checking List</div>
+                                            </td>
+                                            <td colspan="2" style="padding:1px;border:1px solid black; width: 100px">
+                                                <div>II. Process List</div>
+                                            </td>
+                                            <td class="text-center" style="padding:1px;border:1px solid black; width: 130px">
+                                                <div>Date</div>
+                                            </td>
+                                        </tr>
+                                     </t>
+                                     <t t-else="">
+                                        <tr style="background-color:#9cc2e5;">
+                                            <td colspan="2" style="padding:1px;border:1px solid black; width:100px">
+                                                <div>I. Checking List</div>
+                                            </td>
+                                            <td colspan="2" style="padding:1px;border:1px solid black; width: 100px">
+                                                <div>II. Expense List</div>
+                                            </td>
+                                            <td class="text-center" style="padding:1px;border:1px solid black; width: 130px">
+                                                <div>Amount</div>
+                                            </td>
+                                        </tr>
+                                     </t>
+                                </thead>
+                                <t t-if="o.operation_type == 'import'">
+                                    <tbody class="invoice_tbody">
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'HBL Submitted to CNEE'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Recived Bill of Leaading'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'HBL &amp; MBL Submitted to shipping Line'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Checked Tax'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Payment to Local Inv. Charges'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Issued Invoice '"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Invoice Charge to Shipper '"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Make Invoice &amp; Packing List'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Release Docs to CNEE'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Customs Valuation'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Issuing Invoice to oversea Agents'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Arrival Notice'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Container Out to SHV/PNH Depot/SHV Depot '"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Surrandered Status'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Container Returned to PHN Depot/ SHV Depot '"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Payament to THC and Release Document'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Related Line Ministies '"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'C/O Perimted '"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Import Paperwork Arragement'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Send Document '"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Import Permit/ Value Approval'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Trucking Deposit'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Recevied Clearance Documemt '"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Trucking Payament '"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Empty Container Back to Port'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Issued Invoice Final if any'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Refund Deposit Container'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                                <t t-else="">
+                                    <tbody class="invoice_tbody">
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'1'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Customs Permit'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'HBL Submitted to CNEE'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Permit'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'HBL &amp; MBL Submitted to shipping Line'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Register'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Payment to Local Inv. Charges'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Stamp'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <!-- 2. Clearance   -->
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Invoice Charge to Shipper '"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'2'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Clearance'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Release Docs to CNEE'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Inspection'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Issuing Invoice to oversea Agents'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Signature Diputy Diretor'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Container Out to SHV/PNH Depot/SHV Depot'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Deputy Director'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Container Returned to PHN Depot/ SHV Depot'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Stamp Office'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Related Line Ministies'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Cooloring'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Import Paperwork Arragement'"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Customs Reciept '"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <!-- 3. Trucking  -->
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Import Permit/ Value Approval '"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'3'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Trucking'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Trucking Fee'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Stand By Charge'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Lift on to Scan'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <!-- 4. Shipping Line -->
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'4'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Shipping Line'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Heading-CYCY'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'B/L Fee'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Ocean Freight'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Seal Recovery'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'LS Green Recovery'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Late Gate Fee'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Late Gate Submitted'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <!-- 5. Clearance Port -->
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'5'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Clearance Port'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Clearance Free'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:10px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:10px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <!-- 6. Port Charge -->
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'6'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Port Charge'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Lift On'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:10px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:10px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <!-- 7. Other Admin -->
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px;background-color:#ffd965;"><span t-esc="'7'"/></td>
+                                            <td style="border:1px solid black;padding:1px;background-color:#ffd965;">
+                                                <span t-esc="'Other Admin Expense'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;background-color:#ffd965;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-esc="'Commission Fee'"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:10px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                        <tr style="page-break-inside:avoid">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"></td>
+                                            <td style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;width:40px"/>
+                                            <td style="border:1px solid black;padding:10px;">
+                                                <span t-esc="''"/>
+                                            </td>
+                                            <td class="text-center"  style="border:1px solid black;padding:1px;"/>
+                                        </tr>
+                                    </tbody>
+                                </t>
+                            </table>
+                            <!--div style="page-break-inside:avoid">
+                                <div class="row" style="margin-top:10px;font-weight:bold;">
+                                    <div class="col-3" style="font-size:14px;margin-top: 10px;">
+                                        <div style="font-size:12px;text-align:center">Prepared By:</div>
+                                        <div style="font-size:12px;margin-top: 100px">Name:</div>
+                                        <div style="font-size:12px">Date:…......../............./.............</div>
+                                    </div>
+                                    <div class="col-3" style="font-size:14px;margin-top: 10px;">
+                                        <div style="font-size:12px;text-align:center">Checked By:</div>
+                                        <div style="font-size:12px;margin-top: 100px">Name:</div>
+                                        <div style="font-size:12px">Date:…......../............./.............</div>
+                                    </div>
+                                    <div class="col-3" style="font-size:14px;margin-top: 10px;">
+                                        <div style="font-size:12px;text-align:center">Verified By:</div>
+                                        <div style="font-size:12px;margin-top: 100px">Name:</div>
+                                        <div style="font-size:12px">Date:…......../............./.............</div>
+                                    </div>
+                                    <div class="col-3" style="font-size:14px;margin-top: 10px;">
+                                        <div style="font-size:12px;text-align:center">Approved By:</div>
+                                        <div style="font-size:12px;margin-top: 100px">Name:</div>
+                                        <div style="font-size:12px">Date:…......../............./.............</div>
+                                    </div>
+                                </div>
+                            </div-->
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

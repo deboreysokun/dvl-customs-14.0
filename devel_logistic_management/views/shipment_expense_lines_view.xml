@@ -1,0 +1,1468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ############# Customs Valuation Office / Custom Permit ############# -->
+        <record model="ir.actions.server" id="action_customs_comfirm_approval_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_customs_office_permit"/>
+            <field name="binding_model_id" ref="model_shipment_expense_customs_office_permit" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_customs_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_customs_office_permit"/>
+            <field name="binding_model_id" ref="model_shipment_expense_customs_office_permit" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_customs_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_customs_office_permit"/>
+            <field name="binding_model_id" ref="model_shipment_expense_customs_office_permit" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_customs_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_customs_office_permit"/>
+            <field name="binding_model_id" ref="model_shipment_expense_customs_office_permit" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_custom_permit_form" model="ir.ui.view">
+            <field name="name">Customs Valuation</field>
+            <field name="model">shipment.expense.customs.office.permit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_custom_permit_tree" model="ir.ui.view">
+            <field name="name">Customs Valuation</field>
+            <field name="model">shipment.expense.customs.office.permit</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_expense_custom_permit_filter" model="ir.ui.view">
+            <field name="name">Customs Valuation Filter</field>
+            <field name="model">shipment.expense.customs.office.permit</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_custom_permit_action" model="ir.actions.act_window">
+            <field name="name">Customs Valuation Office</field>
+            <field name="res_model">shipment.expense.customs.office.permit</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_custom_permit_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+        <!-- ############# END of  Customs Valuation Office / Custom Permit ############# -->
+
+        <!-- ############# Shipping Line Expense ############# -->
+        <record model="ir.actions.server" id="action_shipping_line_confirm_approve_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_shipping_line"/>
+            <field name="binding_model_id" ref="model_shipment_expense_shipping_line" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_shipping_line_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_shipping_line"/>
+            <field name="binding_model_id" ref="model_shipment_expense_shipping_line" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_shipping_line_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_shipping_line"/>
+            <field name="binding_model_id" ref="model_shipment_expense_shipping_line" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_shipping_line_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_shipping_line"/>
+            <field name="binding_model_id" ref="model_shipment_expense_shipping_line" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+        <record id="view_shipment_expense_shipping_line_form" model="ir.ui.view">
+            <field name="name">Shipping Line</field>
+            <field name="model">shipment.expense.shipping.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_shipment_expense_shipping_line_tree" model="ir.ui.view">
+            <field name="name">Shipping Line List</field>
+            <field name="model">shipment.expense.shipping.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="thc_amount" widget="toggle_button"  groups="account.group_account_user" nolabel="1"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_shipping_line_filter" model="ir.ui.view">
+            <field name="name">Shipping Line filter</field>
+            <field name="model">shipment.expense.shipping.line</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_shipping_line_action" model="ir.actions.act_window">
+            <field name="name">Shipping Lines</field>
+            <field name="res_model">shipment.expense.shipping.line</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_shipping_line_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+        <!-- #############  END of Shipping Line Expense ############# -->
+
+        <!-- ############# Clearance Line Expense ############# -->
+        <record model="ir.actions.server" id="action_clearance_line_confirm_approve_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_clearance"/>
+            <field name="binding_model_id" ref="model_shipment_expense_clearance" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_clearance_line_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_clearance"/>
+            <field name="binding_model_id" ref="model_shipment_expense_clearance" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_clearance_line_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_clearance"/>
+            <field name="binding_model_id" ref="model_shipment_expense_clearance" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_clearance_line_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_clearance"/>
+            <field name="binding_model_id" ref="model_shipment_expense_clearance"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+        <record id="view_shipment_expense_clearance_form" model="ir.ui.view">
+            <field name="name">shipment.expense.clearance.form</field>
+            <field name="model">shipment.expense.clearance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_shipment_expense_clearance_line_tree" model="ir.ui.view">
+            <field name="name">shipment.expense.clearance.tree</field>
+            <field name="model">shipment.expense.clearance</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_clearance_line_filter" model="ir.ui.view">
+            <field name="name">shipment.expense.clearance.filter</field>
+            <field name="model">shipment.expense.clearance</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_clearance_line_action" model="ir.actions.act_window">
+            <field name="name">Clearance Lines</field>
+            <field name="res_model">shipment.expense.clearance</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_clearance_line_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+        <!-- #############  END of Clearance Line Expense ############# -->
+
+        <!-- ############# Customs Duty Line Expense ############# -->
+        <record model="ir.actions.server" id="action_customs_duty_confirm_approve_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_custom_duty"/>
+            <field name="binding_model_id" ref="model_shipment_expense_custom_duty" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_customs_duty_line_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_custom_duty"/>
+            <field name="binding_model_id" ref="model_shipment_expense_custom_duty" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_customs_duty_line_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_custom_duty"/>
+            <field name="binding_model_id" ref="model_shipment_expense_custom_duty" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_customs_duty_line_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_custom_duty"/>
+            <field name="binding_model_id" ref="model_shipment_expense_custom_duty"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+        <record id="view_shipment_expense_custom_duty_form" model="ir.ui.view">
+            <field name="name">shipment.expense.custom.duty.form</field>
+            <field name="model">shipment.expense.custom.duty</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_shipment_expense_customs_duty_line_tree" model="ir.ui.view">
+            <field name="name">shipment.expense.custom.duty.tree</field>
+            <field name="model">shipment.expense.custom.duty</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="duty_tax" widget="toggle_button"  groups="account.group_account_user" nolabel="1"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_customs_duty_line_filter" model="ir.ui.view">
+            <field name="name">shipment.expense.custom.duty.filter</field>
+            <field name="model">shipment.expense.custom.duty</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_customs_duty_line_action" model="ir.actions.act_window">
+            <field name="name">Customs Duty Lines</field>
+            <field name="res_model">shipment.expense.custom.duty</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_customs_duty_line_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+        <!-- #############  END of Customs Duty Line Expense ############# -->
+
+        <!-- ############# Port Charge Line Expense ############# -->
+        <record model="ir.actions.server" id="action_port_charge_confirm_approve_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_port_charge"/>
+            <field name="binding_model_id" ref="model_shipment_expense_port_charge" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_port_charge_line_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_port_charge"/>
+            <field name="binding_model_id" ref="model_shipment_expense_port_charge" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_port_charge_line_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_port_charge"/>
+            <field name="binding_model_id" ref="model_shipment_expense_port_charge"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_port_charge_line_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_port_charge"/>
+            <field name="binding_model_id" ref="model_shipment_expense_port_charge"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+        <record id="view_shipment_expense_port_charge_form" model="ir.ui.view">
+            <field name="name">shipment.expense.port.charge.form</field>
+            <field name="model">shipment.expense.port.charge</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_shipment_expense_port_charge_line_tree" model="ir.ui.view">
+            <field name="name">shipment.expense.port.charge.tree</field>
+            <field name="model">shipment.expense.port.charge</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_port_charge_line_filter" model="ir.ui.view">
+            <field name="name">shipment.expense.port.charge.filter</field>
+            <field name="model">shipment.expense.port.charge</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_port_charge_line_action" model="ir.actions.act_window">
+            <field name="name">Port Charge Lines</field>
+            <field name="res_model">shipment.expense.port.charge</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_port_charge_line_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+        <!-- #############  END of Port Charge Line Expense ############# -->
+
+        <!-- ############# Trucking Line Expense ############# -->
+        <record model="ir.actions.server" id="action_trucking_line_confirm_approve_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_trucking"/>
+            <field name="binding_model_id" ref="model_shipment_expense_trucking" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_trucking_line_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_trucking"/>
+            <field name="binding_model_id" ref="model_shipment_expense_trucking" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_trucking_line_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_trucking"/>
+            <field name="binding_model_id" ref="model_shipment_expense_trucking" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_trucking_line_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_trucking"/>
+            <field name="binding_model_id" ref="model_shipment_expense_trucking"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+        <record id="view_shipment_expense_trucking_form" model="ir.ui.view">
+            <field name="name">shipment.expense.trucking.form</field>
+            <field name="model">shipment.expense.trucking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_shipment_expense_trucking_line_tree" model="ir.ui.view">
+            <field name="name">shipment.expense.trucking.tree</field>
+            <field name="model">shipment.expense.trucking</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="container_id" optional="show"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_trucking_line_filter" model="ir.ui.view">
+            <field name="name">shipment.expense.trucking.filter</field>
+            <field name="model">shipment.expense.trucking</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_trucking_line_action" model="ir.actions.act_window">
+            <field name="name">Trucking Lines</field>
+            <field name="res_model">shipment.expense.trucking</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_trucking_line_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+        <!-- #############  END of Trucking Line Expense ############# -->
+
+        <!-- ############# Other Admin Line Expense ############# -->
+        <record model="ir.actions.server" id="action_other_admin_confirm_approve_all">
+            <field name="name">Confirm and Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_other_admin"/>
+            <field name="binding_model_id" ref="model_shipment_expense_other_admin" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_other_admin_line_confirm_all">
+            <field name="name">Confirm All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_other_admin"/>
+            <field name="binding_model_id" ref="model_shipment_expense_other_admin" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_confirm()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_other_admin_line_approval_all">
+            <field name="name">Approve All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_manager'))]"/>
+            <field name="model_id" ref="model_shipment_expense_other_admin"/>
+            <field name="binding_model_id" ref="model_shipment_expense_other_admin" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_approve()
+            </field>
+        </record>
+        <record model="ir.actions.server" id="action_other_admin_line_draft_all">
+            <field name="name">Draft All</field>
+            <field name="groups_id" eval="[(4, ref('devel_logistic_management.group_dvl_operation_confirm_expense'))]"/>
+            <field name="model_id" ref="model_shipment_expense_other_admin"/>
+            <field name="binding_model_id" ref="model_shipment_expense_other_admin" />
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    records.action_draft_user_confirm()
+            </field>
+        </record>
+        <record id="view_shipment_other_admin_form" model="ir.ui.view">
+            <field name="name">shipment.expense.other.admin.form</field>
+            <field name="model">shipment.expense.other.admin</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Receiver Bank Account Information">
+                        <field name="received_user_id"/>
+                        <field name="receiver_bank_info_widget" widget="bankinfo" string="Bank Info"/>
+                    </group>
+                    <group string="Journal Entries Information">
+                        <group>
+                            <field name="shipment_id" invisible="1"/>
+                            <field name="account_id" groups="account.group_account_user"
+                            options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="description" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'"
+                             decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                            <field name="move_id" string="Journal Entry" readonly="1"/>
+                        </group>
+                        <group>
+                            <label for="qty"/>
+                            <div class="o_address_format">
+                                <field name="qty" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="uom_id" class="o_address_state" placeholder="BL Date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </div>
+                            <label for="unit_price"/>
+                            <div class="o_address_format">
+                                <field name="unit_price" class="o_address_city" placeholder="MBL or Booking N0." attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="currency_id" class="o_address_state" options="{'no_create': True, 'no_open': True, 'no_create_edit': True}"/>
+                            </div>
+                            <field name="rate"/>
+                            <field name="sub_total" string="Sub Total USD"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_shipment_expense_other_admin_line_tree" model="ir.ui.view">
+            <field name="name">shipment.expense.other.admin.tree</field>
+            <field name="model">shipment.expense.other.admin</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="shipment_id" invisible="1"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="attachment_number" string=" "/>
+                    <button name="action_get_attachment_view" string="Attachments" type="object" icon="fa-paperclip" />
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="hide"/>
+                    <field name="requested_date" optional="hide"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" />
+                    <field name="approver_user_id" optional="hide" />
+                    <field name="approved_date" optional="hide" />
+                    <field name="paid_user_id" optional="hide" />
+                    <field name="received_user_id" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="paid_date" optional="hide" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shipment_expense_other_admin_line_filter" model="ir.ui.view">
+            <field name="name">shipment.expense.other.admin.filter</field>
+            <field name="model">shipment.expense.other.admin</field>
+            <field name="arch" type="xml">
+                <search string="Expense Lines">
+                    <field name="description"/>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" name="to_confirm"/>
+                    <filter domain="[('state', '=', 'confirm')]" string="To Approve" name="to_approve"/>
+                    <filter domain="[('state', '=', 'validate')]" string="To Paid" name="to_paid"/>
+                    <separator/>
+                        <filter domain="[('state', '=', 'paid')]" string="Paid" name="paid"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_shipment" string="Shipments" context="{'group_by': 'shipment_id'}"/>
+                        <separator/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                        <filter name="group_requester" string="Requested By" context="{'group_by':'requester_user_id'}"/>
+                        <filter name="group_checker" string="Checked By" context="{'group_by':'checked_user_id'}"/>
+                        <separator/>
+                        <filter name="group_approver" string="Approve By" context="{'group_by':'approver_user_id'}"/>
+                        <filter name="group_paid_by" string="Paid By" context="{'group_by':'paid_user_id'}"/>
+                        <filter name="group_receiver" string="Received By" context="{'group_by':'received_user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="dvl_shipment_expense_other_admin_line_action" model="ir.actions.act_window">
+            <field name="name">Other Admin</field>
+            <field name="res_model">shipment.expense.other.admin</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id','=',active_id)]</field>
+            <field name="view_id" ref="view_shipment_expense_other_admin_line_tree"/>
+            <field name="context">{
+                'default_shipment_id': active_id,
+                'default_requester_user_id': uid
+                }</field>
+        </record>
+
+        <!-- #############  END of Other Admin Line Expense ############# -->
+
+
+        <!-- Expense Line Group Payment -->
+        <menuitem id="dvl_expense_line_menu" name="Expense Lines" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_processing_status_menu"  sequence="4"/>
+
+        <record id="view_shipments_expense_custom_permit" model="ir.ui.view">
+            <field name="name">Customs Valuation</field>
+            <field name="model">shipment.expense.customs.office.permit</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide"  attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_custom_permit_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Customs Valuation Office</field>
+            <field name="res_model">shipment.expense.customs.office.permit</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_custom_permit"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_customs_permit_menu" name="Customs Valuation Office / Permit" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_custom_permit_action" sequence="2"/>
+
+        <record id="view_shipments_expense_shipping_line" model="ir.ui.view">
+            <field name="name">Shipping Line</field>
+            <field name="model">shipment.expense.shipping.line</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_shipping_line_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Shipping Line</field>
+            <field name="res_model">shipment.expense.shipping.line</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_shipping_line"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_shipping_line_menu" name="Shipping Lines" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_shipping_line_action" sequence="3"/>
+
+        <record id="view_shipments_expense_clearance" model="ir.ui.view">
+            <field name="name">Clearance</field>
+            <field name="model">shipment.expense.clearance</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_clearance_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Clearance</field>
+            <field name="res_model">shipment.expense.clearance</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_clearance"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_clearance_menu" name="Clearances" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_clearance_action" sequence="4"/>
+
+        <record id="view_shipments_expense_customs_duty" model="ir.ui.view">
+            <field name="name">Customs Duty</field>
+            <field name="model">shipment.expense.custom.duty</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_customs_duty_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Customs Duty</field>
+            <field name="res_model">shipment.expense.custom.duty</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_customs_duty"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_customs_duty_menu" name="Customs Duty" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_customs_duty_action" sequence="5"/>
+
+        <record id="view_shipments_expense_port_charge" model="ir.ui.view">
+            <field name="name">Port Charge</field>
+            <field name="model">shipment.expense.port.charge</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_port_charge_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Port Charge</field>
+            <field name="res_model">shipment.expense.port.charge</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_port_charge"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_port_charge_menu" name="Port Charge" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_port_charge_action" sequence="6"/>
+
+        <record id="view_shipments_expense_trucking" model="ir.ui.view">
+            <field name="name">Expense Line Trucking </field>
+            <field name="model">shipment.expense.trucking</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_trucking_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Trucking</field>
+            <field name="res_model">shipment.expense.trucking</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_trucking"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_expense_trucking_menu" name="Trucking" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_trucking_action" sequence="7"/>
+
+        <record id="view_shipments_expense_other_admin" model="ir.ui.view">
+            <field name="name">Expense Other Admin </field>
+            <field name="model">shipment.expense.other.admin</field>
+            <field name="arch" type="xml">
+                <tree create="false" import="false" multi_edit="1">
+                    <field name="shipment_id" readonly="1" context="{'show_commodity': 1,'show_client_name': 1}"/>
+                    <field name="account_id" groups="account.group_account_user"
+                    options="{'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="description" attrs="{'readonly':[('state','!=','draft')]}" widget="text"/>
+                    <field name="qty" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="uom_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="unit_price" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="sub_total" sum="Sub Total"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirm'" decoration-danger="state == 'validate'" decoration-muted="state == 'reject'" decoration-success="state == 'paid'"/>
+                    <button string="Confirm" icon="fa-check" name="action_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="draft"/>
+                    <button string="Approve" icon="fa-thumbs-up" name="action_approve" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Reject" icon="fa-thumbs-down" name="action_reject" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="confirm"/>
+                    <button string="Draft" icon="fa-pencil" name="action_draft_user_confirm" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_confirm_expense" states="confirm"/>
+                    <button string="Draft" icon="fa-edit" name="action_draft" type="object"
+                        groups="devel_logistic_management.group_dvl_operation_manager" states="validate,reject"/>
+                    <field name="requester_user_id" optional="show"/>
+                    <field name="requested_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="checked_user_id" optional="hide" />
+                    <field name="checked_date" optional="hide" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="approver_user_id" optional="show" />
+                    <field name="approved_date" optional="show" attrs="{'readonly':[('state','!=','draft')]}" />
+                    <field name="received_user_id" optional="show" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shipment_expense_other_admin_action" model="ir.actions.act_window">
+            <field name="name">Expense Line Other Admin</field>
+            <field name="res_model">shipment.expense.other.admin</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('shipment_id.active','=',True),('state','in',['draft', 'confirm', 'validate'])]</field>
+            <field name="view_id" ref="view_shipments_expense_other_admin"/>
+            <field name="context">{'search_default_group_shipment': 1}</field>
+        </record>
+
+        <menuitem id="dvl_expense_other_admin_menu" name="Other Admin" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+            parent="devel_logistic_management.dvl_expense_line_menu" action="shipment_expense_other_admin_action" sequence="8"/>
+        
+  
+            
+    </data>
+</odoo>

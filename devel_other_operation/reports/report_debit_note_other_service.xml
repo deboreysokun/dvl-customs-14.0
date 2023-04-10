@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <record id="account_move_debit_note_other_service" model="ir.actions.report">
+            <field name="name">Debit Note Other Service</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_other_operation.report_debit_note_other_service</field>
+            <field name="report_file">devel_other_operation.report_debit_note_other_service</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">('%s_DBOS_%s' % (object.shipment_id.name,object.name))</field>
+        </record>
+
+        <template id="report_debit_note_other_service">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                <t t-if="not o" t-set="o" t-value="doc"/>
+                <!-- Multicompany -->
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"/>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+                <t t-if="o.print_receipt == false">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <div>
+                            <div style="color:#1f3864;text-align:center;font-weight:bold;margin-left:0px;margin-right:0px">
+                                <div style="font-size:20px;"><span>KINGDOM OF CAMBODIA</span></div>
+                                <div style="font-size:20px;"><span>NATION RELIGION KING</span></div>
+
+                                <t t-if="o.company_header_id">
+                                    <t t-if="o.company_header_id.street"> <div style="font-size:16px;"><span>Address:<span t-field="o.company_header_id.street"/> </span></div></t>
+                                    <t t-if="o.company_header_id.phone or o.company_header_id.mobile"> <div style="font-size:16px;"><span>Tel:<span t-field="o.company_header_id.phone"/><t t-if="o.company_header_id.mobile"> / <span t-field="o.company_header_id.mobile"/> </t> </span></div> </t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="page">
+                            <div class="text-center" style="text-align:center;border:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px;color:white;background-color:#3f3f3f;">
+                                <h5>DEBIT NOTE</h5>
+                            </div>
+                            <div class="row" style="border-left:2px solid black;border-right:2px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                                <div class="col-5" style="font-size:14px;border-right:2px solid black;padding-right:0px;">
+                                    <div class="row">
+                                        <div class="col-5" style="padding-right:0px;padding-left:0px;"><span t-esc="'Reference:'"/></div>
+                                        <div class="col-7" style="padding-right:0px;padding-left:0px;"><span t-field="o.other_service_id"/></div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-5" style="padding-right:0px;padding-left:0px;"><span t-esc="'Agent Name:'"/></div>
+                                      <div class="col-7" style="padding-right:0px;padding-left:0px;"><span t-field="o.agent_staff_id.name"/></div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-5" style="padding-right:0px;padding-left:0px;"><span t-esc="'Company:'"/></div>
+                                      <div class="col-7" style="padding-right:0px;padding-left:0px;"><span t-field="o.partner_id.name"/></div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-5" style="padding-right:0px;padding-left:0px;"><span t-esc="'Bill To:'"/></div>
+                                      <div class="col-7" style="padding-right:0px;padding-left:0px;"><span t-field="o.other_service_id.name"/></div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-5" style="padding-right:0px;padding-left:0px;"><span t-esc="'Mobile:'"/></div>
+                                      <div class="col-7" style="padding-right:0px;padding-left:0px;">
+                                        <t t-if="o.agent_staff_id">
+                                            <span t-field="o.agent_staff_id.mobile"><t t-if="o.agent_staff_id.phone"> / <span t-field="o.agent_staff_id.phone"/> </t> </span>
+                                        </t>
+                                        <t t-if="not o.agent_staff_id">
+                                            <span t-field="o.partner_id.mobile"><t t-if="o.partner_id.phone"> / <span t-field="o.partner_id.phone"/> </t> </span>
+                                        </t>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-5" style="padding-right:0px;padding-left:0px;"><span t-esc="'Email:'"/></div>
+                                      <t t-if="o.agent_staff_id"><div class="col-7" style="padding-right:0px;padding-left:0px;"><span t-field="o.agent_staff_id.email"/></div></t>
+                                      <t t-if="not o.agent_staff_id"><div class="col-7" style="padding-right:0px;padding-left:0px;"><span t-field="o.partner_id.email"/></div></t>
+                                    </div>
+                                    <br/>
+
+                                </div>
+                                <div class="col-4" style="font-size:14px;padding:0px">
+                                    <div class="row">
+                                      <div class="col-5" style="padding-right: 0px;"><span t-esc="'Invoice No.'"/></div>
+                                      <div class="col-6" style="padding-right: 0px;"><span t-field="o.name"/></div>
+                                    </div>
+
+                                </div>
+                                <div class="col-4" style="font-size:14px;border-right:1px solid #2e75b5;margin-left:0px;">
+                                    <div class="row">
+                                        <div class="col-5 text-right"><span t-esc="'Issued Date: '"/></div>
+                                        <div class="col-5"><span t-field="o.invoice_date" t-options="{'widget': 'date', 'format': 'dd/MMM/YYYY'}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="border-left:2px solid black;border-right:2px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                                <div class="col-5" style="font-size:14px;border-right:2px solid black;padding-right:0px;">
+                                </div>
+                                <div class="col-4" style="font-size:14px;padding:0px">
+                                </div>
+                                <div class="col-4" style="font-size:14px;border-right:1px solid black;margin-left:0px;">
+                                    <div class="row">
+                                        <div class="col-5 text-right"><span t-esc="'Exchange Rate:'"/></div>
+                                        <t t-if="o.currency_id.name == 'USD'">
+                                            <div class="col-5"><t t-esc="'{0:,.0f}'.format(o.exchange_rate)"/></div>
+                                        </t>
+                                        <t t-if="o.currency_id.name == 'KHR'">
+                                            <div class="col-5"><t t-esc="'{0:,.0f}'.format(o.currency_id.rate)"/></div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="table table-borderless" style="font-size:14px;">
+                                <thead>
+                                    <tr style="background-color:#3f3f3f;color:white">
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>NO.</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width:350px">
+                                            <div>DESCRIPTION</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>UOM</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>QTY</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>CURRENCY</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>UNIT PRICE</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>AMOUNT</div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <tr t-foreach="o.invoice_line_ids" t-as="l" style="page-break-inside:avoid">
+                                        <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l_index+1"/></td>
+                                        <td style="border:1px solid black;padding:1px;">
+                                            <span t-field="l.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;padding:1px;">
+                                            <span t-field="l.product_uom_id"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;padding:1px;">
+                                            <t t-if="not l.product_uom_id.name == 'Percent'">
+                                              <span t-esc="'{0:,.2f}'.format(l.quantity)"/>
+                                            </t>
+                                            <t t-if="l.product_uom_id.name == 'Percent'">
+                                                <span t-esc="'{0:,.2f}'.format(l.quantity*100)"/>%
+                                            </t>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;padding:1px;">
+                                            <span t-field="l.currency_id"/>
+                                        </td>
+                                        <td class="text-right" style="border:1px solid black;padding:1px;">
+                                            <t t-if="o.print_2digits == false and o.print_3digits == false">
+                                              <span t-field="l.price_unit"/>
+                                            </t>
+                                            <t t-if="o.print_2digits == true and o.print_3digits == false">
+                                              <span t-esc="'{0:,.2f}'.format(l.price_unit)"/>
+                                            </t>
+                                            <t t-if="o.print_3digits == true and o.print_2digits == false">
+                                              <span t-esc="'{0:,.3f}'.format(l.price_unit)"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right" style="border:1px solid black;padding:1px;">
+                                            <span t-field="l.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="6" style="text-align:right;font-weight:bold;padding:1px;">Total:</td>
+                                        <td class="text-right" style="border:1px solid black; font-weight:bold;padding:1px;background-color:#d0cece;">
+                                            <t t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="6" style="text-align:right;font-weight:bold;padding:1px;">Final Payment:</td>
+                                        <td class="text-right" style="border:1px solid black; font-weight:bold;padding:1px;">
+                                            <t t-esc="'{0:,.2f}'.format(o.amount_residual)"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <t t-if="o.exchange_currency_id.name == 'KHR'">
+                                            <td colspan="6" style="text-align:right;font-weight:bold;padding:1px;">Amount KHR:</td>
+                                            <td class="text-right" style="border:1px solid black; font-weight:bold;padding:1px;">
+                                                R <t t-esc="'{0:,.0f}'.format(o.amount_total_khr)"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.exchange_currency_id.name == 'USD'">
+                                            <td colspan="6" style="text-align:right;font-weight:bold;padding:1px;">Amount USD:</td>
+                                            <td class="text-right" style="border:1px solid black; font-weight:bold;padding:1px;">
+                                                $ <t t-esc="'{0:,.2f}'.format(o.amount_total_khr)"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="page-break-inside:avoid">
+                            <div class="row" style="margin-top:10px;font-weight:bold;">
+                                <div class="col-4" style="font-size:14px;margin-top: 10px;">
+                                    <div>Customer's Signature &amp; Name</div>
+                                    <div style="margin-top: 120px">Name:</div>
+                                    <div>Date:…......../............./.............</div>
+                                </div>
+                                <div class="col-4" style="font-size:14px;margin-top: 10px;">
+                                    <div>Authorized By:</div>
+                                    <div> <img src="/devel_logistic_management/static/img/signature.jpg" height="120px"/></div>
+                                    <div>CHHOR KHUNVATANA</div>
+                                    <div><t t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/></div>
+                                </div>
+                                <div class="col-4" style="font-size:14px;margin-top: 10px;">
+                                    <table class="table table-border">
+                                        <thead>
+                                            <tr><td style="border:1px solid #2e75b5;padding:0px;text-align:center;background-color:#bdd6ee;" colspan="3">Payment/ Receipt</td></tr>
+                                        </thead>
+                                        <tbody class="invoice_tbody">
+                                            <tr>
+                                                <td style="border:1px solid #2e75b5;padding:0px;text-align:center;background-color:#d9e2f3;">Paid By:</td>
+                                                <td style="border:1px solid #2e75b5;padding:0px;text-align:center;background-color:#d9e2f3;" colspan="2">Received By:</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border:1px solid #2e75b5;padding:30px"/>
+                                                <td style="border:1px solid #2e75b5;padding:30px" colspan="2"/>
+                                            </tr>
+                                            <tr>
+                                                <td style="border:1px solid #2e75b5;padding:0px;background-color:#d9e2f3;">Name:</td>
+                                                <td style="border:1px solid #2e75b5;padding:0px;background-color:#d9e2f3;" colspan="2">Name:</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border:1px solid #2e75b5;padding:0px;background-color:#d9e2f3;">Date:</td>
+                                                <td style="border:1px solid #2e75b5;padding:0px;background-color:#d9e2f3;" colspan="2">Date:</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="page-break-inside:avoid">
+                            <div style="border:2px solid #2e75b5;width:500px;font-size:14px;margin-top:15px">
+                                <span style="text-decoration: underline">REMITTANCE DETAILS:</span><br/>
+                                <span>All the price are in US Dollar</span><br/>
+                                <span>Payment Term: Mr. Chhor Khunvatana</span><br/>
+                                <span>Tel: 081 9999 69 / 012 585 085</span><br/><br/>
+                                <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
+                                <span>Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
+                                <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
+                                <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
+                                <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span><br/><br/>
+                                <span>Beneficiary Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
+                                <span>Beneficiary Bank Address: <t t-esc="o.partner_bank_id.bank_id.street"/></span><br/>
+                                <span>Beneficiary Bank SWIFT: <t t-esc="o.partner_bank_id.bank_id.bic"/></span><br/><br/>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <ul class="list-inline" style="text-align: right; font-size:12px">
+                                <li>Page: <span class="page"/> of <span class="topage"/></li>
+                            </ul>
+                        </div>
+                    </div>
+                </t>
+                    <!-- Official Receipt -->
+                    <t t-if="o.payment_state == 'paid' or o.payment_state == 'partial'">
+                        <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                        <t t-foreach="payments_vals" t-as="payment_vals">
+                            <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                                <t t-raw="0"/>
+
+                                <div class="page" style="border:1px solid black;">
+                                    <div class="text-center" style="text-align:center;font-weight:bold;font-size:24px;color:#002060;">
+                                        <t t-if="o.company_header_id">
+                                             <div style="font-size:24px;"><h2><span t-field="o.company_header_id.name"/></h2></div>
+                                        </t>
+                                        <div style="font-size:22px;"><h4>Official Receipt</h4></div>
+                                    </div>
+                                    <t t-set="payment_id" t-value="o.env['account.payment'].browse(payment_vals['account_payment_id'])"/>
+                                    <div class="row mb-2">
+                                      <div class="col-5"/>
+                                      <div class="col-8">
+                                          <div class="row">
+                                              <div class="col-3"/>
+                                              <div class="col-3" style="padding-right:0px;padding-left:0px;font-size:24px;color:#002060;"><span t-esc="'Receipt No. :'"/></div>
+                                              <div style="padding-right:0px;padding-left:0px;font-size:24px;">
+                                                  <span t-esc="payment_id.name"/>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-3"/>
+                                              <div class="col-3" style="padding-right:0px;padding-left:0px;font-size:24px;color:#002060;"><span t-esc="'Reference No. :'"/></div>
+                                              <div  style="padding-right:0px;padding-left:0px;font-size:24px;">
+                                                    <span t-field="o.other_service_id"/>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-3"/>
+                                            <div class="col-3" style="padding-right:0px;padding-left:0px;font-size:24px;color:#002060;"><span t-esc="'Date :'"/></div>
+                                            <div style="padding-right:0px;padding-left:0px;font-size:24px;">
+                                                <span t-esc="payment_id.date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="row mb-2">
+                                        <div class="col-6">
+                                            <div class="row">
+                                              <div class="col-5" style="padding-right:0px;padding-left:20px;font-size:24px;color:#002060;"><span t-esc="'Received From:'"/></div>
+                                              <div class="col-6" style="padding-right:0px;padding-left:0px;font-size:24px;">
+                                                  <span t-esc="payment_id.partner_id.name"/>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                              <div class="row">
+                                                <div style="padding-right:0px;padding-left:20px;font-size:24px;color:#002060;"><span t-esc="'the amount of:'"/></div>
+                                                <div style="padding-right:0px;padding-left:50px;font-size:24px;color:black;">
+                                                    <span t-field="payment_id.amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: payment_id.currency_id}"/>
+                                                </div>
+                                              </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-2">
+                                      <div class="col-8">
+                                        <t t-if="o.other_service_id.description">
+                                            <div class="row">
+                                              <div class="col-7" style="padding-right:0px;padding-left:20px;font-size:24px;color:#002060;;"><span t-esc="'For: '"/><span t-field="o.other_service_id.description"/></div>
+                                            </div>
+                                        </t>
+                                      </div>
+                                      <div class="col-8"/>
+                                    </div>
+
+                                    <div class="row mb-2">
+                                      <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-5" style="padding-right:0px;padding-left:20px;font-size:24px;color:#002060;"><span t-esc="'Payment Method'"/></div>
+                                            </div>
+                                            <div class="row" style="padding-right:0px;padding-left:50px;font-size:24px;">
+                                                <t t-if="payment_id.journal_id.name == 'Cash' "><i class="fa fa-check-square-o"/>  Cash</t>
+                                                <t t-if="payment_id.journal_id.name != 'Cash' "><i class="fa fa-square-o"/>  Cash</t>
+                                            </div>
+                                            <div class="row" style="padding-right:0px;padding-left:50px;font-size:24px;">
+                                                <t t-if="payment_id.journal_id.name == 'Cheque' "><i class="fa fa-check-square-o"/>  Cheque</t>
+                                                <t t-if="payment_id.journal_id.name != 'Cheque' "><i class="fa fa-square-o"/>  Cheque</t>
+                                            </div>
+                                            <div class="row" style="padding-right:0px;padding-left:50px;font-size:24px;">
+                                                <t t-if="payment_id.journal_id.name == 'Bank Transfer' "><i class="fa fa-check-square-o"/>  Money Transfer</t>
+                                                <t t-if="payment_id.journal_id.name != 'Bank Transfer' "><i class="fa fa-square-o"/>  Money Transfer</t>
+                                            </div>
+                                            <div class="row" style="padding-right:0px;padding-left:50px;font-size:24px;">
+                                                <t t-if="payment_id.journal_id.name == 'Bank Deposit' "><i class="fa fa-check-square-o"/>  Bank Deposit</t>
+                                                <t t-if="payment_id.journal_id.name != 'Bank Deposit' "><i class="fa fa-square-o"/>  Bank Deposit</t>
+                                            </div>
+                                      </div>
+
+                                      <div class="col-8">
+                                          <div class="row">
+                                            <div style="padding-right:0px;padding-left:20px;font-size:24px;color:#002060;margin-top: 130px;"> Received By:</div>
+                                            <div style="padding-right:0px;padding-left:50px;font-size:16px;color:#002060;">
+                                                <t t-if="payment_id.create_uid.partner_id.signature_image">
+                                                    <div> <img t-att-src="image_data_uri(payment_id.create_uid.partner_id.signature_image)" height="150px"/></div>
+                                                    <div style="text-align:center;font-size:24px;"><span t-esc="payment_id.create_uid.name"/> </div>
+                                                </t>
+                                                <t t-if="not payment_id.create_uid.partner_id.signature_image"><div style="margin-top: 150px;text-align:center;"><span style="text-align:center;font-size:24px;" t-esc="payment_id.create_uid.partner_id.name"/> </div></t>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

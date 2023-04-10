@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_container_deposit_form" model="ir.ui.view">
+            <field name="name">Container Deposit</field>
+            <field name="model">container.deposit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                 <form string="Register Deposit of Container">
+                    <group>
+                        <group>
+                            <!-- <field name="journal_id" widget="selection" required="1" context="{'default_type': 'bank'}" /> -->
+                            <field name="account_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="source_amount" invisible="1" force_save="1"/>
+                            <field name="source_qty" invisible="1" force_save="1"/>
+                            <field name="amount" force_save="1" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            <!-- <field name="currency_id"
+                            options="{'no_create': True, 'no_open': True}"
+                            groups="base.group_multi_currency"/>
+                            <field name="payment_date"  string="Deposit Date"/-->
+                            <field name="refund_deposit_qty" force_save="1" string="Deposit Qty" required="True"/>
+
+                            <!--field name="communication" placeholder="Internal Note..."/-->
+                        </group>
+                    </group>
+
+                     <footer>
+                        <button name="register_container_deposit" string="Add To Shipping Line" type="object"
+                                class="oe_highlight"/>
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                     </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_container_deposit" model="ir.actions.act_window">
+            <field name="name">Register Deposit of Container</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">container.deposit</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_container_deposit_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_container_refund_form" model="ir.ui.view">
+            <field name="name">Container Refund Deposit</field>
+            <field name="model">container.deposit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                 <form string="Register Refund Deposit of Container">
+                    <group>
+                        <group>
+                            <field name="journal_id" widget="selection" required="1" context="{'default_type': 'bank'}"/>
+                            <field name="account_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="source_amount" invisible="1" force_save="1"/>
+                            <field name="source_qty" invisible="1" force_save="1"/>
+                            <field name="amount" force_save="1" string="Total Amount" widget="monetary" options="{'currency_field': 'currency_id'}" />
+                            <field name="currency_id" options="{'no_create': True, 'no_open': True}"
+                                groups="base.group_multi_currency" invisible="1"/>
+                            <field name="payment_date" string="Refund Date"/>
+                            <field name="refund_deposit_qty" force_save="1" string="Refund Qty" required="True"/>
+                            <field name="communication" placeholder="Internal Note..." />
+                            <field name="remaining_refund_amount" invisible="1" force_save="1"/>
+                        </group>
+                    </group>
+
+                     <footer>
+                        <button name="refund_deposit_container" string="Refund Deposit" type="object"
+                           class="oe_highlight"/>
+                        <button special="cancel" string="Cancel" class="oe_link"/>
+                     </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_container_refund_deposit" model="ir.actions.act_window">
+            <field name="name">Refund Deposit Container</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">container.deposit</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_container_refund_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
+

@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_vgm">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!-- 1 Container 1 VGM ( VGM has to printed in 2 papers; one for estimate system weight; and one for actual weight) -->
+                    <t t-foreach="o.container_line_ids" t-as="c">
+                        <!-- Estimate Weight -->
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center;">
+                                <div style="font-weight:bold;text-decoration: underline">បញ្ជាក់ទម្ងន់សរុប</div>
+                                <div style="font-size:14px;">VERIFIED GROSS MASS (VGM)</div>
+                            </div>
+                            <div class="page text-center" style="font-size:12px;">
+                                <div class="row">
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1" style="font-size:12px"><span>នាមករណ៍អ្នកផ្ញើទំនិញ Shipper Name (Full Name)</span></div>
+                                        <div style="font-size:12px;border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.shipper_id"/></div>
+                                    </div>
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1"><span>លេខកក់ទុកឬប័ណ្ណដឹកជញ្ជូន Booking or B/L Number</span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <t t-if="not o.hbl_number">
+                                                <span t-field="o.bl_number"/>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <span t-field="o.hbl_number"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span>លេខកុងទឺន័រ <br/>Container number </span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <span t-field="c.container_number"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ប្រភេទឬទំហំកុងទឺន័រ <br/> Container type/size </span></div>
+                                        <div style="border:1px solid black;padding:5px;">
+                                            <span t-field="c.container_type_id.code"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ទម្ងន់ទំនិញសរុប <br/> Cargo G.W. (KGS) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"> <t t-esc="c.gross_weight"/> </div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:1px;"><span> បញ្ជាក់ទម្ងន់សរុប <br/>VGM (KGS)<br/></span>
+                                            <span style="font-size:7px">(Cargo G.W. + Container Tare Weight)</span></div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="c.gross_weight + c.weight"/></div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"> <span> វិធី <br/>Method (1 or 2) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="'2'"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ឈ្មោះនាវា(នៅកំពង់ផែផ្ទុកទំនិញ) <br/>Vessel Name (at Port of Loading) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.vessel_id"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខជើងនាវា <br/>Voyage Number</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.voyage_number"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">គោត្តនាមនិងនាមនៃអ្នកទទួលសិទ្ធ <br/> Full Name of Authorized Person (in CAPITAL letter)</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.name"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">តួនាទី <br/> Position</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.function"/></div>
+                                    </div>
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខទំនាក់ទំនង <br/> Contact Number</div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-field="o.create_uid.phone"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">ហត្ថលេខានៃអ្នកទទួលសិទ្ធ Authorized Signature</div>
+                                        <t t-if="o.vgm_stamp == true">
+                                            <t t-if="o.shipper_id.signature_image"><div style="border:1px solid black;padding:5px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                        </t>
+                                    </div>
+                                    <div class="col-8" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;vertical-align:middle;">
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាទម្ងន់ទាំងអស់ដូចមានក្នុងការប្រកាសខាងលើពិតជាត្រឹមត្រូវប្រាកដមែន។
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាជញ្ជីងដែលបានប្រើប្រាស់សម្រាប់ការថ្លឹងទម្ងន់ទំនិញសម្រាប់ផ្ញើតាមនាវានេះពិតជាបានបញ្ជាក់និងត្រួតពិនិត្យតាមការតម្រូវរបស់អាជ្ញាធរមានសមត្ថកិច្ច។
+                                        ការបញ្ជាក់នេះអាចបង្ហាញជូនបានការស្នើសុំ។
+
+                                        We hereby certify the weights as decalared above to be true and accurate. We certify the scale used for
+                                        weighting this shipment has been certified and inspected as required by local authorities. Verification is available
+                                        upon request.</div>
+                                        <t t-if="o.vgm_stamp_consignee == true">
+                                            <!-- Show consignee stamp at any position for all pages-->
+                                            <div style="position:absolute;">
+                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <t t-if="o.vgm_stamp == false">
+                                    <div class="row" style="margin-top:50px;">
+                                        <div class="col-4" style="font-size:12px;padding:0px;">
+                                            <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                            <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="o.vgm_stamp == true">
+                                    <t t-if="not o.shipper_id.signature_image">
+                                        <div class="row" style="margin-top:50px;">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.shipper_id.signature_image">
+                                        <div class="row">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+
+                            <!--  Another VGM the same paper-->
+
+                            <div class="mb-2" style="border-bottom:1px solid black; margin-top:10px;"/>
+
+                            <div style="text-align:center;">
+                                <div style="font-weight:bold;text-decoration: underline">បញ្ជាក់ទម្ងន់សរុប</div>
+                                <div style="font-size:14px;">VERIFIED GROSS MASS (VGM)</div>
+                            </div>
+                            <div class="page text-center" style="font-size:12px;">
+                                <div class="row">
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1" style="font-size:12px"><span>នាមករណ៍អ្នកផ្ញើទំនិញ Shipper Name (Full Name)</span></div>
+                                        <div style="font-size:12px;border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.shipper_id"/></div>
+                                    </div>
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1"><span>លេខកក់ទុកឬប័ណ្ណដឹកជញ្ជូន Booking or B/L Number</span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <t t-if="not o.hbl_number">
+                                                <span t-field="o.bl_number"/>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <span t-field="o.hbl_number"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span>លេខកុងទឺន័រ <br/>Container number </span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <span t-field="c.container_number"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ប្រភេទឬទំហំកុងទឺន័រ <br/> Container type/size </span></div>
+                                        <div style="border:1px solid black;padding:5px;">
+                                            <span t-field="c.container_type_id.code"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ទម្ងន់ទំនិញសរុប <br/> Cargo G.W. (KGS) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"> <t t-esc="c.gross_weight"/> </div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:1px;"><span> បញ្ជាក់ទម្ងន់សរុប <br/>VGM (KGS)<br/></span>
+                                            <span style="font-size:7px">(Cargo G.W. + Container Tare Weight)</span></div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="c.gross_weight + c.weight"/></div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"> <span> វិធី <br/>Method (1 or 2) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="'2'"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ឈ្មោះនាវា(នៅកំពង់ផែផ្ទុកទំនិញ) <br/>Vessel Name (at Port of Loading) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.vessel_id"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខជើងនាវា <br/>Voyage Number</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.voyage_number"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">គោត្តនាមនិងនាមនៃអ្នកទទួលសិទ្ធ <br/> Full Name of Authorized Person (in CAPITAL letter)</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.name"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">តួនាទី <br/> Position</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.function"/></div>
+                                    </div>
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខទំនាក់ទំនង <br/> Contact Number</div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-field="o.create_uid.phone"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">ហត្ថលេខានៃអ្នកទទួលសិទ្ធ Authorized Signature</div>
+                                        <t t-if="o.vgm_stamp == true">
+                                            <t t-if="o.shipper_id.signature_image"><div style="border:1px solid black;padding:5px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                        </t>
+                                    </div>
+                                    <div class="col-8" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;vertical-align:middle;">
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាទម្ងន់ទាំងអស់ដូចមានក្នុងការប្រកាសខាងលើពិតជាត្រឹមត្រូវប្រាកដមែន។
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាជញ្ជីងដែលបានប្រើប្រាស់សម្រាប់ការថ្លឹងទម្ងន់ទំនិញសម្រាប់ផ្ញើតាមនាវានេះពិតជាបានបញ្ជាក់និងត្រួតពិនិត្យតាមការតម្រូវរបស់អាជ្ញាធរមានសមត្ថកិច្ច។
+                                        ការបញ្ជាក់នេះអាចបង្ហាញជូនបានការស្នើសុំ។
+
+                                        We hereby certify the weights as decalared above to be true and accurate. We certify the scale used for
+                                        weighting this shipment has been certified and inspected as required by local authorities. Verification is available
+                                        upon request.</div>
+                                        <t t-if="o.vgm_stamp_consignee == true">
+                                            <!-- Show consignee stamp at any position for all pages-->
+                                            <div style="position:absolute;">
+                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <t t-if="o.vgm_stamp == false">
+                                    <div class="row" style="margin-top:50px;">
+                                        <div class="col-4" style="font-size:12px;padding:0px;">
+                                            <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                            <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="o.vgm_stamp == true">
+                                    <t t-if="not o.shipper_id.signature_image">
+                                        <div class="row" style="margin-top:50px;">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.shipper_id.signature_image">
+                                        <div class="row">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Actual Weight -->
+                        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                            <t t-raw="0"/>
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                            <div style="text-align:center;">
+                                <div style="font-weight:bold;text-decoration: underline">បញ្ជាក់ទម្ងន់សរុប</div>
+                                <div style="font-size:14px;">VERIFIED GROSS MASS (VGM)</div>
+                            </div>
+                            <div class="page text-center" style="font-size:12px;">
+                                <div class="row">
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1" style="font-size:12px"><span>នាមករណ៍អ្នកផ្ញើទំនិញ Shipper Name (Full Name)</span></div>
+                                        <div style="font-size:12px;border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.shipper_id"/></div>
+                                    </div>
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1"><span>លេខកក់ទុកឬប័ណ្ណដឹកជញ្ជូន Booking or B/L Number</span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <t t-if="not o.hbl_number">
+                                                <span t-field="o.bl_number"/>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <span t-field="o.hbl_number"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span>លេខកុងទឺន័រ <br/>Container number </span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <span t-field="c.container_number"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ប្រភេទឬទំហំកុងទឺន័រ <br/> Container type/size </span></div>
+                                        <div style="border:1px solid black;padding:5px;">
+                                            <span t-field="c.container_type_id.code"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ទម្ងន់ទំនិញសរុប <br/> Cargo G.W. (KGS) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"> <t t-esc="c.actual_gross_weight"/> </div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:1px;"><span> បញ្ជាក់ទម្ងន់សរុប <br/>VGM (KGS)<br/></span>
+                                            <span style="font-size:7px">(Cargo G.W. + Container Tare Weight)</span></div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="c.actual_gross_weight + c.weight"/></div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"> <span> វិធី <br/>Method (1 or 2) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="'2'"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ឈ្មោះនាវា(នៅកំពង់ផែផ្ទុកទំនិញ) <br/>Vessel Name (at Port of Loading) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.vessel_id"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខជើងនាវា <br/>Voyage Number</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.voyage_number"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">គោត្តនាមនិងនាមនៃអ្នកទទួលសិទ្ធ <br/> Full Name of Authorized Person (in CAPITAL letter)</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.name"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">តួនាទី <br/> Position</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.function"/></div>
+                                    </div>
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខទំនាក់ទំនង <br/> Contact Number</div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-field="o.create_uid.phone"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">ហត្ថលេខានៃអ្នកទទួលសិទ្ធ Authorized Signature</div>
+                                        <t t-if="o.vgm_stamp == true">
+                                            <t t-if="o.shipper_id.signature_image"><div style="border:1px solid black;padding:5px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                        </t>
+                                    </div>
+                                    <div class="col-8" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;vertical-align:middle;">
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាទម្ងន់ទាំងអស់ដូចមានក្នុងការប្រកាសខាងលើពិតជាត្រឹមត្រូវប្រាកដមែន។
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាជញ្ជីងដែលបានប្រើប្រាស់សម្រាប់ការថ្លឹងទម្ងន់ទំនិញសម្រាប់ផ្ញើតាមនាវានេះពិតជាបានបញ្ជាក់និងត្រួតពិនិត្យតាមការតម្រូវរបស់អាជ្ញាធរមានសមត្ថកិច្ច។
+                                        ការបញ្ជាក់នេះអាចបង្ហាញជូនបានការស្នើសុំ។
+
+                                        We hereby certify the weights as decalared above to be true and accurate. We certify the scale used for
+                                        weighting this shipment has been certified and inspected as required by local authorities. Verification is available
+                                        upon request.</div>
+                                        <t t-if="o.vgm_stamp_consignee == true">
+                                            <!-- Show consignee stamp at any position for all pages-->
+                                            <div style="position:absolute;">
+                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <t t-if="o.vgm_stamp == false">
+                                    <div class="row" style="margin-top:50px;">
+                                        <div class="col-4" style="font-size:12px;padding:0px;">
+                                            <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                            <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="o.vgm_stamp == true">
+                                    <t t-if="not o.shipper_id.signature_image">
+                                        <div class="row" style="margin-top:50px;">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.shipper_id.signature_image">
+                                        <div class="row">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+
+                            <!--  Another VGM the same paper -->
+
+                            <div class="mb-2" style="border-bottom:1px solid black; margin-top:10px;"/>
+
+                            <div style="text-align:center;">
+                                <div style="font-weight:bold;text-decoration: underline">បញ្ជាក់ទម្ងន់សរុប</div>
+                                <div style="font-size:14px;">VERIFIED GROSS MASS (VGM)</div>
+                            </div>
+                            <div class="page text-center" style="font-size:12px;">
+                                <div class="row">
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1" style="font-size:12px"><span>នាមករណ៍អ្នកផ្ញើទំនិញ Shipper Name (Full Name)</span></div>
+                                        <div style="font-size:12px;border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.shipper_id"/></div>
+                                    </div>
+                                    <div class="col-6" style="font-size:12px;padding:0px;">
+                                        <div class="text-left mb-1"><span>លេខកក់ទុកឬប័ណ្ណដឹកជញ្ជូន Booking or B/L Number</span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <t t-if="not o.hbl_number">
+                                                <span t-field="o.bl_number"/>
+                                            </t>
+                                            <t t-if="o.hbl_number">
+                                                <span t-field="o.hbl_number"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span>លេខកុងទឺន័រ <br/>Container number </span></div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;">
+                                            <span t-field="c.container_number"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ប្រភេទឬទំហំកុងទឺន័រ <br/> Container type/size </span></div>
+                                        <div style="border:1px solid black;padding:5px;">
+                                            <span t-field="c.container_type_id.code"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ទម្ងន់ទំនិញសរុប <br/> Cargo G.W. (KGS) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"> <t t-esc="c.actual_gross_weight"/> </div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:1px;"><span> បញ្ជាក់ទម្ងន់សរុប <br/>VGM (KGS)<br/></span>
+                                            <span style="font-size:7px">(Cargo G.W. + Container Tare Weight)</span></div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="c.actual_gross_weight + c.weight"/></div>
+                                    </div>
+                                    <div class="col-2" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"> <span> វិធី <br/>Method (1 or 2) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-esc="'2'"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;"><span> ឈ្មោះនាវា(នៅកំពង់ផែផ្ទុកទំនិញ) <br/>Vessel Name (at Port of Loading) </span> </div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.vessel_id"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខជើងនាវា <br/>Voyage Number</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.voyage_number"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">គោត្តនាមនិងនាមនៃអ្នកទទួលសិទ្ធ <br/> Full Name of Authorized Person (in CAPITAL letter)</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.name"/></div>
+                                    </div>
+                                    <div class="col-3" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">តួនាទី <br/> Position</div>
+                                        <div style="border:1px solid black;padding:5px;text-transform: uppercase;"><span t-field="o.create_uid.function"/></div>
+                                    </div>
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">លេខទំនាក់ទំនង <br/> Contact Number</div>
+                                        <div style="border:1px solid black;padding:5px;"><span t-field="o.create_uid.phone"/></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;">ហត្ថលេខានៃអ្នកទទួលសិទ្ធ Authorized Signature</div>
+                                        <t t-if="o.vgm_stamp == true">
+                                            <t t-if="o.shipper_id.signature_image"><div style="border:1px solid black;padding:5px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                        </t>
+                                    </div>
+                                    <div class="col-8" style="font-size:12px;padding:0px;">
+                                        <div style="padding:10px;vertical-align:middle;">
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាទម្ងន់ទាំងអស់ដូចមានក្នុងការប្រកាសខាងលើពិតជាត្រឹមត្រូវប្រាកដមែន។
+                                        យើងខ្ញុំសូមបញ្ជាក់ថាជញ្ជីងដែលបានប្រើប្រាស់សម្រាប់ការថ្លឹងទម្ងន់ទំនិញសម្រាប់ផ្ញើតាមនាវានេះពិតជាបានបញ្ជាក់និងត្រួតពិនិត្យតាមការតម្រូវរបស់អាជ្ញាធរមានសមត្ថកិច្ច។
+                                        ការបញ្ជាក់នេះអាចបង្ហាញជូនបានការស្នើសុំ។
+
+                                        We hereby certify the weights as decalared above to be true and accurate. We certify the scale used for
+                                        weighting this shipment has been certified and inspected as required by local authorities. Verification is available
+                                        upon request.</div>
+                                        <t t-if="o.vgm_stamp_consignee == true">
+                                            <!-- Show consignee stamp at any position for all pages-->
+                                            <div style="position:absolute;">
+                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <t t-if="o.vgm_stamp == false">
+                                    <div class="row" style="margin-top:50px;">
+                                        <div class="col-4" style="font-size:12px;padding:0px;">
+                                            <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                            <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                        </div>
+                                    </div>
+                                </t>
+                                <t t-if="o.vgm_stamp == true">
+                                    <t t-if="not o.shipper_id.signature_image">
+                                        <div class="row" style="margin-top:50px;">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.shipper_id.signature_image">
+                                        <div class="row">
+                                            <div class="col-4" style="font-size:12px;padding:0px;">
+                                                <div style="padding:10px;">កាលបរិច្ឆេទ Date (dd/mm/yy)</div>
+                                                <div style="border:1px solid black;padding:5px;"><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')" /></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

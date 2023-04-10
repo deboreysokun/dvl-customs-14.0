@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_export_permit_doc">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <div style="text-align:center;font-size:14px;">
+                            ប្រកាសលេខ ៣៤៦ ប្រក.កសក ថ្ងៃនេះចុះថ្ងៃទី ១០ ខែឧសភា ឆ្នាំ ២០១០ ស្ដីពីនីតិវិធីនៃការត្រួតពិនិត្យភូតគាមអនាម័យ
+                        </div>
+                        <div class="text-right">
+                            <span t-field="o.name"/>
+                        </div>
+                        <div style="text-align:center">
+                            <div style="font-weight:bold;font-size:16px;"><span style="font-family:'Moul',cursive;">ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span>KINGDOM OF CAMBOIDA</span></div>
+                            <div style="font-size:16px;"></div>
+                            <div style="font-weight:bold;font-size:14px;"><span>ជាតិ សាសនា ព្រះមហាក្សត្រ<br/> Nation Religion King</span></div>
+                        </div>
+                        <div class="text-right">
+                          លេខ(No)..................................
+                        </div>
+                        <div class="page" style="font-size:14px;">
+                            <div class="text-center" style="font-weight:bold;padding-top:15px;">
+                                <span style="font-family:'Moul',cursive;">ពាក្យសុំការត្រួតពិនិត្យភូតតាមអនាម័យលើទំនិញនាំចេញ</span> <br/><span>(Application for Plant Quarantine Inspection of Export Consignment)</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-3">
+                                   <span>នាម និង គោត្តនាមអ្នកសុំ </span><br/>
+                                   <span style="font-size:10px">( APPLICANT'S NAME )</span>
+                                </div>
+                                <div class="col-6">
+                                    <t t-if="o.create_uid">: <span t-field="o.create_uid.khmer_name"/></t>
+                                   <t t-if="not o.create_uid">:.......................................................................................................................................</t>
+                                </div>
+                                <div class="col-3" style="font-weight:bold;text-align:center;border: 1px solid black;background-color:#D3D3D3;">
+                                   <span>សម្រាប់សមត្ថកិច្ច ភ គ អ</span><br/>
+                                   <span style="font-size:10px">( FOR PQ AUTHORITY )</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-3">
+                                   <span>ឈ្មោះក្រុមហ៊ុន</span><br/>
+                                   <span style="font-size:10px">( COMPANY NAME )</span>
+                                </div>
+                                <div class="col-6">
+                                   <t t-if="o.shipper_id">: <span t-field="o.shipper_id.khmer_name"/></t>
+                                   <t t-if="not o.shipper_id">:.......................................................................................................................................</t>
+                                </div>
+                                <div class="col-3" style="font-weight:bold;border: 1px solid black; border-top:0px; border-bottom:0px; margin:-5px 0px 0px 0px;padding-top:5px">
+                                   <span>.  លេខកូដស្នើសុំ:...............</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-3">
+                                   <span>អាស័យដ្ឋានក្រុមហ៊ុន </span>
+                                </div>
+                                <div class="col-6">
+                                    <t t-if="o.shipper_id">: <span t-field="o.shipper_id.street2"/></t>
+                                    <t t-if="not o.shipper_id">:.......................................................................................................................................</t>
+                                </div>
+                                <div class="col-3" style="font-weight:bold;border: 1px solid black; border-top:0px; border-bottom:0px; margin:-20px 0px 0px 0px;">
+                                   <span>.  ចំណាត់ការ:</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-3">
+                                   <span>និងលេខទូរស័ព្ទទំនាក់ទំនង</span><br/>
+                                   <span style="font-size:10px">(COMPANY ADDRESS &amp; CONTACT PHONE'S NUMBER)</span>
+                                </div>
+                                <div class="col-6">
+                                   <t t-if="o.shipper_id">: <span t-field="o.shipper_id.phone"/> <t t-if="o.shipper_id.mobile"> / <span t-field="o.consignee_id.mobile"/></t> </t>
+                                   <t t-if="not o.shipper_id">:.......................................................................................................................................</t>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-top:0px; margin:-20px 0px 0px 0px;padding-bottom:5px">
+                                   <span>..............................................................
+                                   ..............................................................
+                                   ..............................................................</span>
+                                </div>
+                            </div>
+
+                            <div class="text-center" style="font-weight:bold;">
+                                <span style="text-decoration: underline;font-family:'Moul',cursive;">សូមគោរពជូន</span><br/>
+                                <span style="font-family:'Moul',cursive;">ឯកឧត្តមអគ្គនាយក នៃអគ្គនាយកដ្ឋានកសិកម្ម</span><br/>
+                                <span>(TO H.E DIRECTOR GENERAL OF GENERAL DIRECTORATE OF AGRICULTURE)</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1">
+                                <div class="col-2" style="border: 1px solid black;">
+                                   <div style="padding-top:10px;padding-bottom:10px"> <span style="font-weight:bold;text-decoration: underline;text-align:center">កម្មវត្ថុ៖ </span><br/>
+                                   <span style="font-size:10px;text-align:center">( Subject)</span>
+                                   </div>
+
+                                </div>
+                                <div class="col-10" style="border: 1px solid black; border-left:0px">
+                                    <div style="padding-top:10px;padding-bottom:10px">សុំការត្រួតពិនិត្យនាំចេញ <input type="checkbox"/> / នាំចេញបន្ត <input type="checkbox"/> :..........................................................................................................................................................<br/>
+                                    <span style="font-size:10px">(APPLY FOR EXPORT <input type="checkbox"/> / RE EXPORT <input type="checkbox"/> / INSPECTION OF):.....................................................................................................................................................................................................................</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1">
+                                <span style="font-weight:bold;text-decoration:underline; font-size:14px">ឯកសារជូនភ្ជាប់ </span><span> (ATTACHED DOCUMENTS):</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="line-height:25px;">
+                                <div class="col-9">
+                                   <span style="font-size:14px">1. វិញ្ញាបនបត្រភូតគាមអនាម័យ ដែលចេញដោយសមត្ថកិច្ចភូតគាមអនាម័យក្នុងប្រទេសជាប្រភពដើមនៃទំនិញ</span>
+                                   <span style="font-size:12px">(PHYTOSANITARY CERTIFICATE ISSUED BY PQ AUTHORITY OF COUNTRY’S ORIGIN)</span>
+                                </div>
+
+                                <div class="col-4" >
+                                    <input type="checkbox"/>
+                                   <span style="font-size:14px">1. ចំពោះការនាំចេញបន្ត</span><br/>
+                                   <span style="font-size:10px">(FOR RE EXPORT)</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="line-height:25px;">
+                                <div class="col-9">
+                                   <span style="font-size:14px">2. លិខិតអនុញ្ញាតនាំចូលទំនិញជាកម្មវត្ថុនៃការត្រួតពិនិត្យភូតគាមអនាម័យដែលចេញដោយសមត្ថកិច្ចភូតគាម អនាម័យនៃប្រទេសនាំចូល</span>
+                                   <span style="font-size:12px">(IMPORT CERTIFICATE/PERMIT FOR PLANT QUARANTINE MATERIALS, ISSUED BY PQ AUTHORITY OF IMPORTING COUNTRY)</span>
+                                </div>
+
+                                <div class="col-4">
+                                    <input type="checkbox"/>
+                                   <span style="font-size:14px">2. សម្រាប់ទំនិញហានិភ័យខ្ពស់</span><br/>
+                                   <span style="font-size:10px">(FOR PQ HIGH RISK GOODS)</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="line-height:25px;">
+                                <div class="col-9">
+                                   <span style="font-size:14px">3. បណ្ដាលក្ខខណ្ឌភូតគាមអនាម័យនៃប្រទេសនាំចូល</span>
+                                   <span style="font-size:12px">(OTHER DOCUMENTS RELATED TO PQ REQUIEMENT OF IMPORTING COUNTRY)</span>
+                                </div>
+
+                                <div class="col-4" >
+                                    <input type="checkbox"/>
+                                   <span style="font-size:14px">3. ប្រសិនបើមាន</span><br/>
+                                   <span style="font-size:10px">(IF AVAILAIBLE)</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-9">
+                                   <span style="font-size:14px">4. វិញ្ញាបនបត្រធូបទកម្ម</span>
+                                   <span style="font-size:12px">(FUMIGATION/DISINFESTATION CERTIFICATE)</span>
+                                </div>
+
+                                <div class="col-4" >
+                                    <input type="checkbox"/>
+                                   <span style="font-size:14px">4. ប្រសិនបើមាន</span><br/>
+                                   <span style="font-size:10px">(IF AVAILAIBLE)</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-9">
+                                   <span style="font-size:14px">5. វិក្កយបត្រទំនិញ</span>
+                                   <span style="font-size:12px">(INVOICE)</span>
+                                </div>
+
+                                <div class="col-4">
+                                    <input type="checkbox"/>
+                                   <span style="font-size:14px">5. ចាំបាច់ត្រូវតែមាន</span><br/>
+                                   <span style="font-size:10px">(NESSASSARY DOCUMENT)</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1" style="">
+                                <div class="col-9">
+                                   <span style="font-size:14px">6. បញ្ជីវេចខ្ចប់</span>
+                                   <span style="font-size:12px">(PACKING LIST)</span>
+                                </div>
+
+                                <div class="col-4" >
+                                    <input type="checkbox"/>
+                                   <span style="font-size:14px">6. ចាំបាច់ត្រូវតែមាន</span><br/>
+                                   <span style="font-size:10px">(NESSASSARY DOCUMENT)</span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-1 mt-1">
+                                <span style="font-weight:bold;cursive;text-decoration:underline; font-size:14px">សំគាល់</span><span> (NOTE):</span>
+                                <span> សូមគូស <i class="fa fa-check-square-o"/> ចំពោះឯកសារជូនភ្ជាប់ដែលមាន </span>
+                                <span>( PLEASE MAKE A NOTE <i class="fa fa-check-square-o"/> FOR AVAILABLE ATTACHED DOCUMENTS)</span>
+                            </div>
+
+                            <div class="row mb-1 mt-1">
+                                <span style="font-weight:bold;font-size:14px">ការពិពណ៌នាអំពីមុខទំនិញ</span><span> (DESCRIPTION OF GOODS):</span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-3" style="border: 1px solid black;">
+                                   <span style="text-align:center">១.បំណងនៃការនាំចេញ </span><br/>
+                                   <span style="font-size:10px;text-align:center">(1 .EXPORT PURPOSE)</span>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-left:0px">
+                                    <div style="vertical-align: middle;padding-top:10px;">..........................................................</div>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-left:0px">
+                                   <span style="text-align:center">២.មធ្យោបាយដឹកជញ្ជូន</span><br/>
+                                   <span style="font-size:10px;text-align:center">(2 .MEAN OF CONVEYANCE )</span>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-left:0px">
+                                    <t t-if="o.transportation_mode"><div style="text-align:center;padding-top:10px"><span t-field="o.transportation_mode"/></div></t>
+                                    <t t-if="not o.transportation_mode"><div style="vertical-align: middle;padding-top:10px;">..........................................................</div></t>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-3" style="border: 1px solid black;border-top:0px">
+                                   <span style="text-align:center">៣.ច្រកទ្វារចេញ</span><br/>
+                                   <span style="font-size:10px;text-align:center">(3. EXIT POINT)</span>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-left:0px;border-top:0px">
+                                    <t t-if="o.entry_exit_port_id"><div style="text-align:center;"><span t-field="o.entry_exit_port_id.kh_name"/></div></t>
+                                    <t t-if="not o.entry_exit_port_id"><div style="vertical-align: middle;padding-top:10px;">..........................................................</div></t>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-left:0px;border-top:0px">
+                                   <span style="text-align:center">៤.ច្រក និងប្រទេសគោលដៅ </span><br/>
+                                   <span style="font-size:10px;text-align:center">(4. ENTRY AND COUNTRY DESTINATION)</span>
+                                </div>
+                                <div class="col-3" style="border: 1px solid black; border-left:0px;border-top:0px">
+                                    <t t-if="o.import_country_id"><div style="text-align:center;"><span t-field="o.import_country_id"/></div></t>
+                                    <t t-if="not o.import_country_id"><div style="vertical-align: middle;padding-top:10px;">..........................................................</div></t>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4" style="border: 1px solid black;border-top:0px">
+                                   <span style="text-align:center">ឈ្មោះ និងអាស័យដ្ឋានក្រុមហ៊ុន ដែលទទួលទំនិញ</span><br/>
+                                   <span style="font-size:10px;text-align:center">(NAME &amp; ADDRESS OF CONSIGNEE)</span>
+                                </div>
+                                <div class="col-8" style="border: 1px solid black; border-left:0px;border-top:0px">
+                                    <t t-if="o.consignee_id"><div style="text-align:center;padding-top:10px;">
+                                        <span t-field="o.consignee_id.name"/><br/>
+                                        <span t-field="o.consignee_id.street"/>
+                                        </div>
+                                    </t>
+                                    <t t-if="not o.consignee_id"><div style="vertical-align: middle;padding-top:10px;">:.................................................................................................................................................................................................................................................................................................................................................................................................................</div></t>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row mb-1 mt-1">
+                                <span style="font-weight:bold;font-size:14px; font-widget:bold">សេចក្តីថ្លែងរបស់អ្នកស្នើសុំ</span><span> (APPLICANT’S STATEMENT)</span>
+                            </div>
+
+
+                            <div class="row mb-1 mt-1" style="margin-left:10px;">
+                                <span style="font-size:14px">នាងខ្ញុំ/ខ្ញុំបាទ/ក្រុមហ៊ុនយើងខ្ញុំ សូមប្រកាសថា ឯកសារជូនភ្ជាប់ និងព័ត៌មានទាំងអស់ខាងលើ ពិតជាត្រឹមត្រូវមិនមានការក្លែងបន្លំ និងគោរពតាមរាល់វិធានការភូតគាមអនាម័យ។</span>
+                                <span style="font-size:10px">(I WOULD LIKE TO CERTIFY THAT ALL ATTACHED DOCUMENTS AND INFORMATIONS DECLARED ABOVE ARE TRUE, AND RESPECT TO ALL PHYTOSANITARY
+                                TREATMENT AS REQUIRED ).</span>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-4" style="margin-left:25px;">
+                                   <span style="font-weight:bold;text-align:center">ភ្នំពេញ, ថ្ងៃទី <t t-esc="khmerformattedDate"/> </span>
+                                   <br/><span>(PHNOM PENH, DATE)</span>
+                                </div>
+                                <div class="col-4" style="">
+                                   <span style="font-weight:bold;text-align:center">ហត្ថលេខានិងត្រាក្រុមហ៊ុនដែលស្នើសុំ </span><br/>
+                                   <span style="font-size:10px;text-align:center">(SIGNATURE AND STAMP OF COMPANY)</span>
+                                </div>
+                                <div class="col-4" style="margin-left:-70px; margin-top:10px">
+                                    <span>..................................................................................</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

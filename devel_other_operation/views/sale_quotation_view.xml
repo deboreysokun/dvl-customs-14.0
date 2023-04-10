@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--##############  Sales Quotation ################## -->
+    <record id="view_sale_quotation_form_inherit" model="ir.ui.view">
+        <field name="name">sale.quotation.form</field>
+        <field name="model">sale.quotation</field>
+        <field name="inherit_id" ref="devel_logistic_management.view_sale_quotation_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_company_id']" position="before">
+                <field name="quotation_type" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//group/group[2]/field[@name='duty_tax_payment']" position="attributes">
+                <attribute name="attrs">{'invisible': [('quotation_type', '!=', 'logistic')],
+                                        'readonly': [('is_editable', '=', False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//group/group[2]/field[@name='duty_type']" position="attributes">
+                <attribute name="attrs">{'invisible': [('quotation_type', '!=', 'logistic')],
+                                        'readonly': [('is_editable', '=', False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//group/group[2]/field[@name='commodity']" position="attributes">
+                <attribute name="attrs">{'invisible': [('quotation_type', '!=', 'logistic')],
+                                        'readonly': [('is_editable', '=', False)]}
+                </attribute>
+            </xpath>
+
+            <xpath expr="//group/group[3]" position="attributes">
+                <attribute name="attrs">{'invisible': [('quotation_type', '!=', 'logistic')]}</attribute>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='uom_id']" position="before">
+                <field name="qty" attrs="{'column_invisible': [('parent.quotation_type','!=', 'normal')]}"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='uom_id']" position="after">
+                <field name="price_unit" attrs="{'column_invisible': [('parent.quotation_type','!=', 'normal')]}"/>
+                <field name="price_subtotal" attrs="{'column_invisible': [('parent.quotation_type','!=', 'normal')]}"/>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='container_lcl']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.quotation_type','!=', 'logistic')]}</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='container_20_price']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.quotation_type','!=', 'logistic')]}</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='container_40_price']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.quotation_type', '!=', 'logistic')]}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_sale_quotation_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.quotation.tree</field>
+        <field name="model">sale.quotation</field>
+        <field name="inherit_id" ref="devel_logistic_management.view_sale_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="quotation_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_quotation_search" model="ir.ui.view">
+        <field name="name">sale.quotation.search</field>
+        <field name="model">sale.quotation</field>
+        <field name="inherit_id" ref="devel_logistic_management.view_sale_quotation_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='confirm']" position="after">
+                <separator/>
+                <filter string="Logistic" name="type_logistic" domain="[('quotation_type', '=', 'logistic')]"/>
+                <separator/>
+                <filter string="Normal" name="type_normal" domain="[('quotation_type', '=', 'normal')]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Quotation Type" name="quotation_type" context="{'group_by':'quotation_type'}"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+    <!--##############  END of Sales Quotation ################## -->
+
+
+    <!--############## Sales Quotation Template ################## -->
+
+    <record id="view_sale_quotation_template_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.quotation.template.tree</field>
+        <field name="model">sale.quotation.template</field>
+        <field name="inherit_id" ref="devel_logistic_management.view_sale_quotation_template_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="template_type"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_quotation_template_form_inherit" model="ir.ui.view">
+        <field name="name">sale.quotation.template.form</field>
+        <field name="model">sale.quotation.template</field>
+        <field name="inherit_id" ref="devel_logistic_management.view_sale_quotation_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group>
+                    <field name="template_type"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='uom_id']" position="before">
+                <field name="qty" attrs="{'column_invisible': [('parent.template_type','!=', 'normal')]}"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='uom_id']" position="after">
+                <field name="price_unit" attrs="{'column_invisible': [('parent.template_type','!=', 'normal')]}"/>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='container_lcl']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.template_type','!=', 'logistic')]}</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='container_20_price']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.template_type','!=', 'logistic')]}</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='container_40_price']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.template_type', '!=', 'logistic')]}</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_sale_quotation_template_search" model="ir.ui.view">
+        <field name="name">sale.quotation.template.search</field>
+        <field name="model">sale.quotation.template</field>
+        <field name="inherit_id" ref="devel_logistic_management.view_sale_quotation_template_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <filter string="Logistic" name="type_logistic" domain="[('template_type', '=', 'logistic')]"/>
+                <separator/>
+                <filter string="Normal" name="type_normal" domain="[('template_type', '=', 'normal')]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Type" name="template_type" context="{'group_by':'template_type'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+     <!--############## END Sales Quotation Template ################## -->
+
+</odoo>

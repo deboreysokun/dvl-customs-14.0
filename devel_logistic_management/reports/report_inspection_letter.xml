@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_inspection_letter">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <div class="pull-right text-center">
+                            <div style="font-weight:bold;font-family:'Moul',cursive;font-size:18px;line-height: 35px;">
+                                <span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ<br/>
+                                    <img src="/devel_logistic_management/static/img/symbol_words.png" width="60%"/>
+                                </span>
+                            </div>
+                            <div style="font-size:16px;"></div>
+                        </div>
+                        <div class="page" style="font-size:18px;line-height:30px;">
+                            <div style="padding-top:30px;padding-left:15px;font-family:'Battambang'">
+                                <div class="col-4"><span style="font-family:'Moul', cursive">ក្រុមហ៊ុន:</span> <t t-esc="o.shipper_id.khmer_name"/></div>
+                                <div class="col-4"><span>អាសយដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>
+                            </div>
+                            <div class="text-center" style="font-family:'Moul',cursive;padding-top:15px;">
+                                <span>សំណើសុំត្រួតពិនិត្យទំនិញវិនិយោគនាំចេញ</span><br/>
+                                <span style="font-weight:bold;text-decoration:underline;">សូមគោរពជូន</span><br/><span>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ <br/>នៃអគ្គនាយកដ្ឋានគយនិងរដ្ធាករកម្ពុជា</span>
+                            </div>
+                            <div class="row" style="font-family:'Battambang'">
+                                <div class="col-5" style="border:1px solid black;margin-left:70px;font-family:'Battambang'">
+                                    <span><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំឈ្មោះ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទឈ្មោះ'"/> </t> <span t-esc="o.owner_id.khmer_name"/> តំណាងឲ្យសហគ្រាស:
+                                    <t t-esc="o.owner_id.parent_id.khmer_name"/> សូមអញ្ជើញមន្ត្រីគយ និងរដ្ឋាករ នៃនាយកដ្ឋានគ្រប់គ្រង ការនាំចេញ មកត្រួតពិនិត្យ ទំនិញនាំចេញចំនួន ...........កុងតឺន័រ នៅក្នុងទីតាំងរោងចក្រសហគ្រាស: <t t-esc="o.owner_id.parent_id.khmer_name"/>។
+                                    នៅម៉ោង.............ថ្ងៃទី........ខែ...........ឆ្នាំ............។</span><br/>
+                                    <span style="font-weight:bold;text-decoration:underline;">បញ្ជាក់:</span>
+                                    <span>ក្រុមហ៊ុនយើងខ្ញុំមានទំនិញត្រឹមត្រូវតាម ឯកសារដាក់ក្បែរកុងតឺន័រនិងបានត្រៀមកំលាំង លើកដាក់រួចជាស្រេច។ </span><br/>
+                                    <div class="text-center" style="text-align:center;margin-bottom:150px;">ហត្ថលេខា និងត្រា</div>
+                                </div>
+                                <div class="col-5" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black">
+                                    <span style="margin-left:30px;">ឯកសារយោងរបស់ក្រុមហ៊ុនយើងខ្ញុំមាន៖</span><br/>
+                                    <span>១.ប្រទិវេទន៍គយលេខ...............ចុះថ្ងៃទី..................</span><br/>
+                                    <span>២. <span style="font-family:'Times New Roman';font-size:12px;">INV &amp; P/L.............................Date.........................<br/>
+                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>
+                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>
+                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>
+                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span></span>
+                                    </span><br/>
+                                    <span>៣.លិខិតផ្ទេរសិទ្ធិ</span><br/>
+                                    <span>៤.លិខិតធានាអះអាង</span><br/>
+                                </div>
+                            </div>
+                            <div class="row" style="border-right:1px solid black;border-left:1px solid black;margin-left:55px;border-bottom:1px solid black;margin-right:57px;font-family:'Battambang'">
+                                <div class="col-12" style="padding-top:5px;font-size:18px">
+                                    <span class="text-center" style="margin-left:150px;font-family:'Moul';text-decoration:underline;font-size:18px;text-align:center;">សេចក្តីបញ្ជាក់របស់នាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span><br/>
+                                    <p style="text-indent:30px;">ក្រុមហ៊ុនបានដាក់សំណើសុំត្រួតពិនិត្យទំនិញថ្ងៃទី..........ខែ..............ឆ្នាំ..............។ក្រោយពីបានទទួល ពាក្យស្នើសុំយើងបានអនុញ្ញាតឲ្យមន្ត្រីគយឈ្មោះ (១)....................................(២)....................................
+                                    ធ្វើការត្រួតពិនិត្យទំនិញរបស់រោងចក្រខាងលើតាមសំណើរបស់ក្រុមហ៊ុន។</p><br/>
+                                    <div class="pull-right">រាធានីភ្នំពេញ,ថ្ងៃទី..........ខែ..............ឆ្នាំ................</div><br/>
+                                    <div class="pull-right" style="margin-right:120px;margin-bottom:150px;">ប្រធាន</div>
+                                    <div class="text-center"> </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

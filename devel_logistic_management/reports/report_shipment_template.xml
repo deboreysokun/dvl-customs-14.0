@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Cover File Shipment Template -->
+        <record id="shipment_cover_template_document" model="ir.actions.report">
+            <field name="name">Cover File Shipment Template</field>
+            <field name="model">shipment.cover.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_cover_shipment_template</field>
+            <field name="report_file">devel_logistic_management.report_shipment_template</field>
+            <field name="binding_model_id" ref="model_shipment_cover_template"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">object.name</field>
+        </record>
+
+        <template id="report_cover_shipment_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <div class="row" style="border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div class="col-6" style="font-size:9px;padding:0px;">
+                                <span>Printed Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M:%S')"/></span>
+                            </div>
+                            <div class="col-6" style="font-size:16px;padding:0px;background-color:#2f5496;color:white">
+                                <div class="text-center mb-5"><span> Shpmt Reference#: </span> <span t-field="o.shipment_id.name"/></div>
+                            </div>
+                        </div>
+                            <div style="text-align:center;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div style="font-weight:bold;font-size:18px;"><span t-field="o.company_id.name"/></div>
+                            <div style="font-size:16px;"><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.city"/>, <t t-esc="o.company_id.country_id.name"/></div>
+                            <div style="font-size:16px;"><span>Cover File Shipment</span></div>
+                        </div>
+                        <div class="row"  style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div class="col-6" style="font-size:14px;">
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Quantity'"/></div>
+                                <div class="col-6">
+                                    <t t-foreach="o.shipment_id.get_container_lines()" t-as="item">
+                                    <span t-esc="item_value"/>&#160; &#160; x <span t-esc="item"/> &#160; &#160;
+                                    </t>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Commodity'"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.commodity"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'B/L No.'"/> </div>
+                                <div class="col-6">
+                                    <t t-if="not o.shipment_id.hbl_number"><span t-field="o.shipment_id.bl_number"/></t>
+                                    <t t-if="o.shipment_id.hbl_number"><span t-field="o.shipment_id.hbl_number"/></t>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Containers No.'"/> </div>
+                                <div class="col-6">
+                                    <span t-field="o.shipment_id.container_number"/>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Weight in (KGS)'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.total_gross_weight"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Vessel Voyage No.'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.vessel_id"/><t t-if="o.shipment_id.voyage_number"><span t-esc="'/'"/></t><span t-field="o.shipment_id.voyage_number"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Port of Loading'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.port_of_loading"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Port of Discharge'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.port_of_discharge"/></div>
+                                </div>
+                            </div>
+                            <div class="col-6" style="font-size:14px;">
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'ETD: '"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.etd" t-options="{'widget': 'date', 'format': 'dd/MMM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'ETA: '"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.eta" t-options="{'widget': 'date', 'format': 'dd/MMM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'ETR: '"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.etr" t-options="{'widget': 'date', 'format': 'dd/MMM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Shipping Line:'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.shipping_line_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Trucking:'"/> </div>
+                                <div class="col-6"><span t-esc="' '"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Shipper:'"/> </div>
+                                <div class="col-8"><span t-field="o.shipment_id.shipper_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Consignee:'"/> </div>
+                                <div class="col-8"><span t-field="o.shipment_id.consignee_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Clearance:'"/> </div>
+                                <div class="col-8"><span t-field="o.shipment_id.clearance_office_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
+                                <div class="col-8"><span style="background-color:#ffff00" t-esc="o.shipment_id.customer_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Incoterm'"/> </div>
+                                  <div class="col-6"><span t-field="o.shipment_id.incoterm_id"/></div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="row" style="border: black;font-weight:bold;margin-left:0px;margin-right:0px">
+                                <div class="col-6" style="font-size:12px;padding:0px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-center" style="padding:1px; background-color:#9cc2e5;">
+                                                <td colspan="2" style="padding:0px;border:1px solid black;">
+                                                    <div>I. Checking List</div>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.checking_list_shipment_ids" t-as="checking">
+                                                <t t-if="checking.display_type != 'line_section'">
+                                                    <tr>
+                                                        <td style="width:50px;border: 1px solid black;"></td>
+                                                        <td style="padding:0px; border: 1px solid black;">
+                                                            <span t-field="checking.name"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                                <t t-if="checking.display_type == 'line_section'">
+                                                    <tr>
+                                                        <td style="width:50px;border: 1px solid black;"></td>
+                                                        <td style="padding:0px; border: 1px solid black; background-color:#ffffcc;">
+                                                            <span t-field="checking.name"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-6" style="font-size:12px;padding:0px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-center" style="padding:1px;border:1px solid black; background-color:#9cc2e5;">
+                                                <td colspan="2" style="padding:0px; border: 1px solid black;">
+                                                    <div class="text-center">II. Process List</div>
+                                                </td>
+                                                <td style="padding:0px; border: 1px solid black; width:120px;">
+                                                    <t t-if="o.shipment_id.operation_type != 'import'" >
+                                                        <div class="text-center">Amount</div>
+                                                    </t>
+                                                    <t t-if="o.shipment_id.operation_type == 'import'" >
+                                                        <div class="text-center">Date</div>
+                                                    </t>
+
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.process_list_shipment_ids" t-as="process">
+                                                <t t-if="process.display_type != 'line_section'">
+                                                    <tr>
+                                                        <td style="width:50px; border: 1px solid black;"></td>
+                                                        <td style="padding:0px; border: 1px solid black;">
+                                                            <span t-field="process.name"/>
+                                                        </td>
+                                                        <td style="padding:0px; border: 1px solid black;"></td>
+                                                    </tr>
+                                                </t>
+                                                <t t-if="process.display_type == 'line_section'">
+                                                    <tr>
+                                                        <td style="width:50px; border: 1px solid black;"></td>
+                                                        <td style="padding:0px; border: 1px solid black; background-color:#ffffcc;">
+                                                            <span t-field="process.name"/>
+                                                        </td>
+                                                        <td style="padding:0px; border: 1px solid black;"></td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!-- Cash Payment Request Template -->
+        <record id="shipment_cash_payment_template_document" model="ir.actions.report">
+            <field name="name">Cash Payment Request Template</field>
+            <field name="model">shipment.cover.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_cash_payment_template</field>
+            <field name="report_file">devel_logistic_management.report_shipment_template</field>
+            <field name="binding_model_id" ref="model_shipment_cover_template"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">object.name</field>
+        </record>
+
+        <template id="report_cash_payment_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-raw="0"/>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div class="row" style="border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div class="col-6" style="font-size:9px;padding:0px;">
+                                <span>Printed Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M:%S')"/></span>
+                            </div>
+                            <div class="col-6" style="font-size:12px;padding:0px;background-color:#2f5496;color:white">
+                                <div class="text-center mb-5"><span> Shpmt Reference#: </span> <span t-field="o.shipment_id.name"/></div>
+                            </div>
+                        </div>
+                            <div style="text-align:center;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div style="font-weight:bold;font-size:12px;"><span t-field="o.company_id.name"/></div>
+                            <div style="font-size:12px;"><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.city"/>, <t t-esc="o.company_id.country_id.name"/></div>
+                            <div style="font-size:12px;"><span>Cash Payment Request by Shipment</span></div>
+                        </div>
+                        <div class="row" style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div class="col-6" style="font-size:10px;">
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Quantity'"/></div>
+                                <div class="col-6">
+                                    <t t-foreach="o.shipment_id.get_container_lines()" t-as="item">
+                                    <span t-esc="item_value"/>    x <span t-esc="item"/>    
+                                    </t>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Commodity'"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.commodity"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'B/L No.'"/> </div>
+                                <div class="col-6">
+                                    <t t-if="not o.shipment_id.hbl_number"><span t-field="o.shipment_id.bl_number"/></t>
+                                    <t t-if="o.shipment_id.hbl_number"><span t-field="o.shipment_id.hbl_number"/></t>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Containers No.'"/> </div>
+                                <div class="col-6">
+                                    <span t-field="o.shipment_id.container_number"/>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Weight in (KGS)'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.total_gross_weight"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Vessel Voyage No.'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.vessel_id"/><t t-if="o.shipment_id.voyage_number"><span t-esc="'/'"/></t><span t-field="o.shipment_id.voyage_number"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Port of Loading'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.port_of_loading"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-6"><span t-esc="'Port of Discharge'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.port_of_discharge"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'Incoterm'"/> </div>
+                                  <div class="col-6"><span t-field="o.shipment_id.incoterm_id"/></div>
+                                </div>
+                            </div>
+                            <div class="col-6" style="font-size:10px;">
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'ETD: '"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.etd" t-options="{'widget': 'date', 'format': 'dd/MMM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'ETA: '"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.eta" t-options="{'widget': 'date', 'format': 'dd/MMM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'ETR: '"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.etr" t-options="{'widget': 'date', 'format': 'dd/MMM/YY'}"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Shipping Line:'"/> </div>
+                                <div class="col-6"><span t-field="o.shipment_id.shipping_line_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Trucking:'"/> </div>
+                                <div class="col-6"><span t-esc="' '"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Shipper:'"/> </div>
+                                <div class="col-8"><span t-field="o.shipment_id.shipper_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Consignee:'"/> </div>
+                                <div class="col-8"><span t-field="o.shipment_id.consignee_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span t-esc="'Clearance:'"/> </div>
+                                <div class="col-8"><span t-esc="o.shipment_id.clearance_office_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
+                                <div class="col-8"><span style="background-color:#ffff00" t-esc="o.shipment_id.customer_id.name"/></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page" style="font-size:10px;">
+                            <table class="table" style="font-size:10px;" name="costing">
+                                <thead>
+                                    <tr style="background-color:#2f5496;color:white;">
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 30px">
+                                            <div>No.</div>
+                                        </td>
+                                        <td style="padding:1px;border:1px solid black; width: 30px"/>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width:450px">
+                                            <div>Description</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>UOM</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Qty</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>U/P</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Amount</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Requested By</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Checked By</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Approved By</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Paid By</div>
+                                        </td>
+                                        <td class="text-center" style="padding:1px;border:1px solid black; width: 100px">
+                                            <div>Received By</div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <tr t-foreach="o.cash_payment_shipment_ids" t-as="l" style="page-break-inside:avoid;padding:0px;">
+                                        <td class="text-center" style="border:1px solid black;padding:6px;"><span t-esc="''"/></td>
+                                        <td class="text-center" style="border:1px solid black;padding:6px;"><span t-esc="''"/></td>
+                                        <t t-if="l.display_type != 'line_section'">
+                                            <td style="border:1px solid black;padding:1px;">
+                                                <span t-field="l.name"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
+                                                <span t-field="l.uom_id"/>
+                                            </td>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                            <td class="text-center" style="border:1px solid black;padding:1px;"/>
+                                        </t>
+                                        <t t-if="l.display_type == 'line_section'">
+                                            <td name="td_section_line" colspan="99" style="border:1px solid black;padding:1px;background-color:#ffffcc;">
+                                                <span t-field="l.name"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!--Print both Cover File & Cash Payment Request Template -->
+        <record id="shipment_cover_file_cash_payment_template_document" model="ir.actions.report">
+            <field name="name">Cover File and Cash Payment Shipment Template</field>
+            <field name="model">shipment.cover.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_cover_file_cash_payment_shipment_template</field>
+            <field name="report_file">devel_logistic_management.report_shipment_template</field>
+            <field name="binding_model_id" ref="model_shipment_cover_template"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">object.name</field>
+        </record>
+
+        <template id="report_cover_file_cash_payment_shipment_template">
+            <t t-call="devel_logistic_management.report_cover_shipment_template"/>
+            <t t-call="devel_logistic_management.report_cash_payment_template"/>
+        </template>
+
+    </data>
+</odoo>

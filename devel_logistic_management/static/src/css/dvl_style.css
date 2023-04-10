@@ -1,0 +1,1313 @@
+.total_expensed,
+.tot_operation_expense {
+    color: #c52231;
+}
+/* Tax Calulation */
+.tariff_center table thead th:not(:first-child),
+.tariff_center table tbody th:not(:first-child){
+    width: 120px !important;
+}
+.tariff_center [data-name="cd"]{
+    width: 30px !important;
+    max-width: 50px !important;
+}
+.tariff_center [data-name="st"]{
+    width: 30px !important;
+    max-width: 50px !important;
+}
+.tariff_center [data-name="vat"]{
+    width: 30px !important;
+    max-width: 50px !important;
+}
+.tariff_center [data-name="tariff"]
+{
+  text-align: center !important;
+  width: 150px !important;
+}
+/** Apply Processing Status Import Menu **/
+.processing_status thead{
+    position: sticky !important;
+    top: 0 !important;
+    z-index : 20 !important;
+}
+.processing_status tr{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0 !important;
+    position: sticky !important;
+}
+/* Sticky First row first 4 columns */
+.processing_status tr > th:first-child{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0;
+    position: sticky !important;
+    z-index: 20 !important;
+}
+.processing_status tr > th:nth-child(2){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 49px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.processing_status tr > th:nth-child(3){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 98px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.processing_status tr > th:nth-child(4){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 310px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.processing_status tr > th:nth-child(5){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 290px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+/* END Sticky First row first 4 columns */
+.processing_status table th:not(:last-child),
+.processing_status table td:not(:last-child) {
+    /* padding: 12px 12px; */
+    width: 150px !important;
+    max-width: 250px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+}
+.processing_status table th:first-child,
+.processing_status table td:first-child {
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 0;
+    z-index: 20;
+    background-color: #eee;
+}
+.processing_status table th:nth-child(2),
+.processing_status table td:nth-child(2){
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 49px;
+    z-index: 10;
+    background-color: #eee;
+}
+.processing_status table th:nth-child(3),
+.processing_status table td:nth-child(3){
+    width: 92px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 98px;
+    z-index: 10;
+    background-color: #eee;
+}
+.processing_status table th:nth-child(4),
+.processing_status table td:nth-child(4){
+    width: 120px !important;
+    max-width: 120px !important;
+    position: sticky !important;
+    left : 190px;
+    z-index: 10;
+    background-color: #eee;
+}
+.processing_status table th:nth-child(5),
+.processing_status table td:nth-child(5){
+    width: 49px !important;
+    max-width: 49px !important;
+    position: sticky !important;
+    left : 310px;
+    z-index: 9;
+    background-color: #eee;
+}
+.processing_status table th:nth-child(6),
+.processing_status table td:nth-child(6){
+    width: 130px !important;
+}
+/* start from CV filed */
+.processing_status table th:nth-child(21),
+.processing_status table td:nth-child(21){
+    width: 49px !important;
+}
+.processing_status table th:nth-child(22),
+.processing_status table td:nth-child(22){
+    width: 49px !important;
+}
+.processing_status table th:nth-child(23),
+.processing_status table td:nth-child(23){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(24),
+.processing_status table td:nth-child(24){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(25),
+.processing_status table td:nth-child(25){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(26),
+.processing_status table td:nth-child(26){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(27),
+.processing_status table td:nth-child(27){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(28),
+.processing_status table td:nth-child(28){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(29),
+.processing_status table td:nth-child(29){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(28),
+.processing_status table td:nth-child(28){
+    width: 70px !important;
+}
+.processing_status table th:nth-child(29),
+.processing_status table td:nth-child(29){
+    width: 80px !important;
+}
+.processing_status table th:nth-child(30),
+.processing_status table td:nth-child(30){
+    width: 49px !important;
+}
+.processing_status table th:nth-child(31),
+.processing_status table td:nth-child(31){
+    width: 70px !important;
+}
+/* start from second CV*/
+.processing_status table th:nth-child(34),
+.processing_status table td:nth-child(34){
+    width: 49px !important;
+}
+.processing_status table th:nth-child(35),
+.processing_status table td:nth-child(35){
+    width: 49px !important;
+}
+/*Arrival Sent*/
+.processing_status table th:nth-child(38),
+.processing_status table td:nth-child(38){
+    width: 80px !important;
+}
+/** Apply Processing Status Emport Menu **/
+.processing_status_export thead{
+    position: sticky !important;
+    top: 0 !important;
+    z-index : 20 !important;
+}
+.processing_status_export tr{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0 !important;
+    position: sticky !important;
+}
+/* Sticky First row first 4 columns */
+.processing_status_export tr > th:first-child{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0;
+    position: sticky !important;
+    z-index: 20 !important;
+}
+.processing_status_export tr > th:nth-child(2){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 49px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.processing_status_export tr > th:nth-child(3){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 98px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.processing_status_export tr > th:nth-child(4){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 190px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.processing_status_export tr > th:nth-child(5){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 310px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+/* END Sticky First row first 4 columns */
+.processing_status_export table th:not(:last-child),
+.processing_status_export table td:not(:last-child) {
+    /* padding: 12px 12px; */
+    width: 150px !important;
+    max-width: 200px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+}
+.processing_status_export table th:first-child,
+.processing_status_export table td:first-child {
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 0;
+    z-index: 20;
+    background-color: #eee;
+}
+.processing_status_export table th:nth-child(2),
+.processing_status_export table td:nth-child(2){
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 49px;
+    z-index: 10;
+    background-color: #eee;
+}
+.processing_status_export table th:nth-child(3),
+.processing_status_export table td:nth-child(3){
+    width: 92px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 98px;
+    z-index: 10;
+    background-color: #eee;
+}
+.processing_status_export table th:nth-child(4),
+.processing_status_export table td:nth-child(4){
+    width: 120px !important;
+    max-width: 120px !important;
+    position: sticky !important;
+    left : 190px;
+    z-index: 10;
+    background-color: #eee;
+}
+.processing_status_export table th:nth-child(5),
+.processing_status_export table td:nth-child(5){
+    width: 49px !important;
+    max-width: 49px !important;
+    position: sticky !important;
+    left : 310px;
+    z-index: 9;
+    background-color: #eee;
+}
+/** END Processing Status Emport Menu **/
+
+/** Class Freeze Column first 5 column **/
+.freeze_column thead{
+    position: sticky !important;
+    top: 0 !important;
+    z-index : 10 !important;
+    width: 120px !important;
+}
+.freeze_column tr{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0 !important;
+    position: sticky !important;
+}
+.freeze_column tr > th:first-child{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0;
+    position: sticky !important;
+    z-index: 20 !important;
+}
+.freeze_column tr > th:nth-child(2){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : inherit;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.freeze_column tr > th:nth-child(3){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : inherit;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.freeze_column tr > th:nth-child(4){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : inherit;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.freeze_column tr > th:nth-child(5){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : inherit;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.freeze_column table th:first-child,
+.freeze_column table td:first-child {
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 0;
+    z-index: 20;
+    background-color: #eee;
+}
+.freeze_column table th:nth-child(2),
+.freeze_column table td:nth-child(2){
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 49px;
+    z-index: 10;
+    background-color: #eee;
+}
+.freeze_column table th:nth-child(3),
+.freeze_column table td:nth-child(3){
+    width: 92px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 98px;
+    z-index: 10;
+    background-color: #eee;
+}
+.freeze_column table th:nth-child(4),
+.freeze_column table td:nth-child(4){
+    width: 100px !important;
+    max-width: 100px !important;
+    position: sticky !important;
+    left : 190px;
+    z-index: 10;
+    background-color: #eee;
+}
+.freeze_column table th:nth-child(5),
+.freeze_column table td:nth-child(5){
+    width: 100px !important;
+    max-width: 100px !important;
+    position: sticky !important;
+    left : 290px;
+    z-index: 9;
+    background-color: #eee;
+}
+/* For All Operations (Import, Export, Transit) List View DVL Global */
+.dvl_global table th,
+.dvl_global table td {
+    padding: 12px 5px;
+}
+.dvl_global table tbody tr{
+    text-align: left;
+}
+.dvl_global [data-name="name"]
+{
+  width: 120px !important;
+  min-width: 120px !important;
+}
+.dvl_global [data-name="container_number"]
+{
+  width: 160px !important;
+  min-width: 160px !important;
+}
+.dvl_global [data-name="seal_number"]
+{
+  width: 120px !important;
+  min-width: 120px !important;
+}
+.dvl_global [data-name="incoterm_id"]
+{
+  width: 120px !important;
+  min-width: 120px !important;
+}
+.dvl_global [data-name="commodity"]
+{
+  width: 150px !important;
+  min-width: 150px !important;
+}
+.dvl_global [data-name="shipper_id"]
+{
+  width: 150px !important;
+  min-width: 140px !important;
+}
+.dvl_global [data-name="consignee_id"]
+{
+  width: 150px !important;
+  min-width: 140px !important;
+}
+.dvl_global [data-name="customer_id"]
+{
+    width: 150px !important;
+    min-width: 120px !important;
+}
+.dvl_global [data-name="co_loader_id"]
+{
+  width: 150px !important;
+
+}
+.dvl_global [data-name="shipping_line_id"]
+{
+  width: 150px !important;
+  min-width: 140px !important;
+
+}
+.dvl_global [data-name="port_of_delivery"],
+.dvl_global [data-name="port_of_discharge"],
+.dvl_global [data-name="place_of_reciept"],
+.dvl_global [data-name="port_of_loading"],
+.dvl_global [data-name="final_destination"],
+.dvl_global [data-name="port_of_loading_report"],
+.dvl_global [data-name="port_of_discharge_report"],
+.dvl_global [data-name="port_of_loading_carrier"],
+.dvl_global [data-name="port_of_discharge_carrier"]
+{
+  width: 150px !important;
+  min-width: 140px !important;
+
+}
+
+/* Expense Line List View */
+.expense_line [data-name="container_id"] {
+    width: 100px !important;
+}
+.expense_line [data-name="state"],
+.expense_line [data-name="currency_id"] {
+    width: 92px !important;
+    min-width: 92px !important;
+}
+.expense_line table th:first-child,
+.expense_line table td:first-child,
+.expense_line table th:nth-child(3),
+.expense_line table td:nth-child(3){
+    width: 30px !important;
+}
+.expense_line table th:nth-child(2),
+.expense_line table td:nth-child(2){
+    width: 42px !important;
+}
+.expense_line [data-name="requester_user_id"] {
+    width: 150px !important;
+    min-width: 150px !important;
+}
+.expense_line [data-name="checked_user_id"] {
+    width: 150px !important;
+    min-width: 150px !important;
+}
+.expense_line [data-name="approver_user_id"] {
+    width: 150px !important;
+    min-width: 150px !important;
+}
+.expense_line [data-name="paid_user_id"] {
+    width: 150px !important;
+    min-width: 150px !important;
+}
+.expense_line [data-name="received_user_id"]
+{
+    width: 250px !important;
+    min-width: 250px !important;
+}
+.expense_line [data-name="account_id"]
+{
+    width: 250px !important;
+    min-width: 250px !important;
+}
+.expense_line [data-name="description"]
+{
+  width: 100px !important;
+  min-width: 100px !important;
+}
+.expense_line [data-name="uom_id"]
+{
+  width: 92px !important;
+}
+.expense_line [data-name="qty"]
+{
+  width: 52px !important;
+}
+.expense_line [data-name="thc_amount"]
+{
+  width: 23px !important;
+  max-width: 23px !important;
+}
+.expense_line [data-name="duty_tax"]
+{
+  width: 23px !important;
+  max-width: 23px !important;
+}
+.expense_line [data-name="attachment_number"]
+{
+  width: 23px !important;
+  max-width: 23px !important;
+}
+/* Over Write Odoo default */
+.o_list_number_th {
+    text-align: center !important;
+}
+table thead th {
+    text-align: center !important;
+    background-color: #7C7BAD !important;
+    color: white;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #dee2e6;
+}
+.o_list_table table thead th,
+.o_list_table tbody td {
+    font-weight: 600;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+}
+.nav-tabs {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.nav-tabs .nav-link.active {
+    color: #7C7BAD;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* set text Label in thead to wrap */
+.o_list_view .table-responsive .o_list_table thead tr:nth-child(1) th{
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+}
+
+.o_many2one_cell {
+    text-align: left !important;
+}
+
+td.o_many2one_cell:nth-child(2) {
+    text-align-last: left !important;
+    text-align: left !important;
+}
+/* Account Id need to be align to left in opetaion expense line */
+.expense_line table tbody tr td.o_many2one_cell:nth-child(4) {
+    text-align-last: left !important;
+    text-align: left !important;
+}
+
+/* Set background color when hover kanban content */
+.oe_kanban_global_click:hover{
+    background-color: #b2baf6;
+    color: black !important;
+}
+.o_list_view .o_list_table .text-success,
+.o_list_view .o_list_table .text-success th, /* th and td for freeze column*/
+.o_list_view .o_list_table .text-success td{
+ font-weight: bold;
+ color: black  !important;
+ background-color: #a8d08d;
+}
+.o_list_view .o_list_table .text-warning,
+.o_list_view .o_list_table .text-warning th,
+.o_list_view .o_list_table .text-warning td{
+ font-weight: bold;
+ color: black  !important;
+ background-color: #fef2cb;
+}
+
+.o_list_view .o_list_table .bg-pink,
+.o_list_view .o_list_table .bg-pink th,
+.o_list_view .o_list_table .bg-pink td {
+    color: black;
+    background-color: lightpink;
+}
+
+.o_list_view .o_list_table .text-danger,
+.o_list_view .o_list_table .text-danger th,
+.o_list_view .o_list_table .text-danger td{
+ font-weight: bold;
+ color: black  !important;
+ background-color: #ea9999;
+}
+
+
+/* Custom Button Class*/
+.dvl-bg-light-orange {
+    background-color: rgba(255, 111, 0, 0.5) !important;
+    color: #333;
+    font-weight: bold;
+}
+.text-orange {
+    color: rgba(255, 111, 0) !important;
+}
+.bg-orange-light {
+    background-color: rgba(255, 111, 0, 0.5) !important;
+    color: #333;
+}
+.dvl-bg-light-blue-orange {
+    color: #333;
+    background: linear-gradient(to right top, rgba(23, 162, 184, 0.5), rgba(255, 193, 7, 0.5));
+}
+
+/* Report Meun Style */
+
+.report_operation thead{
+    position: sticky !important;
+    top: 0 !important;
+    z-index : 20 !important;
+}
+
+.report_operation tr{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0 !important;
+    position: sticky !important;
+}
+.report_operation tr > th:first-child{
+    width: 49px !important;
+    max-width: 49px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0;
+    position: sticky !important;
+    z-index: 20 !important;
+}
+.report_operation  tr > th:nth-child(2){
+    width: 49px !important;
+    max-width: 49px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 49px;
+    z-index: 1000 !important;
+    position: sticky !important;
+}
+.report_operation tr > th:nth-child(3){
+    width: 120px !important;
+    max-width: 120px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 98px !important;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.report_operation tr > th:nth-child(4){
+    width: 49px !important;
+    max-width: 49px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 218px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.report_operation tr > th:nth-child(5) {
+    width: 120px !important;
+    max-width: 120px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 267px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.report_operation tr > th:nth-child(6){
+    width: 120px !important;
+    max-width: 120px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 387px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+
+.report_operation table tr.o_data_row th:not(:first-child),
+.report_operation table tr.o_data_row td:not(:first-child) {
+    /* padding: 12px 12px; */
+    width: 150px !important;
+    max-width: 200px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+
+}
+
+.report_operation table tr.o_data_row th:first-child,
+.report_operation table tr.o_data_row td:first-child {
+    width: 49px !important;
+    max-width: 49px !important;
+    position: sticky !important;
+    left : 0;
+    z-index: 5000 !important;
+    background-color: #eee;
+}
+.report_operation table tr.o_data_row th:nth-child(2),
+.report_operation table tr.o_data_row td:nth-child(2){
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 49px;
+    z-index: 5000 !important;
+    background-color: #eee;
+}
+.report_operation table tr.o_data_row th:nth-child(3),
+.report_operation table tr.o_data_row td:nth-child(3){
+    width: 120px !important;
+    max-width: 120px !important;
+    position: sticky !important;
+    left : 98px;
+    z-index: 5000 !important;
+    background-color: #eee;
+}
+.report_operation table tr.o_data_row th:nth-child(4),
+.report_operation table tr.o_data_row td:nth-child(4){
+    width: 49px !important;
+    max-width: 49px !important;
+    position: sticky !important;
+    left : 218px;
+    z-index: 5000 !important;
+    background-color: #eee;
+}
+.report_operation table tr.o_data_row th:nth-child(5),
+.report_operation table tr.o_data_row td:nth-child(5){
+    width: 120px !important;
+    max-width: 120px !important;
+    position: sticky !important;
+    left : 267px;
+    z-index: 20;
+    background-color: #eee;
+}
+.report_operation table tr.o_data_row th:nth-child(6),
+.report_operation table tr.o_data_row td:nth-child(6){
+    width: 120px !important;
+    max-width: 120px !important;
+    position: sticky !important;
+    left : 387px;
+    z-index: 20;
+    background-color: #eee;
+}
+/* From Shipper field to Final Destination field */
+.report_operation table tbody tr td.o_many2one_cell:nth-child(7)
+{
+    text-align-last: left !important;
+    text-align: left !important;
+}
+.report_operation table tbody tr td.o_many2one_cell:nth-child(8)
+{
+    text-align-last: left !important;
+    text-align: left !important;
+}
+.report_operation table tbody tr td.o_many2one_cell:nth-child(9)
+{
+    text-align-last: left !important;
+    text-align: left !important;
+}
+.report_operation table tbody tr td.o_many2one_cell:nth-child(10)
+{
+    text-align-last: left !important;
+    text-align: left !important;
+}
+.report_operation table tbody tr td.o_many2one_cell:nth-child(11)
+{
+    text-align-last: left !important;
+    text-align: left !important;
+}
+.report_operation table tbody tr td.o_many2one_cell:nth-child(12)
+{
+    text-align-last: left !important;
+    text-align: left !important;
+}
+
+/* Form View Group Title */
+.o_form_view .o_horizontal_separator {
+    color: #7C7BAD;
+    font-weight: bold;
+    background-color: #a8d5885d;
+    border-radius: 5px;
+}
+
+.tab-pane:nth-of-type(even) .o_horizontal_separator {
+    color: #7C7BAD;
+    font-weight: bold;
+    background-color: rgba(220, 53, 69, 0.3);
+    border-radius: 5px;
+}
+.nav-tabs .nav-item:nth-of-type(even) .nav-link.active {
+    color: #7C7BAD;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: rgba(220, 53, 69, 0.3);
+}
+.nav-tabs .nav-item:nth-of-type(odd) .nav-link.active {
+    color: #7C7BAD;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #a8d5885d;
+}
+
+
+/* Operatio list View */
+.shipment_list_view thead{
+    position: sticky !important;
+    top: 0 !important;
+    z-index : 20 !important;
+}
+.shipment_list_view tr{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0 !important;
+    position: sticky !important;
+}
+/* Sticky First row first 7 columns */
+.shipment_list_view tr > th:first-child{
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left: 0;
+    position: sticky !important;
+    z-index: 20 !important;
+}
+.shipment_list_view tr > th:nth-child(2){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 49px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.shipment_list_view tr > th:nth-child(3){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 98px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.shipment_list_view tr > th:nth-child(4){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 190px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.shipment_list_view tr > th:nth-child(5){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 310px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.shipment_list_view tr > th:nth-child(6){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 340px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.shipment_list_view tr > th:nth-child(7){
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+    left : 430px;
+    z-index: 10 !important;
+    position: sticky !important;
+}
+.shipment_list_view table th:not(:last-child),
+.shipment_list_view table td:not(:last-child) {
+
+    width: 150px !important;
+    max-width: 250px !important;
+    outline: 1px solid #dee2e6;
+    border: none;
+    outline-offset: -1px;
+}
+.shipment_list_view table th:first-child,
+.shipment_list_view table td:first-child {
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 0;
+    z-index: 20;
+    background-color:white;
+}
+.shipment_list_view table th:nth-child(2),
+.shipment_list_view table td:nth-child(2){
+    width: 49px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 49px;
+    z-index: 10;
+    background-color:white;
+}
+.shipment_list_view table th:nth-child(3),
+.shipment_list_view table td:nth-child(3){
+    width: 92px !important;
+    max-width: 92px !important;
+    position: sticky !important;
+    left : 98px;
+    z-index: 10;
+    background-color: white;
+}
+.shipment_list_view table th:nth-child(4),
+.shipment_list_view table td:nth-child(4){
+    width: 120px !important;
+    max-width: 150px !important;
+    position: sticky !important;
+    left : 190px;
+    z-index: 10;
+    background-color: white;
+}
+.shipment_list_view table th:nth-child(5),
+.shipment_list_view table td:nth-child(5){
+    width: 30px !important;
+    max-width: 30px !important;
+    position: sticky !important;
+    left : 310px;
+    z-index: 9;
+    background-color: white;
+}
+.shipment_list_view table th:nth-child(6),
+.shipment_list_view table td:nth-child(6){
+    width: 90px !important;
+    max-width: 120px !important;
+    position: sticky !important;
+    left : 340px;
+    z-index: 9;
+    background-color: white;
+}
+
+.shipment_list_view table th:nth-child(7),
+.shipment_list_view table td:nth-child(7){
+    width: 150px !important;
+    max-width: 150px !important;
+    position: sticky !important;
+    left : 430px;
+    z-index: 9;
+    background-color: white;
+}
+/* END Sticky First row first 7 columns */
+
+/* Set background color when hover on records in list view */
+.table-hover tbody tr:hover,
+.processing_status tbody tr:hover > th,
+.processing_status tbody tr:hover > td,
+.processing_status_export tbody tr:hover > th,
+.processing_status_export tbody tr:hover > td,
+.report_operation tbody tr.o_data_row:hover > th,
+.report_operation tbody tr.o_data_row:hover > td,
+.freeze_column tbody tr:hover > th,
+.freeze_column tbody tr:hover > td,
+.shipment_list_view tbody tr:hover > th,
+.shipment_list_view tbody tr:hover > td {
+  color: black !important;
+  background-color: #add8e6 !important;
+}
+
+/* Set background color on selected records in list view */
+.o_data_row_selected,
+.processing_status_export table .o_data_row_selected th,
+.processing_status_export table .o_data_row_selected td,
+.processing_status table .o_data_row_selected th,
+.processing_status table .o_data_row_selected td,
+.report_operation table .o_data_row_selected th,
+.report_operation table .o_data_row_selected td,
+.freeze_column table .o_data_row_selected th,
+.freeze_column table .o_data_row_selected td,
+.shipment_list_view table .o_data_row_selected th,
+.shipment_list_view table .o_data_row_selected td {
+    color: #040720 !important;
+    font-weight: bold;
+    background-color: rgb(246, 210, 178) !important;
+}
+
+/* Remove freeze columns in mobile */
+@media (max-width: 767px) {
+    .processing_status table th:first-child,
+    .processing_status table td:first-child {
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 0;
+        z-index: 20;
+        background-color: white;
+    }
+    .processing_status table th:nth-child(2),
+    .processing_status table td:nth-child(2){
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 49px;
+        z-index: 10;
+        background-color: white;
+    }
+    .processing_status table th:nth-child(3),
+    .processing_status table td:nth-child(3){
+        width: 92px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 98px;
+        z-index: 10;
+        background-color: white;
+    }
+    .processing_status table th:nth-child(4),
+    .processing_status table td:nth-child(4){
+        width: 120px !important;
+        max-width: 120px !important;
+        position: revert !important;
+        left : 190px;
+        z-index: 10;
+        background-color: white;
+    }
+    .processing_status table th:nth-child(5),
+    .processing_status table td:nth-child(5){
+        width: 49px !important;
+        max-width: 49px !important;
+        position: revert !important;
+        left : 310px;
+        z-index: 9;
+        background-color: white;
+    }
+    .processing_status_export table th:first-child,
+    .processing_status_export table td:first-child {
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 0;
+        z-index: 20;
+        background-color: white;
+    }
+    .processing_status_export table th:nth-child(2),
+    .processing_status_export table td:nth-child(2){
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 49px;
+        z-index: 10;
+        background-color: white;
+    }
+    .processing_status_export table th:nth-child(3),
+    .processing_status_export table td:nth-child(3){
+        width: 92px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 98px;
+        z-index: 10;
+        background-color: white;
+    }
+    .processing_status_export table th:nth-child(4),
+    .processing_status_export table td:nth-child(4){
+        width: 120px !important;
+        max-width: 120px !important;
+        position: revert !important;
+        left : 190px;
+        z-index: 10;
+        background-color: white;
+    }
+    .processing_status_export table th:nth-child(5),
+    .processing_status_export table td:nth-child(5){
+        width: 49px !important;
+        max-width: 49px !important;
+        position: revert !important;
+        left : 310px;
+        z-index: 9;
+        background-color: white;
+    }
+    .freeze_column table th:first-child,
+    .freeze_column table td:first-child {
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 0;
+        z-index: 20;
+        background-color: white;
+    }
+    .freeze_column table th:nth-child(2),
+    .freeze_column table td:nth-child(2){
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 49px;
+        z-index: 10;
+        background-color: white;
+    }
+    .freeze_column table th:nth-child(3),
+    .freeze_column table td:nth-child(3){
+        width: 92px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 98px;
+        z-index: 10;
+        background-color: white;
+    }
+    .freeze_column table th:nth-child(4),
+    .freeze_column table td:nth-child(4){
+        width: 100px !important;
+        max-width: 100px !important;
+        position: revert !important;
+        left : 190px;
+        z-index: 10;
+        background-color: white;
+    }
+    .freeze_column table th:nth-child(5),
+    .freeze_column table td:nth-child(5){
+        width: 100px !important;
+        max-width: 100px !important;
+        position: revert !important;
+        left : 290px;
+        z-index: 9;
+        background-color: white;
+    }
+    .shipment_list_view table th:first-child,
+    .shipment_list_view table td:first-child {
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 0;
+        z-index: 20;
+        background-color:white;
+    }
+    .shipment_list_view table th:nth-child(2),
+    .shipment_list_view table td:nth-child(2){
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 49px;
+        z-index: 10;
+        background-color:white;
+    }
+    .shipment_list_view table th:nth-child(3),
+    .shipment_list_view table td:nth-child(3){
+        width: 92px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 98px;
+        z-index: 10;
+        background-color: white;
+    }
+    .shipment_list_view table th:nth-child(4),
+    .shipment_list_view table td:nth-child(4){
+        width: 120px !important;
+        max-width: 150px !important;
+        position: revert !important;
+        left : 190px;
+        z-index: 10;
+        background-color: white;
+    }
+    .shipment_list_view table th:nth-child(5),
+    .shipment_list_view table td:nth-child(5){
+        width: 30px !important;
+        max-width: 30px !important;
+        position: revert !important;
+        left : 310px;
+        z-index: 9;
+        background-color: white;
+    }
+    .shipment_list_view table th:nth-child(6),
+    .shipment_list_view table td:nth-child(6){
+        width: 90px !important;
+        max-width: 120px !important;
+        position: revert !important;
+        left : 340px;
+        z-index: 9;
+        background-color: white;
+    }
+
+    .shipment_list_view table th:nth-child(7),
+    .shipment_list_view table td:nth-child(7){
+        width: 150px !important;
+        max-width: 150px !important;
+        position: revert !important;
+        left : 430px;
+        z-index: 9;
+        background-color: white;
+    }
+    .report_operation table th:first-child,
+    .report_operation table tr.o_data_row td:first-child {
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 0;
+        z-index: 5000 !important;
+        background-color: white;
+    }
+    .report_operation table th:nth-child(2),
+    .report_operation table tr.o_data_row td:nth-child(2){
+        width: 49px !important;
+        max-width: 92px !important;
+        position: revert !important;
+        left : 49px;
+        z-index: 5000 !important;
+        background-color: white;
+    }
+    .report_operation table th:nth-child(3),
+    .report_operation table tr.o_data_row td:nth-child(3){
+        width: 120px !important;
+        max-width: 120px !important;
+        position: revert !important;
+        left : 98px;
+        z-index: 5000 !important;
+        background-color: white;
+    }
+    .report_operation table th:nth-child(4),
+    .report_operation table tr.o_data_row td:nth-child(4){
+        width: 49px !important;
+        max-width: 49px !important;
+        position: revert !important;
+        left : 218px;
+        z-index: 5000 !important;
+        background-color: white;
+    }
+    .report_operation table th:nth-child(5),
+    .report_operation table tr.o_data_row td:nth-child(5){
+        width: 120px !important;
+        max-width: 120px !important;
+        position: revert !important;
+        left : 267px;
+        z-index: 20;
+        background-color: white;
+    }
+    .report_operation table th:nth-child(6),
+    .report_operation table tr.o_data_row td:nth-child(6){
+        width: 120px !important;
+        max-width: 120px !important;
+        position: revert !important;
+        left : 387px;
+        z-index: 20;
+        background-color: white;
+    }
+}
+/* END Remove freeze columns in mobile */
+
+
+.crnd-web-list-popover-body {
+  white-space: pre-wrap !important;
+  font-size: 16px;
+  font-weight: bold;
+}
