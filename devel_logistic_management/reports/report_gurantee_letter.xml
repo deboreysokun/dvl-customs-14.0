@@ -79,9 +79,9 @@
                                             <t t-if="not container.container_number"><t t-esc="'.........................................'"/> </t>
                                         </div>
                                     </t>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
                                 </div>
                                 <div class="col-4 text-center" style="padding-right: 5px;padding-left: 5px">
                                     <p style="font-family:'Battambang';font-size:18px;text-decoration: underline;">សៀលគយ</p>
@@ -91,9 +91,9 @@
                                             <t t-if="not o.customs_seal_number"><t t-esc="'.........................................'"/> </t>
                                         </div>
                                     </t>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
                                 </div>
                                 <div class="col-4 text-center" style="padding-right: 5px;padding-left: 5px">
                                     <p style="font-family:'Battambang';font-size:18px;text-decoration: underline;">សៀលកប៉ាល់</p>
@@ -103,9 +103,9 @@
                                             <t t-if="not container.container_seal_number"><t t-esc="'.........................................'"/> </t>
                                         </div>
                                     </t>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
-                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
+<!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
                                 </div>
                             </div>
 

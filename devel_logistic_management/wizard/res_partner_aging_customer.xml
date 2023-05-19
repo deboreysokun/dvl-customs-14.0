@@ -40,7 +40,8 @@
                 <field name="partner_id" string="Customer" />
                 <field name="inv_date_due" string="Due Date" optional="hide"/>
                 <field name="invoice_id" invisible="1" />
-                <button name="open_document" type="object" icon="fa-list-alt" attrs="{'invisible':[('invoice_id', '=', False)]}"/>
+<!--                <button name="open_document" type="object" icon="fa-list-alt" attrs="{'invisible':[('invoice_id', '=', False)]}"/>-->
+                <button name="action_read_customer_aging" context="{'processing_customer_aging':1}" string="" class="float-right btn-secondary" type="object" icon="fa-list-alt" attrs="{'invisible':[('invoice_id', '=', False)]}"/>
                 <field name="not_due" string="Current" sum="Total" optional="hide" />
                 <field name="days_due_01to30" sum="Total" optional="hide" />
                 <field name="days_due_31to60" sum="Total" optional="hide" />
