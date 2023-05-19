@@ -108,6 +108,10 @@
                                 <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
                                 <div class="col-8"><span style="background-color:#ffff00" t-esc="o.customer_id.name"/></div>
                                 </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Incoterm:'"/> </div>
+                                  <div class="col-8"><span t-field="o.incoterm_id.code"/> - <span t-field="o.incoterm_id.name"/></div>
+                                </div>
                             </div>
                         </div>
                         <div class="page" style="font-size:12px;">
@@ -666,7 +670,7 @@
                                     </tbody>
                                 </t>
                             </table>
-                            <!--div style="page-break-inside:avoid">
+                            <div style="page-break-inside:avoid">
                                 <div class="row" style="margin-top:10px;font-weight:bold;">
                                     <div class="col-3" style="font-size:14px;margin-top: 10px;">
                                         <div style="font-size:12px;text-align:center">Prepared By:</div>
@@ -689,7 +693,7 @@
                                         <div style="font-size:12px">Date:…......../............./.............</div>
                                     </div>
                                 </div>
-                            </div-->
+                            </div>
 
                         </div>
                     </div>

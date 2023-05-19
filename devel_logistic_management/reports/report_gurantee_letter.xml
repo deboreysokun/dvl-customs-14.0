@@ -118,38 +118,41 @@
                                 </p>
                             </div>
 
-                            <div style="page-break-inside:avoid">
-                                <div class="row" style="margin-top:10px;font-weight:bold;">
-                                    <div class="col-6 text-center" style="font-size:16px;margin-top: 10px;">
-                                        <p style="font-size:16px;font-family:'Battambang';text-decoration: underline;margin-top: 10px">សូមបញ្ជក់ថា</p>
-                                        <p style="font-size:16px;font-family:'Battambang'">ហត្ថលេខាខាងស្តាំនេះ ពិតជារបស់<t t-if="o.owner_id.gender == 'female'"><t t-esc="'លោកស្រី'"/></t><t t-else=""><t t-esc="'លោក'"/></t>
-                                        <t t-esc="o.owner_id.khmer_name"/> ប្រធានក្រុមហ៊ុន <span t-field="o.shipper_id.name"/> ពិតប្រាកដមែន។
-                                        </p>
-                                        <p style="font-size:16px;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/></p>
-                                        <p style="font-size:16px;font-family:'Battambang'">ហត្ថលេខា </p>
-                                        <t t-if="o.gua_letter_stamp_consignee == true">
-                                            <!-- Show consignee stamp-->
-                                            <div style="position:absolute;">
-                                                <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
-                                            </div>
-                                        </t>
-                                    </div>
-                                    <div class="col-6 text-center" style="font-size:16px;margin-top: 10px;">
-                                        <div style="font-size:16px;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/>
-                                        </div>
-                                        <div style="font-size:16px;margin-top: 10px;font-family:'Battambang'">ប្រធាន<span t-field="o.company_type"/></div>
-                                        <t t-if="o.gua_letter_stamp == true">
-                                            <t t-if="o.owner_id.signature_image">
-                                                <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
-                                                <div style="font-size:16px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/></div>
-                                            </t>
-                                        </t>
-                                        <t t-if="o.gua_letter_stamp == false">
-                                            <div style="font-size:16px;margin-top:160px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/></div>
-                                        </t>
-                                    </div>
-                                </div>
-                            </div>
+                          <div style="page-break-inside:avoid">
+                              <div class="row" style="margin-top:10px;font-weight:bold;">
+                                  <div class="col-6 text-center" style="font-size:16px;margin-top: 10px;">
+                                    <t t-if="o.x_verify_sign==true">
+                                      <!--<p style="font-size:16px;font-family:'Battambang';text-decoration: underline;margin-top: 10px">សូមបញ្ជក់ថា</p>-->
+                                      <!--<p style="font-size:16px;font-family:'Battambang'">ហត្ថលេខាខាងស្តាំនេះ ពិតជារបស់<t t-if="o.owner_id.gender == 'female'"><t t-esc="'លោកស្រី'"/></t><t t-else=""><t t-esc="'លោក'"/></t>-->
+                                      <!--<t t-esc="o.owner_id.khmer_name"/> ប្រធានក្រុមហ៊ុន <span t-field="o.shipper_id.name"/> ពិតប្រាកដមែន។-->
+                                      <!--</p>-->
+                                      <p style="font-size:16px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/> <span t-field="o.shipper_id.name"/></p>
+                                      <p style="font-size:16px;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/></p>
+                                      <p style="font-size:16px;font-family:'Battambang'">ហត្ថលេខា </p>
+                                    </t>
+                                      <t t-if="o.gua_letter_stamp_consignee == true">
+                                          <!-- Show consignee stamp-->
+                                          <div style="position:absolute;">
+                                              <t t-if="o.consignee_id.signature_image"><img style="margin-left:100px" t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
+                                          </div>
+                                      </t>
+                                  </div>
+                                  <div class="col-6 text-center" style="font-size:16px;margin-top: 10px;">
+                                      <div style="font-size:16px;font-family:'Battambang'"><t t-esc="o.province_id.kh_name"/> ថ្ងៃទី <t t-esc="khmerformattedDate"/>
+                                      </div>
+                                      <div style="font-size:16px;margin-top: 10px;font-family:'Battambang'">ប្រធាន<span t-field="o.company_type"/></div>
+                                      <t t-if="o.gua_letter_stamp == true">
+                                          <t t-if="o.owner_id.signature_image">
+                                              <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
+                                              <div style="font-size:16px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/></div>
+                                          </t>
+                                      </t>
+                                      <t t-if="o.gua_letter_stamp == false">
+                                          <div style="font-size:16px;margin-top:160px;font-family:'Battambang'"><t t-esc="o.owner_id.khmer_name"/></div>
+                                      </t>
+                                  </div>
+                              </div>
+                          </div>
 
                         </div>
 
