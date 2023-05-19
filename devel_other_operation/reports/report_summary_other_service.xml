@@ -54,12 +54,12 @@
                             <div class="col-6" style="font-size:14px;">
                                 <t t-if="o.start_date">
                                     <div class="row">
-                                        <div class="col-5"><span t-esc="'Start Date: '"/><span t-field="o.start_date"/></div>
+                                        <div class="col-5"><span t-esc="'Start Date: '"/><span t-field="o.start_date" t-options="{'widget': 'date', 'format': 'YYYY/MM/dd'}"/></div>
                                     </div>
                                 </t>
                                 <t t-if="o.end_date">
                                     <div class="row">
-                                        <div class="col-5"><span t-esc="'End Date: '"/> <span t-field="o.end_date"/></div>
+                                        <div class="col-5"><span t-esc="'End Date: '"/> <span t-field="o.end_date" t-options="{'widget': 'date', 'format': 'YYYY/MM/dd'}"/></div>
                                     </div>
                                 </t>
                             </div>
