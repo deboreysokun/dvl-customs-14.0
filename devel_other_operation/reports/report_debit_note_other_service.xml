@@ -210,7 +210,12 @@
                                 </div>
                                 <div class="col-4" style="font-size:14px;margin-top: 10px;">
                                     <div>Authorized By:</div>
-                                    <div> <img src="/devel_logistic_management/static/img/signature.jpg" height="120px"/></div>
+                                    <t t-if="o.x_no_signature == false">
+                                      <div> <img src="/devel_logistic_management/static/img/signature.jpg" height="120px"/></div>
+                                    </t>
+                                    <t t-if="o.x_no_signature == true">
+                                      <div> <img height="120px"/></div>
+                                    </t>
                                     <div>CHHOR KHUNVATANA</div>
                                     <div><t t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/></div>
                                 </div>

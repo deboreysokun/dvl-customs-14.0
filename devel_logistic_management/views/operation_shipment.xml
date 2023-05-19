@@ -635,6 +635,7 @@
                                             <field name="auth_trader_stamp" class="o_address_state" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                             <label for="auth_trader_stamp_consignee" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="auth_trader_stamp_consignee" class="o_address_state" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
+                                            <field name = "x_select_auth"/>
                                         </div>
 
                                         <label for="transit_authorization_doc" string="AUTH Broker"/>
@@ -681,6 +682,8 @@
                                             <field name="gua_letter_stamp" class="o_address_state" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                             <label for="gua_letter_stamp_consignee" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="gua_letter_stamp_consignee" class="o_address_state" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}" />
+                                            <label for="x_verify_sign" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            <field name="x_verify_sign" class="o_address_state" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                         <label for="vgm" string="VGM"/>
                                         <div class="o_address_format">

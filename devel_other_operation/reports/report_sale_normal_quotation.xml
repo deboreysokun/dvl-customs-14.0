@@ -209,15 +209,15 @@
                                             <t t-if="company.partner_id.signature_image"><div style="font-size:14px;height:150px"/></t>
                                             <div style="border-bottom: 1px solid black;"/>
                                             <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
-                                            <div class="text-center" style="font-size:14px">(Company Name)</div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc='o.partner_id.name'/> &amp; <span t-esc='o.partner_id.function'/></div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc='o.partner_id.parent_id.name'/></div>
                                         </div>
                                         <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;"/>
                                         <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;">
                                             <t t-if="company.partner_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(company.partner_id.signature_image)" height="150px"/></div></t>
                                             <div style="border-bottom: 1px solid black;"/>
                                             <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc='o.sale_user_id.name'/> &amp; <span t-esc='o.sale_user_id.function'/></div>
                                             <div class="text-center" style="font-size:14px"><span t-esc="company.name"/></div>
                                         </div>
                                     </t>
@@ -226,15 +226,15 @@
                                             <t t-if="o.issued_quotation_id.signature_image"><div style="font-size:14px;height:150px"/></t>
                                             <div style="border-bottom: 1px solid black;"/>
                                             <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
-                                            <div class="text-center" style="font-size:14px">(Company Name)</div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc='o.partner_id.name'/> &amp; <span t-esc='o.partner_id.function'/></div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc='o.partner_id.parent_id.name'/></div>
                                         </div>
                                         <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;"/>
                                         <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;">
                                             <t t-if="o.issued_quotation_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.issued_quotation_id.signature_image)" height="150px"/></div></t>
                                             <div style="border-bottom: 1px solid black;"/>
                                             <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
+                                            <div class="text-center" style="font-size:14px"><span t-esc='o.sale_user_id.name'/> &amp; <span t-esc='o.sale_user_id.function'/></div>
                                             <div class="text-center" style="font-size:14px"><span t-esc="o.issued_quotation_id.name"/></div>
                                         </div>
                                     </t>
