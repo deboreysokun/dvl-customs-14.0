@@ -338,6 +338,24 @@ class ResPartnerAgingCustomer(models.Model):
         action["res_id"] = self.invoice_id.id
         return action
 
+    # I want to click then pop up to new tab
+    def action_read_customer_aging(self):
+        self.ensure_one()
+        # I want to open the view in a new tab, if you can find a better way, please fix me!
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        # menu_id = self.env.ref("account.action_move_out_invoice_type").id
+        menu_id = 101
+        if self._context.get('processing_customer_aging'):
+            # action_id = self.env.ref("account.view_move_form").id
+            action_id = 196
+        return {
+            'type': 'ir.actions.act_url',
+            'target': '_blank',
+            'url': str(base_url) + "/web#id=%s&action=%s&model=account_move&view_type=form&cids=%s&menu_id=%s" % (
+                self.invoice_id.id, action_id, self.env.company.id, menu_id),
+        }
+
+
     def init(self):
         self.execute_aging_query()
         super(ResPartnerAgingCustomer, self).init()

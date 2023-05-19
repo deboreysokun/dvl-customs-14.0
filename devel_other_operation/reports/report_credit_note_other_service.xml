@@ -89,7 +89,7 @@
                                 <div class="col-4" style="font-size:14px;border-right:1px solid #2e75b5;margin-left:0px;">
                                     <div class="row">
                                         <div class="col-5 text-right"><span t-esc="'Issued Date: '"/></div>
-                                        <div class="col-5"><span t-field="o.invoice_date" t-options="{'widget': 'date', 'format': 'dd/MMM/YYYY'}"/></div>
+                                        <div class="col-5"><span t-field="o.invoice_date" t-options="{'widget': 'date', 'format': 'YYYY/MMM/dd'}"/></div>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                                     <div>Authorized By:</div>
                                     <div> <img src="/devel_logistic_management/static/img/signature.jpg" height="120px"/></div>
                                     <div>CHHOR KHUNVATANA</div>
-                                    <div><t t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/></div>
+                                    <div><t t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/></div>
                                 </div>
                                 <div class="col-4" style="font-size:14px;margin-top: 10px;"/>
                                 <div class="col-4" style="font-size:14px;margin-top: 10px;">
@@ -270,7 +270,7 @@
                                             <div class="col-3"/>
                                             <div class="col-3" style="padding-right:0px;padding-left:0px;font-size:24px;color:#002060;"><span t-esc="'Date :'"/></div>
                                             <div style="padding-right:0px;padding-left:0px;font-size:24px;">
-                                                <span t-esc="payment_id.date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                                <span t-esc="payment_id.date" t-options="{'widget': 'date', 'format': 'YYYY/MMM/dd'}"/>
                                             </div>
                                         </div>
                                       </div>
