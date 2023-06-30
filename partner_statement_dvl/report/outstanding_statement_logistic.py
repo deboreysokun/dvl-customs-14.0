@@ -147,8 +147,11 @@ class OutstandingStatementLogistic(models.AbstractModel):
                 self._display_lines_sql_q3(company_id)))
         for row in self.env.cr.dictfetchall():
             res[row.pop("partner_id")].append(row)
-        return res
 
+        for partner_id in res:
+            res[partner_id].sort(key=lambda line: line["shipment_id"])
+
+        return res
     @api.model
     def _get_report_values(self, docids, data=None):
         if not data:
