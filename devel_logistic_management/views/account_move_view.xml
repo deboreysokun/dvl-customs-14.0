@@ -46,9 +46,11 @@
                     <group>
                         <span attrs="{'invisible': [('print_3digits','==', True)]}">
                             <h5>Option to Print 2 Digits <field name="print_2digits" optional="show" widget="boolean_toggle"/></h5>
+                            <h5>No signature <field name="x_no_signature" optional="show" widget="boolean_toggle"/></h5>
                         </span>
                         <span attrs="{'invisible': [('print_2digits','==', True)]}">
                             <h5>Option to Print 3 Digits <field name="print_3digits" optional="show" widget="boolean_toggle"/></h5>
+                            <h5>No signature <field name="x_no_signature" optional="show" widget="boolean_toggle"/></h5>
                         </span>
                     </group>
                 </group>
