@@ -297,22 +297,22 @@
                                             <t t-if="o.customs_emp_id.cb_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_back_image)" width="400px" height="500px"/></div></t>
                                         </div>
                                     </div>
-                                    <t t-if="o.auth_broker_stamp_consignee == true">
-                                        <div class="row">
-                                            <div class="text-center col-4">
-                                                <div style="margin-top: 10px;"/>
-                                            </div>
-                                            <div class="text-center col-4">
-                                                <!-- Show consignee stamp -->
-                                                <div style="position:absolute;padding-top:20px;">
-                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
-                                                </div>
-                                            </div>
-                                            <div class="text-center col-4">
-                                                <div style="margin-top: 10px;"/>
-                                            </div>
-                                        </div>
-                                    </t>
+<!--                                    <t t-if="o.auth_broker_stamp_consignee == true">-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="margin-top: 10px;"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                &lt;!&ndash; Show consignee stamp &ndash;&gt;-->
+<!--                                                <div style="position:absolute;padding-top:20px;">-->
+<!--                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="margin-top: 10px;"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
                                 </div>
                             </div>
                         </div>
@@ -610,21 +610,21 @@
                                         </div>
                                     </div>
                                     <!-- Show consignee stamp -->
-                                    <t t-if="o.auth_broker_stamp_consignee == true">
-                                        <div class="row">
-                                            <div class="text-center col-4">
-                                                <div style="margin-top: 10px;"/>
-                                            </div>
-                                            <div class="text-center col-4">
-                                                <div style="position:absolute;padding-top:20px;">
-                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
-                                                </div>
-                                            </div>
-                                            <div class="text-center col-4">
-                                                <div style="margin-top: 10px;"/>
-                                            </div>
-                                        </div>
-                                    </t>
+<!--                                    <t t-if="o.auth_broker_stamp_consignee == true">-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="margin-top: 10px;"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="position:absolute;padding-top:20px;">-->
+<!--                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="margin-top: 10px;"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
                                 </div>
                             </div>
                         </div>
@@ -808,22 +808,22 @@
                                             <t t-if="o.customs_emp_id.cb_card_back_image"><div class="col-3"><img t-att-src="image_data_uri(o.customs_emp_id.cb_card_back_image)" width="400px" height="500px"/></div></t>
                                         </div>
                                     </div>
-                                    <t t-if="o.auth_broker_stamp_consignee == true">
-                                        <div class="row">
-                                            <div class="text-center col-4">
-                                                <div style="margin-top: 10px;"/>
-                                            </div>
-                                            <div class="text-center col-4">
-                                                <!-- Show consignee stamp -->
-                                                <div style="position:absolute;padding-top:20px;">
-                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>
-                                                </div>
-                                            </div>
-                                            <div class="text-center col-4">
-                                                <div style="margin-top: 10px;"/>
-                                            </div>
-                                        </div>
-                                    </t>
+<!--                                    <t t-if="o.auth_broker_stamp_consignee == true">-->
+<!--                                        <div class="row">-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="margin-top: 10px;"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                &lt;!&ndash; Show consignee stamp &ndash;&gt;-->
+<!--                                                <div style="position:absolute;padding-top:20px;">-->
+<!--                                                    <t t-if="o.consignee_id.signature_image"><img t-att-src="image_data_uri(o.consignee_id.signature_image)" height="150px"/></t>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="text-center col-4">-->
+<!--                                                <div style="margin-top: 10px;"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
                                 </div>
                             </div>
                         </div>

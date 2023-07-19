@@ -1169,9 +1169,13 @@ class OperationShipment(models.Model):
             # shipment.container_number =";".join(container_number)
 
         ###### Purpuse code below is to print frist 5 container number on the top and the rest is in the footer (18/Jan/2023)
-            x = len(container_number)-5
-            shipment.container_number1 = "\n".join(container_number[:5])
-            shipment.container_number2 = "\n".join(container_number[-x:])
+            x = len(container_number) - 5
+            if x > 0:
+                shipment.container_number1 = "\n".join(container_number[:5])
+                shipment.container_number2 = "\n".join(container_number[-x:])
+            if x <= 0:
+                shipment.container_number1 = "\n".join(container_number[:5])
+                shipment.container_number2 = ""
         ######    
 
             shipment.seal_number = "\n ".join(seal_number)
