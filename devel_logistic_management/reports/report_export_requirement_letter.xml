@@ -24,8 +24,8 @@
                             <div class="" style="line-height:30px;">
                                 <p style="font-size:14pt;font-family:'Battambang';text-align: justify ">
                                     <span style="font-family:'Khmer OS Muol Light'">កម្មវត្ថុ៖ </span>
-                                    សំណើសុំនាំចេញ <span t-field="o.commodity_khmer"/> ចំនួន <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/> <span t-field="o.qty_uom_id"/> ស្មើនឹង <span t-esc="'{0:,.0f}'.format(o.total_container_qty)"/> កុងតឺន័រ   មានទម្ងន់ <span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/> គីឡូក្រាម   និងមានតម្លៃ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/> ដុល្លារអាមេរិក
-                                    នាំចេញទៅកាន់ប្រទេស <t t-esc="o.import_country_id.khmer_name"/> តាមមាត់ច្រកអន្តរជាតិ <t t-esc="o.entry_exit_port_id.kh_name"/>  និងសុំត្រួតពិនិត្យរូបវ័ន្ត ទំនិញនៅ <t t-esc="o.clearance_office_id.kh_name"/> ។
+                                    សំណើសុំមន្ត្រីគយត្រួតពិនិត្យទំនិញ <span t-field="o.commodity_khmer"/> ចំនួន <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/> <span t-field="o.qty_uom_id"/> ស្មើនឹង <span t-esc="'{0:,.0f}'.format(o.total_container_qty)"/> កុងតឺន័រ   មានទម្ងន់ <span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/> គីឡូក្រាម   និងមានតម្លៃ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/> ដុល្លារអាមេរិក
+                                    នាំចេញទៅកាន់ប្រទេស <t t-esc="o.import_country_id.khmer_name"/> តាមមាត់ច្រកអន្តរជាតិ <t t-esc="o.entry_exit_port_id.kh_name"/>  និងសុំត្រួតពិនិត្យរូបវ័ន្តទំនិញនៅ <t t-esc="o.clearance_office_id.kh_name"/> ។
                                 </p>
                             </div>
 
@@ -74,22 +74,33 @@
                             </div>
 
                             <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា&#160;ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។
                                     ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ <span t-field="o.company_type"/>យើងខ្ញុំ សូមទទួលខុសត្រូវទាំងស្រុងចំពោះមុខច្បាប់ជាធរមាន។
                                 </p>
                             </div>
 
                             <!--<div class="" style="line-height: 30px;">-->
-                            <!--    <p style="font-family:'Moul';text-indent: 50px;font-size:14pt;text-align: justify">អាស្រ័យហេតុនេះ​សូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតអោយ<span t-field="o.company_type"/> <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>នាំចេញទំនិញ-->
+                            <!--    <p style="font-family:'Moul';text-indent: 50px;font-size:14pt;text-align: justify">អាស្រ័យហេតុនេះ សូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតអោយ<span t-field="o.company_type"/> <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>នាំចេញទំនិញ-->
                             <!--    តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
                             <!--    </p>-->
                             <!--</div>-->
-                            
-                            <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">អាស្រ័យហេតុនេះ សូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតអោយ<span t-field="o.company_type"/>
-                                    <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>​នាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
+                            <t t-if="o.owner_id.gender == 'male'">
+                              <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>ខ្ញុំបាទនាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
                                 </p>
-                            </div>
+                              </div>
+                            </t>
+                            <t t-if="o.owner_id.gender == 'female'">
+                              <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>នាងខ្ញុំនាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
+                                </p>
+                              </div>
+                            </t>
+                            <!--<div class="" style="line-height: 30px;">-->
+                            <!--    <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យ និង អនុញ្ញាតអោយ<span t-field="o.company_type"/>-->
+                            <!--    <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else="">ខ្ញុំបាទ</t>នាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
+                            <!--    </p>                            -->
+                            <!--  </div>-->
 
                             <div class="">
                                 <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">សូមលោកប្រធាន មេត្តាទទួលនូវការគោរពអំពី<t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>។</p>

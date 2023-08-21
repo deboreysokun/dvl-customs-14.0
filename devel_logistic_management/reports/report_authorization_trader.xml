@@ -333,7 +333,8 @@
                                     <span style="font-weight:bold"> ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយ៖</span>
                                 </div>
                                 <div style="font-family:'Battambang';font-size:14pt;">
-                                    <i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.clearance_office_id.name"/> <t t-esc="o.clearance_office_id.kh_name"/> </span><br/>
+                                    <!--<i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.clearance_office_id.name"/> <t t-esc="o.clearance_office_id.kh_name"/> /span><br/>-->
+                                    <i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.clearance_office_id.kh_name"/></span><br/>
                                     <span style="margin-left:30px">តាមឯកសារភ្ជាប់ដូចខាងក្រោម៖</span>
                                 </div>
                                 <div style="font-family:'Battambang';font-size:14pt;">
@@ -558,7 +559,7 @@
                                         <span><t t-if="o.authorized_emp_id.gender == 'female'"><t t-esc="'លោកស្រី '"/></t><t t-else=""><t t-esc="'លោក '"/></t> <span style="font-weight:bold;font-family: 'Khmer Os Muol Light', Khmer Os Battambang;"> <t t-esc="o.authorized_emp_id.khmer_name"/></span>
                                             អត្តសញ្ញណប័ណ្ណសញ្ជាតិខ្មែរ <t t-esc="o.authorized_emp_id.id_card_number"/> ជាបុគ្គលិកក្រុមហ៊ុន <t t-esc="o.shipper_id.name"/>
                                             អត្តសញ្ញណកម្មសារពើពន្ធ អតប លេខ <t t-esc="o.shipper_id.vat"/>  លេខទូរស័ព្ទ <t t-esc="o.authorized_emp_id.phone"/>
-                                            <span>ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយសម្រាប់មួយប្រតិវេទន៍គយ នៅ<t t-esc="o.clearance_office_id.name"/> <t t-esc="o.clearance_office_id.kh_name"/>
+                                            <span>ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយសម្រាប់មួយប្រតិវេទន៍គយ នៅ <t t-esc="o.clearance_office_id.kh_name"/>
                                                 ដែលមានឯកសារភ្ជាប់ដូចខាងក្រោម៖
                                             </span>
                                         </span>
@@ -738,7 +739,7 @@
                                         <span style="font-weight:bold"> ដើម្បីបំពេញបែបបទបញ្ចេញទំនិញពីគយ៖</span>
                                     </div>
                                     <div style="font-family:'Battambang';font-size:14pt;">
-                                        <i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.valuation_office_id.kh_name"/> </span><br/>
+                                        <i class="fa fa-check-square-o"/><span> សម្រាប់មួយប្រតិវេទន៍គយឬមួយប្រតិបត្តិការនៅ <t t-esc="o.clearance_office_id.kh_name"/> </span><br/>
                                         <span style="margin-left:30px">តាមឯកសារភ្ជាប់ដូចខាងក្រោម៖</span>
                                     </div>
                                     <div style="font-family:'Battambang';font-size:14pt;">
