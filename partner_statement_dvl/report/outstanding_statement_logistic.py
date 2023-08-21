@@ -149,7 +149,10 @@ class OutstandingStatementLogistic(models.AbstractModel):
             res[row.pop("partner_id")].append(row)
 
         for partner_id in res:
-            res[partner_id].sort(key=lambda line: line["shipment_id"])
+            res[partner_id].sort(key=lambda line: (not line.get("shipment_id", False), line.get("shipment_id")))
+
+        # for partner_id in res:
+        #     res[partner_id].sort(key=lambda line: line["shipment_id"])
 
         return res
     @api.model
