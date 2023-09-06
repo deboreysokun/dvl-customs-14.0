@@ -81,19 +81,19 @@
 
                         <group col="10" string="Operation">
                             <group colspan="3" col="3">
-                                <field name="date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                <field name="operation_type" attrs="{'readonly': [('id', '!=', False)], 'required': [('id', '=', False)]}"/>
-                                <field name="transportation_mode" widget="radio" attrs="{'readonly': [('id', '!=', False)]}"/>
-                                <field name="shipment_type_id" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                <field name="date" attrs="{'readonly': [('is_locked', '=', True)]}" string="1 Date"/>
+                                <field name="operation_type" attrs="{'readonly': [('id', '!=', False)], 'required': [('id', '=', False)]}" string="2 Type"/>
+                                <field name="transportation_mode" widget="radio" attrs="{'readonly': [('id', '!=', False)]}" string="2A Transportation"/>
+                                <field name="shipment_type_id" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}" string="3 Shipment Type"/>
                                 <field name="verify_user_id" options="{'no_open': True,'no_create_edit': True}"
-                                    attrs="{'readonly':[('review_done','=', True)]}"/>
+                                    attrs="{'readonly':[('review_done','=', True)]}" string="4 Review by"/>
                                 <field name="verify_date" attrs="{'invisible': [('review_done', '=', False)]}"/>
                                 <field name="review_comment" attrs="{'invisible': [('review_comment', '=', False)]}"/>
                                 <field name="company_id" groups="base.group_multi_company" readonly="1"/>
                             </group>
                             <group colspan="3" col="3">
-                                <field name="customer_id"/>
-                                <field name="commodity"/>
+                                <field name="customer_id" string="5 Client"/>
+                                <field name="commodity" string="6 Commodity"/>
                                 <field name="container_qty_type"/>
                                 <field name="truck_container" string="Containers &amp; Truck No." widget="text"/>
                             </group>
@@ -127,7 +127,7 @@
                         </group>
                         <group>
                             
-                            <field name="incoterm_id"/>
+                            <field name="incoterm_id" string="7 Incoterm"/>
                             <label for="internal_note" class="dvl-bg-light-orange"/>
                             <div class="o_row">
                                 <field name="internal_note" class="dvl-bg-light-orange"  placeholder="Note on important information such as issues, remark, ...etc"/>
@@ -143,61 +143,61 @@
                                                 'show_commodity': 1,
                                                 'show_client_name': 1,
                                                 'search_view_ref': 'devel_logistic_management.view_shipment_operation_search',
-                                                'tree_view_ref': 'devel_logistic_management.view_shipment_operation_tree'}"/>
+                                                'tree_view_ref': 'devel_logistic_management.view_shipment_operation_tree'}" string="8 Copy From Shipment"/>
                                     </group>
                                 </group>
                                 <group string="General Information">
                                     <group>
-                                        <field name="shipper_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="consignee_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="shipper_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="9 Shipper"/>
+                                        <field name="consignee_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="10 Consignee"/>
 
                                     </group>
                                     <group>
-                                        <field name="notify_party_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="customer_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)], 'required': [('id', '=', False)]}"/>
+                                        <field name="notify_party_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="14 Notify Party"/>
+                                        <field name="customer_id" context="{'show_address': 1, 'show_vat': True}" options='{"always_reload": True, "no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)], 'required': [('id', '=', False)]}" string="15 Client"/>
                                     </group>
                                     <group>
-                                        <field name="export_country_id" attrs="{'invisible': [('operation_type','=','export')], 'readonly': [('is_locked', '=', True)]}" options='{"no_create": True}'/>
-                                        <field name="import_country_id" attrs="{'invisible': [('operation_type','=','import')], 'readonly': [('is_locked', '=', True)]}" options='{"no_create": True}'/>
-                                        <field name="origin_country_id" options='{"no_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="incoterm_id" context="{'show_full_name': 1}" options='{"always_reload": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="export_country_id" attrs="{'invisible': [('operation_type','=','export')], 'readonly': [('is_locked', '=', True)]}" options='{"no_create": True}' string="11 Export Country"/>
+                                        <field name="import_country_id" attrs="{'invisible': [('operation_type','=','import')], 'readonly': [('is_locked', '=', True)]}" options='{"no_create": True}' string="11A Import Country"/>
+                                        <field name="origin_country_id" options='{"no_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="12 Country Of Origin"/>
+                                        <field name="incoterm_id" context="{'show_full_name': 1}" options='{"always_reload": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="13 Incoterm"/>
                                     </group>
                                     <group>
-                                        <field name="entry_exit_port_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'invisible': [('operation_type','=','transit')], 'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="entry_exit_port_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' string="Entry Port" attrs="{'invisible': [('operation_type','!=','transit')], 'readonly': [('is_locked', '=', True)]}" />
-                                        <field name="exit_port_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'invisible': [('operation_type','!=','transit')], 'readonly': [('is_locked', '=', True)]}" />
-                                        <field name="clearance_office_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="valuation_office_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="entry_exit_port_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'invisible': [('operation_type','=','transit')], 'readonly': [('is_locked', '=', True)]}" string="16 Entry/Exit Port"/>
+                                        <field name="entry_exit_port_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' string="16 Entry Port" attrs="{'invisible': [('operation_type','!=','transit')], 'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="exit_port_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'invisible': [('operation_type','!=','transit')], 'readonly': [('is_locked', '=', True)]}" string="16A Exit Port"/>
+                                        <field name="clearance_office_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="17 Clearance Office"/>
+                                        <field name="valuation_office_id" context="{'show_khmer_name': 1}" options='{"always_reload": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="18 Valuation Office"/>
                                     </group>
                                 </group>
                                 <group string="Carrier Information">
                                     <group>
                                         <field name="co_loader_id" options='{"no_quick_create": True}' invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="shipping_line_id" options='{"no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="bl_number" string="MBL or Booking N0." attrs="{'invisible': [('operation_type','!=','import')]}"/>
+                                        <field name="shipping_line_id" options='{"no_quick_create": True}' attrs="{'readonly': [('is_locked', '=', True)]}" string="19 Shipping Line"/>
+                                        <label for="bl_number" string="20A MBL or Booking N0." attrs="{'invisible': [('operation_type','!=','import')]}"/>
                                         <div class="o_row" attrs="{'invisible': [('operation_type','!=','import')]}">
                                             <field name="bl_number" placeholder="MBL or Booking N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="bl_date" placeholder="BL Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="hbl_number" string="HBL N0."/>
+                                        <label for="hbl_number" string="20 HBL N0."/>
                                         <div class="o_row">
                                             <field name="hbl_number" placeholder="HBL N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="hbl_date" placeholder="HBL Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="truck_bill_number"/>
+                                        <label for="truck_bill_number" string="21 Truck Bill NO."/>
                                         <div class="o_row">
                                             <field name="truck_bill_number" placeholder="Truck Bill N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="truck_bill_date" placeholder="Truck Bill Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                     </group>
                                     <group>
-                                        <field name="internal_seal_number" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="customs_seal_number" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="port_of_loading_carrier" string="Port Of Loading" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="port_of_discharge_carrier" string="Port Of Discharge" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="internal_seal_number" attrs="{'readonly': [('is_locked', '=', True)]}" string="22 Internal Seal NO."/>
+                                        <field name="customs_seal_number" attrs="{'readonly': [('is_locked', '=', True)]}" string="23 Customs Seal NO."/>
+                                        <field name="port_of_loading_carrier" string="24 Port Of Loading" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="port_of_discharge_carrier" string="25 Port Of Discharge" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="container_number" invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="seal_number" invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="etd" string="ETD | ETA | ETR"/>
+                                        <label for="etd" string="26 ETD | ETA | ETR"/>
                                         <div class="o_row">
                                             <span class="oe_read_only"> ETD: </span>
                                             <field name="etd" placeholder="ETD" attrs="{'readonly': [('is_locked', '=', True)]}"/>
@@ -211,28 +211,29 @@
 
                                 <group string="Invoice and Package List">
                                     <group>
-                                        <label for="inv_pack_number" string="INV and PL N0."/>
+                                        <label for="inv_pack_number" string="27 INV and PL N0."/>
                                         <div class="o_row">
                                             <field name="inv_pack_number" placeholder="INV and Packing List Number" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="inv_pack_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="inv_packing_list_term" context="{'show_full_name': 1}" options='{"always_reload": True}' string="INV Incoterm" placeholder="eg: CIF" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="commodity" string="Commodity"/>
+                                        <field name="inv_packing_list_term" context="{'show_full_name': 1}" options='{"always_reload": True}' string="28 INV Incoterm" placeholder="eg: CIF" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <label for="commodity" string="29 Commodity"/>
                                         <div class="o_row">
                                             <field name="commodity" placeholder="English" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="commodity_khmer" placeholder="Khmer" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="is_vehicle" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="mix_commodity" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="is_vehicle" attrs="{'readonly': [('is_locked', '=', True)]}" string="30 Is Vehicle"/>
+                                        <field name="mix_commodity" attrs="{'readonly': [('is_locked', '=', True)]}" string="31 Mix Commodity?"/>
+                                        <field name="x_country_option" string="32 Country Option"/>
                                     </group>
                                     <group attrs="{'invisible': [('operation_type','!=','import')]}">
-                                        <field name="co_form_id" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="co_form_date" string="CO Form Date"/>
+                                        <field name="co_form_id" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}" string="32A CO Form"/>
+                                        <label for="co_form_date" string="32B CO Form Date"/>
                                         <div class="o_row">
                                             <field name="co_form_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="co_form_country_id" placeholder="Country of CO Form" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="co_form_number" placeholder="eg. 203203123123" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="co_form_number" placeholder="eg. 203203123123" attrs="{'readonly': [('is_locked', '=', True)]}" string="32C CO Form NO."/>
                                     </group>
                                 </group>
                                 <!-- Invoice and Packing List -->
@@ -294,22 +295,22 @@
                                 <field name="inv_pl_template" style="margin-left:5px"/>
                                 <group>
                                     <group string="Information">
-                                        <label for="total_gross_weight" string="Total Gross Weight"/>
+                                        <label for="total_gross_weight" string="33 Total Gross Weight"/>
                                         <div class="o_address_format">
                                             <field name="total_gross_weight" class="o_address_city"/>
                                             <field name="gross_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="total_net_weight" string="Total Net Weight"/>
+                                        <label for="total_net_weight" string="34 Total Net Weight"/>
                                         <div class="o_address_format">
                                             <field name="total_net_weight" class="o_address_city"/>
                                             <field name="net_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="total_qty" string="Total INV QTY"/>
+                                        <label for="total_qty" string="35 Total INV QTY"/>
                                         <div class="o_address_format">
                                             <field name="total_qty" class="o_address_city"/>
                                             <field name="inv_qty_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="total_pl_qty" string="Total PL QTY"/>
+                                        <label for="total_pl_qty" string="36 Total PL QTY"/>
                                         <div class="o_address_format">
                                             <field name="total_pl_qty" class="o_address_city"/>
                                             <field name="qty_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
@@ -333,17 +334,17 @@
                                         </div>
                                     </group>
                                     <group string="Actual Information">
-                                        <label for="actual_gross_weight" string="Actual Gross Weight"/>
+                                        <label for="actual_gross_weight" string="37 Actual Gross Weight"/>
                                         <div class="o_address_format">
                                             <field name="actual_gross_weight" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="actual_gross_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="actual_net_weight" string="Actual Net Weight"/>
+                                        <label for="actual_net_weight" string="38 Actual Net Weight"/>
                                         <div class="o_address_format">
                                             <field name="actual_net_weight" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="actual_net_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="actual_qty" string="Actual Total QTY"/>
+                                        <label for="actual_qty" string="39 Actual Total QTY"/>
                                         <div class="o_address_format">
                                             <field name="actual_qty" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="actual_qty_uom_id" context="{'show_full_name': 1}" placeholder="UOM" class="o_address_state" options="{'no_create': True}" attrs="{'readonly': [('is_locked', '=', True)]}"/>
@@ -352,19 +353,19 @@
                                 </group>
                                 <group>
                                     <group string="Customs Penalty Information" attrs="{'invisible': [('operation_type','!=','import')]}">
-                                        <label for="penalty_rate_charge" string="Penalty Rate Charge"/>
+                                        <label for="penalty_rate_charge" string="39A Penalty Rate Charge"/>
                                         <div class="o_address_format">
                                             <field name="penalty_rate_charge" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <span class="o_form_label oe_inline">%</span>
                                         </div>
                                         <field name="customs_penalty_price" widget="monetary" attrs="{'readonly': [('is_locked', '=', True)]}"
-                                        options="{'currency_field': 'company_currency_id'}" />
+                                        options="{'currency_field': 'company_currency_id'}" string="39B Customs Penalty"/>
                                     </group>
                                 </group>
 
                                 <group string="List of Containers">
                                     <group>
-                                        <field name="num_of_truck" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="num_of_truck" attrs="{'readonly': [('is_locked', '=', True)]}" string="40 Number of Truck"/>
                                     </group>
                                 </group>
                                 <field name="container_line_ids" nolabel="1" attrs="{'readonly': [('is_locked', '=', True)]}">
@@ -440,50 +441,50 @@
 
                                 <group string="Booking Order &amp; Truck Bill of Lading">
                                     <group>
-                                        <field name="booking_date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="bl_number" string="MBL or Booking N0." attrs="{'invisible': [('operation_type','=','import')]}"/>
+                                        <field name="booking_date" attrs="{'readonly': [('is_locked', '=', True)]}" string="41 Booking Date"/>
+                                        <label for="bl_number" string="41A MBL or Booking N0." attrs="{'invisible': [('operation_type','=','import')]}"/>
                                         <div class="o_row" attrs="{'invisible': [('operation_type','=','import')]}">
                                             <field name="bl_number"  placeholder="MBL or Booking N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="bl_date" placeholder="BL Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="volume_cbm" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="vessel_id" string="Vessel/Voyage N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="volume_cbm" attrs="{'readonly': [('is_locked', '=', True)]}" string="42 Volume / CBM"/>
+                                        <label for="vessel_id" string="43 Vessel/Voyage N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <div class="o_row">
                                             <field name="vessel_id" placeholder="Vessel Name" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="voyage_number" placeholder="Voyage N0." attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="freight" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="description_of_goods" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="freight" attrs="{'readonly': [('is_locked', '=', True)]}" string="44 Freight"/>
+                                        <field name="description_of_goods" attrs="{'readonly': [('is_locked', '=', True)]}" string="45 Description of Goods"/>
                                     </group>
                                     <group>
-                                        <field name="pick_up_date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="place_of_reciept" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="port_of_loading" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="port_of_discharge" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="port_of_delivery" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="final_destination" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="pick_up_date" attrs="{'readonly': [('is_locked', '=', True)]}" string="46 Pick Up Date"/>
+                                        <field name="place_of_reciept" attrs="{'readonly': [('is_locked', '=', True)]}" string="47 Place Of Reciept"/>
+                                        <field name="port_of_loading" attrs="{'readonly': [('is_locked', '=', True)]}" string="48 Port Of Loading"/>
+                                        <field name="port_of_discharge" attrs="{'readonly': [('is_locked', '=', True)]}" string="49 Port Of Discharge"/>
+                                        <field name="port_of_delivery" attrs="{'readonly': [('is_locked', '=', True)]}" string="50 Port of Delivery"/>
+                                        <field name="final_destination" attrs="{'readonly': [('is_locked', '=', True)]}" string="51 Final Destination"/>
                                     </group>
                                 </group>
                                 <group string="ETD ETA PORT" attrs="{'invisible': [('operation_type','=','import')]}">
                                     <group>
-                                        <label for="etd_export_port" string="ETD Port"/>
+                                        <label for="etd_export_port" string="51A ETD Port"/>
                                         <div class="o_address_format">
                                             <field name="etd_export_port" class="o_address_city" placeholder="Port" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="etd_export_date" class="o_address_state"  placeholder="ETD DATE" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="eta_export_port" string="ETA Port"/>
+                                        <label for="eta_export_port" string="51B ETA Port"/>
                                         <div class="o_address_format">
                                             <field name="eta_export_port" class="o_address_city" placeholder="Port" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="eta_export_date" class="o_address_state"  placeholder="ETA DATE" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                     </group>
                                     <group>
-                                        <label for="etd_export_port_1" string="ETD Transit Port"/>
+                                        <label for="etd_export_port_1" string="51C ETD Transit Port"/>
                                         <div class="o_address_format">
                                             <field name="etd_export_port_1" class="o_address_city" placeholder="Port" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="etd_export_date_1" class="o_address_state"  placeholder="ETD DATE" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="eta_export_port_1" string="ETA Transit Port"/>
+                                        <label for="eta_export_port_1" string="51D ETA Transit Port"/>
                                         <div class="o_address_format">
                                             <field name="eta_export_port_1" class="o_address_city" placeholder="Port" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="eta_export_date_1" class="o_address_state"  placeholder="ETA DATE" attrs="{'readonly': [('is_locked', '=', True)]}"/>
@@ -492,7 +493,7 @@
                                 </group>
                                 <group string="Import Documents" attrs="{'invisible': [('operation_type','!=','import')]}">
                                     <group>
-                                        <label for="inv_packing_doc"/>
+                                        <label for="inv_packing_doc" string="52 Inv Packing Doc"/>
                                         <div class="o_address_format">
                                             <field name="inv_packing_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="inv_pl_stamp" string="Shipper Stamp?" attrs="{'invisible': [('inv_packing_doc','=', False)],'readonly': [('is_locked', '=', True)]}"/>
@@ -501,7 +502,7 @@
                                             <field name="inv_pl_stamp_consignee" class="o_address_state" attrs="{'invisible': [('inv_packing_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <label for="transit_truck_bill_doc" string="Truck Bill"/>
+                                        <label for="transit_truck_bill_doc" string="53A Truck Bill"/>
                                         <div class="o_address_format">
                                             <field name="transit_truck_bill_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="truck_bill_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -510,7 +511,7 @@
                                             <field name="truck_bill_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <label for="authorization_doc" string="AUTH Trader"/>
+                                        <label for="authorization_doc" string="54 AUTH Trader"/>
                                         <div class="o_address_format">
                                             <field name="authorization_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="auth_trader_stamp" string="Shipper Stamp?" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -519,7 +520,7 @@
                                             <field name="auth_trader_stamp_consignee" class="o_address_state" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <label for="transit_authorization_doc" string="AUTH Broker"/>
+                                        <label for="transit_authorization_doc" string="54A AUTH Broker"/>
                                         <div class="o_address_format">
                                             <field name="transit_authorization_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="auth_broker_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -527,19 +528,19 @@
                                             <label for="auth_broker_stamp_consignee" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="auth_broker_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
-                                        <field name="owner_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <field name="authorized_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <field name="customs_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <label for="province_id" string="Province(ធ្វើនៅ)" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="owner_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54B Company's Owner"/>
+                                        <field name="authorized_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54C AUTH Employee"/>
+                                        <field name="customs_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54D Customs Borker"/>
+                                        <label for="province_id" string="54E Province(ធ្វើនៅ)" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                         <div class="o_row" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}">
                                             <field name="province_id" placeholder="Province" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="document_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="khmer_date_char" string="Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
+                                        <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
                                             attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                     </group>
                                     <group>
-                                        <label for="permit_doc"/>
+                                        <label for="permit_doc" string="54G Permit Doc"/>
                                         <div class="o_address_format">
                                             <field name="permit_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="permit_stamp" string="Shipper Stamp?" attrs="{'invisible': [('permit_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -547,8 +548,8 @@
                                             <label for="permit_stamp_consignee" attrs="{'invisible': [('permit_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="permit_stamp_consignee" class="o_address_state" attrs="{'invisible': [('permit_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
-                                        <field name="co_doc" string="CO Doc" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <field name="co_attactment_doc" string="CO Attactment Doc" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="co_doc" string="54H CO Doc" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="co_attactment_doc" string="54I CO Attactment Doc" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                     </group>
                                     <group>
                                         <button class="btn btn-primary" name="action_import_download_all" type="object" string="Download"></button>
@@ -556,7 +557,7 @@
                                 </group>
                                 <group string="Transit Documents" attrs="{'invisible': [('operation_type','!=','transit')]}">
                                     <group>
-                                        <label for="transit_inv_packing_doc" string="Inv Packing List"/>
+                                        <label for="transit_inv_packing_doc" string="52 Inv Packing List"/>
                                         <div class="o_address_format">
                                             <field name="transit_inv_packing_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="inv_pl_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_inv_packing_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -564,7 +565,7 @@
                                             <label for="inv_pl_stamp_consignee" attrs="{'invisible': [('transit_inv_packing_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="inv_pl_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_inv_packing_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
-                                        <label for="draft_bl" string="Draft BL"/>
+                                        <label for="draft_bl" string="53 Draft BL"/>
                                         <div class="o_address_format">
                                             <field name="draft_bl" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="draft_bl_stamp" string="Shipper Stamp?" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -573,7 +574,7 @@
                                             <field name="draft_bl_stamp_consignee" class="o_address_state" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <label for="transit_truck_bill_doc" string="Truck Bill"/>
+                                        <label for="transit_truck_bill_doc" string="53A Truck Bill"/>
                                         <div class="o_address_format">
                                             <field name="transit_truck_bill_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="truck_bill_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -581,7 +582,7 @@
                                             <label for="truck_bill_stamp_consignee" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="truck_bill_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
-                                        <label for="transit_authorization_doc" string="AUTH Broker"/>
+                                        <label for="transit_authorization_doc" string="54 AUTH Broker"/>
                                         <div class="o_address_format">
                                             <field name="transit_authorization_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="auth_broker_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -590,7 +591,7 @@
                                             <field name="auth_broker_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <label for="authorization_doc" string="AUTH Trader"/>
+                                        <label for="authorization_doc" string="54A AUTH Trader"/>
                                         <div class="o_address_format">
                                             <field name="authorization_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="auth_trader_stamp" string="Shipper Stamp?" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -599,17 +600,17 @@
                                             <field name="auth_trader_stamp_consignee" class="o_address_state" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <field name="owner_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <field name="authorized_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <field name="customs_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
+                                        <field name="owner_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54B Company's owner"/>
+                                        <field name="authorized_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54C AUTH Employee"/>
+                                        <field name="customs_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54D Customs Border"/>
                                     </group>
                                     <group>
-                                        <label for="province_id" string="Province(ធ្វើនៅ)" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                        <label for="province_id" string="54E Province(ធ្វើនៅ)" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                         <div class="o_row" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}">
-                                            <field name="province_id" placeholder="Province" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                            <field name="province_id" placeholder="Province" attrs="{'readonly': [('is_locked', '=', True)]}" string="54E Province(ធ្វើនៅ)"/>
                                             <field name="document_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="khmer_date_char" string="Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
+                                        <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
                                             attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                     </group>
                                     <group>
@@ -618,8 +619,8 @@
                                 </group>
                                 <group string="Export Documents" attrs="{'invisible': [('operation_type','!=','export')]}">
                                     <group>
-                                        <field name="booking_order_doc" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="export_inv_packing_doc" string="Inv Packing List"/>
+                                        <field name="booking_order_doc" attrs="{'readonly': [('is_locked', '=', True)]}" string="51E Booking Order Doc"/>
+                                        <label for="export_inv_packing_doc" string="52 Inv Packing List"/>
                                         <div class="o_address_format">
                                             <field name="export_inv_packing_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="inv_pl_stamp" string="Shipper Stamp?" attrs="{'invisible': [('export_inv_packing_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -628,7 +629,24 @@
                                             <field name="inv_pl_stamp_consignee" class="o_address_state" attrs="{'invisible': [('export_inv_packing_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <label for="authorization_doc" string="AUTH Trader"/>
+                                        <label for="draft_bl" string="53 Draft BL"/>
+                                        <div class="o_address_format">
+                                            <field name="draft_bl" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                            <label for="draft_bl_stamp" string="Shipper Stamp?" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            <field name="draft_bl_stamp" class="o_address_state" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}" />
+                                            <label for="draft_bl_stamp_consignee" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            <field name="draft_bl_stamp_consignee" class="o_address_state" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}" />
+                                        </div>
+                                        <label for="transit_truck_bill_doc" string="53A Truck Bill"/>
+                                        <div class="o_address_format">
+                                            <field name="transit_truck_bill_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                            <label for="truck_bill_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            <field name="truck_bill_stamp" class="o_address_state" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
+                                            <label for="truck_bill_stamp_consignee" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            <field name="truck_bill_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
+                                        </div>
+
+                                        <label for="authorization_doc" string="54 AUTH Trader"/>
                                         <div class="o_address_format">
                                             <field name="authorization_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="auth_trader_stamp" string="Shipper Stamp?" attrs="{'invisible': [('authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -638,7 +656,7 @@
                                             <field name = "x_select_auth"/>
                                         </div>
 
-                                        <label for="transit_authorization_doc" string="AUTH Broker"/>
+                                        <label for="transit_authorization_doc" string="54A AUTH Broker"/>
                                         <div class="o_address_format">
                                             <field name="transit_authorization_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="auth_broker_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -647,19 +665,19 @@
                                             <field name="auth_broker_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_authorization_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
 
-                                        <field name="owner_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False), ('guaranteed_letter', '=', False), ('export_requirement_letter', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <field name="authorized_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <field name="customs_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}'/>
-                                        <label for="province_id" string="Province(ធ្វើនៅ)" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="owner_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False), ('guaranteed_letter', '=', False), ('export_requirement_letter', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54B Company's Owner"/>
+                                        <field name="authorized_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54C AUTH Employee"/>
+                                        <field name="customs_emp_id" attrs="{'invisible': [('transit_authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}" options='{"no_quick_create": True}' string="54D Customs Borker"/>
+                                        <label for="province_id" string="54E Province(ធ្វើនៅ)" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                         <div class="o_row" attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}">
                                             <field name="province_id" placeholder="Province" attrs="{'readonly': [('is_locked', '=', True)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="document_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)], 'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <field name="khmer_date_char" string="Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
+                                        <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
                                             attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                     </group>
                                     <group>
-                                        <label for="export_requirement_letter" string="Requirement Letter"/>
+                                        <label for="export_requirement_letter" string="54G Requirement Letter"/>
                                         <div class="o_address_format">
                                             <field name="export_requirement_letter" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="req_letter_stamp" string="Shipper Stamp?" attrs="{'invisible': [('export_requirement_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -675,7 +693,7 @@
                                             <span class="oe_read_only">: </span>
                                             <field name="commodity_source" class="o_address_city" attrs="{'invisible': [('export_requirement_letter', '=', False), ('guaranteed_letter', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="guaranteed_letter"/>
+                                        <label for="guaranteed_letter" string="54H Guaranteed Letter"/>
                                         <div class="o_address_format">
                                             <field name="guaranteed_letter" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="gua_letter_stamp" string="Shipper Stamp?" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -685,7 +703,7 @@
                                             <label for="x_verify_sign" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="x_verify_sign" class="o_address_state" attrs="{'invisible': [('guaranteed_letter','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
-                                        <label for="vgm" string="VGM"/>
+                                        <label for="vgm" string="54I VGM"/>
                                         <div class="o_address_format">
                                             <field name="vgm" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="vgm_stamp" string="Shipper Stamp?" attrs="{'invisible': [('vgm','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -693,24 +711,8 @@
                                             <label for="vgm_stamp_consignee" attrs="{'invisible': [('vgm','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="vgm_stamp_consignee" class="o_address_state" attrs="{'invisible': [('vgm','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
-                                        <label for="draft_bl" string="Draft BL"/>
-                                        <div class="o_address_format">
-                                            <field name="draft_bl" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                            <label for="draft_bl_stamp" string="Shipper Stamp?" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                            <field name="draft_bl_stamp" class="o_address_state" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}" />
-                                            <label for="draft_bl_stamp_consignee" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                            <field name="draft_bl_stamp_consignee" class="o_address_state" attrs="{'invisible': [('draft_bl','=', False)], 'readonly': [('is_locked', '=', True)]}" />
-                                        </div>
-                                        <label for="transit_truck_bill_doc" string="Truck Bill"/>
-                                        <div class="o_address_format">
-                                            <field name="transit_truck_bill_doc" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                            <label for="truck_bill_stamp" string="Shipper Stamp?" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                            <field name="truck_bill_stamp" class="o_address_state" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
-                                            <label for="truck_bill_stamp_consignee" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                            <field name="truck_bill_stamp_consignee" class="o_address_state" attrs="{'invisible': [('transit_truck_bill_doc','=', False)], 'readonly': [('is_locked', '=', True)]}" />
-                                        </div>
-                                        <field name="inspection_doc" string="Inspection"/>
-                                        <label for="list_of_container"/>
+                                        <field name="inspection_doc" string="54J Inspection"/>
+                                        <label for="list_of_container" string="54K List Of Container"/>
                                         <div class="o_address_format">
                                             <field name="list_of_container" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <label for="list_cont_stamp" string="Shipper Stamp?" attrs="{'invisible': [('list_of_container','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
@@ -718,7 +720,7 @@
                                             <label for="list_cont_stamp_consignee" attrs="{'invisible': [('list_of_container','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
                                             <field name="list_cont_stamp_consignee" class="o_address_state" attrs="{'invisible': [('list_of_container','=', False)], 'readonly': [('is_locked', '=', True)]}" />
                                         </div>
-                                        <field name="inspection_fixed_doc" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="inspection_fixed_doc" attrs="{'readonly': [('is_locked', '=', True)]}" string="54L Inspection Fixed Doc"/>
                                     </group>
                                     <group>
                                         <button class="btn btn-primary" name="action_export_download_all" type="object" string="Download"></button>
