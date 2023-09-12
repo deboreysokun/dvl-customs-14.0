@@ -1952,7 +1952,7 @@ class ShipmentContainer(models.Model):
                     if storage_days.days <= line.container_charge_type_id.storage_day_free:
                         line.number_storage_days = 0
                     else:
-                        line.number_storage_days = storage_days.days
+                        line.number_storage_days = storage_days.days + 1
                 else:
                     line.number_storage_days = 0
 
@@ -1961,27 +1961,30 @@ class ShipmentContainer(models.Model):
     def _compute_demurrage_days(self):
         for line in self:
             if line.eta and line.takeout_date != False:
-                if line.container_charge_type_id :
-                    temp_demurrage_days = (line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_9day_day_free
+                if line.container_charge_type_id:
+                    temp_demurrage_days = (
+                                                      line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_9day_day_free
                     if temp_demurrage_days <= 0:
                         demurrage_days = 0
                     else:
                         demurrage_days = temp_demurrage_days
 
-                    if temp_demurrage_days <= 9:
+                    if temp_demurrage_days <= line.container_charge_type_id.demurrage_9day_day_free:
                         line.number_demurrage_days = demurrage_days
                     else:
-                        line.number_demurrage_days = 9
+                        line.number_demurrage_days = line.container_charge_type_id.demurrage_9day_day_free
                 else:
                     line.number_demurrage_days = 0
 
     # Compute 2nd Demurrage charge over 9 days
-    @api.onchange('eta', 'takeout_date', 'number_demurrage_days', 'container_charge_type_id.demurrage_over_9day_day_free')
+    @api.onchange('eta', 'takeout_date', 'number_demurrage_days',
+                  'container_charge_type_id.demurrage_over_9day_day_free')
     def _compute_demurrage_days_1(self):
         for line in self:
             if line.eta and line.takeout_date != False:
                 if line.container_charge_type_id:
-                    temp_demurrage_days_1 = (line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_over_9day_day_free
+                    temp_demurrage_days_1 = (
+                                                        line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_over_9day_day_free + 1
                     if temp_demurrage_days_1 <= 0:
                         demurrage_days = 0
                     else:
@@ -1989,12 +1992,12 @@ class ShipmentContainer(models.Model):
 
                     demurrage_days1 = demurrage_days - line.number_demurrage_days
 
-                    if temp_demurrage_days_1 <= 9:
+                    if temp_demurrage_days_1 <= line.container_charge_type_id.demurrage_over_9day_day_free:
                         line.number_demurrage_days_1 = 0
                     else:
                         line.number_demurrage_days_1 = demurrage_days1
-                else: line.number_demurrage_days_1 = 0
-
+                else:
+                    line.number_demurrage_days_1 = 0
     @api.onchange('return_date', 'takeout_date', 'container_charge_type_id.detention_day_free')
     def _compute_detention_days(self):
         for line in self:
