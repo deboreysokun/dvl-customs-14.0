@@ -179,6 +179,11 @@
                         <div style="page-break-inside:avoid">
                             <div class="row" style="margin-top:10px;font-weight:bold;">
                                 <div class="col-4" style="font-size:14px;margin-top: 10px;">
+                                    <div>Customer's Signature &amp; Name</div>
+                                    <div style="margin-top: 120px">Name:</div>
+                                    <div>Date:…......../............./.............</div>
+                                </div>
+                                <div class="col-4" style="font-size:14px;margin-top: 10px;">
                                     <div>Authorized By:</div>
                                     <t t-if="o.x_no_signature == false">
                                       <div> <img src="/devel_logistic_management/static/img/signature.jpg" height="120px"/></div>
@@ -189,7 +194,7 @@
                                     <div>CHHOR KHUNVATANA</div>
                                     <div><t t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/></div>
                                 </div>
-                                <div class="col-4" style="font-size:14px;margin-top: 10px;"/>
+<!--                                <div class="col-4" style="font-size:14px;margin-top: 10px;"/>-->
                                 <div class="col-4" style="font-size:14px;margin-top: 10px;">
                                     <table class="table table-border">
                                         <thead>
