@@ -13,17 +13,18 @@
                         </h1>
                         <group col="3">
                             <group>
+                                <field name="storage_location"/>
                                 <field name="storage_price"/>
                                 <field name="storage_day_free"/>
                             </group>
                             <group>
                                 <field name="demurrage_9day_price"/>
-                                <field name="demurrage_9day_day_free"/>
+                                <field name="demurrage_9day_day_free" string="Demurrage Day Free"/>
                             </group>
 
                             <group>
                                 <field name="demurrage_over_9day_price"/>
-                                <field name="demurrage_over_9day_day_free"/>
+                                <field name="demurrage_over_9day_day_free" string="Demurrage Over Day Free"/>
                             </group>
                             <group>
                                 <field name="standby_price"/>

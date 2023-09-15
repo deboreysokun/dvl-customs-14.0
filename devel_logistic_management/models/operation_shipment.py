@@ -1943,16 +1943,22 @@ class ShipmentContainer(models.Model):
         return res
 
 
-    @api.onchange('eta', 'takeout_date', 'container_charge_type_id.storage_day_free')
+    @api.onchange('eta', 'takeout_date', 'container_charge_type_id.storage_day_free', 'storage_location')
     def _compute_storage_days(self):
         for line in self:
             if line.eta and line.takeout_date != False:
                 if line.container_charge_type_id:
                     storage_days = line.takeout_date - line.eta
-                    if storage_days.days <= line.container_charge_type_id.storage_day_free:
-                        line.number_storage_days = 0
+                    if line.container_charge_type_id.storage_location == "pp_location":
+                        if storage_days.days + 1 <= line.container_charge_type_id.storage_day_free:
+                            line.number_storage_days = 0
+                        else:
+                            line.number_storage_days = storage_days.days + 1 - line.container_charge_type_id.storage_day_free
                     else:
-                        line.number_storage_days = storage_days.days + 1
+                        if storage_days.days + 1 <= line.container_charge_type_id.storage_day_free:
+                            line.number_storage_days = 0
+                        else:
+                            line.number_storage_days = storage_days.days + 1
                 else:
                     line.number_storage_days = 0
 
