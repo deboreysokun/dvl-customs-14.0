@@ -22,7 +22,8 @@ class StorageDemurrageCharge(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Storage And Demurrage Charge by Container Type"
 
-    name = fields.Char(string="Container Type")
+    name = fields.Char(string="Container Type", tracking=True)
+    storage_location = fields.Selection(selection=[('pp_location', 'Phnom Penh'),('kps_location', 'KPS')], string="Location", tracking=True)
     storage_price = fields.Float(string="Storage Charge",tracking=True)
     storage_day_free = fields.Integer(tracking=True, help="#Days Free of Storage Charge")
     demurrage_9day_price = fields.Float(string="1st Demurrage Charge",tracking=True)
