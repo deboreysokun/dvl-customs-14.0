@@ -30,8 +30,8 @@ class Partner(models.Model):
     patent_number = fields.Char(tracking=True)
     patent_date = fields.Date(tracking=True)
     business_activities = fields.Char(help="សម្មភាពអាជីវកម្ម",tracking=True)
-    # kh_name = fields.Char(string="Khmer Name", copy=False, tracking=True)
-    # eng_name = fields.Char(string="English Name", copy=False, tracking=True)
+    kh_name = fields.Char(string="Khmer Name", copy=False, tracking=True)
+    eng_name = fields.Char(string="English Name", copy=False, tracking=True)
     gender = fields.Selection(
         [("male", "Male"), ("female", "Female"), ("other", "Other")], tracking=True
     )
