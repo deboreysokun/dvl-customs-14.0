@@ -191,6 +191,7 @@
                                                 </t>
                                                 <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
                                                 <div style="font-size:14px;">Authorized Signature</div>
+                                                <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
                                             </div>
                                         </div>
                                     </div>
@@ -391,6 +392,7 @@
                                                 </t>
                                                 <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
                                                 <div style="font-size:14px;">Authorized Signature</div>
+                                                <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
                                             </div>
                                         </div>
                                     </div>
@@ -624,6 +626,7 @@
                                             </t>
                                             <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
                                             <div style="font-size:14px;">Authorized Signature</div>
+                                            <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
                                         </div>
                                     </div>
                                 </div>

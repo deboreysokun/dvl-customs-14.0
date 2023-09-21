@@ -1897,7 +1897,7 @@ class ShipmentContainer(models.Model):
     company_id = fields.Many2one(comodel_name='res.company', string='Company', related='shipment_id.company_id', default=lambda self: self.env.company)
     shipment_id = fields.Many2one('operation.shipment', ondelete='cascade', tracking=True)
     container_type_id = fields.Many2one('container.type', tracking=True, required=True)
-    custom_seal_no = fields.Char(string="Custom Seal N0.", tracking=True)
+    custom_seal_no = fields.Char(string="Customs Seal N0.", tracking=True)
     container_number = fields.Char(tracking=True)
     container_seal_number = fields.Char(string="Seal N0.", tracking=True)
     company_seal_no = fields.Char(string="Company Seal N0.")

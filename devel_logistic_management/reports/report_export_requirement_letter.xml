@@ -121,6 +121,7 @@
                                         <div style="font-size:14pt;font-family:'Battambang';"><span>ធ្វើនៅ <t t-esc="o.province_id.kh_name"/></span> ថ្ងៃទី <t t-esc="khmerformattedDate"/>
                                         </div>
                                         <div style="font-size:12pt;margin-top: 10px;font-family:'Khmer OS Muol Light'">ប្រធាន<span t-field="o.company_type"/></div>
+                                        <div style="font-size:14pt;margin-top:160px;font-family:'Khmer OS Muol Light'"><t t-esc="o.shipper_id.kh_name"/></div>
                                         <t t-if="o.req_letter_stamp == true">
                                             <t t-if="o.owner_id.signature_image">
                                                 <div><img t-att-src="image_data_uri(o.owner_id.signature_image)" height="150px"/></div>
