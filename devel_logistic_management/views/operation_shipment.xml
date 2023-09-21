@@ -374,7 +374,9 @@
                                         <field name="container_type_id" options="{'no_create': True}"/>
                                         <field name="container_number" class="o_list_number_th"/>
                                         <field name="container_charge_type_id"/>
+                                        <field name="custom_seal_no" class="o_list_number_th"/>
                                         <field name="container_seal_number" class="o_list_number_th"/>
+                                        <field name="company_seal_no" class="o_list_number_th"/>
                                         <field name="e_f" optional="hide"/>
                                         <!--package here is uom_id -->
                                         <field name="package" context="{'show_full_name': 1}" string="UOM" options="{'no_create': True}" optional="show" class="o_list_number_th"/>
