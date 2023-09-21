@@ -88,7 +88,7 @@
                                     <t t-foreach="o.container_line_ids" t-as="container">
                                         <div style="margin-top: 5px;">
                                             <t t-if="o.customs_seal_number"><t t-esc="o.customs_seal_number"/> </t>
-                                            <t t-if="not o.customs_seal_number"><t t-esc="'.........................................'"/> </t>
+                                            <t t-if="not o.customs_seal_number"><t t-esc="container.custom_seal_no"/> </t>
                                         </div>
                                     </t>
 <!--                                    <div style="margin-top: 5px;"><t t-esc="'.........................................'"/></div>-->
