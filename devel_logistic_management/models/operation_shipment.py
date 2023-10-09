@@ -1970,8 +1970,7 @@ class ShipmentContainer(models.Model):
         for line in self:
             if line.eta and line.takeout_date != False:
                 if line.container_charge_type_id:
-                    temp_demurrage_days = (
-                                                      line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_9day_day_free
+                    temp_demurrage_days = (line.takeout_date - line.eta).days + 1 - line.container_charge_type_id.demurrage_9day_day_free
                     if temp_demurrage_days <= 0:
                         demurrage_days = 0
                     else:
@@ -1991,8 +1990,7 @@ class ShipmentContainer(models.Model):
         for line in self:
             if line.eta and line.takeout_date != False:
                 if line.container_charge_type_id:
-                    temp_demurrage_days_1 = (
-                                                        line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_over_9day_day_free + 1
+                    temp_demurrage_days_1 = (line.takeout_date - line.eta).days - line.container_charge_type_id.demurrage_over_9day_day_free + 1
                     if temp_demurrage_days_1 <= 0:
                         demurrage_days = 0
                     else:
@@ -2011,8 +2009,8 @@ class ShipmentContainer(models.Model):
         for line in self:
             if line.return_date and line.takeout_date != False:
                 if line.container_charge_type_id:
-                    detention_days = (line.return_date - line.takeout_date).days - line.container_charge_type_id.detention_day_free
-                    if detention_days <= 5:
+                    detention_days = (line.return_date - line.takeout_date).days - line.container_charge_type_id.detention_day_free + 1
+                    if detention_days <= 0:
                         line.number_detention_days = 0
                     else:
                         line.number_detention_days = detention_days
@@ -2024,7 +2022,7 @@ class ShipmentContainer(models.Model):
         for line in self:
             if line.eta and line.takeout_date != False:
                 if line.container_charge_type_id:
-                    penalty_day = (line.takeout_date - line.eta).days - line.container_charge_type_id.customs_penalty_day_free
+                    penalty_day = (line.takeout_date - line.eta).days - line.container_charge_type_id.customs_penalty_day_free + 1
                     if penalty_day <= 0:
                         line.number_penalty_days = 0
                     else:
