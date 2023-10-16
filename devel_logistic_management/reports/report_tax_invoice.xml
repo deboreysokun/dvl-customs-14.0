@@ -201,6 +201,7 @@
                                                     <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
                                                     <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
                                                     <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span>
+                                                    <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="150px" height="200px"/></span></t>
                                                 </t>
                                                 <t t-if="o.company_header_id">
                                                     <span>All the price are in US Dollar</span><br/>

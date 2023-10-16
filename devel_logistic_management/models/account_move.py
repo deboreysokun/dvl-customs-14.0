@@ -42,6 +42,9 @@ class AccountMove(models.Model):
     print_2digits = fields.Boolean(string="Print 2 Digits",default=False)
     print_3digits = fields.Boolean(string="Print 3 Digits",default=False)
 
+    # Use to input KHQR
+    khqr = fields.Many2one('account.khqr', string="KHQR Option")
+
 
     @api.depends('exchange_rate')
     def _compute_amount_total_khr(self):

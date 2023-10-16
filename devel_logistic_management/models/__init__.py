@@ -22,3 +22,4 @@ from .import account_move
 from .import storage_demurrage
 from .import sale_quotation
 from .import shipment_cover_template
+from .import account_move_khqr
