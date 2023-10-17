@@ -43,7 +43,8 @@ class AccountMove(models.Model):
     print_3digits = fields.Boolean(string="Print 3 Digits",default=False)
 
     # Use to input KHQR
-    khqr = fields.Many2one('account.khqr', string="KHQR Option")
+    khqr = fields.Many2one('account.khqr', string="KHQR Option", tracking=True)
+    show_bank_info = fields.Boolean(string="Show Bank Info", tracking=True)
 
 
     @api.depends('exchange_rate')

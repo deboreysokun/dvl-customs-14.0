@@ -192,21 +192,23 @@
                                         </tr>
                                         <tr style="page-break-inside:avoid">
                                             <td class="text-left" rowspan="4" colspan="4" style="text-align:center;font-weight:bold;padding:5px;">
-                                                <span style="text-decoration: underline">Note:</span><br/>
-                                                <t t-if="not o.company_header_id">
-                                                    <span>All the price are in US Dollar include VAT 10%</span><br/>
-                                                    <span>Payment Term: Cash or Credit to <t t-esc="company.name"/></span><br/><br/>
-                                                    <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
-                                                    <span>Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
-                                                    <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
-                                                    <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
-                                                    <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span>
-                                                    <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="150px" height="200px"/></span></t>
-                                                </t>
-                                                <t t-if="o.company_header_id">
-                                                    <span>All the price are in US Dollar</span><br/>
-                                                    <span>Cash or Credit to <span class="text-uppercase"><t t-esc="o.company_header_id.name"/></span> </span><br/>
-                                                    <span>Contact <t t-esc="o.company_header_id.phone"/> <t t-if="o.company_header_id.mobile"> / <t t-esc="o.company_header_id.mobile"/> </t> </span><br/><br/>
+                                                <t t-if="o.show_bank_info">
+                                                    <span style="text-decoration: underline">Note:</span><br/>
+                                                    <t t-if="not o.company_header_id">
+                                                        <span>All the price are in US Dollar include VAT 10%</span><br/>
+                                                        <span>Payment Term: Cash or Credit to <t t-esc="company.name"/></span><br/><br/>
+                                                        <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
+                                                        <span>Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
+                                                        <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
+                                                        <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
+                                                        <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span>
+                                                        <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="150px" height="200px"/></span></t>
+                                                    </t>
+                                                    <t t-if="o.company_header_id">
+                                                        <span>All the price are in US Dollar</span><br/>
+                                                        <span>Cash or Credit to <span class="text-uppercase"><t t-esc="o.company_header_id.name"/></span> </span><br/>
+                                                        <span>Contact <t t-esc="o.company_header_id.phone"/> <t t-if="o.company_header_id.mobile"> / <t t-esc="o.company_header_id.mobile"/> </t> </span><br/><br/>
+                                                    </t>
                                                 </t>
                                             </td>
                                             <td class="text-right" style="text-align:center;font-weight:bold;padding:5px;">សរុប/Sub Total</td>

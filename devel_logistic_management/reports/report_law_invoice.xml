@@ -258,6 +258,7 @@
                             </div>
                         </div>
                         <div style="page-break-inside:avoid">
+                          <t t-if="o.show_bank_info">
                             <div style="border:2px solid #BF8F00;width:500px;font-size:14px;margin-top:15px">
                                 <span style="text-decoration: underline">REMITTANCE DETAILS:</span><br/>
                                 <span>All the price are in US Dollar</span><br/>
@@ -271,7 +272,9 @@
                                 <span>Beneficiary Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
                                 <span>Beneficiary Bank Address: <t t-esc="o.partner_bank_id.bank_id.street"/></span><br/>
                                 <span>Beneficiary Bank SWIFT: <t t-esc="o.partner_bank_id.bank_id.bic"/></span><br/><br/>
+                                <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="150px" height="200px"/></span></t>
                             </div>
+                          </t>
                         </div>
                         <t t-if="o.shipment_id.container_number2">
                           <div style="border:2px solid black;width:500px;font-size:14px;margin-top:15px">
