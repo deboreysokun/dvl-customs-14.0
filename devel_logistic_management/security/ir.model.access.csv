@@ -83,3 +83,4 @@ access_process.list.shipment.template.line,process.list.shipment.template.line,m
 access_cash.payment.shipment.template.line,cash.payment.shipment.template.line,model_cash_payment_shipment_template_line,devel_logistic_management.group_dvl_operation_user,1,1,1,1
 
 access_res_partner_shipment_invoice,res.partner.shipment.invoice,model_res_partner_shipment_invoice,account.group_account_user,1,1,1,1
+access_account_khqr,account.khqr,model_account_khqr,account.group_account_user,1,1,1,1

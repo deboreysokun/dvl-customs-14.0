@@ -83,6 +83,7 @@
         'reports/report_export_container_list.xml',
         'views/hr_employee.xml',
         'views/storage_demurrage_view.xml',
+        'views/account_move_configuration.xml',
         'views/account_move_view.xml',
         'reports/report_cover_file_shipment.xml',
         'reports/report_cash_payment_request_shipment.xml',

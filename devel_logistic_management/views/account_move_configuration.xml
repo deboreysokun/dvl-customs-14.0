@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_khqr_view" model="ir.ui.view">
+            <field name="name">KHQR Option</field>
+            <field name="model">account.khqr</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="account_khqr_form" model="ir.ui.view">
+            <field name="name">KHQR Option</field>
+            <field name="model">account.khqr</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="name"/>
+                    <field name="khqr_img" widget="image" options='{"size": [300, 300]}'/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_account_khqr" model="ir.actions.act_window">
+            <field name="name">KHQR Option</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.khqr</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No KHQR Option found. Let's create one!
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="khqr_option"
+                  name="KHQR Option"
+                  action="devel_logistic_management.action_account_khqr"
+                  parent="account.root_payment_menu"
+                  groups="base.group_no_one"
+                  sequence="6"/>
+    </data>
+</odoo>

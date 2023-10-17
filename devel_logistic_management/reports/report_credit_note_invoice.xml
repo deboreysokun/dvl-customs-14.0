@@ -364,14 +364,16 @@
                                 <t t-raw="0"/>
                                 <div>
                                     <div style="border:1px solid black;color:#1f3864;text-align:center;font-weight:bold;margin-left:0px;margin-right:0px">
-                                        <t t-if="not o.company_header_id">
-                                            <div style="font-size:16px;"><span>Address:<span t-esc="company.street"/> </span></div>
-                                            <div style="font-size:16px;"><span>Tel:<span t-esc="company.phone"/> </span></div>
-                                        </t>
-                                        <t t-if="o.company_header_id">
-                                            <t t-if="o.company_header_id.name"> <div style="font-size:16px;"><span t-field="o.company_header_id.name"/></div></t>
-                                            <t t-if="o.company_header_id.street"> <div style="font-size:16px;"><span>Address:<span t-field="o.company_header_id.street"/> </span></div></t>
-                                            <t t-if="o.company_header_id.phone or o.company_header_id.mobile"> <div style="font-size:16px;"><span>Tel:<span t-field="o.company_header_id.phone"/><t t-if="o.company_header_id.mobile"> / <span t-field="o.company_header_id.mobile"/> </t> </span></div> </t>
+                                        <t t-if="o.show_bank_info">
+                                            <t t-if="not o.company_header_id">
+                                                <div style="font-size:16px;"><span>Address:<span t-esc="company.street"/> </span></div>
+                                                <div style="font-size:16px;"><span>Tel:<span t-esc="company.phone"/> </span></div>
+                                            </t>
+                                            <t t-if="o.company_header_id">
+                                                <t t-if="o.company_header_id.name"> <div style="font-size:16px;"><span t-field="o.company_header_id.name"/></div></t>
+                                                <t t-if="o.company_header_id.street"> <div style="font-size:16px;"><span>Address:<span t-field="o.company_header_id.street"/> </span></div></t>
+                                                <t t-if="o.company_header_id.phone or o.company_header_id.mobile"> <div style="font-size:16px;"><span>Tel:<span t-field="o.company_header_id.phone"/><t t-if="o.company_header_id.mobile"> / <span t-field="o.company_header_id.mobile"/> </t> </span></div> </t>
+                                            </t>
                                         </t>
                                     </div>
                                 </div>
