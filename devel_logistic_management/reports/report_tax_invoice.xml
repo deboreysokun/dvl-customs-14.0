@@ -197,12 +197,18 @@
                                                     <t t-if="not o.company_header_id">
                                                         <span>All the price are in US Dollar include VAT 10%</span><br/>
                                                         <span>Payment Term: Cash or Credit to <t t-esc="company.name"/></span><br/><br/>
-                                                        <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
-                                                        <span>Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
-                                                        <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
-                                                        <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
-                                                        <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span><br/>
-                                                        <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="150px" height="200px"/></span></t>
+                                                        <div class="row" style="margin-top:10px;font-weight:bold;">
+                                                            <div class="col-7">
+                                                                <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
+                                                                <span>Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
+                                                                <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
+                                                                <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
+                                                                <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span><br/>
+                                                            </div>
+                                                            <div class="clo-5">
+                                                                <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="80px" height="110px"/></span></t>
+                                                            </div>
+                                                        </div>
                                                     </t>
                                                     <t t-if="o.company_header_id">
                                                         <span>All the price are in US Dollar</span><br/>
