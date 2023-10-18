@@ -341,14 +341,14 @@
                                     <span>Payment Term: Mr. Chhor Khunvatana</span><br/>
                                     <span>Tel: 081 9999 69 / 012 585 085</span><br/><br/>
                                     <div class="row" style="margin-top:10px;font-weight:bold;">
-                                        <div class="col-4" style="font-size:14px;margin-top: 10px;">
+                                        <div class="col-8">
                                             <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/><span>Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
                                             <span>Account Name: <t t-esc="o.partner_bank_id.acc_holder_name"/></span><br/>
                                             <span>Account Number: <t t-esc="o.partner_bank_id.acc_number"/></span><br/>
                                             <span>Account Address: <t t-esc="o.partner_bank_id.street"/></span><br/><br/>
                                         </div>
-                                        <div class="col-4" style="font-size:14px;margin-top: 10px;">
-                                            <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="150px" height="200px"/></span></t>
+                                        <div class="col-4">
+                                            <t t-if="o.khqr"><span><img t-att-src="image_data_uri(o.khqr.khqr_img)" width="80px" height="110px"/></span></t>
                                         </div>
                                     </div>
                                     <span>Beneficiary Bank Name: <t t-esc="o.partner_bank_id.bank_id.name"/></span><br/>
