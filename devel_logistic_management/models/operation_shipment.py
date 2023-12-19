@@ -373,7 +373,7 @@ class OperationShipment(models.Model):
     truck_bill_stamp = fields.Boolean(copy=False, tracking=True)
     transit_authorization_doc = fields.Boolean(copy=False, tracking=True) # Authorization Broker
     auth_broker_stamp = fields.Boolean(copy=False, tracking=True)
-    x_apply_form_permit = fields.Boolean(string="Form Apply Permit", copy=False, tracking=True)
+    x_form_apply_permit = fields.Boolean(string="Form Apply Permit", copy=False, tracking=True)
     x_permit1 = fields.Char(copy=False, tracking=True)
     x_permit2 = fields.Char(copy=False, tracking=True)
     x_permit_date1 = fields.Date(copy=False, tracking=True)
