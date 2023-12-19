@@ -103,6 +103,7 @@ class OperationShipment(models.Model):
     customer_id = fields.Many2one('res.partner', tracking=True, string="Client")
     tag_ids = fields.Many2many('operation.tag', tracking=True)
     commodity = fields.Char(tracking=True)
+    x_image_logo = fields.Boolean(tracking=True,string="Truck Bill Logo")
     commodity_khmer = fields.Char(tracking=True)
     tax_calculation_id = fields.Many2one('tax.calculation', copy=False,tracking=True)
     entry_exit_port_id = fields.Many2one('entry.exit.port', string="Entry/Exit Port", tracking=True)
@@ -372,6 +373,11 @@ class OperationShipment(models.Model):
     truck_bill_stamp = fields.Boolean(copy=False, tracking=True)
     transit_authorization_doc = fields.Boolean(copy=False, tracking=True) # Authorization Broker
     auth_broker_stamp = fields.Boolean(copy=False, tracking=True)
+    x_apply_form_permit = fields.Boolean(string="Form Apply Permit", copy=False, tracking=True)
+    x_permit1 = fields.Char(copy=False, tracking=True)
+    x_permit2 = fields.Char(copy=False, tracking=True)
+    x_permit_date1 = fields.Date(copy=False, tracking=True)
+    x_permit_date2 = fields.Date(copy=False, tracking=True)
 
     ############################## Cash Advance #############################
     cash_advance_line_ids = fields.One2many('operation.cash.advance', 'shipment_id', 'Cash Advance Lines', copy=False)

@@ -7,7 +7,7 @@
                 <t t-foreach="docs" t-as="o">
                     <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                         <t t-raw="0"/>
-                        <t t-set="o" t-value="o.with_context(lang=lang)" />
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
                         <div style="font-size:10px"><span>Printed Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%b-%Y %H:%M:%S')"/> </span></div>
                         <div class="row" style="border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
                             <div class="col-6" style="font-size:12px;padding:0px;">
@@ -28,13 +28,13 @@
                             <div style="font-size:16px;"><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.city"/>, <t t-esc="o.company_id.country_id.name"/></div>
                             <div style="font-size:16px;"><span>Closing File Shipment</span></div>
                         </div>
-                        <div class="row"  style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                        <div class="row" style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
                             <div class="col-6" style="font-size:14px;">
                                 <div class="row">
                                   <div class="col-6"><span t-esc="'Quantity'"/></div>
                                   <div class="col-6">
                                     <t t-foreach="o.get_container_lines()" t-as="item">
-                                       <span t-esc="item_value"/>&#160; &#160; x <span t-esc="item"/> &#160; &#160;
+                                       <span t-esc="item_value"/>    x <span t-esc="item"/>    
                                     </t>
                                   </div>
                                 </div>
@@ -150,27 +150,27 @@
                                                 <td style="border:1px solid black;padding:1px;">
                                                     <span t-field="line.name"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="line.product_uom_id"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="line.quantity"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="line.price_unit"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="line.price_subtotal"/>
                                                 </td>
                                             </tr>
                                         </t>
                                     </t>
-                                    <!-- <tr style="page-break-inside:avoid">
+                                     <tr style="page-break-inside:avoid">
                                         <td colspan="5" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
-                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;">
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
                                             $ <t t-esc="'{0:,.2f}'.format(o.total_invoices)"/>
                                         </td>
-                                    </tr> -->
+                                    </tr>
                                 </tbody>
                             </table>
 
@@ -211,19 +211,19 @@
                                         <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                             <td style="border:1px solid black;padding:1px;">
-                                                <span t-field="l.account_id.name"/>: &#160;
+                                                <span t-field="l.account_id.name"/>:  
                                                 <span t-field="l.description"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.qty"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.unit_price"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.sub_total"/>
                                             </td>
                                         </t>
@@ -242,19 +242,19 @@
                                         <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                             <td style="border:1px solid black;padding:1px;">
-                                                <span t-field="l.account_id.name"/>: &#160;
+                                                <span t-field="l.account_id.name"/>:  
                                                 <span t-field="l.description"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.qty"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.unit_price"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.sub_total"/>
                                             </td>
                                         </t>
@@ -274,19 +274,19 @@
                                             <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                                 <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                                 <td style="border:1px solid black;padding:1px;">
-                                                    <span t-field="l.account_id.name"/>: &#160;
+                                                    <span t-field="l.account_id.name"/>:  
                                                     <span t-field="l.description"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="l.uom_id"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="l.qty"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="l.unit_price"/>
                                                 </td>
-                                                <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                                <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="l.sub_total"/>
                                                 </td>
                                             </t>
@@ -306,19 +306,19 @@
                                         <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                             <td style="border:1px solid black;padding:1px;">
-                                                <span t-field="l.account_id.name"/>: &#160;
+                                                <span t-field="l.account_id.name"/>:  
                                                 <span t-field="l.description"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.qty"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.unit_price"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.sub_total"/>
                                             </td>
                                         </t>
@@ -337,19 +337,19 @@
                                         <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                             <td style="border:1px solid black;padding:1px;">
-                                                <span t-field="l.account_id.name"/>: &#160;
+                                                <span t-field="l.account_id.name"/>:  
                                                 <span t-field="l.description"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.qty"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.unit_price"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.sub_total"/>
                                             </td>
                                         </t>
@@ -368,19 +368,19 @@
                                         <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                             <td style="border:1px solid black;padding:1px;">
-                                                <span t-field="l.account_id.name"/>: &#160;
+                                                <span t-field="l.account_id.name"/>:  
                                                 <span t-field="l.description"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.qty"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.unit_price"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.sub_total"/>
                                             </td>
                                         </t>
@@ -399,19 +399,19 @@
                                         <t t-if="l.state == 'paid' or l.state == 'direct_paid'">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="l.account_id.code"/></td>
                                             <td style="border:1px solid black;padding:1px;">
-                                                <span t-field="l.account_id.name"/>: &#160;
+                                                <span t-field="l.account_id.name"/>:  
                                                 <span t-field="l.description"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.qty"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.unit_price"/>
                                             </td>
-                                            <td class="text-center"  style="border:1px solid black;padding:1px;">
+                                            <td class="text-center" style="border:1px solid black;padding:1px;">
                                                 <span t-field="l.sub_total"/>
                                             </td>
                                         </t>
@@ -430,8 +430,9 @@
                                     </tr>
                                     <tr style="page-break-inside:avoid">
                                         <td colspan="5" style="background-color:#deeaf6;border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Net Income/Loss:</td>
-                                        <td class="text-center" style="border:1px solid black;font-weight:bold;padding:1px;">
-                                            $ <t t-esc="'{0:,.2f}'.format(o.total_invoices+o.tot_operation_expense)"/>
+                                        <t t-set="x" t-value="o.total_invoices+o.tot_operation_expense"/>
+                                        <td t-attf-class="{{'text-center text-success' if x > 0 else 'text-center text-danger' }}" style="border:1px solid black;font-weight:bold;padding:1px;">
+                                             $ <t t-esc="'{0:,.2f}'.format(x)"/>
                                         </td>
                                     </tr>
                                 </tbody>

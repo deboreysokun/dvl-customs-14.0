@@ -35,9 +35,9 @@
                                     <div class="col-8" style="text-align:center;">
                                         <div style="color:#2f5496"><h3><span t-esc="company.name"/></h3></div>
                                         <div style="font-size:14px;color:#2f549">
-                                            <t t-if="company.phone">TEL: <span t-esc="company.phone"/>&#160;</t>
-                                            <t t-if="company.vat">VATTIN: <span t-esc="company.vat"/>&#160;</t>
-                                            <t t-if="company.email">EMAIL: <span t-esc="company.email"/>&#160;</t>
+                                            <t t-if="company.phone">TEL: <span t-esc="company.phone"/> </t>
+                                            <t t-if="company.vat">VATTIN: <span t-esc="company.vat"/> </t>
+                                            <t t-if="company.email">EMAIL: <span t-esc="company.email"/> </t>
                                         </div>
                                         <div style="font-size:14px;color:#2f549"><span t-esc="company.street"/> </div>
                                     </div>
@@ -51,9 +51,9 @@
                                     <div class="col-8" style="text-align:center;">
                                         <div style="color:#2f5496"><h3><span t-esc="o.issued_quotation_id.name"/></h3></div>
                                         <div style="font-size:14px;color:#2f549">
-                                            <t t-if="o.issued_quotation_id.phone">TEL: <span t-esc="o.issued_quotation_id.phone"/>&#160;</t>
-                                            <t t-if="o.issued_quotation_id.vat">VATTIN: <span t-esc="o.issued_quotation_id.vat"/>&#160;</t>
-                                            <t t-if="o.issued_quotation_id.email">EMAIL: <span t-esc="o.issued_quotation_id.email"/>&#160;</t>
+                                            <t t-if="o.issued_quotation_id.phone">TEL: <span t-esc="o.issued_quotation_id.phone"/> </t>
+                                            <t t-if="o.issued_quotation_id.vat">VATTIN: <span t-esc="o.issued_quotation_id.vat"/> </t>
+                                            <t t-if="o.issued_quotation_id.email">EMAIL: <span t-esc="o.issued_quotation_id.email"/> </t>
                                         </div>
                                         <div style="font-size:14px;color:#2f549"><span t-esc="o.issued_quotation_id.street"/> </div>
                                     </div>
@@ -74,7 +74,7 @@
                                   </div>
                                 </div>
                                 <div class="row">
-                                  <div class="col-4"><span>Company&#39;s Name: </span></div>
+                                  <div class="col-4"><span>Company's Name: </span></div>
                                   <div class="col-6"><span t-field="o.partner_company_id.name"/></div>
                                 </div>
                                 <div class="row">
@@ -213,13 +213,13 @@
                                                     <span t-field="line.uom_id"/>
                                                 </td>
                                                 <td class="text-right" style="border:1px solid black;padding:1px;">
-                                                    <span t-field="line.container_lcl" t-options="{'widget': 'float', 'precision': 2}" />
+                                                    <span t-field="line.container_lcl" t-options="{'widget': 'float', 'precision': 2}"/>
                                                 </td>
                                                 <td class="text-right" style="border:1px solid black;padding:1px;">
-                                                    <span t-field="line.container_20_price" t-options="{'widget': 'float', 'precision': 2}" />
+                                                    <span t-field="line.container_20_price" t-options="{'widget': 'float', 'precision': 2}"/>
                                                 </td>
                                                 <td class="text-right" style="border:1px solid black;padding:1px;">
-                                                    <span t-field="line.container_40_price" t-options="{'widget': 'float', 'precision': 2}" />
+                                                    <span t-field="line.container_40_price" t-options="{'widget': 'float', 'precision': 2}"/>
                                                 </td>
                                                 <td class="text-center" style="border:1px solid black;padding:1px;">
                                                     <span t-field="line.remark"/>
@@ -246,7 +246,7 @@
                                                     <strong class="mr16 text-center">Subtotal</strong>
                                                 </td>
                                                 <td class="text-right" name="td_section_subtotal" style="border:1px solid black;padding:1px;">
-                                                    <span t-esc="current_subtotal_lcl" t-options="{'widget': 'float', 'precision': 2}" />
+                                                    <span t-esc="current_subtotal_lcl" t-options="{'widget': 'float', 'precision': 2}"/>
                                                     <t t-set="total_lcl" t-value="total_lcl + current_subtotal_lcl"/>
                                                 </td>
                                                 <td class="text-right" name="td_section_subtotal" style="border:1px solid black;padding:1px;">
@@ -285,37 +285,49 @@
                             <div style="page-break-inside:avoid">
                                 <div class="row" style="font-weight:bold;">
                                     <t t-if="not o.issued_quotation_id">
-                                        <div class="col-4" style="font-size:14px;margin-top: 130px;">
+                                        <div class="col-5" style="font-size:14px;margin-top: 130px;">
                                             <t t-if="company.partner_id.signature_image"><div style="font-size:14px;height:150px"/></t>
                                             <div style="border-bottom: 1px solid black;"/>
-                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
-                                            <div class="text-center" style="font-size:14px">(Company Name)</div>
+                                            <div style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div style="font-size:14px">Date: <span t-esc="o.quotation_date"/></div>
+                                            <div style="font-size:14px">Name: <span t-esc="o.partner_id.name"/></div>
+                                            <div style="font-size:14px">Position: <span t-esc="o.partner_id.function"/></div>
+                                            <div style="font-size:14px">Company name: <span t-esc="o.partner_company_id.name"/></div>
                                         </div>
-                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;"/>
-                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;">
+                                        <div class="col-2 text-center" style="font-size:14px;margin-top: 130px;"/>
+                                        <div class="col-5" style="font-size:14px;margin-top: 130px;">
                                             <t t-if="company.partner_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(company.partner_id.signature_image)" height="150px"/></div></t>
                                             <div style="border-bottom: 1px solid black;"/>
-                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
-                                            <div class="text-center" style="font-size:14px"><span t-esc="company.name"/></div>
+                                            <div style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div style="font-size:14px">Date: <span t-esc="o.quotation_date"/></div>
+                                            <div style="font-size:14px">Name: <span t-esc="o.sale_user_id.name"/></div>
+                                            <div style="font-size:14px">Position: <span t-esc="o.sale_user_id.function"/></div>
+                                            <div style="font-size:14px">Company name: <span t-esc="company.name"/></div>
+                                            <!--<div class="text-center" style="font-size:14px">Name &amp; Position</div>-->
+                                            <!--<div class="text-center" style="font-size:14px"><span t-esc="o.sale_user_id.name"/> &amp; <span t-esc="o.sale_user_id.function"/></div>-->
+                                            <!--<div class="text-center" style="font-size:14px"><span t-esc="company.name"/></div>-->
                                         </div>
                                     </t>
                                     <t t-if="o.issued_quotation_id">
                                         <div class="col-4" style="font-size:14px;margin-top: 130px;">
                                             <t t-if="o.issued_quotation_id.signature_image"><div style="font-size:14px;height:150px"/></t>
                                             <div style="border-bottom: 1px solid black;"/>
-                                            <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
-                                            <div class="text-center" style="font-size:14px">(Company Name)</div>
+                                            <div style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
+                                            <div style="font-size:14px">Date: <span t-esc="o.quotation_date"/></div>
+                                            <div style="font-size:14px">Name: <span t-esc="o.partner_id.name"/></div>
+                                            <div style="font-size:14px">Position: <span t-esc="o.partner_id.function"/></div>
+                                            <div style="font-size:14px">Company name: <span t-esc="o.partner_company_id.name"/></div>
                                         </div>
                                         <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;"/>
-                                        <div class="col-4 text-center" style="font-size:14px;margin-top: 130px;">
+                                        <div class="col-4" style="font-size:14px;margin-top: 130px;">
                                             <t t-if="o.issued_quotation_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.issued_quotation_id.signature_image)" height="150px"/></div></t>
                                             <div style="border-bottom: 1px solid black;"/>
                                             <div class="text-center" style="font-size:14px;margin-top: 3px;">Signed &amp; Stamp</div>
-                                            <div class="text-center" style="font-size:14px">Name &amp; Position</div>
-                                            <div class="text-center" style="font-size:14px"><span t-esc="o.issued_quotation_id.name"/></div>
+                                            <!--<div class="text-center" style="font-size:14px">Name &amp; Position</div>-->
+                                            <div style="font-size:14px">Date: <span t-esc="o.quotation_date"/></div>
+                                            <div style="font-size:14px">Name: <span t-esc="o.sale_user_id.name"/></div>
+                                            <div style="font-size:14px">Position: <span t-esc="o.sale_user_id.function"/></div>
+                                            <div style="font-size:14px">Company name: <span t-esc="o.issued_quotation_id.name"/></div>
                                         </div>
                                     </t>
                                 </div>

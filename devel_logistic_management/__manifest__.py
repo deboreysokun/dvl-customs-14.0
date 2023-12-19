@@ -69,6 +69,7 @@
         'reports/report_co_attachment_doc.xml',
         'reports/report_inv_packing_list.xml',
         'reports/report_authorization_trader.xml',
+        'reports/report_form_apply_permit.xml',
         'reports/report_permit_doc.xml',
         'reports/report_permit_export_doc.xml',
         'views/res_partner_views.xml',
