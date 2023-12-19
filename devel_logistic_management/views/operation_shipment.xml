@@ -541,22 +541,22 @@
                                         </div>
                                         <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
                                             attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="x_form_apply_permit" string="Form Apply Permit?"/>
-                                        <div class="o_address_format">
-                                            <field name="x_form_apply_permit" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                            <div style="display: flex;">
-                                              <label for="x_permit1" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                              <field name="x_permit1" class="o_address_state" placeholder="លិខិតអនុញ្ញាតលេខ........." attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                              <label for="x_permit_date1" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                              <field name="x_permit_date1" class="o_address_state" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                            </div>
-                                            <div style="display: flex;">
-                                              <label for="x_permit2" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                              <field name="x_permit2" placeholder="ចំណារតំណាងអគ្គនាយក......." class="o_address_state" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                              <label for="x_permit_date2" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                              <field name="x_permit_date2" class="o_address_state" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>
-                                            </div>
-                                        </div>
+<!--                                        <label for="x_form_apply_permit" string="Form Apply Permit?"/>-->
+<!--                                        <div class="o_address_format">-->
+<!--                                            <field name="x_form_apply_permit" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                            <div style="display: flex;">-->
+<!--                                              <label for="x_permit1" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                              <field name="x_permit1" class="o_address_state" placeholder="លិខិតអនុញ្ញាតលេខ........." attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                              <label for="x_permit_date1" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                              <field name="x_permit_date1" class="o_address_state" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                            </div>-->
+<!--                                            <div style="display: flex;">-->
+<!--                                              <label for="x_permit2" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                              <field name="x_permit2" placeholder="ចំណារតំណាងអគ្គនាយក......." class="o_address_state" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                              <label for="x_permit_date2" string="" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                              <field name="x_permit_date2" class="o_address_state" attrs="{'invisible': [('x_form_apply_permit','=', False)], 'readonly': [('is_locked', '=', True)]}"/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
                                     </group>
                                     <group>
                                         <label for="permit_doc" string="54G Permit Doc"/>
