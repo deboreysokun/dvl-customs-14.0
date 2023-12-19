@@ -21,21 +21,24 @@
                                         <t t-if="o.shipper_id.email">EMAIL: <span t-esc="o.shipper_id.email"/></t>
                                     </td>
                                     <td rowspan="4" colspan="3" style="width:50%;padding-top:0px;border-left:1px solid black;border-bottom:1px solid black;width:450px;font-family:serif;font-weight:bold;">
-                                        <div style="position:absolute;padding-top:100px;opacity:0.15;">
-                                            <img src="/devel_logistic_management/static/img/dvl_logo.png" style="width:90%;"/>
-                                        </div>
+                                        <t t-if="o.x_image_logo">
+                                          <div style="position:absolute;padding-top:100px;opacity:0.15;">
+                                              <img src="/devel_logistic_management/static/img/dvl_logo.png" style="width:90%;"/>
+                                          </div>
+                                        </t>
                                         <div style="margin-left:-12px;padding-top:30px;font-size:12px;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;width:150px;">T/B No. <t t-if="not o.truck_bill_number"><t t-esc="o.name"/> </t>
                                         <t t-if="o.truck_bill_number"><span t-field="o.truck_bill_number"/> </t></div><br/>
-                                        <div style="color:#2f5496;text-transform: uppercase;font-size:26px;"><span t-esc="o.company_id.name"/></div><br/><br/>
+                                        <t t-if="o.x_image_logo">
+                                          <div style="color:#2f5496;text-transform: uppercase;font-size:26px;"><span t-esc="o.company_id.name"/></div><br/><br/>
+                                            <div style="font-size:16px;">Tel: <span t-esc="o.company_id.phone"/></div>
+                                            <div style="font-size:16px;">Telegram, WeChat, Line: @devellog</div>
+                                            <div style="font-size:16px;">Email: <span t-esc="o.company_id.email"/></div><br/>
 
-                                        <div style="font-size:16px;">Tel: <span t-esc="o.company_id.phone"/></div>
-                                        <div style="font-size:16px;">Telegram, WeChat, Line: @devellog</div>
-                                        <div style="font-size:16px;">Email: <span t-esc="o.company_id.email"/></div><br/>
-
-                                        <div style="font-size:16px;">Address:
-                                            <span t-esc="o.company_id.street"/><t t-if="o.company_id.city">, <span t-esc="o.company_id.city"/></t><t t-if="o.company_id.country_id">, <span t-esc="o.company_id.country_id.name"/></t><br/>
-                                        </div><br/>
-                                        <div style="font-size:16px;">Website: <span t-esc="o.company_id.website"/></div>
+                                            <div style="font-size:16px;">Address:
+                                                <span t-esc="o.company_id.street"/><t t-if="o.company_id.city">, <span t-esc="o.company_id.city"/></t><t t-if="o.company_id.country_id">, <span t-esc="o.company_id.country_id.name"/></t><br/>
+                                            </div><br/>
+                                            <div style="font-size:16px;">Website: <span t-esc="o.company_id.website"/></div>
+                                        </t>
                                     </td>
                                 </tr>
                                 <tr>
