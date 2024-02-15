@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_print_expense_summary_form" model="ir.ui.view">
+        <field name="name">Print Expense Summary Form</field>
+        <field name="model">print.expense.summary</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="name" string="Requested By" read_only="1" />
+                </group>
+                <footer>
+                    <button string="Print" type="object" class="oe_highlight" name="print_expense_summary"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <act_window name="Print Expense Summary" id="action_print_expense_summary" res_model="print.expense.summary" binding_model="res.partner" binding_views="form" view_mode="form" target="new" />
+
+</odoo>

@@ -25,4 +25,5 @@ from . import create_quotation_template
 from . import import_inv_and_packinglist
 from . import res_partner_invoice_payment
 from . import cash_advance_payment
+from . import print_expense_summary
 
