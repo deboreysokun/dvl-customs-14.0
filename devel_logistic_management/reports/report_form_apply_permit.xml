@@ -13,12 +13,12 @@
                         </div>
                         <div class="page" style="font-size:12pt;line-height: 30px;">
                             <div style="font-size:12pt;font-family:'Battambang';">
-                                <div class="col-4"><span style="font-family:'Khmer OS Muol Light';font-size:12pt"><span t-field="o.company_type"/>:</span> <t t-esc="o.consignee_id.name"/></div>
-                                <div class="col-4"><span style="font-family:'Khmer OS Muol Light';font-size:12pt">អាស័យដ្ឋាន: <t t-esc="o.consignee_id.street"/></span></div>
-                                <div class="col-4"><span style="font-family:'Khmer OS Muol Light';font-size:12pt">ទូរស័ព្ទ: <t t-esc="o.consignee_id.phone"/></span> / VAT TIN: <t t-esc="o.consignee_id.vat"/></div>
+                                <div class="col-9"><span style="font-family:'Khmer OS Muol Light';font-size:12pt"><span t-field="o.company_type"/>:</span> <t t-esc="o.consignee_id.name"/></div>
+                                <div class="col-9"><span style="font-family:'Khmer OS Muol Light';font-size:12pt">អាស័យដ្ឋាន: <t t-esc="o.consignee_id.street"/></span></div>
+                                <div class="col-9"><span style="font-family:'Khmer OS Muol Light';font-size:12pt">ទូរស័ព្ទ: <t t-esc="o.consignee_id.phone"/></span> / VAT TIN: <t t-esc="o.consignee_id.vat"/></div>
                             </div>
                             <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:12pt;text-align:center; line-height:30px;">
-                                <span style="text-decoration: underline;">សូមគោរពជូន</span><br/><span>ឯកឧត្តមរដ្ឋមន្ត្រីប្រតិភូអមនាយករដ្ឋមន្រ្តី</span>
+                                <span style="text-decoration: underline;">សូមគោរពជូន</span><br/><span>ឯកឧត្តមរដ្ឋមន្ត្រីប្រតិភូអមនាយករដ្ឋមន្ត្រី</span>
                                 <span><br/>អគ្គនាយកនៃអគ្គនាយកដ្ឋានគយ និង រដ្ឋាករកម្ពុជា</span>
                             </div>
 
@@ -26,55 +26,54 @@
                                 <p style="font-size:14pt;font-family:'Battambang';text-align: justify ">
                                     <span style="font-family:'Khmer OS Muol Light'">កម្មវត្ថុ៖ </span>
                                     សំណើសុំនាំចូល <span t-field="o.commodity"/> ចំនួន <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/> <span t-field="o.qty_uom_id"/> ទំងន់ <span t-esc="'{0:,.0f}'.format(o.total_gross_weight)"/><span t-field="o.gross_uom_id"/>  តម្លៃ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/> USD
-                                    តាមមាត់ច្រកអន្តរជាតិ <t t-esc="o.entry_exit_port_id.kh_name"/> (បញ្ចេញទំនិញតាមមាត់ច្រកអន្តរជាតិ<t t-esc="o.clearance_office_id.kh_name"/>) ។
+                                    តាមមាត់ច្រក<t t-esc="o.entry_exit_port_id.kh_name"/> (បញ្ចេញទំនិញតាមមាត់ច្រក<t t-esc="o.clearance_office_id.kh_name"/>) ។
                                 </p>
                             </div>
 
-                            <div class="row" style="font-family:'serif';font-size:12pt;">
+                            <div class="row" style="font-family:'serif';font-size:14pt;">
                                <div class="col-6">
-                                    <t t-if="o.x_form_apply_permit"><span style="font-family:'Moul'">យោង៖ </span><span>-<t t-esc="o.x_permit1"/></span></t>
+                                    <t t-if="o.x_form_apply_permit"><span style="font-family:'Khmer OS Muol Light'">យោង៖ </span><span>- <t t-esc="o.x_permit1"/></span></t>
                                 </div>
                                 <!--<div class="col-3">-->
                                 <!--   <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>-->
                                 <!--   <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>-->
                                 <!--</div>-->
-                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;">
+                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;margin-left:87px;">
                                    <t t-if="o.x_permit_date1 and o.x_form_apply_permit"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.x_permit_date1.day)"/> ខែ <t t-esc="o.khmer_month(o.x_permit_date1.month  - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.x_permit_date1.year)"/></span></t>
                                 </div>
                             </div>
 
-                            <div class="row" style="font-family:'serif';font-size:12pt;">
-                               <div class="col-6">
+                            <div class="row" style="font-family:'serif';font-size:14pt;">
+                               <div class="col-6" style="margin-left:70px;">
                                   <t t-if="o.x_form_apply_permit"><span>- <t t-esc="o.x_permit2"/></span></t>
                                 </div>
                                 <!--<div class="col-3">-->
                                 <!--   <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>-->
                                 <!--   <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>-->
                                 <!--</div>-->
-                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;">
+                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;margin-left:18px;">
                                    <t t-if="o.x_permit_date2 and o.x_form_apply_permit"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.x_permit_date2.day)"/> ខែ <t t-esc="o.khmer_month(o.x_permit_date2.month  - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.x_permit_date2.year)"/></span></t>
                                 </div>
                             </div>
 
-                            <div class="row" style="font-family:'serif';font-size:12pt;">
-                               <div class="col-6">
+                            <div class="row" style="font-family:'serif';font-size:14pt;">
+                               <div class="col-6" style="margin-left:70px;">
                                     <t t-if="not o.x_form_apply_permit">
-                                      <span style="font-family:'Moul'">យោង៖ </span></t><span>- INV &amp; P/L NO: <t t-esc="o.inv_pack_number"/></span>
-                                </div>
+                                      <span style="font-family:'Khmer OS Muol Light'">យោង៖ </span></t><span>- INV &amp; P/L NO: <t t-esc="o.inv_pack_number"/></span></div>
                                 <!--<div class="col-3">-->
                                 <!--   <t t-if="o.inv_pack_number"><span t-field="o.inv_pack_number"/></t>-->
                                 <!--   <t t-if="not o.inv_pack_number"><span t-field="o.name"/></t>-->
                                 <!--</div>-->
-                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;">
+                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;margin-left:18px;">
                                    <t t-if="o.inv_pack_date"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.inv_pack_date.day)"/> ខែ <t t-esc="o.khmer_month(o.inv_pack_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.inv_pack_date.year)"/></span></t>
                                 </div>
                             </div>
 
-                            <div class="row" style="font-family:'serif';font-size:12pt;">
-                               <div class="col-6">
+                            <div class="row" style="font-family:'serif';font-size:14pt;">
+                               <div class="col-6" style="margin-left:70px;">
                                     <span>- BILL OF LOADING NO: <t t-esc="o.truck_bill_number"/></span>
                                 </div>
-                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;">
+                                <div class="col-6" style="font-family:'Battambang';font-size:14pt;margin-left:18px;">
                                    <t t-if="o.truck_bill_date"><span>ចុះថ្ងៃទី <t t-esc="o.khmer_number(o.truck_bill_date.day)"/> ខែ <t t-esc="o.khmer_month(o.truck_bill_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.truck_bill_date.year)"/></span></t>
                                 </div>
                             </div>
@@ -123,8 +122,9 @@
                             <!--</div>-->
                             <!--<t t-if="o.owner_id.gender == 'male'">-->
                               <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យដូចបានជម្រាបជូនខាងលើ សូមឯកឧត្តមរដ្ឋមន្ត្រីប្រតិភូអមនាយករដ្ឋមន្ត្រី អគ្គនាយកដ្ឋានគយ និងរដ្ឋាករកម្ពុជា មេត្តាពិនិត្យ និងអនុញ្ញាតដល់ក្រុមហ៊ុនខ្ញុំបាទ ដោយក្តីអនុគ្រោះ ។
-                                </p>
+                                <span style="font-family:'Moul';font-size:14pt;text-indent: 50px;"><div>&#009;អាស្រ័យដូចបានជម្រាបជូនខាងលើ&#x20;សូមឯកឧត្តមរដ្ឋមន្ត្រីប្រតិភូអមនាយករដ្ឋមន្ត្រីអគ្គនាយកដ្ឋានគយ និង<br/>រដ្ឋាករកម្ពុជា&#032;មេត្តាពិនិត្យ&#032;និងអនុញ្ញាតដល់ក្រុមហ៊ុនខ្ញុំបាទ&#032;ដោយក្តីអនុគ្រោះ ។
+                                </div>
+                                </span>
                               </div>
                             <!--</t>-->
                             <!--<t t-if="o.owner_id.gender == 'female'">-->
@@ -140,7 +140,7 @@
                             <!--  </div>-->
 
                             <div class="">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">សូម ឯកឧត្តមរដ្ឋមន្រ្តីប្រតិភូអមនាយករដ្ឋមន្ត្រី មេត្តាទទួលនូវការគោរពដ៏ខ្ពង់ខ្ពស់អំពីខ្ញុំបាទ ។</p>
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">សូម ឯកឧត្តមរដ្ឋមន្ត្រីប្រតិភូអមនាយករដ្ឋមន្ត្រី មេត្តាទទួលនូវការគោរពដ៏ខ្ពង់ខ្ពស់អំពីខ្ញុំបាទ ។</p>
                             </div>
 
                             <div style="page-break-inside:avoid">
@@ -155,8 +155,8 @@
                                     </div>
                                     <div class="col-8 text-center" style="font-size:14pt;margin-top: 10px;line-height:30px;">
                                         <div style="font-size:14pt;font-family:'Battambang';">រាជធានីភ្នំពេញ, <span> <t t-esc="o.khmer_date_char"/> </span><br/></div>
-                                        <div style="font-size:14pt;font-family:'Battambang';">ត្រូវនឹងថ្ងៃទី <t t-esc="o.khmer_number(o.document_date.day)"/> ខែ <t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.document_date.year)"/>
-                                        </div>
+                                        <t t-if="o.document_date"><div style="font-size:14pt;font-family:'Battambang';">ត្រូវនឹងថ្ងៃទី <t t-esc="o.khmer_number(o.document_date.day)"/> ខែ <t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ <t t-esc="o.khmer_number(o.document_date.year)"/>
+                                        </div></t>
                                         <div style="font-size:12pt;margin-top: 10px;font-family:'Khmer OS Muol Light'">នាយក<span t-field="o.company_type"/></div>
                                         <!--<div style="font-size:14pt;margin-top:160px;font-family:'Khmer OS Muol Light'"><t t-esc="o.shipper_id.kh_name"/></div>-->
                                         <!--<t t-if="o.req_letter_stamp == true">-->

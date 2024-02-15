@@ -47,6 +47,8 @@ access_res_partner_aging_supplier,res.partner.aging.supplier,model_res_partner_a
 
 access_add_to_expense_line,add.to.expense.line,model_add_to_expense_line,devel_logistic_management.group_dvl_operation_confirm_expense,1,1,1,1
 
+access_print_expense_summary,print.expense.summary,model_print_expense_summary,devel_logistic_management.group_dvl_operation_confirm_expense,1,1,1,1
+
 access_operation_shipment_review_done,operation.shipment.review.done,model_operation_shipment_review_done,devel_logistic_management.group_dvl_operation_user,1,1,1,1
 
 access_province_city,province.city,model_province_city,devel_logistic_management.group_dvl_operation_user,1,1,1,1

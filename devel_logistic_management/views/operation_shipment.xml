@@ -1984,6 +1984,7 @@
               </p>
             </field>
         </record>
+        
 
         <record id="action_operation_export_kanban_view" model="ir.actions.act_window.view">
             <field eval="0" name="sequence"/>

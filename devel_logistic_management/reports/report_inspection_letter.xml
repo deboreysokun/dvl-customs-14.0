@@ -2,63 +2,196 @@
 <odoo>
     <data>
         <template id="report_inspection_letter">
+            <!--<t t-call="web.html_container">-->
+            <!--    <t t-foreach="docs" t-as="o">-->
+            <!--        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">-->
+            <!--            <t t-raw="0"/>-->
+            <!--            <t t-set="o" t-value="o.with_context(lang=lang)"/>-->
+            <!--            <div class="pull-right text-center">-->
+            <!--                <div style="font-weight:bold;font-family:'Moul',cursive;font-size:18px;line-height: 35px;">-->
+            <!--                    <span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ<br/>-->
+            <!--                        <img src="/devel_logistic_management/static/img/symbol_words.png" width="60%"/>-->
+            <!--                    </span>-->
+            <!--                </div>-->
+            <!--                <div style="font-size:16px;"/>-->
+            <!--            </div>-->
+            <!--            <div class="page" style="font-size:18px;line-height:30px;">-->
+            <!--                <div style="padding-top:30px;padding-left:15px;font-family:'Battambang'">-->
+            <!--                    <div class="col-4"><span style="font-family:'Moul', cursive">ក្រុមហ៊ុន:</span> <t t-esc="o.shipper_id.khmer_name"/></div>-->
+            <!--                    <div class="col-4"><span>អាសយដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>-->
+            <!--                </div>-->
+            <!--                <div class="text-center" style="font-family:'Moul',cursive;padding-top:15px;">-->
+            <!--                    <span>សំណើសុំត្រួតពិនិត្យទំនិញវិនិយោគនាំចេញ</span><br/>-->
+            <!--                    <span style="font-weight:bold;text-decoration:underline;">សូមគោរពជូន</span><br/><span>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ <br/>នៃអគ្គនាយកដ្ឋានគយនិងរដ្ធាករកម្ពុជា</span>-->
+            <!--                </div>-->
+            <!--                <div class="row" style="font-family:'Battambang'">-->
+            <!--                    <div class="col-5" style="border:1px solid black;margin-left:70px;font-family:'Battambang'">-->
+            <!--                        <span><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំឈ្មោះ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទឈ្មោះ'"/> </t> <span t-esc="o.owner_id.khmer_name"/> តំណាងឲ្យសហគ្រាស:-->
+            <!--                        <t t-esc="o.owner_id.parent_id.khmer_name"/> សូមអញ្ជើញមន្ត្រីគយ និងរដ្ឋាករ នៃនាយកដ្ឋានគ្រប់គ្រង ការនាំចេញ មកត្រួតពិនិត្យ ទំនិញនាំចេញចំនួន ...........កុងតឺន័រ នៅក្នុងទីតាំងរោងចក្រសហគ្រាស: <t t-esc="o.owner_id.parent_id.khmer_name"/>។-->
+            <!--                        នៅម៉ោង.............ថ្ងៃទី........ខែ...........ឆ្នាំ............។</span><br/>-->
+            <!--                        <span style="font-weight:bold;text-decoration:underline;">បញ្ជាក់:</span>-->
+            <!--                        <span>ក្រុមហ៊ុនយើងខ្ញុំមានទំនិញត្រឹមត្រូវតាម ឯកសារដាក់ក្បែរកុងតឺន័រនិងបានត្រៀមកំលាំង លើកដាក់រួចជាស្រេច។ </span><br/>-->
+            <!--                        <div class="text-center" style="text-align:center;margin-bottom:150px;">ហត្ថលេខា និងត្រា</div>-->
+            <!--                    </div>-->
+            <!--                    <div class="col-5" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black">-->
+            <!--                        <span style="margin-left:30px;">ឯកសារយោងរបស់ក្រុមហ៊ុនយើងខ្ញុំមាន៖</span><br/>-->
+            <!--                        <span>១.ប្រទិវេទន៍គយលេខ...............ចុះថ្ងៃទី..................</span><br/>-->
+            <!--                        <span>២. <span style="font-family:'Times New Roman';font-size:12px;">INV &amp; P/L.............................Date.........................<br/>-->
+            <!--                            <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>-->
+            <!--                            <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>-->
+            <!--                            <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>-->
+            <!--                            <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span></span>-->
+            <!--                        </span><br/>-->
+            <!--                        <span>៣.លិខិតផ្ទេរសិទ្ធិ</span><br/>-->
+            <!--                        <span>៤.លិខិតធានាអះអាង</span><br/>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="row" style="border-right:1px solid black;border-left:1px solid black;margin-left:55px;border-bottom:1px solid black;margin-right:57px;font-family:'Battambang'">-->
+            <!--                    <div class="col-12" style="padding-top:5px;font-size:18px">-->
+            <!--                        <span class="text-center" style="margin-left:150px;font-family:'Moul';text-decoration:underline;font-size:18px;text-align:center;">សេចក្តីបញ្ជាក់របស់នាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span><br/>-->
+            <!--                        <p style="text-indent:30px;">ក្រុមហ៊ុនបានដាក់សំណើសុំត្រួតពិនិត្យទំនិញថ្ងៃទី..........ខែ..............ឆ្នាំ..............។ក្រោយពីបានទទួល ពាក្យស្នើសុំយើងបានអនុញ្ញាតឲ្យមន្ត្រីគយឈ្មោះ (១)....................................(២)....................................-->
+            <!--                        ធ្វើការត្រួតពិនិត្យទំនិញរបស់រោងចក្រខាងលើតាមសំណើរបស់ក្រុមហ៊ុន។</p><br/>-->
+            <!--                        <div class="pull-right">រាធានីភ្នំពេញ,ថ្ងៃទី..........ខែ..............ឆ្នាំ................</div><br/>-->
+            <!--                        <div class="pull-right" style="margin-right:120px;margin-bottom:150px;">ប្រធាន</div>-->
+            <!--                        <div class="text-center"> </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <!--        </div>-->
+            <!--    </t>-->
+            <!--</t>-->
+
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
                     <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                         <t t-raw="0"/>
-                        <t t-set="o" t-value="o.with_context(lang=lang)" />
-                        <div class="pull-right text-center">
-                            <div style="font-weight:bold;font-family:'Moul',cursive;font-size:18px;line-height: 35px;">
-                                <span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ<br/>
-                                    <img src="/devel_logistic_management/static/img/symbol_words.png" width="60%"/>
-                                </span>
-                            </div>
-                            <div style="font-size:16px;"></div>
+                        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                        <div style="text-align:center; padding-top:0px;line-height: 30px;">
+                            <div style="font-family:'Khmer OS Muol Light';font-size:15pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span style="font-family:'Khmer OS Muol Light';font-size:12pt;">ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                            <div style="font-size:12pt;"/>
                         </div>
-                        <div class="page" style="font-size:18px;line-height:30px;">
-                            <div style="padding-top:30px;padding-left:15px;font-family:'Battambang'">
-                                <div class="col-4"><span style="font-family:'Moul', cursive">ក្រុមហ៊ុន:</span> <t t-esc="o.shipper_id.khmer_name"/></div>
-                                <div class="col-4"><span>អាសយដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>
-                            </div>
-                            <div class="text-center" style="font-family:'Moul',cursive;padding-top:15px;">
-                                <span>សំណើសុំត្រួតពិនិត្យទំនិញវិនិយោគនាំចេញ</span><br/>
-                                <span style="font-weight:bold;text-decoration:underline;">សូមគោរពជូន</span><br/><span>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ <br/>នៃអគ្គនាយកដ្ឋានគយនិងរដ្ធាករកម្ពុជា</span>
-                            </div>
-                            <div class="row" style="font-family:'Battambang'">
-                                <div class="col-5" style="border:1px solid black;margin-left:70px;font-family:'Battambang'">
-                                    <span><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំឈ្មោះ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទឈ្មោះ'"/> </t> <span t-esc="o.owner_id.khmer_name"/> តំណាងឲ្យសហគ្រាស:
-                                    <t t-esc="o.owner_id.parent_id.khmer_name"/> សូមអញ្ជើញមន្ត្រីគយ និងរដ្ឋាករ នៃនាយកដ្ឋានគ្រប់គ្រង ការនាំចេញ មកត្រួតពិនិត្យ ទំនិញនាំចេញចំនួន ...........កុងតឺន័រ នៅក្នុងទីតាំងរោងចក្រសហគ្រាស: <t t-esc="o.owner_id.parent_id.khmer_name"/>។
-                                    នៅម៉ោង.............ថ្ងៃទី........ខែ...........ឆ្នាំ............។</span><br/>
-                                    <span style="font-weight:bold;text-decoration:underline;">បញ្ជាក់:</span>
-                                    <span>ក្រុមហ៊ុនយើងខ្ញុំមានទំនិញត្រឹមត្រូវតាម ឯកសារដាក់ក្បែរកុងតឺន័រនិងបានត្រៀមកំលាំង លើកដាក់រួចជាស្រេច។ </span><br/>
-                                    <div class="text-center" style="text-align:center;margin-bottom:150px;">ហត្ថលេខា និងត្រា</div>
-                                </div>
-                                <div class="col-5" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black">
-                                    <span style="margin-left:30px;">ឯកសារយោងរបស់ក្រុមហ៊ុនយើងខ្ញុំមាន៖</span><br/>
-                                    <span>១.ប្រទិវេទន៍គយលេខ...............ចុះថ្ងៃទី..................</span><br/>
-                                    <span>២. <span style="font-family:'Times New Roman';font-size:12px;">INV &amp; P/L.............................Date.........................<br/>
-                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>
-                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>
-                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span><br/>
-                                        <span style="margin-left: 20px;">INV &amp; P/L.............................Date.........................</span></span>
-                                    </span><br/>
-                                    <span>៣.លិខិតផ្ទេរសិទ្ធិ</span><br/>
-                                    <span>៤.លិខិតធានាអះអាង</span><br/>
-                                </div>
-                            </div>
-                            <div class="row" style="border-right:1px solid black;border-left:1px solid black;margin-left:55px;border-bottom:1px solid black;margin-right:57px;font-family:'Battambang'">
-                                <div class="col-12" style="padding-top:5px;font-size:18px">
-                                    <span class="text-center" style="margin-left:150px;font-family:'Moul';text-decoration:underline;font-size:18px;text-align:center;">សេចក្តីបញ្ជាក់របស់នាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span><br/>
-                                    <p style="text-indent:30px;">ក្រុមហ៊ុនបានដាក់សំណើសុំត្រួតពិនិត្យទំនិញថ្ងៃទី..........ខែ..............ឆ្នាំ..............។ក្រោយពីបានទទួល ពាក្យស្នើសុំយើងបានអនុញ្ញាតឲ្យមន្ត្រីគយឈ្មោះ (១)....................................(២)....................................
-                                    ធ្វើការត្រួតពិនិត្យទំនិញរបស់រោងចក្រខាងលើតាមសំណើរបស់ក្រុមហ៊ុន។</p><br/>
-                                    <div class="pull-right">រាធានីភ្នំពេញ,ថ្ងៃទី..........ខែ..............ឆ្នាំ................</div><br/>
-                                    <div class="pull-right" style="margin-right:120px;margin-bottom:150px;">ប្រធាន</div>
-                                    <div class="text-center"> </div>
-                                </div>
-                            </div>
+                        <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:12pt;text-align:center; line-height:30px;padding-top:20px">
+                          <span>សំណើសុំត្រួតពិនិត្យទំនិញនាំចេញនៅក្រៅការិយាល័យគយ</span>
                         </div>
 
-                    </div>
+                            <div class="" style="line-height:30px;">
+                                <p style="font-size:14pt;font-family:'Battambang';text-indent: 50px;">
+                                  ខ្ញុំបាទឈ្មោះ <span style="font-family:'Khmer OS Muol Light';" t-esc="o.shipper_id.kh_name"/> អត្តសញ្ញាណប័ណ្ណសញ្ជាតិខ្មែរលេខ <span t-esc="o.shipper_id.id_card_number"/> ជាប្រធានក្រុមហ៊ុន <span t-esc="o.shipper_id.name"/> អត្តសញ្ញាណកម្មសារពើពន្ធ (VAT) លេខ <span t-esc="o.shipper_id.vat"/> ទូរស័ព្ទលេខ <span t-esc="o.shipper_id.phone"/> ជាម្ចាស់ទំនិញ អាស័យដ្ឋាន <span t-esc="o.shipper_id.street2"/>។
+                                </p>
+                            </div>
+
+                            <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:12pt;text-align:center; line-height:30px;">
+                                <span>សូមគោរពជូន<br/>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span>
+                                <span><br/>នៃអគ្គនាយកដ្ឋានគយ និង រដ្ឋាករកម្ពុជា</span>
+                            </div>
+
+                            <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">
+                                  សូមអញ្ជើញមន្ត្រីគយ នៃនាយកដ្ឋានគ្រប់គ្រងការនាំចេញត្រួតពិនិត្យទំនិញ <span t-esc="o.commodity"/> ចំនួន ១ កុងតឺន័រ នៅទីតាំង <span t-esc="o.clearance_office_id.kh_name"/>។
+                                </p>
+                            </div>
+
+                            <div class="" style="line-height: 15px;">
+                                <p style="font-family:'Battambang';font-size:14pt;text-indent: 50px;">ខ្ញុំបាទសូមធានាអះអាងជូនចំពោះមន្ត្រីគយដែលមានសមត្ថកិច្ចថាទំនិញរបស់យើងខ្ញុំពិតជាត្រឹម</p>
+                                <p style="font-family:'Battambang';font-size:14pt;">ត្រូវតាមឯកសារ ដោយពុំមានបង្កប់ទំនិញល្មើសច្បាប់ឡើយ។ ករណីខុសពីការអះអាងលើ ខ្ញុំបាទសូម</p>
+                                <p style="font-family:'Battambang';font-size:14pt;">ទទួលចំពោះមុខច្បាប់ជាធរមាន។</p>
+                            </div>
+
+                            <div style="page-break-inside:avoid">
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-6" style="font-size:14pt;margin-top: 10px;text-align:right;line-height:30px;"/>
+                                    <div class="col-6" style="font-size:14pt;margin-top: 10px;text-align:right;line-height:30px;">
+                                        <div style="font-size:14pt;font-family:'Battambang';"><span>រាជធានីភ្នំពេញ <t t-if="o.document_date"> ថ្ងៃទី<t t-esc="o.khmer_number(o.document_date.day)"/> ខែ<t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ<t t-esc="o.khmer_number(o.document_date.year)"/> </t></span>
+                                        </div>
+                                        <div class="text-center" style="font-size:14pt;margin-top: 10px;font-family:'Battambang'">ហត្ថលេខានិងត្រា</div>
+                                        <div class="text-center" style="font-size:14pt;margin-top:130px;font-family:'Khmer OS Muol Light'"><t t-esc="o.shipper_id.kh_name"/></div>
+                                        <!--<div>-->
+                                        <!--    <div style="font-size:14pt;margin-top:160px;font-family:'Battambang';"><t t-esc="o.owner_id.khmer_name"/></div>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:12pt;text-align:center; line-height:30px;margin-top:30px;">
+                                <span><u>សេចក្តីបញ្ជាក់របស់នាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</u></span>
+                            </div>
+                            <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">
+                                  ក្រុមហ៊ុនបានដាក់សំណើសុំត្រួតពិនិត្យទំនិញថ្ងៃទី<t t-esc="o.khmer_number(o.document_date.day)"/> ខែ<t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ<t t-esc="o.khmer_number(o.document_date.year)"/>។ ក្រោយពីបានទទួល<br/>ពាក្យស្នើសុំយើងបានអនុញ្ញាតឲ្យមន្ត្រីគយឈ្មោះ (១) .............................. (២) .......................... ធ្វើការត្រួតពិនិត្យទំនិញរបស់រោងចក្រ\ផែស្ងួតខាងលើតាមសំណើរបស់ក្រុមហ៊ុន។
+                                </p>
+                            </div>
+
+                            <div style="page-break-inside:avoid;margin-bottom:400px;">
+                                <div class="row" style="margin-top:10px;">
+                                    <div class="col-6" style="font-size:14pt;margin-top: 10px;text-align:right;line-height:30px;"/>
+                                    <div class="col-6" style="font-size:14pt;margin-top: 10px;text-align:right;line-height:30px;">
+                                        <div style="font-size:14pt;font-family:'Battambang';"><span>រាជធានីភ្នំពេញ <t t-if="o.document_date"> ថ្ងៃទី<t t-esc="o.khmer_number(o.document_date.day)"/> ខែ<t t-esc="o.khmer_month(o.document_date.month - 1)"/> ឆ្នាំ<t t-esc="o.khmer_number(o.document_date.year)"/> </t></span>
+                                        </div>
+                                        <div class="text-center" style="font-size:14pt;margin-top: 10px;font-family:'Battambang'">ប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</div>
+                                        <!--<div>-->
+                                        <!--    <div style="font-size:14pt;margin-top:160px;font-family:'Battambang';"><t t-esc="o.owner_id.khmer_name"/></div>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                              <table class="table table-borderless mt-1" style="font-size:16px;">
+                                <thead>
+                                    <tr style="background:LightGray;">
+                                        <td class="text-center" style="border:1px solid black; width: 30px">
+                                            <div>ល.រ</div>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black; width:200px">
+                                            <div>លេខប្រតិវេទន៍</div>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black; width: 150px">
+                                            <div>លេខកុងតឺន័រ</div>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black; width:150px">
+                                            <div>ទំហំ</div>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black; width: 150px">
+                                            <div>សៀលគយ</div>
+                                          </td>
+                                        <td class="text-center" style="border:1px solid black;width:130px">
+                                            <div>ផ្សេងៗ</div>
+                                        </td>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <tr t-foreach="o.container_line_ids" t-as="l" style="page-break-inside:avoid">
+                                        <td class="text-center" style="border:1px solid black;"><span t-esc="l_index+1"/></td>
+                                        <td class="text-center" style="border:1px solid black;">
+                                            <span t-field="l.x_sad_no"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;">
+                                            <span t-field="l.container_number"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;">
+                                            <span t-field="l.container_type_id.charge_type_id"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;">
+                                            <span t-field="l.custom_seal_no"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid black;">
+                                            <span t-esc="o.commodity_khmer"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="range(1,20)" t-as="index">
+                                    <td class="text-center" style="border:1px solid black;height:20px;"/>
+                                    <td class="text-center" style="border:1px solid black;height:20px;"/>
+                                    <td class="text-center" style="border:1px solid black;height:20px;"/>
+                                    <td class="text-center" style="border:1px solid black;height:20px;"/>
+                                    <td class="text-center" style="border:1px solid black;height:20px;"/>
+                                    <td class="text-center" style="border:1px solid black;height:20px;"/>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    <!--</div>-->
                 </t>
             </t>
         </template>
