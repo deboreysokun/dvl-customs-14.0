@@ -8,7 +8,7 @@
                         <t t-raw="0"/>
                         <t t-set="o" t-value="o.with_context(lang=lang)"/>
                         <div style="text-align:center; padding-top:0px;line-height: 30px;">
-                            <div style="font-family:'Khmer OS Muol Light';font-size:12pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា<br/>ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                            <div style="font-family:'Khmer OS Muol Light';font-size:15pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span style="font-family:'Khmer OS Muol Light';font-size:12pt;">ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
                             <div style="font-size:12pt;"/>
                         </div>
                         <div class="page" style="font-size:12pt;line-height: 30px;">

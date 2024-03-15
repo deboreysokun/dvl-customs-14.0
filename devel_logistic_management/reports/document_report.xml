@@ -283,13 +283,26 @@
             <field name="report_file">invoice_packing_line</field>
         </record>
 
-         <!-- Action Preview DVL Sales Quotation Document -->
+        <!-- Action Preview DVL Sales Quotation Document -->
         <record id="action_view_sales_quotation_dvl" model="ir.actions.report">
             <field name="name">Preview Sales Quotation Document</field>
             <field name="model">sale.quotation</field>
             <field name="paperformat_id" ref="devel_logistic_management.paperformat_less_header"/>
             <field name="report_type">qweb-html</field>
             <field name="report_name">devel_logistic_management.report_preview_sale_quotation</field>
+        </record>
+
+        <!-- Expense Summary -->
+        <report id="report_expense_summary_xlsx" model="print.expense.summary" string="Print to XLSX" report_type="xlsx" name="devel_logistic_management.report_expense_summary_xlsx" file="Expense Summary" attachment_use="False" />
+
+        <record id="action_expense_summary" model="ir.actions.report">
+            <field name="name">Expense Summary Report</field>
+            <field name="model">print.expense.summary</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">devel_logistic_management.report_expense_summary</field>
+            <field name="report_file">devel_logistic_management.report_expense_summary</field>
+            <field name="print_report_name">Expense Summary</field>
+            <field name="binding_model_id" ref="model_print_expense_summary"/>
         </record>
     </data>
 </odoo>

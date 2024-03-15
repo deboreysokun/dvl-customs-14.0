@@ -1984,6 +1984,7 @@
               </p>
             </field>
         </record>
+        
 
         <record id="action_operation_export_kanban_view" model="ir.actions.act_window.view">
             <field eval="0" name="sequence"/>
@@ -2152,7 +2153,7 @@
         </record>
 
         <menuitem id="dvl_report_import_operations_menu" name="Import Operations"
-            parent="devel_logistic_management.dvl_report_menu" action="dvl_report_import_operation_action" sequence="1"/>
+            parent="devel_logistic_management.dvl_report_menu" action="devel_logistic_management.action_import_operation_shipment_report" sequence="1"/>
 
         <!-- Report Operation Export Shipment-->
         <record id="view_report_shipment_export_operation" model="ir.ui.view">
@@ -2196,7 +2197,7 @@
         </record>
 
         <menuitem id="dvl_report_export_operations_menu" name="Export Operations"
-        parent="devel_logistic_management.dvl_report_menu" action="dvl_report_export_operation_action" sequence="2"/>
+        parent="devel_logistic_management.dvl_report_menu" action="devel_logistic_management.action_export_operation_shipment_report" sequence="2"/>
 
         <!-- Report Transit Operation-->
         <record id="view_report_shipment_transit_operation" model="ir.ui.view">
@@ -2240,7 +2241,7 @@
         </record>
 
         <menuitem id="dvl_report_transit_operations_menu" name="Transit Operations"
-            parent="devel_logistic_management.dvl_report_menu" action="dvl_report_transit_operation_action" sequence="3"/>
+            parent="devel_logistic_management.dvl_report_menu" action="devel_logistic_management.action_transit_operation_shipment_report" sequence="3"/>
 
         <!-- Report Deposit Containers-->
         <record id="view_report_deposit_container" model="ir.ui.view">
