@@ -1,11 +1,11 @@
 from odoo import models, api, fields
+from datetime import datetime, timedelta
 
 
 class PrintExpenseSummary(models.TransientModel):
     _name = 'print.expense.summary'
 
-    start_date = fields.Datetime(required=True)
-    end_date = fields.Datetime(required=True)
+    end_date = fields.Date(required=True, default=datetime.now().date())
 
     name = fields.Char(string='Report Name', required=True, default=lambda self: self._default_name(), read_only=True)
 
@@ -15,16 +15,19 @@ class PrintExpenseSummary(models.TransientModel):
 
     def print_expense_summary(self):
 
+        print("END DATE", self.end_date)
+
         current_partner = self.env['res.partner'].browse(self.env.context.get('active_id'))
 
         import_domain = [('operation_type', '=', 'import')]
         export_domain = [('operation_type', '=', 'export')]
         transit_domain = [('operation_type', '=', 'transit')]
+        other_domain = [('operation_type', '=', 'import'),('operation_type', '=', 'export'),('operation_type', '!=', 'transit')]
 
         import_operations = self.env['operation.shipment'].search(import_domain)
         export_operations = self.env['operation.shipment'].search(export_domain)
         transit_operations = self.env['operation.shipment'].search(transit_domain)
-        all_operations = self.env["operation.shipment"].search([])
+        other_operations = self.env['operation.shipment'].search(other_domain)
 
         data = {
             "Import": [],
@@ -42,7 +45,7 @@ class PrintExpenseSummary(models.TransientModel):
                 operation_data = {
                     "shipment_reference": operation.name,
                     "type": operation.operation_type,
-                    "bl_number": f"{operation.bl_number}+{operation.truck_bill_number if operation.truck_bill_number else ''}",
+                    "bl_number": f"{operation.bl_number}{('+' + operation.truck_bill_number) if operation.truck_bill_number else ''}",
                     "container_no": operation.truck_container,
                     "commodity": operation.commodity,
                     "eta": operation.eta,
@@ -62,7 +65,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "requested_date": line.requested_date
                         }
 
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 # Shipping Line
@@ -75,7 +78,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "state": line.state,
                             "requested_date": line.requested_date
                         }
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 # Customs Duty
@@ -89,7 +92,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "requested_date": line.requested_date
                         }
 
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 # Clearance
@@ -103,7 +106,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "requested_date": line.requested_date
                         }
 
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 # Port Charge
@@ -117,7 +120,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "requested_date": line.requested_date
                         }
 
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 # Trucking
@@ -131,7 +134,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "requested_date": line.requested_date
                         }
 
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 # Other Admin Expenses
@@ -145,7 +148,7 @@ class PrintExpenseSummary(models.TransientModel):
                             "requested_date": line.requested_date
                         }
 
-                        if self.start_date <= expense_line["requested_date"] <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and expense_line["received_by"] == current_partner.name:
                             operation_data["expense_lines"].append(expense_line)
 
                 result.append(operation_data)
@@ -155,15 +158,31 @@ class PrintExpenseSummary(models.TransientModel):
         data["Import"] = get_data(import_operations)
         data["Export"] = get_data(export_operations)
         data["Transit"] = get_data(transit_operations)
+        data["Other"] = get_data(other_operations)
 
-        
+        print("USER", self.env.user.name)
 
         report_data = {
             "contact": current_partner.name,
-            "lines": []
+            "lines": [],
+            "banks": [],
+            "print_date": datetime.now().date(),
+            "printed_by": self.env.user.name
         }
 
-        all_operations = data["Import"] + data["Export"] + data["Transit"]
+        if current_partner.bank_ids:
+
+            for bank in current_partner.bank_ids:
+
+                val = {
+                    'bank_name': bank.bank_id.name,
+                    'acc_number': bank.acc_number,
+                    'acc_holder_name': bank.acc_holder_name
+                }
+
+                report_data["banks"].append(val)
+
+        all_operations = data["Import"] + data["Export"] + data["Transit"] + data["Other"]
 
         filter = []
 
@@ -201,5 +220,7 @@ class PrintExpenseSummary(models.TransientModel):
         print("=" * 10)
 
         print("Report Data Lines:", report_data["lines"])
+
+        print("Report Data Partner Banks:", report_data["banks"])
 
         return self.env.ref('devel_logistic_management.action_expense_summary').with_context(landscape=True).report_action(None, data=report_data)

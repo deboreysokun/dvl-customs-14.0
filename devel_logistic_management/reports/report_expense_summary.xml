@@ -87,10 +87,10 @@
                                         <t t-esc="line['eta']"/>
                                     </td>
                                     <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        $                                        <t t-esc="round(total_amount[1], 2)" />
+                                            $                                        <t t-esc="round(total_amount[1], 2)" />
                                     </td>
                                     <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        $                                        <t t-esc="round(balance, 2)"/>
+                                            $                                        <t t-esc="round(balance, 2)"/>
                                     </td>
                                 </tr>
                                 <t t-set="row_number" t-value="row_number + 1"/>
@@ -99,12 +99,45 @@
                     </t>
                     <tr style="background-color: yellow">
                         <td colspan="10" style="font-weight: 500; text-align: right; height: 25px; border: 1px solid #000;">Total Expense</td>
-                        <td colspan="1" style="text-align: center; height: 25px; border: 1px solid #000;">$ <t t-esc="round(balance, 2)"/></td>
+                        <td colspan="1" style="text-align: center; height: 25px; border: 1px solid #000;">$                            <t t-esc="round(balance, 2)"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
+            <br />
+
+            <div>
+                <t t-foreach="banks" t-as="bank">
+                    <div style="border: 1px solid black; width: 500px; height: auto; padding: 10px; line-height: 1.6;">
+                        <span style="text-decoration: underline; font-weight: bold; font-size: 16px">Bank Information</span>
+                        <br />
+                        <span>
+                            <span>Bank: </span><t t-esc="bank['bank_name']" />
+                        </span>
+                        <br />
+                        <span>
+                            <span>Account Number: </span><t t-esc="bank['acc_number']" />
+                        </span>
+                        <br />
+                        <span>
+                            <span>Account Holder Name: </span><t t-esc="bank['acc_holder_name']" />
+                        </span>
+                        <br />
+                    </div>
+                    <br />
+                </t>
+                
+                <div>
+                    <p style="font-weight: bold">Print Date: <t t-esc="print_date" /></p>
+                    <p style="font-weight: bold">Printed By: <t t-esc="printed_by" /></p>
+                </div>
+
+            </div>
+
+
         </t>
+
     </template>
 </data>
 </odoo>

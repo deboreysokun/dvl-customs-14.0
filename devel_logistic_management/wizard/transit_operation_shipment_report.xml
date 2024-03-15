@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_transit_operation_shipment_report" model="ir.ui.view">
+
+        <field name="name">Transit Operation Shipment Report</field>
+        <field name="model">transit.operation.shipment.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <footer>
+                        <button name="action_filter_transit_operations" string="Filter" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_transit_operation_shipment_report">
+        <field name="name">action.transit.operation.report</field>
+        <field name="res_model">transit.operation.shipment.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
