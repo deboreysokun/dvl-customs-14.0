@@ -26,4 +26,6 @@ from . import import_inv_and_packinglist
 from . import res_partner_invoice_payment
 from . import cash_advance_payment
 from . import print_expense_summary
-
+from . import import_operation_shipment_report
+from . import export_operation_shipment_report
+from . import transit_operation_shipment_report

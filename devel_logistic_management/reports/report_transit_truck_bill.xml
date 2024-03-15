@@ -126,12 +126,6 @@
                                                 <span t-esc="containe_text"/><br/>
                                             </t>
                                         </t>
-                                        <t t-if="o.truck_line_ids">
-                                          <div style="font-size:10px;">TRUCK NO/ DRIVER'S NAME/ DRIVER ID</div>
-                                          <t t-foreach="o.truck_line_ids" t-as="l">
-                                            <span><t t-esc="l.truck_number"/>/ <t t-esc="l.driver_id.driver_name"/>/ <t t-esc="l.x_driver_id_number"/></span><br/>
-                                          </t>
-                                        </t>
                                     </td>
                                     <td style="border-bottom:1px solid black;border-left:1px solid black;font-weight:bold">
                                         <t t-if="not o.actual_qty"><span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/></t>

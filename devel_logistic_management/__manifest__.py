@@ -21,7 +21,6 @@
     'description': """
                     Import Operation, Export Opertion, Trasit Operation,
                     HS Code For customs in Cambodia
-
                     """,
     'license': 'OPL-1',
     'author': 'A2A Digital',
@@ -60,6 +59,9 @@
         'wizard/res_partner_invoice_payment_view.xml',
         'wizard/cash_advance_payment_view.xml',
         'wizard/print_expense_summary.xml',
+        'wizard/import_operation_shipment_report.xml',
+        'wizard/export_operation_shipment_report.xml',
+        'wizard/transit_operation_shipment_report.xml',
 
         'views/tax_calculation_view.xml',
         'views/shipment_expense_lines_view.xml',
