@@ -113,15 +113,15 @@
                         <span style="text-decoration: underline; font-weight: bold; font-size: 16px">Bank Information</span>
                         <br />
                         <span>
-                            <span>Bank: </span><t t-esc="bank['bank_name']" />
+                            <t t-esc="bank['bank_name']" />
                         </span>
                         <br />
                         <span>
-                            <span>Account Number: </span><t t-esc="bank['acc_number']" />
+                            <t t-esc="bank['acc_number']" />
                         </span>
                         <br />
                         <span>
-                            <span>Account Holder Name: </span><t t-esc="bank['acc_holder_name']" />
+                            <t t-esc="bank['acc_holder_name']" />
                         </span>
                         <br />
                     </div>
