@@ -8,7 +8,7 @@
                             <!-- Invoice Document Paper -->
                             <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                                 <t t-raw="0"/>
-                                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                                <t t-set="o" t-value="o.with_context(lang=lang)"/>
                                 <div style="text-align:center;text-transform: uppercase;">
                                     <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
                                     <div style="font-size:14px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
@@ -156,13 +156,13 @@
                                             </td>
                                         </tr>
                                         <tr style="page-break-inside:avoid">
-                                            <td style="border:1px solid black;padding:5px;"></td>
+                                            <td style="border:1px solid black;padding:5px;"/>
                                             <td class="text-center" colspan="4" style="border-bottom:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
                                             <t t-if="manuf_date == 1">
-                                                <td class="text-center" style="border-bottom:1px solid black;"></td>
+                                                <td class="text-center" style="border-bottom:1px solid black;"/>
                                             </t>
                                             <t t-if="expiry_date == 1">
-                                                <td class="text-center" style="border-bottom:1px solid black;"></td>
+                                                <td class="text-center" style="border-bottom:1px solid black;"/>
                                             </t>
 
                                             <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
@@ -186,12 +186,15 @@
                                                 </t>
                                             </div>
                                             <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
-                                                <t t-if="o.inv_pl_stamp == true">
-                                                    <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                               <t t-if="o.inv_pl_stamp == true">
+                                                 <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                                 <div style="font-size:14px;">Authorized Signature</div>
+                                                 <t t-if="o.shipper_id.signature_image"><div style="font-size:14px; margin-top:20px"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                                 <div style="font-size:14px;margin-top:50px;"><t t-esc="o.shipper_id.eng_name"/></div>
                                                 </t>
-                                                <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
-                                                <div style="font-size:14px;">Authorized Signature</div>
-                                                <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
+                                                <!--<div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>-->
+                                                <!--<div style="font-size:14px;">Authorized Signature</div>-->
+                                                <!--<div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -201,7 +204,7 @@
                             <!-- Packing List Document Paper-->
                             <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                                 <t t-raw="0"/>
-                                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                                <t t-set="o" t-value="o.with_context(lang=lang)"/>
                                 <div style="text-align:center;text-transform: uppercase;">
                                     <div style="font-weight:bold"><h5><span t-field="o.shipper_id"/></h5></div>
                                     <div style="font-size:14px;"><t t-esc="o.shipper_id.street"/> <t t-if="o.shipper_id.city">, <t t-esc="o.shipper_id.city"/> </t> <t t-if="o.shipper_id.country_id">, <t t-esc="o.shipper_id.country_id.name"/> </t></div>
@@ -350,14 +353,14 @@
                                             </td>
                                         </tr>
                                         <tr style="page-break-inside:avoid">
-                                            <td style="border:1px solid black;padding:5px;"></td>
+                                            <td style="border:1px solid black;padding:5px;"/>
 
                                             <td class="text-center" style="border-bottom:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
                                             <t t-if="manuf_date == 1">
-                                                <td class="text-center" style="border-bottom:1px solid black;"></td>
+                                                <td class="text-center" style="border-bottom:1px solid black;"/>
                                             </t>
                                             <t t-if="expiry_date == 1">
-                                                <td class="text-center" style="border-bottom:1px solid black;"></td>
+                                                <td class="text-center" style="border-bottom:1px solid black;"/>
                                             </t>
                                             <td class="text-center" style="border:1px solid black; font-weight:bold;padding:5px;">
                                                 <t t-if="not o.total_pl_qty"><span t-esc="'{0:,.0f}'.format(o.total_qty)"/></t>
@@ -387,12 +390,13 @@
                                                 </t>
                                             </div>
                                             <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
+
                                                 <t t-if="o.inv_pl_stamp == true">
-                                                    <t t-if="o.shipper_id.signature_image"><div style="font-size:14px;"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                                 <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                                 <div style="font-size:14px;">Authorized Signature</div>
+                                                 <t t-if="o.shipper_id.signature_image"><div style="font-size:14px; margin-top:20px"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                                 <div style="font-size:14px;margin-top:50px;"><t t-esc="o.shipper_id.eng_name"/></div>
                                                 </t>
-                                                <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
-                                                <div style="font-size:14px;">Authorized Signature</div>
-                                                <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
                                             </div>
                                         </div>
                                     </div>
@@ -403,7 +407,7 @@
                     <t t-if="o.is_vehicle">
                         <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                             <t t-raw="0"/>
-                            <t t-set="o" t-value="o.with_context(lang=lang)" />
+                            <t t-set="o" t-value="o.with_context(lang=lang)"/>
                             <div>
                                 <div style="font-size:14px"><span style="text-decoration: underline">SELLER</span></div>
                                 <div style="font-weight:bold;font-size:14px"><span t-field="o.shipper_id"/></div>
@@ -594,7 +598,7 @@
                                             </td>
                                         </tr>
                                         <tr style="page-break-inside:avoid">
-                                            <td style="border:1px solid black;padding:5px;"></td>
+                                            <td style="border:1px solid black;padding:5px;"/>
                                             <td class="text-center" t-att-colspan="cloumn_span" style="border:1px solid black;text-align:right;font-weight:bold;padding:5px;">TOTAL </td>
                                             <td class="text-center" style="border:1px solid black; font-weight:bold;padding:5px;">
                                                 <t t-esc="'{0:,.0f}'.format(o.total_qty)"/> <span t-field="o.qty_uom_id"/>
@@ -603,7 +607,7 @@
                                                 <t t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/>
                                             </td>
                                             <t t-if="gvwr == 1"><td style="border:1px solid black;font-weight:bold;padding:5px;"/></t>
-                                            <td style="border:1px solid black;padding:5px;"></td>
+                                            <td style="border:1px solid black;padding:5px;"/>
                                             <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
                                                 $ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/>
                                             </td>

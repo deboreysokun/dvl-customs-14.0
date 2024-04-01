@@ -22,7 +22,7 @@ class PrintExpenseSummary(models.TransientModel):
         import_domain = [('operation_type', '=', 'import')]
         export_domain = [('operation_type', '=', 'export')]
         transit_domain = [('operation_type', '=', 'transit')]
-        other_domain = [('operation_type', '=', 'import'),('operation_type', '=', 'export'),('operation_type', '!=', 'transit')]
+        other_domain = [('operation_type', '!=', 'import'),('operation_type', '!=', 'export'),('operation_type', '!=', 'transit')]
 
         import_operations = self.env['operation.shipment'].search(import_domain)
         export_operations = self.env['operation.shipment'].search(export_domain)
@@ -51,8 +51,6 @@ class PrintExpenseSummary(models.TransientModel):
                     "eta": operation.eta,
                     "expense_lines": [],
                 }
-
-                
 
                 # Customs Valuation Office
                 if operation.expense_custom_permit_line_ids:
@@ -166,7 +164,7 @@ class PrintExpenseSummary(models.TransientModel):
             "contact": current_partner.name,
             "lines": [],
             "banks": [],
-            "print_date": datetime.now().date(),
+            "print_date": self.end_date,
             "printed_by": self.env.user.name
         }
 
@@ -183,10 +181,8 @@ class PrintExpenseSummary(models.TransientModel):
                 report_data["banks"].append(val)
 
         all_operations = data["Import"] + data["Export"] + data["Transit"] + data["Other"]
-
-        filter = []
-
-        for operation in all_operations:   
+        
+        for operation in all_operations:
 
             if len(operation['expense_lines']) > 0:
                 
@@ -216,6 +212,8 @@ class PrintExpenseSummary(models.TransientModel):
                     }
 
                     report_data["lines"].append(line)
+
+                    print("LINE", line)
 
         print("=" * 10)
 

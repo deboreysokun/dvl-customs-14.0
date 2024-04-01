@@ -68,7 +68,10 @@
 
 
                             <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូនលោកប្រធាននាយកដ្ឋានមេត្តាជ្រាបថា
+                                <!--<p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូនលោកប្រធាននាយកដ្ឋានមេត្តាជ្រាបថា-->
+                                <!--<span t-field="o.company_type"/>យើងខ្ញុំបាន<span t-field="o.commodity_source"/>នូវ <span t-field="o.commodity_khmer"/> ដើម្បីធ្វើការនាំចេញទៅកាន់ទីផ្សារបរទេស។-->
+                                <!--</p>-->
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូន<span style="font-family:'Khmer OS Muol Light';font-size:13pt;"> លោកប្រធាននាយកដ្ឋាន </span>មេត្តាជ្រាបថា
                                 <span t-field="o.company_type"/>យើងខ្ញុំបាន<span t-field="o.commodity_source"/>នូវ <span t-field="o.commodity_khmer"/> ដើម្បីធ្វើការនាំចេញទៅកាន់ទីផ្សារបរទេស។
                                 </p>
                             </div>
@@ -79,14 +82,13 @@
                                 </p>
                             </div>
 
-                            <!--<div class="" style="line-height: 30px;">-->
-                            <!--    <p style="font-family:'Moul';text-indent: 50px;font-size:14pt;text-align: justify">អាស្រ័យហេតុនេះ សូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតអោយ<span t-field="o.company_type"/> <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>នាំចេញទំនិញ-->
-                            <!--    តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
-                            <!--    </p>-->
-                            <!--</div>-->
+                            <div class="" style="line-height: 30px;">
+                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូម<span style="font-family:'Khmer OS Muol Light';font-size:13pt;"> លោកប្រធាន </span>មេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>នាងខ្ញុំនាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
+                                </p>
+                            </div>
                             <t t-if="o.owner_id.gender == 'male'">
                               <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>ខ្ញុំបាទនាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
+                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូម<span style="font-family:'Khmer OS Muol Light';font-size:13pt;">">លោកប្រធាន</span>មេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>នាងខ្ញុំនាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
                                 </p>
                               </div>
                             </t>
@@ -103,7 +105,7 @@
                             <!--  </div>-->
 
                             <div class="">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">សូមលោកប្រធាន មេត្តាទទួលនូវការគោរពអំពី<t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>។</p>
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;">សូម<span style="font-family:'Khmer OS Muol Light';font-size:13pt;">លោកប្រធាន</span>មេត្តាទទួលនូវការគោរពអំពី<t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>។</p>
                             </div>
 
                             <div style="page-break-inside:avoid">
