@@ -245,9 +245,9 @@
                                         <field name="description"/>
                                         <field name="description_khmer" optional="hide" />
                                         <field name="qty" sum="Total QTY" string="QTY"/>
-                                        <field name="uom_id" context="{'show_full_name': 1}" options="{'no_create': True}" string="UOM" class="o_list_number_th"/>
+                                        <field name="uom_id" context="{'show_full_name': 1}"  string="UOM" class="o_list_number_th"/>
                                         <field name="packing_list_qty" sum="Total PL QTY" string="PL QTY"/>
-                                        <field name="packing_list_uom_id" context="{'show_full_name': 1}"  options="{'no_create': True}" string="PL UOM" placeholder="PL UOM" class="o_list_number_th"/>
+                                        <field name="packing_list_uom_id" context="{'show_full_name': 1}"   string="PL UOM" placeholder="PL UOM" class="o_list_number_th"/>
                                         <field name="number" optional="show" class="o_list_number_th"/>
                                         <field name="number_in_co" attrs="{'column_invisible': [('parent.co_form_id','=', False)]}" optional="show" class="o_list_number_th"/>
                                         <field name="price_unit" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
