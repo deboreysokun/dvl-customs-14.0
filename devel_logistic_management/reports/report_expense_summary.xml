@@ -70,7 +70,7 @@
                                 <t t-esc="line['type']"/>
                             </td>
                             <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                <t t-esc="line['total_amount']" />
+                                <t t-esc="line['expense_category']" />
                             </td>
                             <td style="text-align: center; height: 25px; border: 1px solid #000;">
                                 <t t-esc="line['bl_number']"/>

@@ -183,23 +183,36 @@ class PrintExpenseSummary(models.TransientModel):
 
             if len(operation['expense_lines']) > 0:
                 
-                total_amount = 0
-                for expense_line in operation['expense_lines']:
-                    total_amount += expense_line["sub_total"]
-                line = {
-                    "request_date": expense_line["requested_date"].date(),
-                    "shipment_reference" : operation["shipment_reference"],
-                    "type" : operation["type"],
-                    "bl_number": operation["bl_number"],
-                    "container_no": operation["container_no"],
-                    "commodity": operation["commodity"],
-                    "eta": operation["eta"],
-                    "total_amount": total_amount
+                total_amounts = {
+                    "Customs Valuation Office": 0,
+                    "Trucking": 0,
+                    "Other Admin Expenses": 0,
+                    "Port Charge": 0,
+                    "Shipping Line": 0,
+                    "Clearance": 0,
+                    "Customs Duty": 0,
                 }
 
+                for expense_line in operation['expense_lines']:
+                    total_amounts[expense_line['category']] += expense_line["sub_total"]
 
+                for category, value in total_amounts.items():
 
-                report_data["lines"].append(line)
+                    if value != 0:
+                
+                        line = {
+                            "request_date": expense_line["requested_date"].date(),
+                            "shipment_reference" : operation["shipment_reference"],
+                            "type" : operation["type"],
+                            "bl_number": operation["bl_number"],
+                            "container_no": operation["container_no"],
+                            "commodity": operation["commodity"],
+                            "eta": operation["eta"],
+                            "expense_category": category,
+                            "total_amount": value
+                        }
+
+                        report_data["lines"].append(line)
 
         for line in report_data["lines"]:
 
