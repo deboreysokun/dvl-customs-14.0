@@ -55,47 +55,42 @@
                     <t t-set="row_number" t-value="1"/>
                     <t t-set="balance" t-value="0"/>
                     <t t-foreach="lines" t-as="line">
-                        <t t-foreach="line['total_amounts'].items()" t-as="total_amount">
-                            <t t-if="total_amount[1] > 0">
-                                <t t-set="balance" t-value="balance + total_amount[1]"/>
-                                <tr>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="row_number" />
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['request_date']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['shipment_reference']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['type']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="total_amount[0]" />
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['bl_number']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['container_no']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['commodity']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        <t t-esc="line['eta']"/>
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                            $                                        <t t-esc="round(total_amount[1], 2)" />
-                                    </td>
-                                    <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                            $                                        <t t-esc="round(balance, 2)"/>
-                                    </td>
-                                </tr>
-                                <t t-set="row_number" t-value="row_number + 1"/>
-                            </t>
-                        </t>
+                        <t t-set="balance" t-value="balance + line['total_amount']"/>
+                        <tr>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="row_number" />
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['request_date']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['shipment_reference']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['type']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['total_amount']" />
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['bl_number']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['container_no']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['commodity']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                <t t-esc="line['eta']"/>
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                        $                                <t t-esc="round(line['total_amount'], 2)" />
+                            </td>
+                            <td style="text-align: center; height: 25px; border: 1px solid #000;">
+                                        $                                <t t-esc="round(balance, 2)"/>
+                            </td>
+                        </tr>
                     </t>
                     <tr style="background-color: yellow">
                         <td colspan="10" style="font-weight: 500; text-align: right; height: 25px; border: 1px solid #000;">Total Expense</td>
@@ -127,10 +122,12 @@
                     </div>
                     <br />
                 </t>
-                
+
                 <div>
-                    <p style="font-weight: bold">Print Date: <t t-esc="print_date" /></p>
-                    <p style="font-weight: bold">Printed By: <t t-esc="printed_by" /></p>
+                    <p style="font-weight: bold">Print Date: <t t-esc="print_date" />
+                    </p>
+                    <p style="font-weight: bold">Printed By: <t t-esc="printed_by" />
+                    </p>
                 </div>
 
             </div>
