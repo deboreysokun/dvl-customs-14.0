@@ -85,17 +85,17 @@
                                 <t t-esc="line['eta']"/>
                             </td>
                             <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        $                                <t t-esc="round(line['total_amount'], 2)" />
+                                        $                                <t t-esc="'{:,}'.format(round(line['total_amount'], 2))" />
                             </td>
                             <td style="text-align: center; height: 25px; border: 1px solid #000;">
-                                        $                                <t t-esc="round(balance, 2)"/>
+                                        $                                <t t-esc="'{:,}'.format(round(balance, 2))"/>
                             </td>
                         </tr>
                         <t t-set="row_number" t-value="row_number + 1"/>
                     </t>
                     <tr style="background-color: yellow">
                         <td colspan="10" style="font-weight: 500; text-align: right; height: 25px; border: 1px solid #000;">Total Expense</td>
-                        <td colspan="1" style="text-align: center; height: 25px; border: 1px solid #000;">$                            <t t-esc="round(balance, 2)"/>
+                        <td colspan="1" style="text-align: center; height: 25px; border: 1px solid #000;">$ <t t-esc="'{:,}'.format(round(balance, 2))"/>
                         </td>
                     </tr>
                 </tbody>
