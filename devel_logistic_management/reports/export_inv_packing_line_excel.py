@@ -58,6 +58,10 @@ class InvPackingLineXls(models.AbstractModel):
         sheet.write(0,29, "IMEI1", format11)
         sheet.write(0,30, "IMEI2", format11)
         sheet.write(0,31, "IMEI3", format11)
+        sheet.write(0,32, "NBR_PACKAGE", format11)
+        sheet.write(0,33, "PACKAGE_TYPE", format11)
+        sheet.write(0,34, "SUPP_CODE", format11)
+        sheet.write(0,35, "SUPP_QTY", format11)
         row=1
         line_index = 1
         description = v_capacity = " "
@@ -81,7 +85,6 @@ class InvPackingLineXls(models.AbstractModel):
             sheet.write_number(row,8, line.net_weight, format12)
             sheet.write_number(row,9, line.gross_weight, format12)
             sheet.write_number(row,10,line.price_unit, format12)
-
             if shipment.co_form_id:
                 sheet.write(row,13, int(line.fta), format12)
                 sheet.write(row,14, _(line.number_in_co) if line.number_in_co != 0 else _(''), format12)
@@ -102,6 +105,11 @@ class InvPackingLineXls(models.AbstractModel):
                     sheet.write(row,26, line.v_eng or '',)
                     sheet.write(row,27, line.v_gvw or '',)
                     sheet.write(row,28, line.v_other_info or '',)
+
+            sheet.write(row,32, line.nbr_packages or '',format12)
+            sheet.write(row,33, line.package_type or '',format12)
+            sheet.write(row,34, line.supplementary_unicode or '',format12)
+            sheet.write(row,35, line.supplementary_qty or '',format12)
             row +=1
             line_index +=1
             description = " "
