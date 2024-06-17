@@ -1669,6 +1669,14 @@
                     <field name="transportation_mode" optional="hide"/>
                     <field name="company_id" groups="base.group_multi_company" optional="hide"/>
                     <field name="company_currency_id" invisible='1'/>
+                    <!--add in code later-->
+                    <field name="total_invoices"/>
+                    <field name="tot_operation_expense"/>
+                    <field name="total_reimbursed"/>
+                    <field name="balance"/>
+                    <field name="total_cash_received"/>
+                    <field name="total_expensed"/>
+                    <field name="cash_balance"/>
                 </tree>
             </field>
         </record>
