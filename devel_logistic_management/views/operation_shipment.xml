@@ -284,6 +284,10 @@
                                         <field name="fta" optional="show" string="FTA %" class="o_list_number_th"/>
                                         <field name="tax_rate_co" optional="hide" class="o_list_number_th" string="CO Rate%"/>
                                         <field name="new_tax_rate" optional="show" class="o_list_number_th"/>
+                                        <field name="nbr_packages" optional="show" />
+                                        <field name="package_type" optional="show" />
+                                        <field name="supplementary_unicode" optional="show"/>
+                                        <field name="supplementary_qty" optional="show" />
                                         <field name="tax_amount" sum="Duty Tax" optional="show" string="Duty Tax" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
                                         <field name="tax_amount_co" sum="Tax CO" optional="show" string="Tax CO" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
                                         <field name="ministry_info" widget="dynamic_popover_text" options="{'max_width': '350px'}" optional="show"/>
