@@ -18,9 +18,10 @@ class ResPartnerAgingDate(models.TransientModel):
         for res in self:
             ctx = self._context.copy()
             ctx.update({"age_date": res.age_date})
+            company_id = self.env.company.id
             customer_aging.execute_aging_query(age_date=res.age_date)
             action = self.env.ref("devel_logistic_management.action_customer_aging_tree").sudo().read()[0]
-            action["domain"] = [("total", "<>", 0.0000000)]
+            action["domain"] = [("total", "<>", 0.0000000),("invoice_id.company_id", "=", company_id)]
             action["context"] = ctx
             return action
 
@@ -30,6 +31,7 @@ class ResPartnerAgingDate(models.TransientModel):
             ctx = self._context.copy()
             ctx.update({"age_date": res.age_date})
             supplier_aging.execute_aging_query(age_date=res.age_date)
+            company_id = self.env.company.id
             action = self.env.ref("devel_logistic_management.action_supplier_aging_tree").sudo().read()[0]
             action["domain"] = [
                 "|","|","|","|","|","|",
@@ -40,6 +42,7 @@ class ResPartnerAgingDate(models.TransientModel):
                 ("days_due_91to120", "<>", 0.000000),
                 ("days_due_121togr", "<>", 0.000000),
                 ("not_due", "<>", 0.000000),
+                ("invoice_id.company_id", "=", company_id)
             ]
             action["context"] = ctx
             return action
