@@ -128,19 +128,58 @@
                                     <span>Tel: 081 9999 69 / 012 585 085</span><br/><br/>
                                     <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
                                     <t t-if="env.company.id == 1">
-                                        <span>Bank Name: <t t-esc="'ABA BANK'"/></span><br/>
-                                        <span>Account Name: <t t-esc="'CHHOR KHUNVATANA'"/></span><br/>
-                                        <span>Account Number: <t t-esc="'081 999 969'"/></span><br/><br/>
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <span>Bank Name:
+                                                    <t t-esc="'ABA BANK'"/>
+                                                </span>
+                                                <br/>
+                                                <span>Account Name:
+                                                    <t t-esc="'CHHOR KHUNVATANA'"/>
+                                                </span>
+                                                <br/>
+                                                <span>Account Number:
+                                                    <t t-esc="'081 999 969'"/>
+                                                </span>
+                                                <br/>
+                                                <br/>
+                                            </div>
+                                            <div style="margin-left:40px;">
+                                                <img src="/partner_statement_dvl/static/src/img/c.jpg"
+                                                     height="120px"/>
+                                            </div>
+                                        </div>
                                     </t>
                                     <t t-if="env.company.id == 5">
-                                        <span>Bank Name: ABA BANK</span><br/>
-                                        <span>Account Number: 009 489 175</span><br/>
-                                        <span>Account Name: CHHOR KHUNVATANA &amp; TRIV KONGHENG</span><br/><br/>
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <span>Bank Name: ABA BANK</span>
+                                                <br/>
+                                                <span>Account Number: 009 489 175</span>
+                                                <br/>
+                                                <span>Account Name: CHHOR KHUNVATANA &amp; TRIV KONGHENG</span>
+                                                <br/>
+                                                <br/>
+                                            </div>
+                                            <div style="margin-left:40px;">
+                                                <img src="/partner_statement_dvl/static/src/img/ct.jpg" height="120px"/>
+                                            </div>
+                                        </div>
                                     </t>
+
                                     <t t-if="env.company.id == 6">
-                                        <span>Bank Name: ABA BANK</span><br/>
-                                        <span>Account Number: 555 999 969</span><br/>
-                                        <span>Account Name: CHHOR KHUNVATANA &amp; TRIV KONGHENG &amp; CHHOENG SENKOSAL</span><br/><br/>
+                                            <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <span>Bank Name: ABA BANK</span><br/>
+                                                <span>Account Number: 555 999 969</span><br/>
+                                                <span>Account Name: CHHOR KHUNVATANA &amp; TRIV KONGHENG &amp; CHHOENG
+                                                    SENKOSAL</span><br/><br/>
+                                            </div>
+                                            <div>
+                                                <img src="/partner_statement_dvl/static/src/img/ctc.png"
+                                                     height="120px"/>
+                                            </div>
+                                        </div>
                                     </t>
                                     <span>Beneficiary Bank Name: <t t-esc="'ADVANCED BANK OF ASIA LIMITED'"/></span><br/>
                                     <span>Beneficiary Bank Address: <t t-esc="'No. 148, Preah Sihanouk Blvd. Phnom Penh Cambodia'"/></span><br/>
