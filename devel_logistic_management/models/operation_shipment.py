@@ -42,13 +42,13 @@ class OperationShipment(models.Model):
         readonly=False, store=True, default=_default_stage,
         copy=False, group_expand='_read_group_stage_ids', ondelete='restrict')
 
-    # @api.model
-    # def _read_group_stage_ids(self, stages, domain, order):
-    #     """ Read group customization in order to display all the stages in the
-    #         kanban view, even if they are empty
-    #     """
-    #     stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
-    #     return stages.browse(stage_ids)
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order):
+        """ Read group customization in order to display all the stages in the
+            kanban view, even if they are empty
+        """
+        stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
+        return stages.browse(stage_ids)
 
     # @api.model
     # def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
