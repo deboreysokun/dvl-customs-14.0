@@ -5,7 +5,7 @@ import datetime
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
-
+from collections import defaultdict
 from odoo import models, api
 from odoo.http import request
 
@@ -465,48 +465,40 @@ class DashBoard(models.Model):
 
     @api.model
     def get_overdues(self, *post):
-
         company_id = self.get_current_company_value()
 
-        states_arg = ""
-        if post != ('posted',):
-            states_arg = """ account_move.state in ('posted', 'draft')"""
+        if post == ('posted',):
+            states = ['posted']
         else:
-            states_arg = """ account_move.state = 'posted'"""
+            states = ['posted', 'draft']
 
-        self._cr.execute((''' select res_partner.name as partner, res_partner.commercial_partner_id as res,
-                             account_move.commercial_partner_id as parent, sum(account_move.amount_total) as amount
-                            from account_move, account_move_line, res_partner, account_account where 
-                            account_move.partner_id=res_partner.id AND account_move.move_type = 'out_invoice' 
-                            AND payment_state = 'not_paid' 
-                            AND %s
-                            AND account_move.company_id in ''' + str(tuple(company_id)) + '''
-                            AND account_account.internal_type = 'payable'
-                            AND account_move.commercial_partner_id=res_partner.commercial_partner_id 
-                            group by parent,partner,res
-                            order by amount desc
-                            ''') % (states_arg))
-        record = self._cr.dictfetchall()
-        due_partner = [item['partner'] for item in record]
-        due_amount = [item['amount'] for item in record]
+        move_records = self.env['account.move'].search([
+            ('move_type', '=', 'out_invoice'),
+            ('payment_state', '=', 'not_paid'),
+            ('state', 'in', states),
+            ('company_id', 'in', company_id),
+        ])
 
-        amounts = sum(due_amount[9:])
-        name = due_partner[9:]
-        result = []
-        pre_partner = []
+        partner_amounts = defaultdict(float)
+        for move in move_records:
+            payable_lines = move.line_ids.filtered(lambda line: line.account_id.internal_type == 'payable')
+            for line in payable_lines:
+                partner_amounts[line.partner_id.commercial_partner_id.name] += line.balance
 
-        due_amount = due_amount[:9]
-        due_amount.append(amounts)
-        due_partner = due_partner[:9]
+        sorted_partner_amounts = sorted(partner_amounts.items(), key=lambda x: x[1], reverse=True)
+
+        due_partner = [partner for partner, _ in sorted_partner_amounts[:9]]
+        due_amount = [amount for _, amount in sorted_partner_amounts[:9]]
+
+        others_amount = sum(amount for _, amount in sorted_partner_amounts[9:])
         due_partner.append("Others")
-        records = {
+        due_amount.append(others_amount)
+
+        return {
             'due_partner': due_partner,
             'due_amount': due_amount,
-            'result': result,
-
+            'result': []
         }
-        return records
-
     @api.model
     def get_overdues_this_month_and_year(self, *post):
 
