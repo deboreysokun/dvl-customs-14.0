@@ -69,11 +69,11 @@
                                 </div>
                                 <div class="row">
                                 <div class="col-6"><span t-esc="'Port of Loading'"/> </div>
-                                <div class="col-6"><span t-field="o.shipment_id.port_of_loading"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.port_of_loading_carrier"/></div>
                                 </div>
                                 <div class="row">
                                 <div class="col-6"><span t-esc="'Port of Discharge'"/> </div>
-                                <div class="col-6"><span t-field="o.shipment_id.port_of_discharge"/></div>
+                                <div class="col-6"><span t-field="o.shipment_id.port_of_discharge_carrier"/></div>
                                 </div>
                             </div>
                             <div class="col-6" style="font-size:14px;">

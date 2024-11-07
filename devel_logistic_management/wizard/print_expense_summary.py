@@ -15,8 +15,6 @@ class PrintExpenseSummary(models.TransientModel):
 
     def print_expense_summary(self):
 
-        print("END DATE", self.end_date)
-
         current_partner = self.env['res.partner'].browse(self.env.context.get('active_id'))
 
         import_domain = [('operation_type', '=', 'import')]
@@ -158,7 +156,6 @@ class PrintExpenseSummary(models.TransientModel):
         data["Transit"] = get_data(transit_operations)
         data["Other"] = get_data(other_operations)
 
-        print("USER", self.env.user.name)
 
         report_data = {
             "contact": current_partner.name,
@@ -186,39 +183,40 @@ class PrintExpenseSummary(models.TransientModel):
 
             if len(operation['expense_lines']) > 0:
                 
+                total_amounts = {
+                    "Customs Valuation Office": 0,
+                    "Trucking": 0,
+                    "Other Admin Expenses": 0,
+                    "Port Charge": 0,
+                    "Shipping Line": 0,
+                    "Clearance": 0,
+                    "Customs Duty": 0,
+                }
+
                 for expense_line in operation['expense_lines']:
+                    total_amounts[expense_line['category']] += expense_line["sub_total"]
 
-                    total_amounts = {
-                        "Customs Valuation Office": 0,
-                        "Shipping Line": 0,
-                        "Customs Duty": 0,
-                        "Clearance": 0,
-                        "Port Charge": 0,
-                        "Trucking": 0,
-                        "Other Admin Expenses": 0,
-                    }
+                for category, value in total_amounts.items():
 
-                    total_amounts[expense_line["category"]] += expense_line["sub_total"]
+                    if value != 0:
+                
+                        line = {
+                            "request_date": expense_line["requested_date"].date(),
+                            "shipment_reference" : operation["shipment_reference"],
+                            "type" : operation["type"],
+                            "bl_number": operation["bl_number"],
+                            "container_no": operation["container_no"],
+                            "commodity": operation["commodity"],
+                            "eta": operation["eta"],
+                            "expense_category": category,
+                            "total_amount": value
+                        }
 
-                    line = {
-                        "request_date": expense_line["requested_date"].date(),
-                        "shipment_reference" : operation["shipment_reference"],
-                        "type" : operation["type"],
-                        "bl_number": operation["bl_number"],
-                        "container_no": operation["container_no"],
-                        "commodity": operation["commodity"],
-                        "eta": operation["eta"],
-                        "total_amounts": total_amounts
-                    }
+                        report_data["lines"].append(line)
 
-                    report_data["lines"].append(line)
+        for line in report_data["lines"]:
 
-                    print("LINE", line)
 
-        print("=" * 10)
-
-        print("Report Data Lines:", report_data["lines"])
-
-        print("Report Data Partner Banks:", report_data["banks"])
+                print("LINE =>", line["shipment_reference"], line['total_amount'])
 
         return self.env.ref('devel_logistic_management.action_expense_summary').with_context(landscape=True).report_action(None, data=report_data)

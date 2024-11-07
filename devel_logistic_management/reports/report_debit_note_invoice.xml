@@ -141,11 +141,11 @@
                                     </div>
                                     <div class="row">
                                       <div class="col-5"><span t-esc="'Port of Loading'"/> </div>
-                                      <div class="col-6" style="padding-right:0px"><span t-field="o.shipment_id.port_of_loading_report"/></div>
+                                      <div class="col-6" style="padding-right:0px"><span t-field="o.shipment_id.port_of_loading_carrier"/></div>
                                     </div>
                                     <div class="row">
                                       <div class="col-5"><span t-esc="'Port of Discharge'"/> </div>
-                                      <div class="col-6" style="padding-right:0px"><span t-field="o.shipment_id.port_of_discharge_report"/></div>
+                                      <div class="col-6" style="padding-right:0px"><span t-field="o.shipment_id.port_of_discharge_carrier"/></div>
                                     </div>
                                 </div>
                                 <div class="col-4" style="font-size:14px;border-right:1px solid #2e75b5;margin-left:0px;">
