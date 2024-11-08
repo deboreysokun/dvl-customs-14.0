@@ -55,7 +55,7 @@ class OperationShipment(models.Model):
         """
             Override read_group to calculate the sum of the non-stored fields that depend on the user context
         """
-        res = super(OperationShipment, self).read_group(domain, fields, groupby, offset=offset, limit=100, orderby=orderby, lazy=lazy)
+        res = super(OperationShipment, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
         shipments = self.env['operation.shipment']
         for shipment in res:
             if '__domain' in shipment:
