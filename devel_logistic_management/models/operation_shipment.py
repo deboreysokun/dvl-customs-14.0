@@ -22,10 +22,7 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.tools import pdf
 from odoo.modules.module import get_module_resource
 from odoo.tools.misc import format_datetime
-from odoo.osv import expression
-import logging
 
-_logger = logging.getLogger(__name__)
 class OperationShipment(models.Model):
     _name = "operation.shipment"
     _order = "name desc, date desc, id desc"
@@ -56,63 +53,33 @@ class OperationShipment(models.Model):
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
         """
-        Optimized version of read_group to calculate sums of computed fields
+            Override read_group to calculate the sum of the non-stored fields that depend on the user context
         """
-        res = super(OperationShipment, self).read_group(domain, fields, groupby, offset=offset, limit=limit,
-                                                        orderby=orderby, lazy=lazy)
-
-        # Define which fields need computation
-        computed_fields = [
-            'total_invoices', 'tot_operation_expense', 'balance',
-            'total_cash_received', 'total_expensed', 'cash_balance',
-            'total_deposit_amount', 'balance_refund_amount',
-            'refund_container_deposit_amount', 'total_reimbursed'
-        ]
-
-        # Check if we need to compute anything
-        fields_to_compute = [f for f in computed_fields if f in fields]
-        if not fields_to_compute:
-            return res
-
-        # Get all domains at once
-        all_domains = [group['__domain'] for group in res if '__domain' in group]
-        if not all_domains:
-            return res
-
-        try:
-            # Process all records in a single search
-            full_domain = domain  # Use the original domain as base
-            if len(all_domains) > 1:
-                # Combine the domains correctly using OR
-                or_domains = ['|'] * (len(all_domains) - 1)
-                or_domains.extend(all_domains)
-                full_domain = expression.AND([domain, or_domains]) if domain else or_domains
-            elif all_domains:
-                # If only one domain, AND it with the original domain
-                full_domain = expression.AND([domain, all_domains[0]]) if domain else all_domains[0]
-
-            all_shipments = self.search(full_domain)
-
-            # Update all groups
-            for group in res:
-                if '__domain' in group:
-                    group_domain = group['__domain']
-                    # Filter records for this specific group
-                    group_records = all_shipments.filtered_domain(group_domain)
-
-                    # Calculate all needed fields at once for this group
-                    for field in fields_to_compute:
-                        group[field] = sum(group_records.mapped(field))
-
-        except Exception as e:
-            _logger.error(f"Error in read_group: {str(e)}")
-            # Fallback to original slower but safer method
-            for group in res:
-                if '__domain' in group:
-                    shipments = self.search(group['__domain'])
-                    for field in fields_to_compute:
-                        group[field] = sum(shipments.mapped(field))
-
+        res = super(OperationShipment, self).read_group(domain, fields, groupby, offset=offset, limit=100, orderby=orderby, lazy=lazy)
+        shipments = self.env['operation.shipment']
+        for shipment in res:
+            if '__domain' in shipment:
+                shipments = self.search(shipment['__domain'])
+            if 'total_invoices' in fields:
+                shipment['total_invoices'] = sum(shipments.mapped('total_invoices'))
+            if 'tot_operation_expense' in fields:
+                shipment['tot_operation_expense'] = sum(shipments.mapped('tot_operation_expense'))
+            if 'balance' in fields:
+                shipment['balance'] = sum(shipments.mapped('balance'))
+            if 'total_cash_received' in fields:
+                shipment['total_cash_received'] = sum(shipments.mapped('total_cash_received'))
+            if 'total_expensed' in fields:
+                shipment['total_expensed'] = sum(shipments.mapped('total_expensed'))
+            if 'cash_balance' in fields:
+                shipment['cash_balance'] = sum(shipments.mapped('cash_balance'))
+            if 'total_deposit_amount' in fields:
+                shipment['total_deposit_amount'] = sum(shipments.mapped('total_deposit_amount'))
+            if 'balance_refund_amount' in fields:
+                shipment['balance_refund_amount'] = sum(shipments.mapped('balance_refund_amount'))
+            if 'refund_container_deposit_amount' in fields:
+                shipment['refund_container_deposit_amount'] = sum(shipments.mapped('refund_container_deposit_amount'))
+            if 'total_reimbursed' in fields:
+                shipment['total_reimbursed'] = sum(shipments.mapped('total_reimbursed'))
         return res
 
     name = fields.Char(default=lambda self: _('New'),
