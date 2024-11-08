@@ -22,7 +22,10 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.tools import pdf
 from odoo.modules.module import get_module_resource
 from odoo.tools.misc import format_datetime
+from odoo.osv import expression
+import logging
 
+_logger = logging.getLogger(__name__)
 class OperationShipment(models.Model):
     _name = "operation.shipment"
     _order = "name desc, date desc, id desc"
@@ -49,6 +52,7 @@ class OperationShipment(models.Model):
         """
         stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
+
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
         """
@@ -75,27 +79,39 @@ class OperationShipment(models.Model):
         if not all_domains:
             return res
 
-        # Combine all domains with OR and fetch records once
-        combined_domain = ['|'] * (len(all_domains) - 1) + all_domains
-        all_shipments = self.search(combined_domain)
+        try:
+            # Process all records in a single search
+            full_domain = domain  # Use the original domain as base
+            if len(all_domains) > 1:
+                # Combine the domains correctly using OR
+                or_domains = ['|'] * (len(all_domains) - 1)
+                or_domains.extend(all_domains)
+                full_domain = expression.AND([domain, or_domains]) if domain else or_domains
+            elif all_domains:
+                # If only one domain, AND it with the original domain
+                full_domain = expression.AND([domain, all_domains[0]]) if domain else all_domains[0]
 
-        # Create a mapping of domain to records
-        domain_to_records = {}
-        for group in res:
-            if '__domain' in group:
-                domain_key = str(group['__domain'])  # Convert domain to string for dict key
-                matching_records = all_shipments.filtered_domain(group['__domain'])
-                domain_to_records[domain_key] = matching_records
+            all_shipments = self.search(full_domain)
 
-        # Update all groups at once
-        for group in res:
-            if '__domain' in group:
-                domain_key = str(group['__domain'])
-                shipments = domain_to_records[domain_key]
+            # Update all groups
+            for group in res:
+                if '__domain' in group:
+                    group_domain = group['__domain']
+                    # Filter records for this specific group
+                    group_records = all_shipments.filtered_domain(group_domain)
 
-                # Calculate all needed fields at once for this group
-                for field in fields_to_compute:
-                    group[field] = sum(shipments.mapped(field))
+                    # Calculate all needed fields at once for this group
+                    for field in fields_to_compute:
+                        group[field] = sum(group_records.mapped(field))
+
+        except Exception as e:
+            _logger.error(f"Error in read_group: {str(e)}")
+            # Fallback to original slower but safer method
+            for group in res:
+                if '__domain' in group:
+                    shipments = self.search(group['__domain'])
+                    for field in fields_to_compute:
+                        group[field] = sum(shipments.mapped(field))
 
         return res
 
