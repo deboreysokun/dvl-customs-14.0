@@ -50,55 +50,37 @@ class OperationShipment(models.Model):
         stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
 
-    @api.model
-    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        """
-        Override read_group to calculate the sum of the non-stored fields that depend on the user context
-        Optimized version using SQL aggregation
-        """
-        res = super(OperationShipment, self).read_group(domain, fields, groupby, offset=offset, limit=limit,
-                                                        orderby=orderby, lazy=lazy)
-
-        # Only process if any of our custom fields are requested
-        custom_fields = {
-            'total_invoices', 'tot_operation_expense', 'balance',
-            'total_cash_received', 'total_expensed', 'cash_balance',
-            'total_deposit_amount', 'balance_refund_amount',
-            'refund_container_deposit_amount', 'total_reimbursed'
-        }
-
-        fields_to_compute = custom_fields.intersection(fields)
-        if not fields_to_compute:
-            return res
-
-        for group in res:
-            if '__domain' not in group:
-                continue
-
-            # Build SQL query dynamically based on requested fields
-            select_parts = []
-            for field in fields_to_compute:
-                select_parts.append(f'SUM({field}) as {field}')
-
-            query = f"""
-                SELECT {', '.join(select_parts)}
-                FROM operation_shipment
-                WHERE %s
-            """
-
-            # Convert domain to SQL
-            where_clause, where_params = self.env['operation.shipment']._where_calc(group['__domain']).get_sql()
-
-            # Execute single SQL query for all fields
-            self.env.cr.execute(query % where_clause, where_params)
-            sums = self.env.cr.dictfetchone()
-
-            # Update group with results
-            if sums:
-                for field in fields_to_compute:
-                    group[field] = sums[field] if sums[field] is not None else 0.0
-
-        return res
+    # @api.model
+    # def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+    #     """
+    #         Override read_group to calculate the sum of the non-stored fields that depend on the user context
+    #     """
+    #     res = super(OperationShipment, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+    #     shipments = self.env['operation.shipment']
+    #     for shipment in res:
+    #         if '__domain' in shipment:
+    #             shipments = self.search(shipment['__domain'])
+    #         if 'total_invoices' in fields:
+    #             shipment['total_invoices'] = sum(shipments.mapped('total_invoices'))
+    #         if 'tot_operation_expense' in fields:
+    #             shipment['tot_operation_expense'] = sum(shipments.mapped('tot_operation_expense'))
+    #         if 'balance' in fields:
+    #             shipment['balance'] = sum(shipments.mapped('balance'))
+    #         if 'total_cash_received' in fields:
+    #             shipment['total_cash_received'] = sum(shipments.mapped('total_cash_received'))
+    #         if 'total_expensed' in fields:
+    #             shipment['total_expensed'] = sum(shipments.mapped('total_expensed'))
+    #         if 'cash_balance' in fields:
+    #             shipment['cash_balance'] = sum(shipments.mapped('cash_balance'))
+    #         if 'total_deposit_amount' in fields:
+    #             shipment['total_deposit_amount'] = sum(shipments.mapped('total_deposit_amount'))
+    #         if 'balance_refund_amount' in fields:
+    #             shipment['balance_refund_amount'] = sum(shipments.mapped('balance_refund_amount'))
+    #         if 'refund_container_deposit_amount' in fields:
+    #             shipment['refund_container_deposit_amount'] = sum(shipments.mapped('refund_container_deposit_amount'))
+    #         if 'total_reimbursed' in fields:
+    #             shipment['total_reimbursed'] = sum(shipments.mapped('total_reimbursed'))
+    #     return res
 
     name = fields.Char(default=lambda self: _('New'),
             copy=False, readonly=True)
