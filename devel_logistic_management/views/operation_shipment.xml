@@ -198,14 +198,14 @@
                                         <field name="port_of_discharge_carrier" string="25 Port Of Discharge" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="container_number" invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="seal_number" invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                        <label for="etd" string="26 ETD | ETA | ETR"/>
+                                        <label for="etd" string="26 ETD | ETA | ETC"/>
                                         <div class="o_row">
                                             <span class="oe_read_only"> ETD: </span>
                                             <field name="etd" placeholder="ETD" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                             <span class="oe_read_only"> | ETA:  </span>
                                             <field name="eta" placeholder="ETA" attrs="{'readonly': [('is_locked', '=', True)]}"/>
-                                            <span class="oe_read_only"> | ETR: </span>
-                                            <field name="etr" placeholder="ETR" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                            <span class="oe_read_only"> | ETC: </span>
+                                            <field name="etc" placeholder="ETC" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                     </group>
                                 </group>
@@ -1659,7 +1659,7 @@
                     <field name="origin_country_id" invisible="context.get('default_operation_type') == 'export'" />
                     <field name="etd" optional="show"/>
                     <field name="eta" optional="show"/>
-                    <field name="etr" optional="show"/>
+                    <field name="etc" optional="show"/>
                     <field name="place_of_reciept" optional="show"/>
                     <field name="port_of_loading_report" string="Port Of Loading" optional="show"/>
                     <field name="port_of_discharge_report" string="Port Of Discharge" optional="show"/>
@@ -1920,7 +1920,7 @@
                     <field name="origin_country_id"/>
                     <field name="etd"/>
                     <field name="eta"/>
-                    <field name="etr"/>
+                    <field name="etc"/>
                     <field name="consignee_id" avatar_field="image_128"/>
                     <field name="create_uid" filters="1" invisible="1"/>
                 </calendar>
@@ -1975,7 +1975,7 @@
                     <field name="import_country_id"/>
                     <field name="etd"/>
                     <field name="eta"/>
-                    <field name="etr"/>
+                    <field name="etc"/>
                     <field name="consignee_id" avatar_field="image_128"/>
                     <field name="create_uid" filters="1" invisible="1"/>
                 </calendar>
@@ -2031,7 +2031,7 @@
                     <field name="import_country_id"/>
                     <field name="etd"/>
                     <field name="eta"/>
-                    <field name="etr"/>
+                    <field name="etc"/>
                     <field name="consignee_id" avatar_field="image_128"/>
                     <field name="create_uid" filters="1" invisible="1"/>
                 </calendar>
@@ -2084,7 +2084,7 @@
                     <field name="origin_country_id"/>
                     <field name="etd"/>
                     <field name="eta"/>
-                    <field name="etr"/>
+                    <field name="etc"/>
                     <field name="consignee_id" avatar_field="image_128"/>
                     <field name="create_uid" filters="1" invisible="1"/>
                 </calendar>
