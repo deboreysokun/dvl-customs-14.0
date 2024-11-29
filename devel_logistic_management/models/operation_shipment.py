@@ -129,7 +129,7 @@ class OperationShipment(models.Model):
     customs_seal_number = fields.Char(string='Customs Seal N0.', tracking=True, copy=False)
     etd = fields.Date(string="ETD", help='Estimated Time Departure', tracking=True, copy=False)
     eta = fields.Date(string="ETA",help='Estimated Time Arrival', tracking=True, copy=False)
-    etr = fields.Date(string="ETR",help='Estimated Time Return', tracking=True, copy=False)
+    etc = fields.Date(string="ETC",help='Estimate Time Clearance', tracking=True, copy=False)
     co_loader_id = fields.Many2one('res.partner', tracking=True) # unused
     shipping_line_id = fields.Many2one('res.partner', tracking=True)
     port_of_loading_carrier = fields.Many2one('entry.exit.port', tracking=True)
