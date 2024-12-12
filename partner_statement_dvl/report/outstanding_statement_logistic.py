@@ -149,12 +149,29 @@ class OutstandingStatementLogistic(models.AbstractModel):
             res[row.pop("partner_id")].append(row)
 
         for partner_id in res:
-            res[partner_id][:] = [d for d in res[partner_id] if self.env['account.move'].sudo().search(
-                [('name', '=', d.get('move_id'))]).move_type == 'out_invoice']
-            res[partner_id][:] = [d for d in res[partner_id] if self.env['account.move'].sudo().search([('name', '=', d.get('move_id'))]).payment_state != 'paid']
+            res[partner_id][:] = [
+                d for d in res[partner_id]
+                if self.env['account.move'].sudo().search([
+                    ('name', '=', d.get('move_id')),
+                    ('partner_id', '=', partner_id),
+                ]).move_type == 'out_invoice'
+            ]
+
+            res[partner_id][:] = [
+                d for d in res[partner_id]
+                if self.env['account.move'].sudo().search([
+                    ('name', '=', d.get('move_id')),
+                    ('partner_id', '=', partner_id)
+                ]).payment_state != 'paid'
+            ]
+
             res[partner_id].sort(key=lambda line: (not line.get("shipment_id", False), line.get("shipment_id")))
+
             for d in res[partner_id]:
-                age = self.env['res.partner.aging.customer'].sudo().search([('invoice_ref', '=', d.get('move_id'))])[0]
+                age = self.env['res.partner.aging.customer'].sudo().search([
+                    ('invoice_ref', '=', d.get('move_id')),
+                    ('partner_id', '=', partner_id),
+                ])[0]
                 d['age'] = age.max_days_overdue
 
 

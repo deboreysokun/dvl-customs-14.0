@@ -80,9 +80,21 @@
                                     <span>Payment Term: Mr. Chhor Khunvatana</span><br/>
                                     <span>Tel: 081 9999 69 / 012 585 085</span><br/><br/>
                                     <span style="text-decoration: underline">Bank Information for remittance of Payment</span><br/>
-                                    <span>Bank Name: <t t-esc="'ABA BANK'"/></span><br/>
-                                    <span>Account Name: <t t-esc="'CHHOR KHUNVATANA'"/></span><br/>
-                                    <span>Account Number: <t t-esc="'081 999 969'"/></span><br/><br/>
+                                    <t t-if="env.company.id == 1">
+                                        <span>Bank Name: <t t-esc="'ABA BANK'"/></span><br/>
+                                        <span>Account Name: <t t-esc="'CHHOR KHUNVATANA'"/></span><br/>
+                                        <span>Account Number: <t t-esc="'081 999 969'"/></span><br/><br/>
+                                    </t>
+                                    <t t-if="env.company.id == 5">
+                                        <span>Bank Name: ABA BANK</span><br/>
+                                        <span>Account Number: 009 489 175</span><br/>
+                                        <span>Account Name: CHHOR KHUNVATANA &amp; TRIV KONGHENG</span><br/><br/>
+                                    </t>
+                                    <t t-if="env.company.id == 6">
+                                        <span>Bank Name: ABA BANK</span><br/>
+                                        <span>Account Number: 555 999 969</span><br/>
+                                        <span>Account Name: CHHOR KHUNVATANA &amp; TRIV KONGHENG &amp; CHHOENG SENKOSAL</span><br/><br/>
+                                    </t>
                                     <span>Beneficiary Bank Name: <t t-esc="'ADVANCED BANK OF ASIA LIMITED'"/></span><br/>
                                     <span>Beneficiary Bank Address: <t t-esc="'No. 148, Preah Sihanouk Blvd. Phnom Penh Cambodia'"/></span><br/>
                                     <span>Beneficiary Bank SWIFT: <t t-esc="'ABAAKHPP'"/></span><br/><br/>
