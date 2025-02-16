@@ -116,3 +116,19 @@ class ResPartnerBank(models.Model):
 
     #Client need it
     street = fields.Char(string="Account Address")
+
+class ResPartnerAgentStaff(models.Model):
+    _name = 'res.partner.agent.staff'
+    _description = "Agent Staff Information"
+    _rec_name = "agent_staff_id"
+    agent_staff_id = fields.Char(string="Agent Staff Name", required=True)
+    partner_id = fields.Many2one('res.partner', string="Partner", ondelete='cascade')
+    agent_staff_id_number = fields.Char(string="Agent Staff ID")
+    agent_staff_telephone = fields.Char(string="Agent Staff Telephone Number")
+    agent_staff_email = fields.Char(string="Agent Staff Email")
+    agent_bank_information = fields.Char(string="Agent Bank Information")
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+    agent_staff_ids = fields.One2many('res.partner.agent.staff', 'partner_id', string="Agent Staff Information")
+

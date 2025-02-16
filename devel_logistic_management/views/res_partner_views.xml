@@ -77,6 +77,21 @@
                     </group>
                 </page>
             </xpath>
+            <xpath expr="//notebook/page[1]" position="before">
+                <page string="Agent Staff Information">
+                    <group>
+                        <field name="agent_staff_ids">
+                            <tree editable="bottom">
+                                <field name="agent_staff_id" string="Staff Name"/>
+                                <field name="agent_staff_id_number" string="Staff ID"/>
+                                <field name="agent_staff_telephone" string="Telephone"/>
+                                <field name="agent_staff_email" string="Email"/>
+                                <field name="agent_bank_information" string="Bank Information"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
             <xpath expr="//field[@name='company_type']" position="after">
                 <field name="is_truck" attrs="{'invisible': [('company_type','=', 'person')]}"/>
                 <label for="is_truck" string="Truck Company" attrs="{'invisible': [('company_type','=', 'person')]}"/>

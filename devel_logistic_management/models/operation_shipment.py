@@ -100,7 +100,13 @@ class OperationShipment(models.Model):
     shipper_id = fields.Many2one('res.partner', tracking=True)
     consignee_id = fields.Many2one('res.partner', tracking=True)
     notify_party_id = fields.Many2one('res.partner', tracking=True)
-    customer_id = fields.Many2one('res.partner', tracking=True, string="Client")
+    customer_id = fields.Many2one('res.partner', tracking=True, string="Agent Company")
+    agent_staff_id = fields.Many2one(
+        'res.partner.agent.staff',
+        tracking=True,
+        string="Agent Staff Name",
+        display_name="agent_staff_id"
+    )
     tag_ids = fields.Many2many('operation.tag', tracking=True)
     commodity = fields.Char(tracking=True)
     x_image_logo = fields.Boolean(tracking=True,string="Truck Bill Logo")

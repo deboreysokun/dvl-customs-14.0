@@ -44,6 +44,7 @@ access_sale_quotation_template_line,sale.quotation.template.line,model_sale_quot
 access_res_partner_aging_date,res.partner.aging.date,model_res_partner_aging_date,account.group_account_user,1,1,1,1
 access_res_partner_aging_customer,res.partner.aging.customer,model_res_partner_aging_customer,account.group_account_user,1,1,1,1
 access_res_partner_aging_supplier,res.partner.aging.supplier,model_res_partner_aging_supplier,account.group_account_user,1,1,1,1
+access_res_partner_agent_staff,res.partner.agent.staff,model_res_partner_agent_staff,devel_logistic_management.group_dvl_operation_user,1,1,1,1
 
 access_add_to_expense_line,add.to.expense.line,model_add_to_expense_line,devel_logistic_management.group_dvl_operation_confirm_expense,1,1,1,1
 

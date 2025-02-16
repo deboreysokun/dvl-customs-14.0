@@ -37,7 +37,7 @@
                 <field name="max_days_overdue" class="o_list_number_th"/>
                 <field name="shipment_id"/>
                 <field name="invoice_ref" string="Inv.Number"/>
-                <field name="partner_id" string="Customer" />
+                <field name="partner_id" string="Agent Company" />
                 <field name="inv_date_due" string="Due Date" optional="hide"/>
                 <field name="invoice_id" invisible="1" />
 <!--                <button name="open_document" type="object" icon="fa-list-alt" attrs="{'invisible':[('invoice_id', '=', False)]}"/>-->

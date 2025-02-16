@@ -13,7 +13,7 @@
                             <h4><span t-esc="company.name"/> </h4>
                             <h4><span t-esc="' ' if account_type == 'receivable' else 'Supplier '"/>STATEMENT OF OUTSTANDING PAYMENT UP TO
                             <span t-esc="d['end']"/> </h4>
-                            <h4><span t-esc="'AGENT: ' if account_type == 'receivable' else 'Supplier: '"/> <span class="text-uppercase" t-field="o.name"/></h4>
+                            <h4><span t-esc="'AGENT COMPANY: ' if account_type == 'receivable' else 'Supplier: '"/> <span class="text-uppercase" t-field="o.name"/></h4>
                         </div>
                         <t t-if="d['currencies']">
                             <br/>
@@ -28,6 +28,7 @@
                                             <th class="text-center" style="vertical-align: middle;border: 1px solid black">Type</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">BL Number</th>
                                             <th class="text-center" style="width: 14%;vertical-align: middle;border: 1px solid black">Contianer No.</th>
+                                            <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Agent Staff</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Commodity</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Incoterm</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">POL</th>
@@ -62,6 +63,9 @@
                                             </td>
                                             <td class="text-center" style="border: 1px solid black;">
                                                 <span t-esc="line['container_number']"/>
+                                            </td>
+                                            <td class="text-center" style="border: 1px solid black;">
+                                                <span t-esc="line['agent_staff_name']"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                                 <span t-esc="line['commodity']"/>

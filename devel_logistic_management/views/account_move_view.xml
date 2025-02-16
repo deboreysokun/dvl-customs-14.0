@@ -71,7 +71,7 @@
             <xpath expr="//group[@id='header_left_group']/div[@class='o_td_label']" position="replace">
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="agent_staff_id" context="{'show_mobile':True, 'show_email': True}" options='{"always_reload": True}' attrs="{'invisible': [('move_type', '=', 'entry')], 'readonly': [('state', 'not in', ('draft'))]}"/>
+                <field name="agent_staff_id" context="{'show_mobile':True, 'show_email': True}" options='{"always_reload": True}' />
                 <field name="client_company_id" context="{'show_mobile':True, 'show_email': True}" options='{"always_reload": True}' attrs="{'invisible': [('move_type', '=', 'entry')], 'readonly': [('state', 'not in', ('draft'))]}"/>
                 <field name="client_staff_id" context="{'show_mobile':True, 'show_email': True}" attrs="{'invisible': [('move_type', '=', 'entry')], 'readonly': [('state', 'not in', ('draft'))]}"/>
                 <label name="invoice_copy_from_id" for="invoice_copy_from_id" string="Copy From" class="oe_edit_only"

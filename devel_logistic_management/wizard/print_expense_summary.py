@@ -20,13 +20,13 @@ class PrintExpenseSummary(models.TransientModel):
         import_domain = [('operation_type', '=', 'import')]
         export_domain = [('operation_type', '=', 'export')]
         transit_domain = [('operation_type', '=', 'transit')]
-        other_domain = [('operation_type', '!=', 'import'),('operation_type', '!=', 'export'),('operation_type', '!=', 'transit')]
 
         import_operations = self.env['operation.shipment'].search(import_domain)
         export_operations = self.env['operation.shipment'].search(export_domain)
         transit_operations = self.env['operation.shipment'].search(transit_domain)
-        other_operations = self.env['operation.shipment'].search(other_domain)
+        other_operations = self.env['other.operation'].search([])
 
+        print("OTHER OPERATIONS", other_operations)
         data = {
             "Import": [],
             "Export": [],
@@ -150,11 +150,40 @@ class PrintExpenseSummary(models.TransientModel):
                 result.append(operation_data)
 
             return result
-            
+
+        def get_data_other(operations):
+            result = []
+
+            for operation in operations:
+                operation_data = {
+                    "shipment_reference": operation.name,
+                    "type": "other",
+                    # "bl_number": f"{operation.bl_number}{('+' + operation.truck_bill_number) if operation.truck_bill_number else ''}",
+                    # "container_no": operation.truck_container,
+                    # "commodity": operation.commodity,
+                    # "eta": operation.eta,
+                    "expense_lines": [],
+                }
+                if operation.other_operation_expense_line_ids:
+                    for line in operation.other_operation_expense_line_ids:
+                        expense_line = {
+                            "category": "Other Operation Type",
+                            "sub_total": line.sub_total,
+                            "received_by": line.received_user_id.name,
+                            "state": line.state,
+                            "requested_date": line.requested_date
+                        }
+
+                        if expense_line["requested_date"].date() <= self.end_date and expense_line["state"] == "confirm" and \
+                                expense_line["received_by"] == current_partner.name:
+                            operation_data["expense_lines"].append(expense_line)
+                result.append(operation_data)
+            return result
+
         data["Import"] = get_data(import_operations)
         data["Export"] = get_data(export_operations)
         data["Transit"] = get_data(transit_operations)
-        data["Other"] = get_data(other_operations)
+        data["Other"] = get_data_other(other_operations)
 
 
         report_data = {
@@ -191,6 +220,7 @@ class PrintExpenseSummary(models.TransientModel):
                     "Shipping Line": 0,
                     "Clearance": 0,
                     "Customs Duty": 0,
+                    "Other Operation Type":0
                 }
 
                 for expense_line in operation['expense_lines']:
@@ -199,15 +229,14 @@ class PrintExpenseSummary(models.TransientModel):
                 for category, value in total_amounts.items():
 
                     if value != 0:
-                
                         line = {
                             "request_date": expense_line["requested_date"].date(),
                             "shipment_reference" : operation["shipment_reference"],
                             "type" : operation["type"],
-                            "bl_number": operation["bl_number"],
-                            "container_no": operation["container_no"],
-                            "commodity": operation["commodity"],
-                            "eta": operation["eta"],
+                            "bl_number": operation["bl_number"] if operation["type"] != "other" else "",
+                            "container_no": operation["container_no"] if operation["type"] != "other" else "",
+                            "commodity": operation["commodity"] if operation["type"] != "other" else "",
+                            "eta": operation["eta"] if operation["type"] != "other" else "",
                             "expense_category": category,
                             "total_amount": value
                         }

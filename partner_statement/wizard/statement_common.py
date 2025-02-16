@@ -40,7 +40,11 @@ class StatementCommon(models.AbstractModel):
         string="Account type",
         default="receivable",
     )
-
+    customer_id = fields.Many2one('res.partner', tracking=True, string="Agent Company")
+    agent_staff_id = fields.Many2one(
+        comodel_name='res.partner.agent.staff',
+        string='Agent Staff',
+    )
     @api.onchange("aging_type")
     def onchange_aging_type(self):
         if self.aging_type == "months":
