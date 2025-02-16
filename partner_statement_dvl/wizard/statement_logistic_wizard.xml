@@ -30,6 +30,17 @@
                 <br />
                 <br />
             </xpath>
+            <group>
+                <div>
+                    <label for="customer_id" string="Agent Company"/>
+                </div>
+                <field name="customer_id" string="Agent Company Name:"/>
+
+                <div>
+                    <label for="agent_staff_id" string="Agent Staff"/>
+                </div>
+                <field name="agent_staff_id" string="Agent Staff:" />
+            </group>
         </field>
     </record>
 </odoo>

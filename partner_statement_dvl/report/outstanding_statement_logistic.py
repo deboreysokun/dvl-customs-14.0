@@ -10,14 +10,14 @@ class OutstandingStatementLogistic(models.AbstractModel):
     _name = "report.partner_statement_dvl.outstanding_statement_logistic"
     _description = "Partner Outstanding Statement of Logistic Operation"
 
-    def _display_lines_sql_q1(self, partners, date_end, account_type):
+    def _display_lines_sql_q1(self, partners, date_end, account_type, customer_id=None, agent_staff_id=None):
         partners = tuple(partners)
-        return str(
-            self._cr.mogrify(
-                """
+        query = """
             SELECT l.id, m.name AS move_id, l.partner_id, l.date, l.name,
                             l.blocked, l.currency_id, l.company_id,
-                            op.name AS shipment_id, op.operation_type, op.bl_number, op.container_number, op.commodity, pod.name AS port_of_delivery, pol.name AS port_of_loading,
+                            op.name AS shipment_id, op.operation_type, op.bl_number, op.container_number,
+                            staff.agent_staff_id AS agent_staff_name,
+                            op.commodity, pod.name AS port_of_delivery, pol.name AS port_of_loading,
                             pod1.name AS port_of_discharge, fd.name AS final_destination, por.name AS place_of_reciept, op.etd, op.eta, op.etr, incoterm.code AS incoterm_id, inv_inco.code AS inv_packing_list_term,
             CASE WHEN l.ref IS NOT NULL
                 THEN l.ref
@@ -48,6 +48,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
             JOIN account_account_type at ON (at.id = aa.user_type_id)
             JOIN account_move m ON (l.move_id = m.id)
             LEFT JOIN operation_shipment op ON (op.id = m.shipment_id)
+            LEFT JOIN res_partner_agent_staff staff ON (staff.id = op.agent_staff_id)
             LEFT JOIN entry_exit_port pod ON (pod.id = op.port_of_delivery)
             LEFT JOIN entry_exit_port pod1 ON (pod1.id = op.port_of_discharge_report)
             LEFT JOIN entry_exit_port pol ON (pol.id = op.port_of_loading_report)
@@ -68,25 +69,37 @@ class OutstandingStatementLogistic(models.AbstractModel):
                 WHERE l2.date <= %(date_end)s
             ) as pc ON pc.credit_move_id = l.id
             WHERE l.partner_id IN %(partners)s AND at.type = %(account_type)s
-                                AND (
-                                  (pd.id IS NOT NULL AND
-                                      pd.max_date <= %(date_end)s) OR
-                                  (pc.id IS NOT NULL AND
-                                      pc.max_date <= %(date_end)s) OR
-                                  (pd.id IS NULL AND pc.id IS NULL)
-                                ) AND l.date <= %(date_end)s AND m.state IN ('posted')
+            """
+
+        if customer_id and agent_staff_id:
+            query += """ AND op.customer_id = %(customer_id)s 
+                        AND op.agent_staff_id = %(agent_staff_id)s"""
+
+        query += """ AND (
+                      (pd.id IS NOT NULL AND
+                          pd.max_date <= %(date_end)s) OR
+                      (pc.id IS NOT NULL AND
+                          pc.max_date <= %(date_end)s) OR
+                      (pd.id IS NULL AND pc.id IS NULL)
+                    ) AND l.date <= %(date_end)s AND m.state IN ('posted')
             GROUP BY l.id, l.partner_id, m.name, l.date, l.date_maturity, l.name,
-                op.name, op.operation_type, op.bl_number, op.container_number, op.commodity, pod.name, pol.name, pod1.name, fd.name, por.name, op.etd, op.eta, op.etr, incoterm.code, inv_inco.code,
+                op.name, op.operation_type, op.bl_number, op.container_number, staff.agent_staff_id, op.commodity, pod.name, pol.name, pod1.name, fd.name, por.name, op.etd, op.eta, op.etr, incoterm.code, inv_inco.code,
                 CASE WHEN l.ref IS NOT NULL
                     THEN l.ref
                     ELSE m.ref
                 END,
                 l.blocked, l.currency_id, l.balance, l.amount_currency, l.company_id
-            """,
-                locals(),
-            ),
-            "utf-8",
-        )
+            """
+
+        params = {
+            'date_end': date_end,
+            'partners': partners,
+            'account_type': account_type,
+            'customer_id': customer_id,
+            'agent_staff_id': agent_staff_id,
+        }
+
+        return str(self._cr.mogrify(query, params), "utf-8")
 
     def _display_lines_sql_q2(self):
         return str(
@@ -95,7 +108,9 @@ class OutstandingStatementLogistic(models.AbstractModel):
                 SELECT Q1.partner_id, Q1.currency_id, Q1.move_id,
                     Q1.date, Q1.date_maturity, Q1.debit, Q1.credit,
                     Q1.name, Q1.ref, Q1.blocked, Q1.company_id,
-                    Q1.shipment_id, Q1.operation_type, Q1.bl_number, Q1.container_number, Q1.commodity, Q1.port_of_delivery, Q1.port_of_loading,
+                    Q1.shipment_id, Q1.operation_type, Q1.bl_number, Q1.container_number,
+                    Q1.agent_staff_name, 
+                    Q1.commodity, Q1.port_of_delivery, Q1.port_of_loading,
                     Q1.port_of_discharge, Q1.final_destination, Q1.place_of_reciept, Q1.etd, Q1.eta, Q1.etr, Q1.incoterm_id, Q1.inv_packing_list_term,
                 CASE WHEN Q1.currency_id is not null
                     THEN Q1.open_amount_currency
@@ -115,7 +130,9 @@ class OutstandingStatementLogistic(models.AbstractModel):
             SELECT Q2.partner_id, Q2.move_id, Q2.date, Q2.date_maturity,
               Q2.name, Q2.ref, Q2.debit, Q2.credit,
               Q2.debit-Q2.credit AS amount, blocked,
-              Q2.shipment_id, Q2.operation_type, Q2.bl_number, Q2.container_number, Q2.commodity, Q2.port_of_loading, Q2.port_of_delivery,
+              Q2.shipment_id, Q2.operation_type, Q2.bl_number, Q2.container_number,
+              Q2.agent_staff_name,
+              Q2.commodity, Q2.port_of_loading, Q2.port_of_delivery,
               Q2.port_of_discharge, Q2.final_destination, Q2.place_of_reciept, Q2.etd, Q2.eta, Q2.etr, Q2.incoterm_id, Q2.inv_packing_list_term,
               COALESCE(Q2.currency_id, c.currency_id) AS currency_id,
               Q2.open_amount
@@ -131,6 +148,11 @@ class OutstandingStatementLogistic(models.AbstractModel):
     def _get_account_display_lines(self, company_id, partner_ids, date_start, date_end, account_type):
         res = dict(map(lambda x: (x, []), partner_ids))
         partners = tuple(partner_ids)
+
+        # Get customer_id and agent_staff_id from the data dictionary
+        customer_id = self.env.context.get('customer_id')
+        agent_staff_id = self.env.context.get('agent_staff_id')
+
         # pylint: disable=E8103
         self.env.cr.execute(
             """
@@ -139,12 +161,13 @@ class OutstandingStatementLogistic(models.AbstractModel):
              Q3 AS (%s)
         SELECT partner_id, currency_id, move_id, date, date_maturity, debit,
                             credit, amount, open_amount, name, ref, blocked,
-                            shipment_id, operation_type, bl_number, container_number, commodity, port_of_loading, port_of_delivery, port_of_discharge, final_destination, place_of_reciept, etd, eta, etr, incoterm_id, inv_packing_list_term
+                            shipment_id, operation_type, bl_number, container_number, agent_staff_name ,commodity, port_of_loading, port_of_delivery, port_of_discharge, final_destination, place_of_reciept, etd, eta, etr, incoterm_id, inv_packing_list_term
         FROM Q3
-        ORDER BY date, date_maturity, move_id, shipment_id, operation_type, bl_number, container_number, commodity, port_of_loading, port_of_delivery, port_of_discharge, final_destination, place_of_reciept, etd, eta, etr, incoterm_id, inv_packing_list_term""" % (
-                self._display_lines_sql_q1(partners, date_end, account_type),
+        ORDER BY date, date_maturity, move_id, shipment_id, operation_type, bl_number, container_number, agent_staff_name,commodity, port_of_loading, port_of_delivery, port_of_discharge, final_destination, place_of_reciept, etd, eta, etr, incoterm_id, inv_packing_list_term""" % (
+                self._display_lines_sql_q1(partners, date_end, account_type, customer_id, agent_staff_id),
                 self._display_lines_sql_q2(),
                 self._display_lines_sql_q3(company_id)))
+
         for row in self.env.cr.dictfetchall():
             res[row.pop("partner_id")].append(row)
 
@@ -174,11 +197,6 @@ class OutstandingStatementLogistic(models.AbstractModel):
                 ])[0]
                 d['age'] = age.max_days_overdue
 
-
-        # for partner_id in res:
-        #     res[partner_id].sort(key=lambda line: line["shipment_id"])
-
-
         return res
     @api.model
     def _get_report_values(self, docids, data=None):
@@ -190,6 +208,11 @@ class OutstandingStatementLogistic(models.AbstractModel):
             )
             data.update(wiz.create({})._prepare_statement())
         data["amount_field"] = "open_amount"
-        print('=============', data)
+
+        # Add the context with customer_id and agent_staff_id
+        self = self.with_context(
+            customer_id=data.get('customer_id'),
+            agent_staff_id=data.get('agent_staff_id')
+        )
         return super()._get_report_values(docids, data)
 

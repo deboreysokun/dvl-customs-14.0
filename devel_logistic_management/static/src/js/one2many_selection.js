@@ -162,6 +162,7 @@ odoo.define('devel_logistic_management.form_widgets', function (require) {
                 $('.btn_clear_cash_advance_otd').show()
             }
             else if (this.selection.length > 0 && model === 'other.operation.expense.line') {
+                $('.button_set_received_by_ptg').show()
                 $('.button_confirm_expense_lines').show()
                 $('.button_approve_expense_lines').show()
                 $('.btn_confirm_approve_expense_line').show()

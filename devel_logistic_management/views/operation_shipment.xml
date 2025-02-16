@@ -92,7 +92,8 @@
                                 <field name="company_id" groups="base.group_multi_company" readonly="1"/>
                             </group>
                             <group colspan="3" col="3">
-                                <field name="customer_id" string="5 Client"/>
+                                <field name="customer_id" string="5 Company Agent"/>
+                                <field name="agent_staff_id" string="Agent Staff Name"/>
                                 <field name="commodity" string="6 Commodity"/>
                                 <field name="container_qty_type"/>
                                 <field name="truck_container" string="Containers &amp; Truck No." widget="text"/>
