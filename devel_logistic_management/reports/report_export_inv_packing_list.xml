@@ -186,15 +186,21 @@
                                                 </t>
                                             </div>
                                             <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
-                                               <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.inv_pl_stamp">
                                                  <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
                                                  <div style="font-size:14px;">Authorized Signature</div>
-                                                 <t t-if="o.shipper_id.signature_image"><div style="font-size:14px; margin-top:20px"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                                 <t t-if="o.shipper_id.signature_image">
+                                                   <div style="font-size:14px; margin-top:20px">
+                                                     <img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/>
+                                                   </div>
+                                                 </t>
                                                  <div style="font-size:14px;margin-top:50px;"><t t-esc="o.shipper_id.eng_name"/></div>
-                                                </t>
-                                                <!--<div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>-->
-                                                <!--<div style="font-size:14px;">Authorized Signature</div>-->
-                                                <!--<div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>-->
+                                               </t>
+                                               <t t-else="">
+                                                 <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                                 <div style="font-size:14px;">Authorized Signature</div>
+                                                 <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
+                                               </t>
                                             </div>
                                         </div>
                                     </div>
@@ -390,13 +396,21 @@
                                                 </t>
                                             </div>
                                             <div class="col-7 text-center" style="font-size:14px;margin-top: 10px;">
-
-                                                <t t-if="o.inv_pl_stamp == true">
+                                               <t t-if="o.inv_pl_stamp">
                                                  <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
                                                  <div style="font-size:14px;">Authorized Signature</div>
-                                                 <t t-if="o.shipper_id.signature_image"><div style="font-size:14px; margin-top:20px"><img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/></div></t>
+                                                 <t t-if="o.shipper_id.signature_image">
+                                                   <div style="font-size:14px; margin-top:20px">
+                                                     <img t-att-src="image_data_uri(o.shipper_id.signature_image)" height="150px"/>
+                                                   </div>
+                                                 </t>
                                                  <div style="font-size:14px;margin-top:50px;"><t t-esc="o.shipper_id.eng_name"/></div>
-                                                </t>
+                                               </t>
+                                               <t t-else="">
+                                                 <div style="font-size:14px;margin-top: 10px;"><span t-field="o.shipper_id"/></div>
+                                                 <div style="font-size:14px;">Authorized Signature</div>
+                                                 <div style="font-size:14px;margin-top:160px;"><t t-esc="o.shipper_id.eng_name"/></div>
+                                               </t>
                                             </div>
                                         </div>
                                     </div>
