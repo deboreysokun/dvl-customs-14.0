@@ -72,14 +72,13 @@
                                 <!--<p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូនលោកប្រធាននាយកដ្ឋានមេត្តាជ្រាបថា-->
                                 <!--<span t-field="o.company_type"/>យើងខ្ញុំបាន<span t-field="o.commodity_source"/>នូវ <span t-field="o.commodity_khmer"/> ដើម្បីធ្វើការនាំចេញទៅកាន់ទីផ្សារបរទេស។-->
                                 <!--</p>-->
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូន<span style="font-family:'Khmer OS Muol Light';font-size:13pt;"> លោកប្រធាននាយកដ្ឋាន </span>មេត្តាជ្រាបថា
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify">តបតាមកម្មវត្ថុនិងយោងខាងលើ<t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមជម្រាបជូន<span style="font-family:'Khmer OS Muol Light';font-size:13pt;">លោកប្រធាននាយកដ្ឋាន</span>មេត្តាជ្រាបថា
                                 <span t-field="o.company_type"/>យើងខ្ញុំបាន<span t-field="o.commodity_source"/>នូវ <span t-field="o.commodity_khmer"/> ដើម្បីធ្វើការនាំចេញទៅកាន់ទីផ្សារបរទេស។
                                 </p>
                             </div>
 
                             <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។
-                                    ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ <span t-field="o.company_type"/>យើងខ្ញុំ សូមទទួលខុសត្រូវទាំងស្រុងចំពោះមុខច្បាប់ជាធរមាន។
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ<span t-field="o.company_type"/>យើងខ្ញុំសូមទទួលខុសត្រូវទាំង ស្រុងចំពោះមុខច្បាប់ជាធរមាន។
                                 </p>
                             </div>
 
