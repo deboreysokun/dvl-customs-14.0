@@ -8,7 +8,7 @@
                         <t t-raw="0"/>
                         <t t-set="o" t-value="o.with_context(lang=lang)"/>
                         <div style="text-align:center; padding-top:0px;line-height: 30px;">
-                            <div style="font-family:'Khmer OS Muol Light';font-size:12pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span style="font-family:'Khmer OS Muol Light';font-size:12pt;">ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                            <div style="font-family:'Khmer OS Muol Light';font-size:13pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span style="font-family:'Khmer OS Muol Light';font-size:13pt;">ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
                             <div style="font-size:12pt;"/>
                         </div>
                         <div class="page" style="font-size:12pt;line-height: 30px;">
@@ -16,7 +16,7 @@
                                 <div class="col-4"><span style="font-family:'Khmer OS Muol Light';font-size:12pt"><span t-field="o.company_type"/>:</span> <t t-esc="o.shipper_id.khmer_name"/></div>
                                 <div class="col-4"><span style="font-size:12pt;font-family:'Battambang';">អាស័យដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>
                             </div>
-                            <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:11pt;text-align:center; line-height:30px;">
+                            <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:13pt;text-align:center; line-height:30px;">
                                 <span>សូមគោរពជូន<br/>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span>
                                 <span><br/>នៃអគ្គនាយកដ្ឋានគយ និង រដ្ឋាករកម្ពុជា</span>
                             </div>
@@ -29,7 +29,7 @@
                                 </p>
                             </div>
 
-                            <div class="row" style="font-family:'serif';font-size:12pt;">
+                            <div class="row" style="font-family:'serif';font-size:13pt;">
                                <div class="col-4">
                                     <span style="font-family:'Khmer OS Muol Light'">យោង៖ </span><span>- Invoice &amp; P/L No:</span>
                                 </div>
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ<span t-field="o.company_type"/>យើងខ្ញុំសូមទទួលខុសត្រូវទាំង ស្រុងចំពោះមុខច្បាប់ជាធរមាន។
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt; "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ <span t-field="o.company_type"/>យើងខ្ញុំសូមទទួលខុសត្រូវទាំង ស្រុងចំពោះមុខច្បាប់ជាធរមាន។
                                 </p>
                             </div>
 
