@@ -129,6 +129,13 @@ class OtherOperation(models.Model):
     ############################################################################################################
     # This number computed based on operation service type short code (following invoice sequence number concept)
     # borrow from  create Journal concept
+    port_of_loading_carrier = fields.Many2one('entry.exit.port', tracking=True)
+    port_of_discharge_carrier = fields.Many2one('entry.exit.port', tracking=True)
+    etd = fields.Date(string="ETD", help='Estimated Time Departure', tracking=True, copy=False)
+    eta = fields.Date(string="ETA",help='Estimated Time Arrival', tracking=True, copy=False)
+    etr = fields.Date(string="ETC",help='Estimate Time Clearance', tracking=True, copy=False)
+    num_of_truck = fields.Integer(string="Number of Truck", help="Number of Truck for qty of container")
+    container_line_ids = fields.One2many('other.container', 'container_ids', 'Container items')
     @api.depends('state', 'service_type_id','date')
     def _compute_name(self):
         def service_type_key(record):
@@ -719,3 +726,80 @@ class OtherOperationExpenseLine(models.Model):
     _order = "sequence, id desc"
     _description = "Other Service Expense Line"
     _check_company_auto = True
+
+class OtherContainer(models.Model):
+    _name = 'other.container'
+    _description = "Other Container"
+    etd = fields.Date(string="ETD", help='Estimated Time Departure', tracking=True, copy=False)
+    eta = fields.Date(string="ETA", help='Estimated Time Arrival', tracking=True, copy=False)
+    etr = fields.Date(string="ETC", help='Estimate Time Clearance', tracking=True, copy=False)
+    container_ids = fields.Many2one('other.operation', string="Other Operation", ondelete='cascade')
+    shipment_id = fields.Many2one('operation.shipment', ondelete='cascade', tracking=True, string="Shipment ID")
+    container_type_id = fields.Many2one('container.type', tracking=True, required=True, string="Container Type ")
+    container_number = fields.Char(tracking=True, string="Container Number")
+    container_charge_type_id = fields.Many2one('storage.demurrage.charge', string="Container Charge Types")
+    custom_seal_no = fields.Char(string="Customs Seal N0.", tracking=True)
+    container_seal_number = fields.Char(string="Seal N0.", tracking=True)
+    company_seal_no = fields.Char(string="Company Seal N0.")
+    e_f = fields.Many2one('consignment', string="E/F", tracking=True)
+    package = fields.Many2one('uom.unit', tracking=True)
+    weight = fields.Float(string='Empty Weight', tracking=True)
+    gross_weight = fields.Float(string='Gross Weight', tracking=True)
+    actual_gross_weight = fields.Float(string='Actual Gross Weight', tracking=True)  # printed in VGM pdf actual GW
+    transportation = fields.Char()
+    remark = fields.Text()
+    storage_charge_date = fields.Date()
+    demurrage_charge_date = fields.Date()
+    return_date = fields.Date()
+    takeout_date = fields.Date(string="ETR", help="ថ្ងៃយកចេញ")
+    unit_price = fields.Float(tracking=True)
+    number_storage_days = fields.Integer('#Days Storage', default=0)
+    number_demurrage_days = fields.Integer('1st Demurrage', default=0)
+    number_demurrage_days_1 = fields.Integer('2nd Demurrage', default=0)
+    number_detention_days = fields.Integer('#Days Detention', default=0)
+    number_penalty_days = fields.Integer('#Days Penalty', default=0)
+    number_standby_days = fields.Integer('#Days Standby', default=0)
+    standby_charge = fields.Monetary(readonly=True, currency_field='currency_id', compute="_compute_standby_charge")
+    storage_charge = fields.Monetary(readonly=True, currency_field='currency_id',
+                                     compute="_compute_storage_charge")
+    demurrage_charge = fields.Monetary(readonly=True, currency_field='currency_id',
+                                       compute="_compute_demurrage_charge")
+    detention_charge = fields.Monetary(readonly=True, currency_field='currency_id', compute="_compute_detention_charge")
+    custom_penalty_charge = fields.Monetary(readonly=True, currency_field='currency_id',
+                                            compute="_custom_penalty_charge")
+    total_charge = fields.Monetary(readonly=True, currency_field='currency_id',
+                                   compute="_total_charge")
+
+    currency_id = fields.Many2one('res.currency', string='Currency', related='shipment_id.company_id.currency_id')
+
+    @api.depends('number_standby_days', 'container_charge_type_id.standby_price')
+    def _compute_standby_charge(self):
+        for line in self:
+            line.standby_charge = line.number_standby_days * line.container_charge_type_id.standby_price
+
+    @api.depends('number_storage_days', 'container_charge_type_id.storage_price')
+    def _compute_storage_charge(self):
+        for line in self:
+            line.storage_charge = line.number_storage_days * line.container_charge_type_id.storage_price
+
+    @api.depends('number_demurrage_days', 'number_demurrage_days_1',
+                 'container_charge_type_id.demurrage_9day_price', 'container_charge_type_id.demurrage_over_9day_price')
+    def _compute_demurrage_charge(self):
+        for line in self:
+            line.demurrage_charge = (
+                                                line.number_demurrage_days * line.container_charge_type_id.demurrage_9day_price) + (
+                                                line.number_demurrage_days_1 * line.container_charge_type_id.demurrage_over_9day_price)
+
+    @api.depends('number_detention_days', 'container_charge_type_id.detention_price')
+    def _compute_detention_charge(self):
+        for line in self:
+            line.detention_charge = line.number_detention_days * line.container_charge_type_id.detention_price
+
+    @api.depends('number_penalty_days', 'shipment_id.customs_penalty_price')
+    def _custom_penalty_charge(self):
+        for line in self:
+            line.custom_penalty_charge = line.number_penalty_days * line.shipment_id.customs_penalty_price
+
+    def _total_charge(self):
+        for line in self:
+            line.total_charge = line.storage_charge + line.demurrage_charge + line.detention_charge + line.custom_penalty_charge

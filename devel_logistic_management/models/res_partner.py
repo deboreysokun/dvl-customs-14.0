@@ -120,13 +120,21 @@ class ResPartnerBank(models.Model):
 class ResPartnerAgentStaff(models.Model):
     _name = 'res.partner.agent.staff'
     _description = "Agent Staff Information"
-    _rec_name = "agent_staff_id"
-    agent_staff_id = fields.Char(string="Agent Staff Name", required=True)
+    _rec_name = "agent_staff_name"
+
+    agent_staff_id = fields.Many2one('res.partner', string="Agent Staff", domain="[('is_company', '=', False)]")
+    agent_staff_name = fields.Char(string="Agent Staff Name", compute="_compute_agent_staff_name", store=True)
     partner_id = fields.Many2one('res.partner', string="Partner", ondelete='cascade')
     agent_staff_id_number = fields.Char(string="Agent Staff ID")
     agent_staff_telephone = fields.Char(string="Agent Staff Telephone Number")
     agent_staff_email = fields.Char(string="Agent Staff Email")
     agent_bank_information = fields.Char(string="Agent Bank Information")
+
+    @api.depends('agent_staff_id')
+    def _compute_agent_staff_name(self):
+        for record in self:
+            record.agent_staff_name = record.agent_staff_id.name if record.agent_staff_id else ""
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
