@@ -100,7 +100,7 @@
                                     <field name="num_of_truck" string="Number of Truck"/>
                                 </group>
                                 <group string="Container Table">
-                                    <field name="container_line_ids" nolabel="1" >
+                                    <field name="container_line_idss" nolabel="1" >
                                        <tree editable="bottom" class="tariff_center">
                                             <field name="shipment_id" invisible="1" string="Shipment ID"/>
                                             <field name="container_type_id" options="{'no_create': True}" string="Container Type "/>

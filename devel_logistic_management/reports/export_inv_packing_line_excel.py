@@ -94,7 +94,7 @@ class InvPackingLineXls(models.AbstractModel):
                 sheet.write(row,17, int(line.fta), format12)
                 sheet.write(row,18, _(line.number_in_co) if line.number_in_co != 0 else _(''), format12)
                 sheet.write(row,19, line.co_criteria or '', format12)
-                sheet.write(row,20, _(int(str(line.price_subtotal_fob))) if line.price_subtotal_fob != 0 else _(''), format12)
+                sheet.write(row, 20, _(int(line.price_subtotal_fob)) if line.price_subtotal_fob != 0 else _(''),format12)
 
             if shipment.is_vehicle or shipment.mix_commodity:
                 if line.v_type:
@@ -102,14 +102,15 @@ class InvPackingLineXls(models.AbstractModel):
                     sheet.write(row,22, _('LEFT-HAND-DRIVE') if line.v_left_hand_drive == 'left' else (_('RIGHT-HAND-DRIVE') if line.v_left_hand_drive == 'right' else _('')),)
                     sheet.write(row,23, line.v_power_mode.name or '',)
                     sheet.write(row,24, _('NEW') if line.new_used == 'new' else (_('USED') if line.new_used == 'used' else _('')),)
-                    sheet.write(row,25, line.v_brand.name or '',)
                     sheet.write(row,26, line.v_model or '',)
                     sheet.write(row,27, int(str(line.v_model_year)) or '',format12)
                     sheet.write(row,28, _(float(str(line.v_capacity))) if line.v_capacity else _(''),format12)
                     sheet.write(row,31, line.v_vin or '',)
                     sheet.write(row,32, line.v_eng or '',)
                     sheet.write(row,33, line.v_gvw or '',)
-                    sheet.write(row,24, line.v_other_info or '',)
+                    sheet.write(row,34, line.v_other_info or '',)
+            #moveout to make it in the report excel
+            sheet.write(row, 25, line.v_brand_typing or '', )
 
             row +=1
             line_index +=1

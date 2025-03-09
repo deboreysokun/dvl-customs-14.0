@@ -1831,6 +1831,7 @@ class OperationShipmentItem(models.Model):
     v_vin = fields.Char(string="លេខតួ")
     v_eng = fields.Char(string="លេខម៉ាស៊ីន") #Vehicle Engine| v_eng
     v_brand = fields.Many2one('vehicle.brand', string="ម៉ាក")
+    v_brand_typing = fields.Char(string="ម៉ាក")
     v_model = fields.Char(string="ម៉ូដែល")
     v_power_mode = fields.Many2one('vehicle.power.mode', string="ប្រភេទថាមពលដែលប្រើប្រាស់")
     v_gvw = fields.Char(string="ទម្ងន់រថយន្តគិតទាំងបន្ទុក") #Gross Vehicle Weight| v_gvw

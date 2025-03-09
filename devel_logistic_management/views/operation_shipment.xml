@@ -268,7 +268,8 @@
                                         <field name="new_used" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_vin" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_eng" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
-                                        <field name="v_brand" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
+                                        <field name="v_brand" invisible="1" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
+                                        <field name="v_brand_typing" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_model" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_power_mode" options="{'no_create': True}" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_gvw" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
