@@ -43,14 +43,14 @@ class ImportInvAndPackingList(models.TransientModel):
             raise ValidationError(_("Please Upload File to Import Inv and Packing List!"))
 
         shipment_id = self.env['operation.shipment'].browse(
-            self._context.get('active_ids'))
+        self._context.get('active_ids'))
 
-        # unlink all existing lines in INV and PL of shipment to avoid create new line
+        #unlink all existing lines in INV and PL of shipment to avoid create new line
         if shipment_id.line_ids:
             shipment_id.line_ids = [(5, 0, 0)]
 
         try:
-            file = tempfile.NamedTemporaryFile(delete=False, suffix=".xlsx")
+            file = tempfile.NamedTemporaryFile(delete= False,suffix=".xlsx")
             file.write(binascii.a2b_base64(self.file))
             file.seek(0)
             values = {}
@@ -62,72 +62,48 @@ class ImportInvAndPackingList(models.TransientModel):
         for row_no in range(sheet.nrows):
             val = {}
             if row_no <= 0:
-                fields = list(map(lambda row: row.value.encode('utf-8'), sheet.row(row_no)))
+                fields = list(map(lambda row:row.value.encode('utf-8'), sheet.row(row_no)))
             else:
-                line = list(
-                    map(lambda row: isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value),
-                        sheet.row(row_no)))
-
-                # Handle description parsing (may contain manufacturing and expiry dates)
-                description = line[5]
-                manuf_date = None
-                expiry_date = None
-
-                # Extract dates from description if present
-                if 'MFG:' in description:
-                    parts = description.split('MFG:')
-                    description = parts[0].strip()
-                    date_part = parts[1].strip()
-                    if ',' in date_part:
-                        manuf_date = date_part.split(',')[0].strip()
-
-                if 'EXP:' in description:
-                    parts = description.split('EXP:')
-                    if 'MFG:' not in description:
-                        description = parts[0].strip()
-                    expiry_date = parts[1].strip().split(',')[0] if ',' in parts[1] else parts[1].strip()
-
-                values.update({
-                    'hs_code_id': line[1],  # HSCODE
-                    'remark_hs_code': line[2],  # HSCODEonFTA
-                    'co_form': line[3],  # CO_FORM
-                    'origin_country_id': line[4],  # ItemCOcode
-                    'description': description,  # ITEM_DESCRIPTION
-                    'description_khmer': line[6],  # ITEM_DESCRIPTION_KH
-                    'uom_id': line[7],  # ITEM_UNIT
-                    'qty': line[8],  # ITEM_QTY
-                    'net_weight': line[9],  # ITEM_NW
-                    'gross_weight': line[10],  # ITEM_GW
-                    'price_unit': line[11],  # ITEM_UNIT_PRICE
-                    'nbr_packages': line[12],  # Nbr_Package
-                    'package_type': line[13],  # Pacakge_Code
-                    'supplementary_qty': line[14],  # Supplementary_Unit_Qty
-                    'item_additional_fee_text': line[15],  # ItemAdditionalFeeText
-                    'item_additional_fee': line[16],  # ItemAdditionalFee
-                    'fta': line[17],  # FTA_CD
-                    'number_in_co': line[18],  # NbrInCo
-                    'co_criteria': line[19],  # CoCriteria
-                    'fob_amount': line[20],  # ITEM_FOB
-                    'v_type': line[21],  # VType
-                    'v_left_hand_drive': line[22],  # VLeftHandDrive
-                    'v_power_mode': line[23],  # VPowerMode
-                    'new_used': line[24],  # NEW_USED
-                    'v_brand_typing': line[25],  # ITEM_BRAND
-                    'v_model': line[26],  # ITEM_MODEL
-                    'v_model_year': line[27],  # ITEM_MODELYEAR
-                    'v_capacity': line[28],  # ITEM_CAPACITY
-                    'v_power_unit_code': line[29],  # VPowerUnitCode
-                    'v_color': line[30],  # VColor
-                    'v_vin': line[31],  # ITEM_VIN
-                    'v_eng': line[32],  # ITEM_ENG
-                    'v_gvw': line[33],  # VGvW
-                    'v_other_info': line[34],  # VOtherInfo
-                    'imei1': line[35],  # IMEI1
-                    'imei2': line[36],  # IMEI2
-                    'imei3': line[37],  # IMEI3
-                    'item_manufacturing_date': manuf_date,  # Extracted from description
-                    'item_expiry_date': expiry_date,  # Extracted from description
-                })
+                line = list(map(lambda row:isinstance(row.value, bytes) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
+                values.update( {
+                    'hs_code_id': line[1],
+                    'remark_hs_code': line[2],
+                    'origin_country_id':line[3],
+                    'description':line[4],
+                    'description_khmer':line[5],
+                    'qty':line[6],
+                    'uom_id':line[7],
+                    'packing_list_qty':line[8],
+                    'packing_list_uom_id':line[9],
+                    'number_in_book':line[10],
+                    'price_unit':line[11],
+                    'net_weight':line[12],
+                    'gross_weight':line[13],
+                    'manuf_date' : line[14],
+                    'expiry_date' : line[15],
+                    'fta': line[16],
+                    'number_in_co':line[17],
+                    'fob_amount':line[18],
+                    'co_criteria':line[19],
+                    'new_tax_rate': line[20],
+                    'nbr_packages': line[21],
+                    'package_type': line[22],
+                    'supplementary_unicode': line[23],
+                    'supplementary_qty': line[24],
+                    'wheel_type': line[25],
+                    'v_type':line[26],
+                    'v_left_hand_drive':line[27],
+                    'v_power_mode':line[28],
+                    'new_used':line[29],
+                    'v_brand':line[30],
+                    'v_model':line[31],
+                    'v_model_year':line[32],
+                    'v_capacity':line[33],
+                    'v_vin':line[34],
+                    'v_eng':line[35],
+                    'v_gvw':line[36],
+                    'v_other_info':line[37],
+                    })
                 res = self.create_inv_pl(values)
 
     def create_inv_pl(self, values):
@@ -138,165 +114,185 @@ class ImportInvAndPackingList(models.TransientModel):
         hs_code_id = self.get_hscode(values.get('hs_code_id'))
         origin_country_id = self.get_origin_country(values.get('origin_country_id'))
         uom_id = self.get_uom(values.get('uom_id'))
+        packing_list_uom_id = self.get_packing_list_uom(values.get('packing_list_uom_id'))
 
-        # Parse the dates if they're provided as strings
-        manuf_date = self.parse_date(values.get('item_manufacturing_date')) if values.get(
-            'item_manufacturing_date') else None
-        expiry_date = self.parse_date(values.get('item_expiry_date')) if values.get('item_expiry_date') else None
+        manuf_date = self.get_manuf_date(values.get('manuf_date'))
+        expiry_date = self.get_expiry_date(values.get('expiry_date'))
 
         v_type_id = self.get_vtype(values.get('v_type'))
         v_power_mode_id = self.get_v_power_mode(values.get('v_power_mode'))
-        v_brand_typing_id = self.get_v_brand_typing(values.get('v_brand_typing'))
+        v_brand_id = self.get_v_brand(values.get('v_brand'))
 
-        # Handle left-hand drive
-        v_left_hand_drive = ''
-        if values.get('v_left_hand_drive') == 'LEFT-HAND-DRIVE':
-            v_left_hand_drive = 'left'
-        elif values.get('v_left_hand_drive') == 'RIGHT-HAND-DRIVE':
-            v_left_hand_drive = 'right'
+        new_used = v_left_hand_drive = wheel_type = number_in_book = number_in_co = ''
+        v_model_year = v_capacity = ''
 
-        # Handle new/used
-        new_used = ''
         if values.get('new_used') == 'NEW':
             new_used = 'new'
+        elif values.get('new_used') == 'new':
+            new_used = 'new'
+        elif values.get('new_used') == 'New':
+            new_used = 'new'
         elif values.get('new_used') == 'USED':
+            genew_usednder = 'used'
+        elif values.get('new_used') == 'used':
             new_used = 'used'
+        elif values.get('new_used') == 'Used':
+            new_used = 'used'
+        else:
+            new_used = ''
 
-        # Handle numeric fields safely
-        number_in_co = ''
-        if values.get('number_in_co') and values.get('number_in_co') != '':
-            try:
-                number_in_co = int(float(str(values.get('number_in_co'))))
-            except:
-                number_in_co = ''
+        if values.get('v_left_hand_drive') == 'LEFT-HAND-DRIVE':
+            v_left_hand_drive ='left'
+        elif values.get('v_left_hand_drive') == 'left':
+            v_left_hand_drive ='left'
+        elif values.get('v_left_hand_drive') == 'right':
+            v_left_hand_drive ='right'
+        elif values.get('v_left_hand_drive') == 'RIGHT-HAND-DRIVE':
+            v_left_hand_drive = 'right'
+        else:
+            v_left_hand_drive = ''
 
-        v_model_year = ''
-        if values.get('v_model_year') and values.get('v_model_year') != '':
-            try:
-                v_model_year = int(float(str(values.get('v_model_year'))))
-            except:
-                v_model_year = ''
+        if values.get('wheel_type') == '4WD':
+            wheel_type = '4wd'
+        elif values.get('wheel_type') == '2WD':
+            wheel_type = '2wd'
+        else:
+            wheel_type = ''
 
-        v_capacity = values.get('v_capacity', '')
+        if not values.get('number_in_book'):
+            number_in_book = ' '
+        else:
+            number_in_book = int(float(str(values.get('number_in_book'))))
+
+        if not values.get('number_in_co'):
+            number_in_co = ' '
+        else:
+            number_in_co = int(float(str(values.get('number_in_co'))))
+
+        if not values.get('v_model_year'):
+            v_model_year = ' '
+        else:
+            v_model_year = int(float(str(values.get('v_model_year'))))
+
+        if not values.get('v_capacity'):
+            v_capacity = ' '
+        else:
+            v_capacity = str(values.get('v_capacity'))
 
         vals = {
-            'shipment_id': shipment_id.id,
-            'hs_code_id': hs_code_id.id if hs_code_id else False,
-            'remark_hs_code': values.get('remark_hs_code'),
-            'origin_country_id': origin_country_id.id if origin_country_id else False,
-            'description': values.get('description'),
-            'description_khmer': values.get('description_khmer'),
-            'qty': values.get('qty'),
-            'uom_id': uom_id.id if uom_id else False,
-            'price_unit': values.get('price_unit'),
-            'net_weight': values.get('net_weight'),
-            'gross_weight': values.get('gross_weight'),
-            'item_manufacturing_date': manuf_date,
-            'item_expiry_date': expiry_date,
-            'fta': values.get('fta'),
-            'number_in_co': number_in_co,
-            'price_subtotal_fob': values.get('fob_amount'),
-            'co_criteria': values.get('co_criteria'),
-            'nbr_packages': values.get('nbr_packages'),
-            'package_type': values.get('package_type'),
-            'supplementary_qty': values.get('supplementary_qty'),
-            'v_type': v_type_id.id if v_type_id else False,
-            'v_left_hand_drive': v_left_hand_drive,
-            'v_power_mode': v_power_mode_id.id if v_power_mode_id else False,
-            'new_used': new_used,
-            'v_brand_typing': values.get('v_brand_typing', False),
-            'v_model': values.get('v_model'),
-            'v_model_year': v_model_year,
-            'v_capacity': v_capacity,
-            'v_vin': values.get('v_vin'),
-            'v_eng': values.get('v_eng'),
-            'v_gvw': values.get('v_gvw'),
-            'v_other_info': values.get('v_other_info'),
-        }
-
-        # Add new fields if they exist in the model
-        additional_fields = [
-            'imei1', 'imei2', 'imei3', 'v_power_unit_code', 'v_color',
-            'item_additional_fee_text', 'item_additional_fee'
-        ]
-
-        for field in additional_fields:
-            if hasattr(inv_pl_line, field) and values.get(field):
-                vals[field] = values.get(field)
+                'shipment_id': shipment_id.id,
+                'hs_code_id': hs_code_id.id,
+                'remark_hs_code': values.get('remark_hs_code'),
+                'origin_country_id': origin_country_id.id ,
+                'description': values.get('description'),
+                'description_khmer': values.get('description_khmer'),
+                'qty': values.get('qty'),
+                'uom_id': uom_id.id,
+                'packing_list_qty': values.get('packing_list_qty'),
+                'packing_list_uom_id': packing_list_uom_id.id,
+                'number': number_in_book,
+                'price_unit': values.get('price_unit'),
+                'net_weight': values.get('net_weight'),
+                'gross_weight': values.get('gross_weight'),
+                'item_manufacturing_date' : manuf_date,
+                'item_expiry_date' : expiry_date,
+                'fta': values.get('fta'),
+                'number_in_co': number_in_co,
+                'price_subtotal_fob': values.get('fob_amount'),
+                'co_criteria':values.get('co_criteria'),
+                'new_tax_rate': values.get('new_tax_rate'),
+                'nbr_packages' : values.get('nbr_packages'),
+                'package_type': values.get('package_type'),
+                'supplementary_unicode': values.get('supplementary_unicode'),
+                'supplementary_qty': values.get('supplementary_qty'),
+                'wheel_type': wheel_type,
+                'v_type': v_type_id.id,
+                'v_left_hand_drive': v_left_hand_drive,
+                'v_power_mode': v_power_mode_id.id,
+                'new_used': new_used,
+                'v_brand': v_brand_id.id,
+                'v_model': values.get('v_model'),
+                'v_model_year': v_model_year,
+                'v_capacity': v_capacity,
+                'v_vin': values.get('v_vin'),
+                'v_eng': values.get('v_eng'),
+                'v_gvw': values.get('v_gvw'),
+                'v_other_info': values.get('v_other_info'),
+                }
 
         res = inv_pl_line.create(vals)
         return res
 
     def get_hscode(self, name):
-        if not name or name == '':
-            return False
-        hscode = self.env['hs.code'].search([('tariff_code', '=', name)], limit=1)
-        if hscode:
+        hscode = self.env['hs.code'].search([('tariff_code', '=', name)],limit=1)
+        if hscode or not hscode:
             return hscode
         else:
             raise UserError(_('"%s" HSCODE is not found in system !') % name)
 
     def get_origin_country(self, name):
-        if not name or name == '':
-            return False
-        country = self.env['res.country'].search([('code', '=', name)], limit=1)
-        if country:
+        country = self.env['res.country'].search([('code', '=', name)],limit=1)
+        if country or not country:
             return country
         else:
             raise UserError(_('"%s" Country is not found in system !') % name)
 
     def get_uom(self, name):
-        if not name or name == '':
-            return False
-        uom = self.env['uom.unit'].search([('name', '=', name)], limit=1)
-        if uom:
+        uom = self.env['uom.unit'].search([('name', '=', name)],limit=1)
+        if uom or not uom:
             return uom
         else:
             raise UserError(_('"%s" UOM is not found in system !') % name)
 
+    def get_packing_list_uom(self, name):
+        pl_uom = self.env['uom.unit'].search([('name', '=', name)],limit=1)
+        if pl_uom or not pl_uom:
+            return pl_uom
+        else:
+            raise UserError(_('"%s" PL UOM is not found in system !') % name)
+
     def get_vtype(self, name):
-        if not name or name == '':
-            return False
-        v_type = self.env['vehicle.type'].search([('name', '=', name)], limit=1)
-        if v_type:
+        v_type = self.env['vehicle.type'].search([('name', '=', name)],limit=1)
+        if v_type or not v_type:
             return v_type
         else:
             raise UserError(_('"%s" Vehicle Type is not found in system !') % name)
 
     def get_v_power_mode(self, name):
-        if not name or name == '':
-            return False
-        v_power_mode = self.env['vehicle.power.mode'].search([('name', '=', name)], limit=1)
-        if v_power_mode:
+        v_power_mode = self.env['vehicle.power.mode'].search([('name', '=', name)],limit=1)
+        if v_power_mode or not v_power_mode:
             return v_power_mode
         else:
             raise UserError(_('"%s" Vehicle Power Mode is not found in system !') % name)
 
-    def get_v_brand_typing(self, name):
-        # Simply return the name as is, or False if empty
-        return name if name else False
+    def get_v_brand(self, name):
+        v_brand = self.env['vehicle.brand'].search([('name', '=', name)],limit=1)
+        if v_brand or not v_brand:
+            return v_brand
+        else:
+            raise UserError(_('"%s" Vehicle Brand is not found in system !') % name)
 
-    def parse_date(self, date_str):
-        """Parse date from string format"""
+    def get_expiry_date(self, date):
         try:
-            if not date_str:
-                return None
-
-            # Try to parse as Excel date first
-            try:
-                py_date = datetime(*xlrd.xldate_as_tuple(float(date_str), 0))
-                return py_date
-            except:
+            if date:
+                py_date = datetime(*xlrd.xldate_as_tuple(float(date), 0))
+                expiry_date = datetime.strptime(str(py_date), '%Y-%m-%d %H:%M:%S')
+                return expiry_date
+            else:
                 pass
+        except Exception:
+            _logger.info("Wrong Expiry Date Format %s" % (date), exc_info=True)
+            raise ValidationError(_('Wrong Expiry Date Format ! Date Should be in format YYYY-MM-DD'))
 
-            # Try common date formats
-            for fmt in ['%Y-%m-%d', '%d/%m/%Y', '%m/%d/%Y', '%d-%m-%Y', '%m-%d-%Y']:
-                try:
-                    return datetime.strptime(date_str, fmt)
-                except:
-                    continue
+    def get_manuf_date(self, date):
+        try:
+            if date:
+                py_date = datetime(*xlrd.xldate_as_tuple(float(date), 0))
+                manuf_date = datetime.strptime(str(py_date), '%Y-%m-%d %H:%M:%S')
+                return manuf_date
+            else:
+                pass
+        except Exception:
+            _logger.info("Wrong Manufacturing Date Format %s" % (date), exc_info=True)
+            raise ValidationError(_('Wrong Manufacturing Date Format ! Date Should be in format YYYY-MM-DD'))
 
-            return None
-        except Exception as e:
-            _logger.info("Wrong Date Format %s: %s" % (date_str, e), exc_info=True)
-            return None
