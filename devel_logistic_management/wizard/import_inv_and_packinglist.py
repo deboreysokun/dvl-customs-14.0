@@ -95,7 +95,7 @@ class ImportInvAndPackingList(models.TransientModel):
                     'v_left_hand_drive':line[27],
                     'v_power_mode':line[28],
                     'new_used':line[29],
-                    'v_brand':line[30],
+                    'v_brand_typing':line[30],
                     'v_model':line[31],
                     'v_model_year':line[32],
                     'v_capacity':line[33],
@@ -121,7 +121,7 @@ class ImportInvAndPackingList(models.TransientModel):
 
         v_type_id = self.get_vtype(values.get('v_type'))
         v_power_mode_id = self.get_v_power_mode(values.get('v_power_mode'))
-        v_brand_id = self.get_v_brand(values.get('v_brand'))
+        v_brand_typing_id = self.get_v_brand_typing(values.get('v_brand_typing'))
 
         new_used = v_left_hand_drive = wheel_type = number_in_book = number_in_co = ''
         v_model_year = v_capacity = ''
@@ -210,7 +210,7 @@ class ImportInvAndPackingList(models.TransientModel):
                 'v_left_hand_drive': v_left_hand_drive,
                 'v_power_mode': v_power_mode_id.id,
                 'new_used': new_used,
-                'v_brand': v_brand_id.id,
+                'v_brand_typing': values.get('v_brand_typing'),
                 'v_model': values.get('v_model'),
                 'v_model_year': v_model_year,
                 'v_capacity': v_capacity,
@@ -265,10 +265,10 @@ class ImportInvAndPackingList(models.TransientModel):
         else:
             raise UserError(_('"%s" Vehicle Power Mode is not found in system !') % name)
 
-    def get_v_brand(self, name):
-        v_brand = self.env['vehicle.brand'].search([('name', '=', name)],limit=1)
-        if v_brand or not v_brand:
-            return v_brand
+    def get_v_brand_typing(self, name):
+        v_brand_typing = self.env['vehicle.brand'].search([('name', '=', name)],limit=1)
+        if v_brand_typing or not v_brand_typing:
+            return v_brand_typing
         else:
             raise UserError(_('"%s" Vehicle Brand is not found in system !') % name)
 
