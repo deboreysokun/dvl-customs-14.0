@@ -78,7 +78,8 @@
                             </div>
 
                             <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថា ទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ<span t-field="o.company_type"/>យើងខ្ញុំសូមទទួលខុសត្រូវទាំងស្រុងចំពោះមុខច្បាប់ជាធរមាន។</p>
+                                <p style="font-family:'Battambang';text-indent: 50px;font-size:14pt;text-align: justify "><t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else=""><t t-esc="'ខ្ញុំបាទ'"/></t>សូមធានាអះអាងថាទំនិញខាងលើពិតជាត្រឹមត្រូវតាមឯកសារដែលបានប្រកាសដោយពុំមានបង្កប់ទំនិញអ្វីផ្សេងទៀតឡើយ។ប្រសិនបើផ្ទុយពីការធានាអះអាងខាងលើ<span t-field="o.company_type"/>យើងខ្ញុំសូមទទួលខុស ត្រូវទាំងស្រុងចំពោះមុខច្បាប់ជាធរមាន។
+                                </p>
                             </div>
 
 <!--                            <div class="" style="line-height: 30px;">-->
