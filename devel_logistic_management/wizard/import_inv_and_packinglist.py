@@ -275,14 +275,24 @@ class ImportInvAndPackingList(models.TransientModel):
     def get_expiry_date(self, date):
         try:
             if date:
-                py_date = datetime(*xlrd.xldate_as_tuple(float(date), 0))
-                expiry_date = datetime.strptime(str(py_date), '%Y-%m-%d %H:%M:%S')
-                return expiry_date
+                if isinstance(date, str):
+                    try:
+                        expiry_date = datetime.strptime(date, '%d/%m/%Y')
+                        return expiry_date
+                    except ValueError:
+                        pass
+                try:
+                    py_date = datetime(*xlrd.xldate_as_tuple(float(date), 0))
+                    return py_date
+                except (ValueError, TypeError):
+                    pass
+
+                raise ValueError("Date format not recognized")
             else:
-                pass
-        except Exception:
-            _logger.info("Wrong Expiry Date Format %s" % (date), exc_info=True)
-            raise ValidationError(_('Wrong Expiry Date Format ! Date Should be in format YYYY-MM-DD'))
+                return None
+        except Exception as e:
+            _logger.info(f"Wrong Expiry Date Format {date}", exc_info=True)
+            raise ValidationError(_('Wrong Expiry Date Format! Date should be in format DD/MM/YYYY'))
 
     def get_manuf_date(self, date):
         try:

@@ -135,6 +135,7 @@ class OtherOperation(models.Model):
     eta = fields.Date(string="ETA",help='Estimated Time Arrival', tracking=True, copy=False)
     etr = fields.Date(string="ETC",help='Estimate Time Clearance', tracking=True, copy=False)
     num_of_truck = fields.Integer(string="Number of Truck", help="Number of Truck for qty of container")
+    truck_plate_num = fields.Char(string="Truck License Plate Number", help="The License plate number for the truck")
     container_line_idss = fields.One2many('other.container', 'container_ids', 'Container items')
     @api.depends('state', 'service_type_id','date')
     def _compute_name(self):
