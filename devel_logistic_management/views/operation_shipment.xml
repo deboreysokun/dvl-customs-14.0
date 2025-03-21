@@ -12,7 +12,8 @@
                             highlight="1" attrs="{'invisible': [('id','=',False)]}"/>
                         <field name="stage_id" widget="statusbar"
                             options="{'clickable': '1', 'fold_field': 'fold'}"
-                            attrs="{'invisible': [('active', '=', False)]}"/>
+                            attrs="{'invisible': [('active', '=', False)]}"
+                            context="{'filter_stages_by_date': True}"/>
                         <button name="action_preview_import_documents"
                             type="object" string="Preview Document" icon="fa-search"
                             attrs="{'invisible': [('operation_type', '!=', 'import')]}"/>
@@ -264,12 +265,12 @@
                                         <field name="item_expiry_date" attrs="{'column_invisible': ['&amp;',('parent.is_vehicle','=', True),('parent.mix_commodity','=', False)]}"/>
                                         <field name="wheel_type" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="origin_country_id" options='{"no_open": True, "no_create": True}'/>
-                                        <field name="v_type" options="{'no_create': True}" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
+                                        <field name="v_type" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="new_used" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_vin" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_eng" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
-                                        <field name="v_brand" invisible="1" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
-                                        <field name="v_brand_typing" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
+                                        <field name="v_brand" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
+                                        <field name="v_brand_typing" invisible="1" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_model" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_power_mode" options="{'no_create': True}" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
                                         <field name="v_gvw" attrs="{'column_invisible': [('parent.is_vehicle','=', False),('parent.mix_commodity','=', False)]}"/>
@@ -1642,7 +1643,7 @@
                     <field name="received_payment_date" invisible="1"/>
                     <field name="is_partially_paid" invisible="1" groups="account.group_account_manager"/>
                     <field name="is_fully_paid" invisible="1" groups="account.group_account_manager"/>
-                    <field name="stage_id" optional="show"/>
+                    <field name="stage_id" optional="show" context="{'filter_stages_by_date': True}"/>
                     <field name="name"/>
                     <field name="id" widget="open_tab" width="0.5" nolabel="1"/>
                     <field name="date"/>
@@ -1712,7 +1713,7 @@
                 <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban"
                 on_create="quick_create" quick_create_view="devel_logistic_management.quick_create_shipment_form"
                 archivable="false" sample="1">
-                    <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                    <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description"}}' context="{'filter_stages_by_date': True}"/>
                     <field name="create_uid"/>
                     <field name="name"/>
                     <field name="date"/>

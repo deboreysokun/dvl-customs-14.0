@@ -44,11 +44,16 @@ class OperationShipment(models.Model):
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
-        """ Read group customization in order to display all the stages in the
-            kanban view, even if they are empty
-        """
         stage_ids = stages._search([], order=order, access_rights_uid=SUPERUSER_ID)
-        return stages.browse(stage_ids)
+        all_stages = stages.browse(stage_ids)
+
+        stages_to_hide = ['In Progress', 'Completed (Payment and Scan all documents)', 'CV, Permit Approved']
+        jan_1_2025 = fields.Date.from_string('2025-01-01')
+        today = fields.Date.today()
+
+        if today >= jan_1_2025:
+            return all_stages.filtered(lambda stage: stage.name not in stages_to_hide)
+        return all_stages
 
     # @api.model
     # def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
