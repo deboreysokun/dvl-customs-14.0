@@ -7,11 +7,13 @@ class InheritResPartnerAgingCustomer(models.Model):
     other_service_id = fields.Many2one('other.operation', string='Other Service Ref.')
 
     def execute_aging_query(self, age_date=False):
+        print("other query")
         if not age_date:
             age_date = fields.Date.context_today(self)
 
         query = """
                 SELECT aml.id, aml.partner_id as partner_id, aml.shipment_id as shipment_id,
+                ai.agent_staff_id as agent_staff_id,
                 aml.other_service_id as other_service_id,
                 ai.invoice_user_id as salesman, aml.date as date, aml.date as
                 date_due, ai.name as invoice_ref,
@@ -122,6 +124,7 @@ class InheritResPartnerAgingCustomer(models.Model):
                     ai.id as invoice_id,
                     ai.invoice_date_due as inv_date_due
                 FROM account_account ac,account_move_line aml
+                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 INNER JOIN
                     (SELECT lt.id,
                     CASE WHEN inv.invoice_date_due is null then 0
@@ -130,14 +133,14 @@ class InheritResPartnerAgingCustomer(models.Model):
                     FROM account_move_line lt LEFT JOIN account_move inv
                     on lt.move_id = inv.id where inv.move_type = 'out_invoice') DaysDue
                 ON DaysDue.id = aml.id
-                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 WHERE ac.user_type_id = 1 and aml.date
                     <= '{}' AND ai.state = 'posted' AND
                     (ai.payment_state != 'paid' OR
                     aml.full_reconcile_id IS NULL) AND ai.move_type = 'out_invoice'
-                    GROUP BY aml.partner_id,
+                    GROUP BY aml.partner_id, ai.agent_staff_id,
                     aml.id, ai.name, days_due, ai.invoice_user_id, ai.id UNION
                     SELECT aml.id, aml.partner_id as partner_id,ai.shipment_id as shipment_id,ai.other_service_id as other_service_id,
+                    ai.agent_staff_id as agent_staff_id,
                     ai.invoice_user_id as
                     salesman, aml.date as date, aml.date as date_due,
                     ai.name as invoice_ref,days_due AS avg_days_overdue,
@@ -249,6 +252,7 @@ class InheritResPartnerAgingCustomer(models.Model):
                     ai.id as invoice_id,
                     ai.invoice_date_due as inv_date_due
                     FROM account_account ac,account_move_line aml
+                    LEFT JOIN account_move as ai ON ai.id = aml.move_id
                     INNER JOIN
                       (
                        SELECT lt.id,
@@ -259,16 +263,16 @@ class InheritResPartnerAgingCustomer(models.Model):
                        inv on lt.move_id = inv.id where inv.move_type = 'out_invoice'
                     ) DaysDue
                 ON DaysDue.id = aml.id
-                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 WHERE ac.user_type_id = 1
                 AND aml.date <= '{}'
                 AND aml.partner_id IS NULL
                 AND aml.full_reconcile_id is NULL
-                GROUP BY aml.partner_id, aml.id, ai.name, days_due,
+                GROUP BY aml.partner_id, ai.agent_staff_id,aml.id, ai.name, days_due,
                 ai.invoice_user_id, ai.id UNION
                 select aml.id,
                         aml.partner_id as partner_id,
                         aml.shipment_id as shipment_id,
+                        ai.agent_staff_id as agent_staff_id,
                         aml.other_service_id as other_service_id,
                         aml.create_uid as salesman,
                         aml.date as date,
@@ -291,6 +295,7 @@ class InheritResPartnerAgingCustomer(models.Model):
                         l.date<='{}')) ELSE 0 END AS total,
                         null as invoice_id, aml.date as inv_date_due
                 from account_move_line aml
+                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 where aml.date <= '{}'
                 and aml.full_reconcile_id IS NOT NULL
                 and aml.account_id in (select id from
