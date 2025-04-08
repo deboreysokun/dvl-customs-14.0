@@ -16,6 +16,7 @@ class ResPartnerAgingSupplier(models.Model):
     partner_id = fields.Many2one("res.partner", "Partner", readonly=True)
     max_days_overdue = fields.Integer("Age", readonly=True)
     avg_days_overdue = fields.Integer("Avg Days Overdue", readonly=True)
+    agent_staff_id = fields.Many2one('res.partner', string="Agent Staff Name", readonly=True)
     date = fields.Date("Date", readonly=True)
     date_due = fields.Date("Due Date", readonly=True)
     inv_date_due = fields.Date("Invoice Date", readonly=True)
@@ -31,11 +32,13 @@ class ResPartnerAgingSupplier(models.Model):
     salesman = fields.Many2one("res.users", "Sales Rep", readonly=True)
 
     def execute_aging_query(self, age_date=False):
+        print("Execute query from supplier")
         if not age_date:
             age_date = fields.Date.context_today(self)
 
         query = """
                 SELECT aml.id, aml.partner_id as partner_id, aml.shipment_id as shipment_id,
+                ai.agent_staff_id as agent_staff_id,
                 ai.invoice_user_id as salesman, aml.date as date, aml.date as date_due, ai.name
                 as invoice_ref, days_due AS avg_days_overdue,
                 CASE WHEN (days_due BETWEEN 1 and 30) THEN
@@ -154,6 +157,7 @@ class ResPartnerAgingSupplier(models.Model):
                 ai.id as invoice_id,
                 ai.invoice_date_due as inv_date_due
                 FROM account_account ac, account_move_line aml
+                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 INNER JOIN
                   (
                    SELECT lt.id,
@@ -164,7 +168,6 @@ class ResPartnerAgingSupplier(models.Model):
                    lt.move_id = inv.id where inv.move_type = 'in_invoice'
                 ) DaysDue
                 ON DaysDue.id = aml.id
-                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 WHERE
                 ac.user_type_id in (select id from account_account_type where
                 type = 'payable')
@@ -173,10 +176,11 @@ class ResPartnerAgingSupplier(models.Model):
                 (ai.payment_state != 'paid' OR
                 aml.full_reconcile_id IS NULL)
                 AND ai.move_type = 'in_invoice'
-                GROUP BY aml.partner_id, aml.id, ai.name, days_due,
+                GROUP BY aml.partner_id, ai.agent_staff_id, aml.id, ai.name, days_due,
                 ai.invoice_user_id, ai.id
                 UNION
                 SELECT aml.id, aml.partner_id as partner_id, aml.shipment_id as shipment_id,
+                ai.agent_staff_id as agent_staff_id,
                 ai.invoice_user_id as salesman, aml.date as date, aml.date as date_due, ai.name as
                 invoice_ref, days_due AS avg_days_overdue,
                 CASE WHEN (days_due BETWEEN 1 and 30) THEN
@@ -295,6 +299,7 @@ class ResPartnerAgingSupplier(models.Model):
                 ai.id as invoice_id,
                 ai.invoice_date_due as inv_date_due
                 FROM account_account ac, account_move_line aml
+                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 INNER JOIN
                   (
                    SELECT lt.id,
@@ -305,19 +310,19 @@ class ResPartnerAgingSupplier(models.Model):
                    lt.move_id = inv.id where inv.move_type = 'in_invoice'
                 ) DaysDue
                 ON DaysDue.id = aml.id
-                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 WHERE
                 ac.user_type_id in (select id from account_account_type where
                 type = 'payable')
                 AND aml.date <= '{}'
                 AND aml.partner_id IS NULL
                 AND aml.full_reconcile_id is NULL
-                GROUP BY aml.partner_id, aml.id, ai.name, days_due,
+                GROUP BY aml.partner_id, ai.agent_staff_id, aml.id, ai.name, days_due,
                 ai.invoice_user_id, ai.id
                 UNION
                 select aml.id,
                         aml.partner_id as partner_id,
                         aml.shipment_id as shipment_id,
+                        ai.agent_staff_id as agent_staff_id,
                         aml.create_uid as salesman,
                         aml.date as date,
                         aml.date as date_due,
@@ -342,6 +347,7 @@ class ResPartnerAgingSupplier(models.Model):
                        null as invoice_id,
                        aml.date as inv_date_due
                 from account_move_line aml
+                LEFT JOIN account_move as ai ON ai.id = aml.move_id
                 where aml.date <= '{}'
                 and aml.full_reconcile_id IS NOT NULL
                 and aml.account_id in (select id from account_account_type

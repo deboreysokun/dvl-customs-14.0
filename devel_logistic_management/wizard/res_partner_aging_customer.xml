@@ -15,6 +15,7 @@
                             ('days_due_91to120', '&gt;', 0),
                             ('days_due_121togr', '&gt;', 0)]"
                 />
+<!--                <field name="agent_staff_id" string="Agent Staff Name"/>-->
                 <field name="partner_id" string="Customer" />
                 <field name="invoice_id" />
                 <field name="invoice_ref" />
@@ -38,6 +39,7 @@
                 <field name="shipment_id"/>
                 <field name="invoice_ref" string="Inv.Number"/>
                 <field name="partner_id" string="Agent Company" />
+                <field name="agent_staff_id" string="Agent Staff"/>
                 <field name="inv_date_due" string="Due Date" optional="hide"/>
                 <field name="invoice_id" invisible="1" />
 <!--                <button name="open_document" type="object" icon="fa-list-alt" attrs="{'invisible':[('invoice_id', '=', False)]}"/>-->
