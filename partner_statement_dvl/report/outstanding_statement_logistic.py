@@ -84,7 +84,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
                       (pd.id IS NULL AND pc.id IS NULL)
                     ) AND l.date <= %(date_end)s AND m.state IN ('posted')
             GROUP BY l.id, l.partner_id, m.name, l.date, l.date_maturity, l.name,
-                op.name, op.operation_type, op.bl_number, op.container_number, p_staff.namec, op.commodity, pod.name, pol.name, pod1.name, fd.name, por.name, op.etd, op.eta, op.etr, incoterm.code, inv_inco.code,
+                op.name, op.operation_type, op.bl_number, op.container_number, p_staff.name, op.commodity, pod.name, pol.name, pod1.name, fd.name, por.name, op.etd, op.eta, op.etr, incoterm.code, inv_inco.code,
                 CASE WHEN l.ref IS NOT NULL
                     THEN l.ref
                     ELSE m.ref
