@@ -31,6 +31,8 @@
                                     <th class="text-center" style="vertical-align: middle;border: 1px solid black">Inv.Number</th>
                                     <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">BL No.</th>
                                     <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Contianer No.</th>
+                                    <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Commodity name</th>
+                                    <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Incoterm</th>
                                     <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Vol</th>
                                     <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Issued Date</th>
                                     <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Inv.Amont</th>
@@ -59,6 +61,12 @@
                                     </td>
                                     <td class="text-center" style="border: 1px solid black;">
                                         <span t-esc="invoice.shipment_id.container_number"/>
+                                    </td>
+                                    <td class="text-center" style="border: 1px solid black;">
+                                        <span t-esc="invoice.shipment_id.commodity"/>
+                                    </td>
+                                    <td class="text-center" style="border: 1px solid black;">
+                                        <span t-esc="invoice.shipment_id.incoterm_id.name"/>
                                     </td>
                                     <td class="text-center" style="border: 1px solid black;">
                                         <span t-esc="invoice.shipment_id.container_qty_type"/>
