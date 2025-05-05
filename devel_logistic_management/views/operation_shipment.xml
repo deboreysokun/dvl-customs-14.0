@@ -94,7 +94,7 @@
                             </group>
                             <group colspan="3" col="3">
                                 <field name="customer_id" string="5 Company Agent"/>
-                                <field name="agent_staff_id" string="Agent Staff Name"/>
+                                <field name="agent_staff_id" string="5.1 Agent Staff Name"/>
                                 <field name="commodity" string="6 Commodity"/>
                                 <field name="container_qty_type"/>
                                 <field name="truck_container" string="Containers &amp; Truck No." widget="text"/>

@@ -101,12 +101,20 @@
                                   <div class="col-8"><span t-field="o.consignee_id.name"/></div>
                                 </div>
                                 <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Valuation Office:'"/> </div>
+                                  <div class="col-8"><span t-field="o.valuation_office_id.name"/></div>
+                                </div>
+                                <div class="row">
                                   <div class="col-4 text-right"><span t-esc="'Clearance:'"/> </div>
                                   <div class="col-8"><span t-field="o.clearance_office_id.name"/></div>
                                 </div>
                                 <div class="row">
-                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Company:'"/> </div>
                                 <div class="col-8"><span style="background-color:#ffff00" t-esc="o.customer_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Staff:'"/> </div>
+                                    <div class="col-8"><span style="background-color:#ffff00" t-esc="o.agent_staff_id.agent_staff_name"/></div>
                                 </div>
                                 <div class="row">
                                   <div class="col-4 text-right"><span t-esc="'Incoterm:'"/> </div>
