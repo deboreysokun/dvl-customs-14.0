@@ -106,12 +106,20 @@
                                 <div class="col-8"><span t-field="o.shipment_id.consignee_id.name"/></div>
                                 </div>
                                 <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Valuation Office:'"/> </div>
+                                  <div class="col-8"><span t-esc="o.shipment_id.valuation_office_id.name"/></div>
+                                </div>
+                                <div class="row">
                                 <div class="col-4 text-right"><span t-esc="'Clearance:'"/> </div>
                                 <div class="col-8"><span t-field="o.shipment_id.clearance_office_id.name"/></div>
                                 </div>
                                 <div class="row">
-                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Company:'"/> </div>
                                 <div class="col-8"><span style="background-color:#ffff00" t-esc="o.shipment_id.customer_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Staff:'"/> </div>
+                                <div class="col-8"><span style="background-color:#ffff00" t-esc="o.shipment_id.agent_staff_id.agent_staff_name"/></div>
                                 </div>
                                 <div class="row">
                                   <div class="col-6"><span t-esc="'Incoterm'"/> </div>
@@ -311,12 +319,20 @@
                                 <div class="col-8"><span t-field="o.shipment_id.consignee_id.name"/></div>
                                 </div>
                                 <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Valuation Office:'"/> </div>
+                                  <div class="col-8"><span t-esc="o.shipment_id.valuation_office_id.name"/></div>
+                                </div>
+                                <div class="row">
                                 <div class="col-4 text-right"><span t-esc="'Clearance:'"/> </div>
                                 <div class="col-8"><span t-esc="o.shipment_id.clearance_office_id.name"/></div>
                                 </div>
                                 <div class="row">
-                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Client:'"/> </div>
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Company:'"/> </div>
                                 <div class="col-8"><span style="background-color:#ffff00" t-esc="o.shipment_id.customer_id.name"/></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Staff:'"/> </div>
+                                <div class="col-8"><span style="background-color:#ffff00" t-esc="o.shipment_id.agent_staff_id.agent_staff_name"/></div>
                                 </div>
                             </div>
                         </div>
