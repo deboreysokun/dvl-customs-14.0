@@ -34,12 +34,12 @@
         <field name="arch" type="xml">
             <tree create="false" delete="false" string="Customer Aging Date wise"
                 decoration-bg-purple="max_days_overdue > 0 and total > 0">
+                <field name="partner_id" string="Agent Company" />
                 <field name="agent_staff_id" string="Agent Staff"/>
                 <field name="date_due" string="Issued Date"/>
                 <field name="max_days_overdue" class="o_list_number_th"/>
                 <field name="shipment_id"/>
                 <field name="invoice_ref" string="Inv.Number"/>
-                <field name="partner_id" string="Agent Company" invisible="1"/>
                 <field name="inv_date_due" string="Due Date" optional="hide"/>
                 <field name="invoice_id" invisible="1" />
 <!--                <button name="open_document" type="object" icon="fa-list-alt" attrs="{'invisible':[('invoice_id', '=', False)]}"/>-->
