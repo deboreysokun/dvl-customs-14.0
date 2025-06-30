@@ -163,7 +163,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-5 text-right"><span t-esc="'ETR: '"/></div>
-                                        <div class="col-5"><span t-field="o.shipment_id.etr" t-options="{'widget': 'date', 'format': 'YYYY/MM/dd'}"/></div>
+                                        <div class="col-5"><span t-field="o.shipment_id.etr"/></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5 text-right"><span t-esc="'Consignee: '"/></div>
+                                    </div>
+                                    <div class="row" style="display: inline;">
+                                        <div class="col-5" style="display: inline;"><span t-field="o.shipment_id.consignee_id"/></div>
                                     </div>
                                 </div>
                             </div>
