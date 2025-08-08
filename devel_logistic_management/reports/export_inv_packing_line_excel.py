@@ -64,6 +64,8 @@ class InvPackingLineXls(models.AbstractModel):
         sheet.write(0,35, "IMEI1", format11)
         sheet.write(0,36, "IMEI2", format11)
         sheet.write(0,37, "IMEI3", format11)
+        sheet.write(0,38, "Genset_StandbyPowerKVA", format11)
+        sheet.write(0,39, "Transformer_PowerKVA", format11)
         row=1
         line_index = 1
         description = v_capacity = " "
