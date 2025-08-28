@@ -1791,7 +1791,8 @@ class OperationShipmentItem(models.Model):
 
     shipment_id = fields.Many2one('operation.shipment', ondelete='cascade', tracking=True)
     company_currency_id = fields.Many2one('res.currency', string="Company Currency",
-        related='shipment_id.company_currency_id')
+                                          default=lambda self: self.env.company.currency_id,
+                                          tracking=True)
     description = fields.Text(tracking=True)
     description_khmer = fields.Text(tracking=True)
     qty = fields.Float(tracking=True)

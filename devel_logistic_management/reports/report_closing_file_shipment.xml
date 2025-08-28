@@ -265,7 +265,7 @@
                                             $ <t t-esc="'{0:,.2f}'.format(o.total_clearance_amount)"/>
                                         </td>
                                     </tr>
-                                    <t t-if="o.operation_type == 'import'">
+                                    <t t-if="o.operation_type in ('import', 'export')">
                                         <tr style="background-color:#deeaf6;">
                                             <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                             <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Customs Duty'"/></td>
