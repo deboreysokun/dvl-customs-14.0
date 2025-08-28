@@ -247,7 +247,7 @@
                                             <span t-field="l.received_user_id.name"/>
                                         </td>
                                     </tr>
-                                    <t t-if="o.operation_type == 'import'">
+                                    <t t-if="o.operation_type in ('import', 'export')">
                                         <tr style="background-color:#d9e2f3;">
                                             <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                             <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
