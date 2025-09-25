@@ -116,12 +116,20 @@
                                                 <div>UOM</div>
                                             </td>
                                             <td class="text-center" style="border:1px solid black;width:130px">
-                                                <div>UNIT PRICE</div>
-                                                <div>(USD)</div>
+                                                <div>UNIT PRICE
+                                                <t t-if="o.line_ids and o.line_ids[0].company_currency_id.name == 'USD'">(USD)</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'CNY'">(CNY)</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'THB'">(THB)</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'KHR'">(KHR)</t>
+                                                <t t-else="">(USD)</t></div>
                                             </td>
                                             <td class="text-center" style="border:1px solid black;width:130px">
-                                                <div>AMOUNT</div>
-                                                <div>(USD)</div>
+                                                <div>AMOUNT
+                                                <t t-if="o.line_ids and o.line_ids[0].company_currency_id.name == 'USD'">(USD)</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'CNY'">(CNY)</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'THB'">(THB)</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'KHR'">(KHR)</t>
+                                                <t t-else="">(USD)</t></div>
                                             </td>
                                         </tr>
                                     </thead>
@@ -148,11 +156,21 @@
                                             <td class="text-center" style="border:1px solid black;padding:5px;">
                                                 <span t-field="l.uom_id"/>
                                             </td>
-                                            <td class="text-right" style="border:1px solid black;padding:5px;">
-                                                $ <span t-esc="'{0:,.2f}'.format(l.price_unit)"/>
+                                            <td class="text-center" style="border:1px solid black;padding:5px;">
+                                                <t t-if="l.company_currency_id.name == 'USD'">$</t>
+                                                <t t-elif="l.company_currency_id.name == 'CNY'">¥</t>
+                                                <t t-elif="l.company_currency_id.name == 'THB'">฿</t>
+                                                <t t-elif="l.company_currency_id.name == 'KHR'">KHR</t>
+                                                <t t-else="">$</t>
+                                                <span> </span><span t-esc="'{0:,.2f}'.format(l.price_unit)"/>
                                             </td>
                                             <td class="text-right" style="border:1px solid black;padding:5px;">
-                                                $ <span t-esc="'{0:,.2f}'.format(l.price_subtotal)"/>
+                                                <t t-if="l.company_currency_id.name == 'USD'">$</t>
+                                                <t t-elif="l.company_currency_id.name == 'CNY'">¥</t>
+                                                <t t-elif="l.company_currency_id.name == 'THB'">฿</t>
+                                                <t t-elif="l.company_currency_id.name == 'KHR'">KHR</t>
+                                                <t t-else="">$</t>
+                                                <span> </span><span t-esc="'{0:,.2f}'.format(l.price_subtotal)"/>
                                             </td>
                                         </tr>
                                         <tr style="page-break-inside:avoid">
@@ -166,7 +184,12 @@
                                             </t>
 
                                             <td class="text-right" style="border:1px solid black; font-weight:bold;padding:5px;">
-                                                    $ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/>
+                                                <t t-if="o.line_ids and o.line_ids[0].company_currency_id.name == 'USD'">$</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'CNY'">¥</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'THB'">฿</t>
+                                                <t t-elif="o.line_ids and o.line_ids[0].company_currency_id.name == 'KHR'">KHR</t>
+                                                <t t-else="">$</t>
+                                                <span> </span><t t-esc="'{0:,.2f}'.format(o.total_amount)"/>
                                             </td>
 
 
