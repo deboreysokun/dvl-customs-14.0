@@ -171,6 +171,12 @@
                                     <div class="row" style="display: inline;">
                                         <div class="col-5" style="display: inline;"><span t-field="o.shipment_id.consignee_id"/></div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-5 text-right"><span t-esc="'Shipping Line: '"/></div>
+                                    </div>
+                                    <div class="row" style="display: inline;">
+                                        <div class="col-5" style="display: inline;"><span t-field="o.shipment_id.shipping_line_id"/></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" style="border-left:2px solid #2e75b5;border-right:2px solid #2e75b5;font-weight:bold;margin-left:0px;margin-right:0px">
