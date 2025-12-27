@@ -162,14 +162,16 @@ odoo.define('devel_logistic_management.form_widgets', function (require) {
                 $('.btn_clear_cash_advance_otd').show()
             }
             else if (this.selection.length > 0 && model === 'other.operation.expense.line') {
-                $('.button_set_received_by_ptg').show()
+                $('.button_set_received_by_line').show()
                 $('.button_confirm_expense_lines').show()
                 $('.button_approve_expense_lines').show()
                 $('.btn_confirm_approve_expense_line').show()
                 $('.button_draft_expense_lines').show()
                 // button in other.operation | other service type
                 $('.btn_pay_other_expense_line').show()
+                $('.button_reimbursement_line').show()
                 $('.btn_direct_pay_other_expense_line').show()
+                $('.btn_clear_cash_advance_line').show()
             }
             else if (this.selection.length > 0 && model === 'operation.cash.advance') {
                 $('.btn_cash_advance_payment').show()
@@ -261,9 +263,11 @@ odoo.define('devel_logistic_management.form_widgets', function (require) {
                 $('.button_approve_expense_lines').hide()
                 $('.btn_confirm_approve_expense_line').hide()
                 $('.button_draft_expense_lines').hide()
-                $('.button_set_received_by').hide()
+                $('.button_set_received_by_line').hide()
                 $('.btn_pay_other_expense_line').hide()
+                $('.button_reimbursement_line').hide()
                 $('.btn_direct_pay_other_expense_line').hide()
+                $('.btn_clear_cash_advance_line').hide()
             }
             this.$('thead .o_list_record_selector input').prop('checked', allChecked);
             this.trigger_up('selection_changed', { selection: this.selection });
@@ -278,9 +282,11 @@ odoo.define('devel_logistic_management.form_widgets', function (require) {
             "click .button_approve_expense_lines": "action_approve_lines",
             "click .btn_confirm_approve_expense_line": "action_confirm_approve_lines",
             "click .button_draft_expense_lines": "_confirmResetRecordToDraft",
-            "click .button_set_received_by": "action_set_received_by",
+            "click .button_set_received_by_line": "action_set_received_by",
             "click .btn_pay_other_expense_line": "action_pay_lines_other_operation",
+            "click .button_reimbursement_line": "action_reimbursement_expense_line",
             "click .btn_direct_pay_other_expense_line": "action_direct_payment_other_service",
+            "click .btn_clear_cash_advance_line": "action_clear_cash_advance",
         },
 
         start: function () {
@@ -428,6 +434,37 @@ odoo.define('devel_logistic_management.form_widgets', function (require) {
                 });
             });
         },
+        action_reimbursement_expense_line: function () {
+            var self = this;
+            var selected_ids = self.get_selected_ids_one2many();
+            var model = self.get_selected_mode_one2many();
+            if (selected_ids.length === 0) {
+                this.do_warn(_t("You must choose at least one record."));
+                return false;
+            }
+            self._rpc({
+                // Get view id
+                model:'ir.model.data',
+                method:'xmlid_to_res_model_res_id',
+                args: ['devel_logistic_management.view_reimburse_lines_form'], // View id goes here
+            }).then(function(data){
+                // Open view
+                self.do_action({
+                        name: 'Generate Reimbursement Invoice',
+                        type: 'ir.actions.act_window',
+                        res_model: 'expense.line.reimbursement',
+                        context: {
+                            'active_model': model,
+                            'active_ids': selected_ids,
+                        },
+                        target: 'new',
+                        views: [[data[1], 'form']], // data[1] variable contains the view id
+                    },{on_close: function () {
+                        self.trigger_up('reload', { keepChanges: true });
+                    }
+                });
+            });
+        },
         action_direct_payment_other_service: function () {
             var self = this;
             var selected_ids = self.get_selected_ids_one2many();
@@ -447,6 +484,37 @@ odoo.define('devel_logistic_management.form_widgets', function (require) {
                         name: 'Register Direct Payment',
                         type: 'ir.actions.act_window',
                         res_model: 'other.operation.line.payment',
+                        context: {
+                            'active_model': model,
+                            'active_ids': selected_ids,
+                        },
+                        target: 'new',
+                        views: [[data[1], 'form']], // data[1] variable contains the view id
+                    },{on_close: function () {
+                        self.trigger_up('reload', { keepChanges: true });
+                    }
+                });
+            });
+        },
+        action_clear_cash_advance: function () {
+            var self = this;
+            var selected_ids = self.get_selected_ids_one2many();
+            var model = self.get_selected_mode_one2many();
+            if (selected_ids.length === 0) {
+                this.do_warn(_t("You must choose at least one record."));
+                return false;
+            }
+            self._rpc({
+                // Get view id
+                model:'ir.model.data',
+                method:'xmlid_to_res_model_res_id',
+                args: ['devel_logistic_management.view_expense_clear_cash_advance'], // View id goes here
+            }).then(function(data){
+                // Open view
+                self.do_action({
+                        name: 'Clear Cash Advance',
+                        type: 'ir.actions.act_window',
+                        res_model: 'expense.line.payment',
                         context: {
                             'active_model': model,
                             'active_ids': selected_ids,
