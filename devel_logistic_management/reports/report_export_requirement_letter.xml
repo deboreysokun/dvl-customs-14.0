@@ -8,13 +8,13 @@
                         <t t-raw="0"/>
                         <t t-set="o" t-value="o.with_context(lang=lang)"/>
                         <div style="text-align:center; padding-top:0px;line-height: 30px;">
-                            <div style="font-family:'Khmer OS Muol Light';font-size:13pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span style="font-family:'Khmer OS Muol Light';font-size:13pt;">ជាតិ សាសនា ព្រះមហាក្សត្រ</span></div>
+                            <div style="font-family:'Khmer OS Muol Light';font-size:13pt;"><span>ព្រះរាជាណាចក្រកម្ពុជា</span><br/><span style="font-family:'Khmer OS Muol Light';font-size:13pt;">ជាតិ សាសនា ព្រះមហាក្សត្រ<br><img src="/devel_logistic_management/static/img/symbol_words.png" width="20%"/></br></span></div>
                             <div style="font-size:12pt;"/>
                         </div>
                         <div class="page" style="font-size:12pt;line-height: 30px;">
                             <div style="font-size:12pt;font-family:'Battambang';">
                                 <div class="col-4"><span style="font-family:'Khmer OS Muol Light';font-size:12pt"><span t-field="o.company_type"/>:</span> <t t-esc="o.shipper_id.khmer_name"/></div>
-                                <div class="col-4"><span style="font-size:12pt;font-family:'Battambang';">អាស័យដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>
+                                <div class="col-4"><span style="font-size:12pt;font-family:'Khmer OS Muol Light';">អាស័យដ្ឋាន: <t t-esc="o.shipper_id.street2"/></span></div>
                             </div>
                             <div class="text-center mb-4" style="font-family:'Khmer OS Muol Light';font-size:13pt;text-align:center; line-height:30px;">
                                 <span>សូមគោរពជូន<br/>លោកប្រធាននាយកដ្ឋានគ្រប់គ្រងការនាំចេញ</span>
@@ -85,18 +85,18 @@
 <!--                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូម<span style="font-family:'Khmer OS Muol Light';font-size:13pt;"> លោកប្រធាន </span>មេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>ខ្ញុំបាទនាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
 <!--                                </p>-->
 <!--                            </div>-->
-                            <t t-if="o.owner_id.gender == 'male'">
-                              <div class="" style="line-height: 30px;">
+<!--                            <t t-if="o.owner_id.gender == 'male'">-->
+                            <div class="" style="line-height: 30px;">
                                 <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូម<span style="font-family:'Khmer OS Muol Light';font-size:13pt;">លោកប្រធាន</span>មេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>ខ្ញុំបាទនាំចេញទំនិញតាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
                                 </p>
-                              </div>
-                            </t>
-                            <t t-if="o.owner_id.gender == 'female'">
-                              <div class="" style="line-height: 30px;">
-                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>នាងខ្ញុំនាំចេញទំនិញតាមសំណើខាងលើដោយក្តីអនុគ្រោះ។
-                                </p>
-                              </div>
-                            </t>
+                            </div>
+<!--                            </t>-->
+<!--                            <t t-if="o.owner_id.gender == 'female'">-->
+<!--                              <div class="" style="line-height: 30px;">-->
+<!--                                <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យនិងអនុញ្ញាតឱ្យ<span t-field="o.company_type"/>នាងខ្ញុំនាំចេញទំនិញតាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
+<!--                                </p>-->
+<!--                              </div>-->
+<!--                            </t>-->
                             <!--<div class="" style="line-height: 30px;">-->
                             <!--    <p style="font-family:'Battambang';font-size:14pt;text-align: justify;text-indent: 50px;">អាស្រ័យហេតុនេះសូមលោកប្រធានមេត្តាពិនិត្យ និង អនុញ្ញាតអោយ<span t-field="o.company_type"/>-->
                             <!--    <t t-if="o.owner_id.gender == 'female'"><t t-esc="'នាងខ្ញុំ'"/></t><t t-else="">ខ្ញុំបាទ</t>នាំចេញទំនិញ តាមសំណើខាងលើដោយក្តីអនុគ្រោះ។-->
