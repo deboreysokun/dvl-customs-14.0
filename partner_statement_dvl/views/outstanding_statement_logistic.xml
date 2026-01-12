@@ -28,7 +28,8 @@
                                             <th class="text-center" style="vertical-align: middle;border: 1px solid black">Type</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">BL Number</th>
                                             <th class="text-center" style="width: 14%;vertical-align: middle;border: 1px solid black">Contianer No.</th>
-                                            <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Agent Staff</th>
+                                            <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Invoice NO.</th>
+                                            <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Agent Staff Name</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Commodity</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">Incoterm</th>
                                             <th class="text-center" style="width: 10%;vertical-align: middle;border: 1px solid black">POL</th>
@@ -63,6 +64,9 @@
                                             </td>
                                             <td class="text-center" style="border: 1px solid black;">
                                                 <span t-esc="line['container_number']"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                                <span t-esc="line['inv_pack_number']"/>
                                             </td>
                                             <td class="text-center" style="border: 1px solid black;">
                                                 <span t-esc="line['agent_staff_name']"/>
