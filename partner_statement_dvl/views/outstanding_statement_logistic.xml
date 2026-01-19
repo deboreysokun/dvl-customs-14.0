@@ -66,7 +66,7 @@
                                                 <span t-esc="line['container_number']"/>
                                             </td>
                                             <td style="border: 1px solid black;">
-                                                <span t-esc="line['inv_pack_number']"/>
+                                                <span t-esc="line['invoice_number']"/>
                                             </td>
                                             <td class="text-center" style="border: 1px solid black;">
                                                 <span t-esc="line['agent_staff_name']"/>

@@ -15,6 +15,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
         query = """
             SELECT l.id, m.name AS move_id, l.partner_id, l.date, l.name,
                             l.blocked, l.currency_id, l.company_id,
+                            m.name AS invoice_number,
                             op.name AS shipment_id, op.operation_type, op.bl_number, op.container_number,
                             p_staff.name AS agent_staff_name,
                             op.commodity, op.inv_pack_number, pod.name AS port_of_delivery, pol.name AS port_of_loading,
@@ -109,6 +110,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
                 SELECT Q1.partner_id, Q1.currency_id, Q1.move_id,
                     Q1.date, Q1.date_maturity, Q1.debit, Q1.credit,
                     Q1.name, Q1.ref, Q1.blocked, Q1.company_id,
+                    Q1.invoice_number,
                     Q1.shipment_id, Q1.operation_type, Q1.bl_number, Q1.container_number,
                     Q1.agent_staff_name, 
                     Q1.commodity,Q1.inv_pack_number, Q1.port_of_delivery, Q1.port_of_loading,
@@ -131,6 +133,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
             SELECT Q2.partner_id, Q2.move_id, Q2.date, Q2.date_maturity,
               Q2.name, Q2.ref, Q2.debit, Q2.credit,
               Q2.debit-Q2.credit AS amount, blocked,
+              Q2.invoice_number,
               Q2.shipment_id, Q2.operation_type, Q2.bl_number, Q2.container_number,
               Q2.agent_staff_name,
               Q2.commodity, Q2.inv_pack_number, Q2.port_of_loading, Q2.port_of_delivery,
@@ -162,6 +165,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
              Q3 AS (%s)
         SELECT partner_id, currency_id, move_id, date, date_maturity, debit,
                             credit, amount, open_amount, name, ref, blocked,
+                            invoice_number,
                             shipment_id, operation_type, bl_number, container_number, agent_staff_name ,commodity,inv_pack_number, port_of_loading, port_of_delivery, port_of_discharge, final_destination, place_of_reciept, etd, eta, etr, incoterm_id, inv_packing_list_term
         FROM Q3
         ORDER BY date, date_maturity, move_id, shipment_id, operation_type, bl_number, container_number, agent_staff_name,commodity,inv_pack_number, port_of_loading, port_of_delivery, port_of_discharge, final_destination, place_of_reciept, etd, eta, etr, incoterm_id, inv_packing_list_term""" % (
