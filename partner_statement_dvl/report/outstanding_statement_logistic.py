@@ -16,7 +16,8 @@ class OutstandingStatementLogistic(models.AbstractModel):
             SELECT l.id, m.name AS move_id, l.partner_id, l.date, l.name,
                             l.blocked, l.currency_id, l.company_id,
                             m.name AS invoice_number,
-                            op.name AS shipment_id, op.operation_type, op.bl_number, op.container_number,
+                            COALESCE(op.name, ot.name) AS shipment_id, 
+                            op.operation_type, op.bl_number, op.container_number,
                             p_staff.name AS agent_staff_name,
                             op.commodity, op.inv_pack_number, pod.name AS port_of_delivery, pol.name AS port_of_loading,
                             pod1.name AS port_of_discharge, fd.name AS final_destination, por.name AS place_of_reciept, op.etd, op.eta, op.etr, incoterm.code AS incoterm_id, inv_inco.code AS inv_packing_list_term,
@@ -49,6 +50,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
             JOIN account_account_type at ON (at.id = aa.user_type_id)
             JOIN account_move m ON (l.move_id = m.id)
             LEFT JOIN operation_shipment op ON (op.id = m.shipment_id)
+            LEFT JOIN other_operation ot ON (ot.id = m.other_service_id)
             LEFT JOIN res_partner_agent_staff staff ON (staff.id = op.agent_staff_id)
             LEFT JOIN res_partner p_staff ON (p_staff.id = staff.agent_staff_id)
             LEFT JOIN entry_exit_port pod ON (pod.id = op.port_of_delivery)
@@ -85,7 +87,7 @@ class OutstandingStatementLogistic(models.AbstractModel):
                       (pd.id IS NULL AND pc.id IS NULL)
                     ) AND l.date <= %(date_end)s AND m.state IN ('posted')
             GROUP BY l.id, l.partner_id, m.name, l.date, l.date_maturity, l.name,
-                op.name, op.operation_type, op.bl_number, op.container_number, p_staff.name, op.commodity,op.inv_pack_number,pod.name, pol.name, pod1.name, fd.name, por.name, op.etd, op.eta, op.etr, incoterm.code, inv_inco.code,
+                op.name, ot.name, op.operation_type, op.bl_number, op.container_number, p_staff.name, op.commodity,op.inv_pack_number,pod.name, pol.name, pod1.name, fd.name, por.name, op.etd, op.eta, op.etr, incoterm.code, inv_inco.code,
                 CASE WHEN l.ref IS NOT NULL
                     THEN l.ref
                     ELSE m.ref
@@ -220,4 +222,3 @@ class OutstandingStatementLogistic(models.AbstractModel):
             agent_staff_id=data.get('agent_staff_id')
         )
         return super()._get_report_values(docids, data)
-
