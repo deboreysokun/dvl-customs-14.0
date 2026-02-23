@@ -25,7 +25,7 @@
                                 <p style="font-size:14pt;font-family:'Battambang';text-align: justify ">
                                     <span style="font-family:'Khmer OS Muol Light'">កម្មវត្ថុ៖ </span>
                                     សំណើសុំមន្ត្រីគយត្រួតពិនិត្យទំនិញ <span t-field="o.commodity_khmer"/> ចំនួន <span t-esc="'{0:,.0f}'.format(o.total_pl_qty)"/> <span t-field="o.qty_uom_id"/> ស្មើនឹង <span t-esc="'{0:,.0f}'.format(o.total_container_qty)"/> កុងតឺន័រ   មានទម្ងន់ <span t-esc="'{0:,.2f}'.format(o.total_gross_weight)"/> គីឡូក្រាម   និងមានតម្លៃ <t t-esc="'{0:,.2f}'.format(o.total_amount)"/> ដុល្លារអាមេរិក
-                                    នាំចេញទៅកាន់ប្រទេស<span style="font-size:8pt"> </span><span t-esc="o.import_country_id.khmer_name"/><span style="font-size:8pt"> </span>តាមមាត់ច្រកកំពង់ផែអន្តរជាតិ<span t-esc="o.entry_exit_port_id.kh_name"/><span style="font-size:8pt"> </span>និងសុំត្រួតពិនិត្យរូបវ័ន្តទំនិញនៅ<span style="font-size:8pt"> </span><span t-esc="o.clearance_office_id.kh_name"/> ។
+                                    នាំចេញទៅកាន់ប្រទេស<span style="font-size:8pt"> </span><span t-esc="o.import_country_id.khmer_name"/><span style="font-size:8pt"> </span>តាមមាត់ច្រកកំពង់ផែអន្តរជាតិ<span t-esc="o.entry_exit_port_id.kh_name"/><span style="font-size:8pt"> </span>និងសុំត្រួតពិនិត្យរូបវ័ន្តទំនិញនៅ<span style="font-size:8pt"> </span><span t-esc="o.clearance_office_id.kh_name"/>។
                                 </p>
                             </div>
 
