@@ -234,6 +234,8 @@
                     <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
                     <filter string="Confirmed" name="confirm" domain="[('state', '=', 'confirm')]"/>
                     <separator/>
+                    <filter string="Not Yet Issued Invoice" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
+                        name="no_invoice_date" domain="[('issued_invoice_date', '=', False)]"/>
                     <filter string="No Expense Lines" groups="devel_logistic_management.group_dvl_operation_manager,account.group_account_user"
                         name="to_confirm" domain="[('other_operation_expense_line_ids', '=', False)]"/>
                     <separator/>

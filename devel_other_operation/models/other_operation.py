@@ -134,6 +134,8 @@ class OtherOperation(models.Model):
     etd = fields.Date(string="ETD", help='Estimated Time Departure', tracking=True, copy=False)
     eta = fields.Date(string="ETA",help='Estimated Time Arrival', tracking=True, copy=False)
     etr = fields.Date(string="ETC",help='Estimate Time Clearance', tracking=True, copy=False)
+    issued_invoice_date = fields.Date(copy=False, compute="_received_payment_date", store=True, compute_sudo=True)
+    received_payment_date = fields.Date(copy=False, compute="_received_payment_date", store=True, compute_sudo=True)
     num_of_truck = fields.Integer(string="Number of Truck", help="Number of Truck for qty of container")
     truck_plate_num = fields.Char(string="Truck License Plate Number", help="The License plate number for the truck")
     container_line_idss = fields.One2many('other.container', 'container_ids', 'Container items')
@@ -311,6 +313,29 @@ class OtherOperation(models.Model):
         }
         return action
 
+    @api.depends('invoice_ids.payment_state', 'invoice_ids.state')
+    def _received_payment_date(self):
+        for record in self:
+            record.issued_invoice_date = False
+            record.received_payment_date = False
+            for invoice in record.invoice_ids.sorted(lambda x: x.invoice_date):
+                if invoice.invoice_date and invoice.state not in ['draft', 'cancel']:
+                    record.write({
+                        "issued_invoice_date": invoice.invoice_date,
+                    })
+                if (
+                        invoice.payment_state == "paid" or invoice.payment_state == "partial") and invoice.amount_total != 0.0:
+                    invoice_payment_info = invoice._get_reconciled_info_JSON_values()
+                    payment_id = 0
+                    for payment_vals in invoice_payment_info:
+                        payment_id = self.env['account.payment'].browse(payment_vals['account_payment_id'])
+                    record.write({
+                        "received_payment_date": payment_id.date,
+                    })
+                else:
+                    record.write({
+                        "received_payment_date": False,
+                    })
     @api.depends('other_operation_expense_line_ids.sub_total')
     def _compute_total_expense_amount(self):
         for record in self:
