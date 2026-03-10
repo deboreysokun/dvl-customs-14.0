@@ -197,7 +197,9 @@
                                         <field name="internal_seal_number" attrs="{'readonly': [('is_locked', '=', True)]}" string="22 Internal Seal NO."/>
                                         <field name="customs_seal_number" attrs="{'readonly': [('is_locked', '=', True)]}" string="23 Customs Seal NO."/>
                                         <field name="port_of_loading_carrier" string="24 Port Of Loading" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="pick_up_location" string="24.A Pick Up Location" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="port_of_discharge_carrier" string="25 Port Of Discharge" attrs="{'readonly': [('is_locked', '=', True)]}"/>
+                                        <field name="final_delivery_location" string="25.A Delivery Location" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="container_number" invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <field name="seal_number" invisible="1" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <label for="etd" string="26 ETD | ETA | ETC"/>
