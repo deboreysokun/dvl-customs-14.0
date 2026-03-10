@@ -144,7 +144,9 @@ class OperationShipment(models.Model):
     co_loader_id = fields.Many2one('res.partner', tracking=True) # unused
     shipping_line_id = fields.Many2one('res.partner', tracking=True)
     port_of_loading_carrier = fields.Many2one('entry.exit.port', tracking=True)
+    pick_up_location = fields.Many2one('entry.exit.port', tracking=True)
     port_of_discharge_carrier = fields.Many2one('entry.exit.port', tracking=True)
+    final_delivery_location = fields.Many2one('entry.exit.port', tracking=True)
     ##################### End of Carrier Information ########################
     # For Reporting Fields | Get POL POD of Carrier Else POL POD of Booking Order
     port_of_loading_report = fields.Many2one('entry.exit.port', store=True, compute="_compute_pol_pod_report", copy=False)
