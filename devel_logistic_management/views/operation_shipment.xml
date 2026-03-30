@@ -550,7 +550,7 @@
                                             <field name="document_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                         <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
-                                            attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         <label for="x_form_apply_permit" string="Form Apply Permit?"/>
                                         <div class="o_address_format">
                                             <field name="x_form_apply_permit" class="o_address_city" attrs="{'readonly': [('is_locked', '=', True)]}"/>
@@ -640,7 +640,7 @@
                                             <field name="document_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                         <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
-                                            attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                     </group>
                                     <group>
                                         <button class="btn btn-primary" name="action_transit_download_all" type="object" string="Download"></button>
@@ -703,7 +703,7 @@
                                             <field name="document_date" placeholder="Date" attrs="{'readonly': [('is_locked', '=', True)], 'readonly': [('is_locked', '=', True)]}"/>
                                         </div>
                                         <field name="khmer_date_char" string="54F Khmer Date" placeholder="Eg. ថ្ងៃសុក្រ ៩កើត ខែផល្គុន ឆ្នាំឆ្លូវ ត្រី​ស័ក, ព.ស.​ ២៥៦៥"
-                                            attrs="{'invisible': [('transit_authorization_doc', '=', False), ('authorization_doc', '=', False)], 'readonly': [('is_locked', '=', True)]}"/>
+                                            attrs="{'readonly': [('is_locked', '=', True)]}"/>
                                     </group>
                                     <group>
                                         <label for="export_requirement_letter" string="54G Requirement Letter"/>
