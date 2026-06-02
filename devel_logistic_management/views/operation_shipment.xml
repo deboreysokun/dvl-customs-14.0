@@ -1661,6 +1661,9 @@
                     <field name="consignee_id"/>
                     <field name="customer_id"/>
                     <field name="incoterm_id" optional="show"/>
+                    <field name="entry_exit_port_id" optional="show"/>
+                    <field name="clearance_office_id" optional="show"/>
+                    <field name="valuation_office_id" optional="show"/>
                     <field name="import_country_id" invisible="context.get('default_operation_type') != 'export'" />
                     <field name="origin_country_id" invisible="context.get('default_operation_type') == 'export'" />
                     <field name="etd" optional="show"/>
