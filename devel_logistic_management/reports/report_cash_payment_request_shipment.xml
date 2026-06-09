@@ -172,7 +172,9 @@
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Customs Permit'"/></td>
                                     </tr>
-                                    <tr t-foreach="o.expense_custom_permit_line_ids" t-as="l" style="page-break-inside:avoid">
+                                    <tr t-foreach="o.expense_custom_permit_line_ids" t-as="l"
+                                        t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                        style="page-break-inside:avoid">
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td style="border:1px solid black;padding:1px;">
@@ -216,7 +218,9 @@
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Clearance'"/></td>
                                     </tr>
-                                    <tr t-foreach="o.expense_clearance_line_ids" t-as="l" style="page-break-inside:avoid">
+                                    <tr t-foreach="o.expense_clearance_line_ids" t-as="l"
+                                    t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                    style="page-break-inside:avoid">
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td style="border:1px solid black;padding:1px;">
@@ -261,7 +265,9 @@
                                             <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                             <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Customs Duty'"/></td>
                                         </tr>
-                                        <tr t-foreach="o.expense_custom_duty_line_ids" t-as="l" style="page-break-inside:avoid">
+                                        <tr t-foreach="o.expense_custom_duty_line_ids" t-as="l"
+                                        t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                        style="page-break-inside:avoid">
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                             <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                             <td style="border:1px solid black;padding:1px;">
@@ -306,7 +312,10 @@
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Trucking'"/></td>
                                     </tr>
-                                    <tr t-foreach="o.expense_trucking_line_ids" t-as="l" style="page-break-inside:avoid">
+<!--                                    <tr t-foreach="o.expense_trucking_line_ids" t-as="l" style="page-break-inside:avoid">-->
+                                    <tr t-foreach="o.expense_trucking_line_ids" t-as="l"
+                                        t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                        style="page-break-inside:avoid">
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td style="border:1px solid black;padding:1px;">
@@ -350,7 +359,10 @@
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Shipping Line'"/></td>
                                     </tr>
-                                    <tr t-foreach="o.expense_shipping_line_line_ids" t-as="l" style="page-break-inside:avoid">
+<!--                                <tr t-foreach="o.expense_shipping_line_line_ids" t-as="l" style="page-break-inside:avoid">-->
+                                    <tr t-foreach="o.expense_shipping_line_line_ids" t-as="l"
+                                        t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                        style="page-break-inside:avoid">
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td style="border:1px solid black;padding:1px;">
@@ -394,7 +406,10 @@
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Port Charge'"/></td>
                                     </tr>
-                                    <tr t-foreach="o.expense_port_charge_line_ids" t-as="l" style="page-break-inside:avoid">
+<!--                                <tr t-foreach="o.expense_port_charge_line_ids" t-as="l" style="page-break-inside:avoid">-->
+                                    <tr t-foreach="o.expense_port_charge_line_ids" t-as="l"
+                                        t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                        style="page-break-inside:avoid">
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td style="border:1px solid black;padding:1px;">
@@ -438,7 +453,10 @@
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td colspan="99" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="'Other Admin Expense'"/></td>
                                     </tr>
-                                    <tr t-foreach="o.expense_other_admin_line_ids" t-as="l" style="page-break-inside:avoid">
+<!--                                <tr t-foreach="o.expense_other_admin_line_ids" t-as="l" style="page-break-inside:avoid">-->
+                                    <tr t-foreach="o.expense_other_admin_line_ids" t-as="l"
+                                        t-if="l.sub_total > 0 and l.state != 'direct_paid'"
+                                        style="page-break-inside:avoid">
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td class="text-center" style="border:1px solid black;padding:1px;"><span t-esc="''"/></td>
                                         <td style="border:1px solid black;padding:1px;">
