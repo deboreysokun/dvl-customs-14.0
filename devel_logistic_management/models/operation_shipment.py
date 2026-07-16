@@ -597,8 +597,17 @@ class OperationShipment(models.Model):
     #Customs Valuation / Customs Permit Expenses Lines
     expense_custom_permit_line_ids = fields.One2many('shipment.expense.customs.office.permit', 'shipment_id', 'Expense Custom Office/Permit Lines', tracking=True, copy=False)
     total_custom_permit_amount = fields.Float('Total Paid', compute='_compute_total_custom_permit_amount', tracking=True)
+    total_custom_permit_amount_cash_payment_request = fields.Float('Total Paid', compute='_compute_total_custom_permit_amount_cash_payment_request',
+                                              tracking=True)
     tot_custom_permit_lines = fields.Float('Total Expense', compute='_compute_total_custom_permit_lines')
 
+    @api.depends('expense_custom_permit_line_ids.sub_total')
+    def _compute_total_custom_permit_amount_cash_payment_request(self):
+        for shipment in self:
+            total_custom_permit_amount_cash_payment_request = 0
+            for line in shipment.expense_custom_permit_line_ids.filtered(lambda l: l.state in ['confirm','draft']):
+                total_custom_permit_amount_cash_payment_request += line.sub_total
+            shipment.total_custom_permit_amount_cash_payment_request = total_custom_permit_amount_cash_payment_request
     @api.depends('expense_custom_permit_line_ids.sub_total')
     def _compute_total_custom_permit_amount(self):
         for shipment in self:
@@ -618,10 +627,20 @@ class OperationShipment(models.Model):
     # Shipping Line Expenses
     expense_shipping_line_line_ids = fields.One2many('shipment.expense.shipping.line', 'shipment_id', 'Expense Shipping Lines', copy=False)
     total_shipping_line_amount = fields.Float('Total Amount', compute='_compute_total_shipping_line_amount', tracking=True)
+    total_shipping_line_amount_cash_payment_request = fields.Float('Total Amount', compute='_compute_total_shipping_line_amount_cash_payment_request',
+                                              tracking=True)
     total_thc_amount = fields.Float('THC Amount', compute='_compute_total_thc_amount')
     total_thc_paid_date = fields.Date(string="THC Paid Date", compute='_compute_total_thc_amount')
     tot_shipping_line_lines = fields.Float('Total Expense', compute='_compute_total_shipping_line_lines')
 
+    @api.depends('expense_shipping_line_line_ids.sub_total')
+    def _compute_total_shipping_line_amount_cash_payment_request(self):
+        for shipment in self:
+            total_shipping_line_amount_cash_payment_request = 0
+            lines = shipment.expense_shipping_line_line_ids.filtered(lambda l: l.state in ['confirm','draft'])
+            for line in lines:
+                total_shipping_line_amount_cash_payment_request += line.sub_total
+            shipment.total_shipping_line_amount_cash_payment_request = total_shipping_line_amount_cash_payment_request
     @api.depends('expense_shipping_line_line_ids.sub_total')
     def _compute_total_shipping_line_amount(self):
         for shipment in self:
@@ -657,8 +676,19 @@ class OperationShipment(models.Model):
     #Clearance Expenses
     expense_clearance_line_ids = fields.One2many('shipment.expense.clearance', 'shipment_id', 'Expense Clearance Lines', copy=False)
     total_clearance_amount = fields.Float('Total Amount', compute='_compute_total_clearance_amount')
+    total_clearance_amount_cash_payment_request = fields.Float('Total Paid',
+                                                                   compute='_compute_total_clearance_amount_cash_payment_request',
+                                                                   tracking=True)
     tot_clearance_lines = fields.Float('Total Expense', compute='_compute_total_clearance_lines')
 
+    @api.depends('expense_custom_permit_line_ids.sub_total')
+    def _compute_total_clearance_amount_cash_payment_request(self):
+        for shipment in self:
+            total_clearance_amount_cash_payment_request = 0
+            for line in shipment.expense_clearance_line_ids.filtered(
+                    lambda l: l.state in ['confirm','draft']):
+                total_clearance_amount_cash_payment_request += line.sub_total
+            shipment.total_clearance_amount_cash_payment_request = total_clearance_amount_cash_payment_request
     @api.depends('expense_clearance_line_ids.sub_total')
     def _compute_total_clearance_amount(self):
         for shipment in self:
@@ -678,6 +708,7 @@ class OperationShipment(models.Model):
     #Custom Duty Expenses
     expense_custom_duty_line_ids = fields.One2many('shipment.expense.custom.duty', 'shipment_id', 'Expense Custom Duty Lines', copy=False)
     total_custom_duty_amount = fields.Float('Total Amount', compute='_compute_total_custom_duty_amount', tracking=True)
+    total_custom_duty_amount_cash_payment_request = fields.Float('Total Amount', compute='_compute_total_custom_duty_amount_cash_payment_request', tracking=True)
     total_duty_tax = fields.Float('Duty Tax Amount', compute='_compute_total_duty_amount')
     total_duty_tax_khr = fields.Float('Duty Tax Amount in KHR', compute='_compute_total_duty_amount')
     customs_exchange_rate = fields.Float('Exchange Rate', copy=False)
@@ -685,6 +716,13 @@ class OperationShipment(models.Model):
     tot_custom_duty_lines = fields.Float('Total Expense', compute='_compute_total_custom_duty_lines')
 
     #Total Customs Duty Expnese Line Paid Amount
+    @api.depends('expense_custom_duty_line_ids.sub_total')
+    def _compute_total_custom_duty_amount_cash_payment_request(self):
+        for shipment in self:
+            total_custom_duty_amount_cash_payment_request = 0
+            for line in shipment.expense_custom_duty_line_ids.filtered(lambda l: l.state in ['confirm','draft']):
+                total_custom_duty_amount_cash_payment_request += line.sub_total
+            shipment.total_custom_duty_amount_cash_payment_request = total_custom_duty_amount_cash_payment_request
     @api.depends('expense_custom_duty_line_ids.sub_total')
     def _compute_total_custom_duty_amount(self):
         for shipment in self:
@@ -719,9 +757,17 @@ class OperationShipment(models.Model):
     # Port Charge Expense
     expense_port_charge_line_ids = fields.One2many('shipment.expense.port.charge', 'shipment_id', 'Expense Port Charge Lines', copy=False)
     total_port_charge_amount = fields.Float('Total Amount', compute='_compute_total_port_charge_amount')
+    total_port_charge_amount_cash_payment_request = fields.Float('Total Amount', compute='_compute_total_port_charge_amount_cash_payment_request')
     tot_port_charge_lines = fields.Float('Total Expense', compute='_compute_total_port_charge_lines')
 
     #total lines exclude reject state: Total Expense
+    @api.depends('expense_port_charge_line_ids.sub_total')
+    def _compute_total_port_charge_amount_cash_payment_request(self):
+        for shipment in self:
+            total_port_charge_amount_cash_payment_request = 0
+            for line in shipment.expense_port_charge_line_ids.filtered(lambda l: l.state in ['confirm','draft']):
+                total_port_charge_amount_cash_payment_request += line.sub_total
+            shipment.total_port_charge_amount_cash_payment_request = total_port_charge_amount_cash_payment_request
     @api.depends('expense_port_charge_line_ids.sub_total')
     def _compute_total_port_charge_lines(self):
         for shipment in self:
@@ -742,9 +788,17 @@ class OperationShipment(models.Model):
     # Trcuking Line Expenses
     expense_trucking_line_ids = fields.One2many('shipment.expense.trucking', 'shipment_id', 'Expense Trucking Lines', copy=False)
     total_trucking_amount = fields.Float('Total Amount', compute='_compute_total_trucking_amount')
+    total_trucking_amount_cash_payment_request = fields.Float('Total Amount', compute='_compute_total_trucking_amount_cash_payment_request')
     tot_trucking_lines = fields.Float('Total Expense', compute='_compute_total_trucking_lines')
 
     #total lines exclude reject state: Total Expense
+    @api.depends('expense_trucking_line_ids.sub_total')
+    def _compute_total_trucking_amount_cash_payment_request(self):
+        for shipment in self:
+            total_trucking_amount_cash_payment_request = 0
+            for line in shipment.expense_trucking_line_ids.filtered(lambda l: l.state in ['confirm','draft']):
+                total_trucking_amount_cash_payment_request += line.sub_total
+            shipment.total_trucking_amount_cash_payment_request = total_trucking_amount_cash_payment_request
     @api.depends('expense_trucking_line_ids.sub_total')
     def _compute_total_trucking_lines(self):
         for shipment in self:
@@ -765,6 +819,7 @@ class OperationShipment(models.Model):
     # Other Admin Expenses
     expense_other_admin_line_ids = fields.One2many('shipment.expense.other.admin', 'shipment_id', copy=False)
     total_other_admin_amount = fields.Float('Total Amount', compute='_compute_total_other_admin_amount')
+    total_other_admin_amount_cash_payment_request = fields.Float('Total Amount', compute='_compute_total_other_admin_amount_cash_payment_request')
     tot_other_admin_lines = fields.Float('Total Expense', compute='_compute_total_other_admin_lines')
 
     #total lines exclude reject state: Total Expense
@@ -777,6 +832,13 @@ class OperationShipment(models.Model):
             shipment.tot_other_admin_lines = total_other_admin_lines
 
     #total paid Lines: Total Paid
+    @api.depends('expense_other_admin_line_ids.sub_total')
+    def _compute_total_other_admin_amount_cash_payment_request(self):
+        for shipment in self:
+            total_other_admin_amount_cash_payment_request = 0
+            for line in shipment.expense_other_admin_line_ids.filtered(lambda l: l.state in ['confirm','draft']):
+                total_other_admin_amount_cash_payment_request += line.sub_total
+            shipment.total_other_admin_amount_cash_payment_request = total_other_admin_amount_cash_payment_request
     @api.depends('expense_other_admin_line_ids.sub_total')
     def _compute_total_other_admin_amount(self):
         for shipment in self:
