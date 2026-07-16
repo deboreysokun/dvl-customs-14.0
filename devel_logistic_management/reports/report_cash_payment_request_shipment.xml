@@ -213,6 +213,12 @@
                                             <span t-field="l.received_user_id.name"/>
                                         </td>
                                     </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_custom_permit_amount_cash_payment_request)"/>
+                                        </td>
+                                    </tr>
                                     <tr style="background-color:#d9e2f3;">
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
@@ -257,6 +263,12 @@
                                         </td>
                                         <td class="text-center"  style="border:1px solid black;padding:1px;">
                                             <span t-field="l.received_user_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_clearance_amount_cash_payment_request)"/>
                                         </td>
                                     </tr>
                                     <t t-if="o.operation_type in ('import', 'export')">
@@ -307,6 +319,12 @@
                                             </td>
                                         </tr>
                                     </t>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_custom_duty_amount_cash_payment_request)"/>
+                                        </td>
+                                    </tr>
                                     <tr style="background-color:#d9e2f3;">
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
@@ -352,6 +370,12 @@
                                         </td>
                                         <td class="text-center"  style="border:1px solid black;padding:1px;">
                                             <span t-field="l.received_user_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_trucking_amount_cash_payment_request)"/>
                                         </td>
                                     </tr>
                                     <tr style="background-color:#d9e2f3;">
@@ -401,6 +425,12 @@
                                             <span t-field="l.received_user_id.name"/>
                                         </td>
                                     </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_shipping_line_amount_cash_payment_request)"/>
+                                        </td>
+                                    </tr>
                                     <tr style="background-color:#d9e2f3;">
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
@@ -448,6 +478,12 @@
                                             <span t-field="l.received_user_id.name"/>
                                         </td>
                                     </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_port_charge_amount_cash_payment_request)"/>
+                                        </td>
+                                    </tr>
                                     <tr style="background-color:#d9e2f3;">
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
                                         <td class="text-center" style="font-size:14px;padding:1px;border:1px solid black;"><span t-esc="''"/></td>
@@ -493,6 +529,12 @@
                                         </td>
                                         <td class="text-center"  style="border:1px solid black;padding:1px;">
                                             <span t-field="l.received_user_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="page-break-inside:avoid">
+                                        <td colspan="11" style="border:1px solid black;text-align:right;font-weight:bold;padding:1px;">Total</td>
+                                        <td class="text-center" style="border:1px solid black; font-weight:bold;padding:1px;color:#ff0000">
+                                            $ <t t-esc="'{0:,.2f}'.format(o.total_other_admin_amount_cash_payment_request)"/>
                                         </td>
                                     </tr>
                                 </tbody>
