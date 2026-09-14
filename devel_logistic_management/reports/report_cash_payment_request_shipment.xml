@@ -23,9 +23,9 @@
                             </t>
                         </div>
                         <div style="text-align:center;border-left:1px solid black;border-right:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
+                            <div style="font-size:24px;"><span style="background-color:yellow;">Cash Payment Request By Shipment</span></div>
                             <div style="font-weight:bold;font-size:18px;"><span t-field="o.company_id.name"/></div>
                             <div style="font-size:16px;"><t t-esc="o.company_id.street"/>, <t t-esc="o.company_id.city"/>, <t t-esc="o.company_id.country_id.name"/></div>
-                            <div style="font-size:16px;"><span>Cash Payment Request By Shipment</span></div>
                         </div>
                         <div class="row"  style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;font-weight:bold;margin-left:0px;margin-right:0px">
                             <div class="col-6" style="font-size:14px;">
@@ -78,6 +78,10 @@
                                   <div class="col-6"><span t-esc="'Delivery Location'"/> </div>
                                   <div class="col-6"><span t-field="o.final_delivery_location"/></div>
                                 </div>
+                                <div class="row">
+                                  <div class="col-6"><span t-esc="'PIC'"/> </div>
+                                  <div class="col-6"><span t-field="o.write_uid.name"/></div>
+                                </div>
                             </div>
                             <div class="col-6" style="font-size:14px;">
                                 <div class="row">
@@ -123,6 +127,10 @@
                                 <div class="row">
                                 <div class="col-4 text-right"><span style="background-color:#ffff00" t-esc="'Agent Staff:'"/> </div>
                                 <div class="col-8"><span style="background-color:#ffff00" t-esc="o.agent_staff_id.agent_staff_name"/></div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-4 text-right"><span t-esc="'Incoterm:'"/> </div>
+                                  <div class="col-8"><span t-field="o.incoterm_id.code"/> - <span t-field="o.incoterm_id.name"/></div>
                                 </div>
                             </div>
                         </div>
