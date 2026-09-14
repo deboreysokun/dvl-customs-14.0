@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-6"><span t-esc="'PIC'"/> </div>
-                                  <div class="col-6"><span t-field="o.write_uid.name"/></div>
+                                  <div class="col-6"><span t-field="o.last_chatter_user.name"/></div>
                                 </div>
                             </div>
                             <div class="col-6" style="font-size:14px;">

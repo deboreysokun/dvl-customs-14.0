@@ -30,6 +30,25 @@ class OperationShipment(models.Model):
     _description = "Operation of Shipment"
     _check_company_auto = True
 
+    last_chatter_user = fields.Many2one(
+        'res.users',
+        string="Last Edited By",
+        compute='_compute_last_chatter_user',
+        store=True,
+    )
+
+    @api.depends('message_ids')
+    def _compute_last_chatter_user(self):
+        for rec in self:
+            last_message = rec.message_ids.sorted('date', reverse=True)[:1]
+            if last_message and last_message.author_id:
+                # Match author_id (res.partner) back to a res.users record
+                user = self.env['res.users'].search(
+                    [('partner_id', '=', last_message.author_id.id)], limit=1
+                )
+                rec.last_chatter_user = user.id if user else rec.create_uid.id
+            else:
+                rec.last_chatter_user = rec.create_uid.id
     @api.returns('self')
     def _default_stage(self):
         return self.env['operation.stage'].search([('name', '=', 'New')], limit=1)
