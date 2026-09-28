@@ -30,6 +30,13 @@ class OperationShipment(models.Model):
     _description = "Operation of Shipment"
     _check_company_auto = True
 
+    last_edited_by_information_filling = fields.Many2one(
+        'res.users',
+        string="information_filling - Last Edited By",
+        compute='_compute_last_edited_by_information_filling',
+        store=True,
+    )
+
     last_chatter_user = fields.Many2one(
         'res.users',
         string="Last Edited By",
@@ -60,6 +67,62 @@ class OperationShipment(models.Model):
     stage_id = fields.Many2one('operation.stage', string='Stage', index=True, tracking=True,
         readonly=False, store=True, default=_default_stage,
         copy=False, group_expand='_read_group_stage_ids', ondelete='restrict')
+
+    information_filling_fields = ['shipper_id', 'consignee_id', 'export_country_id',
+                                  'import_country_id','origin_country_id','incoterm_id',
+                                  'notify_party_id','customer_id','entry_exit_port_id',
+                                  'exit_port_id','clearance_office_id','valuation_office_id',
+                                  'shipping_line_id','bl_number','bl_date','hbl_number','hbl_date',
+                                  'truck_bill_number','truck_bill_date','internal_seal_number',
+                                  'customs_seal_number','port_of_loading_carrier','pick_up_location',
+                                  'port_of_discharge_carrier','final_delivery_location','etd','eta','etr',
+                                  'inv_pack_number','inv_pack_date','inv_packing_list_term','commodity','commodity_khmer',
+                                  'is_vehicle','mix_commodity','x_country_option','co_form_id','co_form_date',
+                                  'co_form_country_id','co_form_number','line_ids','description','description_khmer',
+                                  'qty','uom_id','packing_list_qty','packing_list_uom_id','number','number_in_co',
+                                  'company_currency_id','price_unit','price_subtotal','price_subtotal_fob',
+                                  'co_criteria','net_weight','gross_weight','price_per_kg','item_manufacturing_date',
+                                  'item_expiry_date','wheel_type','origin_country_id','v_type','new_used','v_vin',
+                                  'v_eng','v_brand','v_brand_typing','v_model','v_power_mode','v_gvw','v_model_year',
+                                  'v_capacity','v_left_hand_drive','v_other_info','hs_code_id','remark_hs_code',
+                                  'cd','st','vat','tax_rate','fta','tax_rate_co','new_tax_rate','nbr_packages','package_type',
+                                  'supplementary_unicode','supplementary_qty','tax_amount','tax_amount_co','ministry_info',
+                                  'total_gross_weight','total_net_weight','total_qty','total_pl_qty','total_amount','total_tax_amount',
+                                  'total_tax_amount_co','actual_gross_weight','actual_net_weight','actual_qty','penalty_rate_charge',
+                                  'customs_penalty_price','num_of_truck','truck_line_ids','booking_date','volume_cbm'
+                                  'freight','description_of_goods','pick_up_date','place_of_reciept','port_of_loading',
+                                  'port_of_discharge','port_of_delivery','final_destination','etd_export_port',
+                                  'eta_export_port','etd_export_port_1','eta_export_port_1','inv_packing_doc',
+                                  'transit_truck_bill_doc','authorization_doc','transit_authorization_doc',
+                                  'khmer_date_char','x_form_apply_permit','permit_doc','co_doc','co_attactment_doc']
+
+    @api.depends('message_ids.tracking_value_ids')
+    def _compute_last_edited_by_information_filling(self):
+        for rec in self:
+            rec.last_edited_by_information_filling = rec._get_last_editor_for_fields(rec.information_filling_fields)
+
+    def _get_last_editor_for_fields(self, field_names):
+        self.ensure_one()
+        TrackingValue = self.env['mail.tracking.value']
+        field_ids = self.env['ir.model.fields'].search([
+            ('model', '=', self._name),
+            ('name', 'in', field_names),
+        ]).ids
+        if not field_ids:
+            return self.create_uid
+
+        tracking = TrackingValue.search([
+            ('field', 'in', field_ids),
+            ('mail_message_id.model', '=', self._name),
+            ('mail_message_id.res_id', '=', self.id),
+        ], order='create_date desc', limit=1)
+
+        if tracking and tracking.mail_message_id.author_id:
+            user = self.env['res.users'].search(
+                [('partner_id', '=', tracking.mail_message_id.author_id.id)], limit=1
+            )
+            return user or self.create_uid
+        return self.create_uid
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):

@@ -805,7 +805,7 @@
                                     </div>
                                 </group>
                                 <!-- Customs Valuation / Permit | hide for transit operation -->
-                                <group attrs="{'invisible': [('operation_type','=','transit')]}">
+                                <group>
                                     <separator coslpan="4" string="Customs Valuation Office" attrs="{'invisible': [('operation_type','!=','import')]}"/>
                                     <separator coslpan="4" string="Customs Permit" attrs="{'invisible': [('operation_type','!=','export')]}"/>
                                     <separator coslpan="4" string="Valuation/Permit" attrs="{'invisible': [('operation_type','!=','transit')]}"/>
@@ -857,7 +857,7 @@
                                     </group>
                                 </group>
                                 <!-- shipping line -->
-                                <group attrs="{'invisible': [('operation_type','in',('transit', 'export'))]}">
+                                <group attrs="{'invisible': [('operation_type','=','export')]}">
                                     <separator coslpan="4" string="Shipping Line"/>
                                     <field name="expense_shipping_line_line_ids" context="{'default_requester_user_id': uid}" widget="selectable_shipping_line">
                                         <tree string="Shipping Line" editable="bottom" class="expense_line" decoration-bg-purple="id == False">
@@ -932,7 +932,7 @@
                                     </group>
                                 </group>
                                 <!-- Customs Duty-->
-                                <group attrs="{'invisible': [('operation_type','in',('transit', 'export'))]}">
+                                <group attrs="{'invisible': [('operation_type','=','export')]}">
                                     <separator coslpan="4" string="Customs Duty"/>
                                     <field name="expense_custom_duty_line_ids" context="{'default_requester_user_id': uid}" widget="selectable_custom_duty">
                                         <tree editable="bottom" class="expense_line" decoration-bg-purple="id == False">
@@ -1058,7 +1058,7 @@
                                     </group>
                                 </group>
                                 <!-- Port Charge-->
-                                <group attrs="{'invisible': [('operation_type','in',('transit', 'export'))]}">
+                                <group attrs="{'invisible': [('operation_type','=','export')]}">
                                     <separator coslpan="4" string="Port Charge"/>
                                     <field name="expense_port_charge_line_ids" context="{'default_requester_user_id': uid}" widget="selectable_port_charge">
                                         <tree string="Port Charge" editable="bottom" class="expense_line" decoration-bg-purple="id == False">
@@ -1109,7 +1109,7 @@
                                     </group>
                                 </group>
                                 <!-- Trucking  -->
-                                <group attrs="{'invisible': [('operation_type','in',('transit', 'export'))]}">
+                                <group attrs="{'invisible': [('operation_type','=','export')]}">
                                     <separator coslpan="4" string="Trucking"/>
                                     <field name="expense_trucking_line_ids" context="{'default_requester_user_id': uid, 'default_shipment_id': id,}" widget="selectable_trucking">
                                         <tree string="Trucking" editable="bottom" class="expense_line" decoration-bg-purple="id == False">
@@ -1161,7 +1161,7 @@
                                     </group>
                                 </group>
                                 <!-- Other admin-->
-                                <group attrs="{'invisible': [('operation_type','in',('transit', 'export'))]}">
+                                <group attrs="{'invisible': [('operation_type','=','export')]}">
                                     <separator coslpan="4" string="Other Admin Expenses"/>
                                     <field name="expense_other_admin_line_ids" force_save="1" context="{'default_requester_user_id': uid}" widget="selectable_other_admin">
                                         <tree string="Other Admin Expenses" editable="bottom" class="expense_line" decoration-bg-purple="id == False">
