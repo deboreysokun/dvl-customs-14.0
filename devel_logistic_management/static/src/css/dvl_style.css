@@ -875,6 +875,9 @@ td.o_many2one_cell:nth-child(2) {
     top: 0 !important;
     z-index : 20 !important;
 }
+.o_list_view.shipment_list_view .table-responsive .o_list_table thead tr:nth-child(1) th {
+    top: auto !important;
+}
 .shipment_list_view tr{
     outline: 1px solid #dee2e6;
     border: none;
